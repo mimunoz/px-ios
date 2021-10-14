@@ -16,6 +16,7 @@ final class AnchorDimension: AnchorDimensionComposing {
         self.root.translatesAutoresizingMaskIntoConstraints = false
     }
     
+    @discardableResult
     func equalTo(
         _ otherConstraint: AnchorDimension,
         multiplier: CGFloat = 1.0,
@@ -30,6 +31,7 @@ final class AnchorDimension: AnchorDimensionComposing {
         return prepare(constraint, with: priority)
     }
     
+    @discardableResult
     func lessThanOrEqualTo(
         _ otherConstraint: AnchorDimension,
         multiplier: CGFloat = 1.0,
@@ -44,6 +46,7 @@ final class AnchorDimension: AnchorDimensionComposing {
         return prepare(constraint, with: priority)
     }
     
+    @discardableResult
     func greaterThanOrEqualTo(
         _ otherConstraint: AnchorDimension,
          multiplier: CGFloat = 1.0,
@@ -58,6 +61,7 @@ final class AnchorDimension: AnchorDimensionComposing {
         return prepare(constraint, with: priority)
     }
     
+    @discardableResult
     func equalTo(
         constant: CGFloat,
         priority: UILayoutPriority = .required
@@ -66,6 +70,7 @@ final class AnchorDimension: AnchorDimensionComposing {
         return prepare(constraint, with: priority)
     }
     
+    @discardableResult
     func lessThanOrEqualTo(
         constant: CGFloat,
         priority: UILayoutPriority = .required
@@ -74,6 +79,7 @@ final class AnchorDimension: AnchorDimensionComposing {
         return prepare(constraint, with: priority)
     }
     
+    @discardableResult
     func greaterThanOrEqualTo(
         constant: CGFloat,
         priority: UILayoutPriority = .required
@@ -82,6 +88,7 @@ final class AnchorDimension: AnchorDimensionComposing {
         return prepare(constraint, with: priority)
     }
     
+    @discardableResult
     func equalTo(
         _ root: AnchoringRoot,
         multiplier: CGFloat = 1.0,
@@ -96,6 +103,7 @@ final class AnchorDimension: AnchorDimensionComposing {
         )
     }
     
+    @discardableResult
     func lessThanOrEqualTo(
         _ root: AnchoringRoot,
         multiplier: CGFloat = 1.0,
@@ -110,6 +118,7 @@ final class AnchorDimension: AnchorDimensionComposing {
         )
     }
     
+    @discardableResult
     func greaterThanOrEqualTo(
         _ root: AnchoringRoot,
         multiplier: CGFloat = 1.0,
