@@ -40,10 +40,7 @@ extension AnchorPositioningComposing {
         constant: CGFloat,
         priority: UILayoutPriority
     ) -> NSLayoutConstraint {
-        guard let superview = root.superview else {
-            preconditionFailure("Root doesn't have a superview")
-        }
-        return equalTo(superview, constant: constant, priority: priority)
+        equalTo(rootSuperview, constant: constant, priority: priority)
     }
     
     @discardableResult
@@ -51,10 +48,7 @@ extension AnchorPositioningComposing {
         constant: CGFloat,
         priority: UILayoutPriority
     ) -> NSLayoutConstraint {
-        guard let superview = root.superview else {
-            preconditionFailure("Root doesn't have a superview")
-        }
-        return lessThanOrEqualTo(superview, constant: constant, priority: priority)
+        lessThanOrEqualTo(rootSuperview, constant: constant, priority: priority)
     }
     
     @discardableResult
@@ -62,9 +56,15 @@ extension AnchorPositioningComposing {
         constant: CGFloat,
         priority: UILayoutPriority
     ) -> NSLayoutConstraint {
-        guard let superview = root.superview else {
-            preconditionFailure("Root doesn't have a superview")
+        greaterThanOrEqualTo(rootSuperview, constant: constant, priority: priority)
+    }
+}
+
+private extension AnchorPositioningComposing {
+    var rootSuperview: UIView {
+        if let superview = root.superview {
+            return superview
         }
-        return greaterThanOrEqualTo(superview, constant: constant, priority: priority)
+        preconditionFailure("Root doesn't have a superview")
     }
 }
