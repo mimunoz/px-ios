@@ -3,9 +3,28 @@ import UIKit
 protocol AnchorPositioningComposing {
     var root: AnchoringRoot { get }
     var type: AnchorType { get }
-    func equalTo(_ view: AnchoringRoot, constant: CGFloat, priority: UILayoutPriority)
-    func lessThanOrEqualTo(_ view: AnchoringRoot, constant: CGFloat, priority: UILayoutPriority)
-    func greaterThanOrEqualTo(_ view: AnchoringRoot, constant: CGFloat, priority: UILayoutPriority)
+    
+    @discardableResult
+    func equalTo(
+        _ root: AnchoringRoot,
+        constant: CGFloat,
+        priority: UILayoutPriority
+    ) -> NSLayoutConstraint
+    
+    
+    @discardableResult
+    func lessThanOrEqualTo(
+        _ root: AnchoringRoot,
+        constant: CGFloat,
+        priority: UILayoutPriority
+    ) -> NSLayoutConstraint
+    
+    @discardableResult
+    func greaterThanOrEqualTo(
+        _ root: AnchoringRoot,
+        constant: CGFloat,
+        priority: UILayoutPriority
+    ) -> NSLayoutConstraint
 }
 
 extension AnchorPositioningComposing {
@@ -15,4 +34,37 @@ extension AnchorPositioningComposing {
     var top: ComposedPositionAnchor { .init(root: root, anchors: [self, root.top]) }
     var bottom: ComposedPositionAnchor { .init(root: root, anchors: [self, root.bottom]) }
     var centerY: ComposedPositionAnchor { .init(root: root, anchors: [self, root.centerY]) }
+    
+    @discardableResult
+    func equalToSuperview(
+        constant: CGFloat,
+        priority: UILayoutPriority
+    ) -> NSLayoutConstraint {
+        guard let superview = root.superview else {
+            preconditionFailure("Root doesn't have a superview")
+        }
+        return equalTo(superview, constant: constant, priority: priority)
+    }
+    
+    @discardableResult
+    func lessThanOrEqualToSuperview(
+        constant: CGFloat,
+        priority: UILayoutPriority
+    ) -> NSLayoutConstraint {
+        guard let superview = root.superview else {
+            preconditionFailure("Root doesn't have a superview")
+        }
+        return lessThanOrEqualTo(superview, constant: constant, priority: priority)
+    }
+    
+    @discardableResult
+    func greaterThanOrEqualToSuperview(
+        constant: CGFloat,
+        priority: UILayoutPriority
+    ) -> NSLayoutConstraint {
+        guard let superview = root.superview else {
+            preconditionFailure("Root doesn't have a superview")
+        }
+        return greaterThanOrEqualTo(superview, constant: constant, priority: priority)
+    }
 }

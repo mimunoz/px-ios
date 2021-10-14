@@ -3,58 +3,118 @@ import UIKit
 protocol AnchorPositioning {
     var type: AnchorType { get }
     var root: AnchoringRoot { get }
-    func equalTo(_ otherConstraint: Self, constant: CGFloat, priority: UILayoutPriority)
-    func lessThanOrEqualTo(_ otherConstraint: Self, constant: CGFloat, priority: UILayoutPriority)
-    func greaterThanOrEqualTo(_ otherConstraint: Self, constant: CGFloat, priority: UILayoutPriority)
+    
+    @discardableResult
+    func equalTo(
+        _ otherConstraint: Self,
+        constant: CGFloat,
+        priority: UILayoutPriority
+    ) -> NSLayoutConstraint
+    
+    @discardableResult
+    func lessThanOrEqualTo(
+        _ otherConstraint: Self,
+        constant: CGFloat,
+        priority: UILayoutPriority)
+    -> NSLayoutConstraint
+    
+    @discardableResult
+    func greaterThanOrEqualTo(
+        _ otherConstraint: Self,
+        constant: CGFloat,
+        priority: UILayoutPriority)
+    -> NSLayoutConstraint
 }
 
 extension AnchorPositioning {
-    func equalToSuperview(constant: CGFloat = 0.0, priority: UILayoutPriority = .required) {
-        guard let superview = root.superview else { return }
-        equalTo(superview, constant: constant, priority: priority)
+    @discardableResult
+    func equalToSuperview(constant: CGFloat = 0.0, priority: UILayoutPriority = .required) -> NSLayoutConstraint {
+        equalTo(
+            rootSuperview,
+            constant: constant,
+            priority: priority
+        )
     }
     
-    func lessThanOrEqualToSuperview(constant: CGFloat = 0.0, priority: UILayoutPriority = .required) {
-        guard let superview = root.superview else { return }
-        lessThanOrEqualTo(superview, constant: constant, priority: priority)
+    @discardableResult
+    func lessThanOrEqualToSuperview(constant: CGFloat = 0.0, priority: UILayoutPriority = .required) -> NSLayoutConstraint {
+        lessThanOrEqualTo(
+            rootSuperview,
+            constant: constant,
+            priority: priority
+        )
     }
     
-    func greaterThanOrEqualToSuperview(constant: CGFloat = 0.0, priority: UILayoutPriority = .required) {
-        guard let superview = root.superview else { return }
-        greaterThanOrEqualTo(superview, constant: constant, priority: priority)
+    @discardableResult
+    func greaterThanOrEqualToSuperview(constant: CGFloat = 0.0, priority: UILayoutPriority = .required) -> NSLayoutConstraint {
+        greaterThanOrEqualTo(
+            rootSuperview,
+            constant: constant,
+            priority: priority
+        )
     }
     
-    func equalTo(_ root: AnchoringRoot, constant: CGFloat = 0.0, priority: UILayoutPriority = .required) {
-        guard let anchor = anchorFor(root: root) else { return }
-        equalTo(anchor, constant: constant, priority: priority)
+    @discardableResult
+    func equalTo(_ root: AnchoringRoot, constant: CGFloat = 0.0, priority: UILayoutPriority = .required) -> NSLayoutConstraint {
+        equalTo(
+            anchorFor(root: root),
+            constant: constant,
+            priority: priority
+        )
     }
     
-    func lessThanOrEqualTo(_ root: AnchoringRoot, constant: CGFloat = 0.0, priority: UILayoutPriority = .required) {
-        guard let anchor = anchorFor(root: root) else { return }
-        lessThanOrEqualTo(anchor, constant: constant, priority: priority)
+    @discardableResult
+    func lessThanOrEqualTo(_ root: AnchoringRoot, constant: CGFloat = 0.0, priority: UILayoutPriority = .required) -> NSLayoutConstraint {
+        lessThanOrEqualTo(
+            anchorFor(root: root),
+            constant: constant,
+            priority: priority
+        )
     }
     
-    func greaterThanOrEqualTo(_ root: AnchoringRoot, constant: CGFloat = 0.0, priority: UILayoutPriority = .required) {
-        guard let anchor = anchorFor(root: root) else { return }
-        greaterThanOrEqualTo(anchor, constant: constant, priority: priority)
+    @discardableResult
+    func greaterThanOrEqualTo(_ root: AnchoringRoot, constant: CGFloat = 0.0, priority: UILayoutPriority = .required) -> NSLayoutConstraint {
+        greaterThanOrEqualTo(
+            anchorFor(root: root),
+            constant: constant,
+            priority: priority
+        )
     }
-    
-    private func anchorFor(root: AnchoringRoot?) -> Self? {
+}
+
+private extension AnchorPositioning {
+    func anchorFor(root: AnchoringRoot) -> Self {
+        let anchor: Self?
+        
         switch type {
         case .leading:
-            return root?.leading as? Self
+            anchor = root.leading as? Self
         case .trailing:
-            return root?.trailing as? Self
+            anchor = root.trailing as? Self
         case .centerX:
-            return root?.centerX as? Self
+            anchor = root.centerX as? Self
         case .top:
-            return root?.top as? Self
+            anchor = root.top as? Self
         case .bottom:
-            return root?.bottom as? Self
+            anchor = root.bottom as? Self
         case .centerY:
-            return root?.centerY as? Self
+            anchor = root.centerY as? Self
         default:
-            return nil
+            anchor = nil
         }
+        
+        if let anchor = anchor {
+            return anchor
+        }
+        
+        preconditionFailure("Could not resolve \(type) anchor for this root \(root)")
+    }
+    
+    var rootSuperview: UIView {
+        if let superview = root.superview {
+            return superview
+        }
+        
+        preconditionFailure("Root doesn't have a superview")
     }
 }
