@@ -47,7 +47,7 @@ extension PXSummaryComposer {
 
     // MARK: style
     func summaryColor() -> UIColor {
-        return isDefaultStatusBarStyle ? UIColor.black : ThemeManager.shared.whiteColor()
+        return UIColor.Andes.gray900
     }
 
     func yourPurchaseSummaryTitle() -> String {

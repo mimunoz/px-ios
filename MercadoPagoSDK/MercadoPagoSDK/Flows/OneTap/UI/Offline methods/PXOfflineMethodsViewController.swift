@@ -22,6 +22,11 @@ final class PXOfflineMethodsViewController: MercadoPagoUIViewController {
     weak var delegate: PXOfflineMethodsViewControllerDelegate?
 
     var userDidScroll = false
+    
+    private struct Constants {
+        static let viewBorderWidth: CGFloat = 1.5
+        static let viewCornerRadius: CGFloat = 10
+    }
 
     init(viewModel: PXOfflineMethodsViewModel, callbackConfirm: @escaping ((PXPaymentData, Bool) -> Void), callbackUpdatePaymentOption: @escaping ((PaymentMethodOption) -> Void), finishButtonAnimation: @escaping (() -> Void), callbackFinishCheckout: @escaping (() -> Void)) {
         self.viewModel = viewModel
@@ -67,8 +72,19 @@ final class PXOfflineMethodsViewController: MercadoPagoUIViewController {
     }
 
     func render() {
-        view.backgroundColor = ThemeManager.shared.whiteColor()
-
+        view.layer.borderWidth = Constants.viewBorderWidth
+        view.layer.borderColor = UIColor.Andes.graySolid070.cgColor
+        view.layer.cornerRadius = 10
+        view.backgroundColor = UIColor.Andes.white
+        
+        tableView.layer.cornerRadius = 10
+        tableView.layer.masksToBounds = true
+        
+        if #available(iOS 12.0, *) {
+            view.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+            tableView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        }
+        
         let footerView = getFooterView()
         view.addSubview(footerView)
 
@@ -91,7 +107,7 @@ final class PXOfflineMethodsViewController: MercadoPagoUIViewController {
         NSLayoutConstraint.activate([
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.topAnchor.constraint(equalTo: view.topAnchor),
+            tableView.topAnchor.constraint(equalTo: view.topAnchor, constant: PXLayout.L_MARGIN),
             tableView.bottomAnchor.constraint(equalTo: footerView.topAnchor)
         ])
         tableView.reloadData()
@@ -321,10 +337,24 @@ extension PXOfflineMethodsViewController: UITableViewDelegate, UITableViewDataSo
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let title = viewModel.headerTitleForSection(section)
         let view = UIView()
-        view.backgroundColor = .white
+        view.backgroundColor = UIColor.Andes.white
+        view.layer.cornerRadius = Constants.viewCornerRadius
+        
+        if #available(iOS 12.0, *) {
+            view.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        }
+        
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.attributedText = title?.getAttributedString(fontSize: PXLayout.XXS_FONT)
+        
+        if title?.weight == nil {
+            label.text = title?.message
+            label.font = UIFont.ml_semiboldSystemFont(ofSize: PXLayout.M_FONT)
+            label.textColor = UIColor.Andes.gray900
+        } else {
+            label.attributedText = title?.getAttributedString(fontSize: PXLayout.M_FONT)
+        }
+
         view.addSubview(label)
 
         NSLayoutConstraint.activate([

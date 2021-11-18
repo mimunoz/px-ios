@@ -255,6 +255,13 @@ final class PXLayout: NSObject {
         let availableScreenHeight = screenHeight - topBarHeight
         return availableScreenHeight * percent / 100
     }
+    
+    static func getAvailabelScreenHeightWithStatusBarOnly(in viewController: UIViewController, applyingMarginFactor percent: CGFloat = 100) -> CGFloat {
+        let screenHeight = getScreenHeight()
+        let topBarHeight = UIApplication.shared.statusBarFrame.size.height
+        let availableScreenHeight = screenHeight - topBarHeight
+        return availableScreenHeight * percent / 100
+    }
 
     static func getScreenHeight(applyingMarginFactor percent: CGFloat = 100) -> CGFloat {
         let screenSize = UIScreen.main.bounds

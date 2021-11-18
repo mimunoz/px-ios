@@ -50,6 +50,7 @@ struct PXInitFeatures: Codable {
     let customTaxesCharges: Bool
     let cardsCustomTaxesCharges: Bool
     let taxableCharges: Bool
+    let styleVersion: String
     let threedsSdkVersion: String
 
     init(
@@ -63,6 +64,7 @@ struct PXInitFeatures: Codable {
         customTaxesCharges: Bool = true,
         cardsCustomTaxesCharges: Bool = true,
         taxableCharges: Bool = true,
+        styleVersion: String = "v1",
         threedsSdkVersion: String = "v1") {
         self.oneTap = oneTap
         self.split = split
@@ -74,6 +76,7 @@ struct PXInitFeatures: Codable {
         self.customTaxesCharges = customTaxesCharges
         self.cardsCustomTaxesCharges = cardsCustomTaxesCharges
         self.taxableCharges = taxableCharges
+        self.styleVersion = styleVersion
         self.threedsSdkVersion = threedsSdkVersion
     }
 
@@ -88,6 +91,7 @@ struct PXInitFeatures: Codable {
         case customTaxesCharges = "custom_taxes_charges"
         case cardsCustomTaxesCharges = "cards_custom_taxes_charges"
         case taxableCharges = "taxable_charges"
+        case styleVersion = "style_version"
         case threedsSdkVersion = "threeds_sdk_version"
     }
 }

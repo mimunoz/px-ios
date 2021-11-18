@@ -39,7 +39,7 @@ class PXOfflineMethodsSheetViewController: SheetViewController {
     private func setupTotalView() {
         let totalView = UIView()
         totalView.translatesAutoresizingMaskIntoConstraints = false
-        totalView.backgroundColor = ThemeManager.shared.navigationBar().backgroundColor
+        totalView.backgroundColor = .clear
         totalView.alpha = 0.0
 
         view.addSubview(totalView)
@@ -53,8 +53,9 @@ class PXOfflineMethodsSheetViewController: SheetViewController {
 
         let totalLabel = UILabel()
         totalLabel.translatesAutoresizingMaskIntoConstraints = false
-        totalLabel.attributedText = viewModel.getTotalTitle().getAttributedString(fontSize: PXLayout.M_FONT, textColor: ThemeManager.shared.navigationBar().getTintColor())
+        totalLabel.attributedText = viewModel.getTotalTitle().getAttributedString(fontSize: PXLayout.S_FONT, textColor: UIColor.Andes.gray900)
         totalLabel.textAlignment = .right
+        totalLabel.backgroundColor = UIColor.Andes.white
 
         totalView.addSubview(totalLabel)
 
@@ -64,8 +65,9 @@ class PXOfflineMethodsSheetViewController: SheetViewController {
         ])
 
         let closeButton = UIButton(type: .custom)
-        let closeImage = ResourceManager.shared.getImage("result-close-button")?.imageWithOverlayTint(tintColor: ThemeManager.shared.navigationBar().getTintColor())
+        let closeImage = ResourceManager.shared.getImage("result-close-button")?.imageWithOverlayTint(tintColor: UIColor.Andes.gray900)
         closeButton.setImage(closeImage, for: .normal)
+        closeButton.backgroundColor = .white
         closeButton.translatesAutoresizingMaskIntoConstraints = false
         closeButton.add(for: .touchUpInside) { [weak self] in
             PXFeedbackGenerator.mediumImpactFeedback()

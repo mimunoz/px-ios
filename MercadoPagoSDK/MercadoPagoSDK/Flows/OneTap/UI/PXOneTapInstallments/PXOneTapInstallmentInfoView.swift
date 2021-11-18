@@ -49,6 +49,7 @@ extension PXOneTapInstallmentInfoView {
         pagerView.interitemSpacing = PXCardSliderSizeManager.interItemSpace
         pagerView.decelerationDistance = 1
         pagerView.itemSize = CGSize(width: width, height: PXOneTapInstallmentInfoView.DEFAULT_ROW_HEIGHT)
+        pagerView.backgroundColor = UIColor.Andes.graySolid040
     }
 }
 
@@ -79,6 +80,7 @@ extension PXOneTapInstallmentInfoView: FSPagerViewDataSource {
         }
 
         let label = buildLabel(itemModel.text, nil, .left)
+        label.textColor = UIColor.Andes.gray900
         let accessibilityMessage = getAccessibilityMessage(itemModel.text.string, benefitsText)
         cell.setAccessibilityMessage(accessibilityMessage)
         if index == 0 {

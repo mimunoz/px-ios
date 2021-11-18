@@ -8,7 +8,11 @@ final class PXDiscountDetailViewController: MercadoPagoUIViewController {
     init(amountHelper: PXAmountHelper, discountDescription: PXDiscountDescriptionViewModel) {
         self.amountHelper = amountHelper
         self.discountDescription = discountDescription
+        
         super.init(nibName: nil, bundle: nil)
+        
+        super.shouldHideNavigationBar = true
+        super.shouldShowBackArrow = false
     }
 
     override public func viewDidAppear(_ animated: Bool) {

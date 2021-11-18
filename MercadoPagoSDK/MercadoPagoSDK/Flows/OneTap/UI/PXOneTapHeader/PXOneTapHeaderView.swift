@@ -5,7 +5,7 @@ enum OneTapHeaderAnimationDirection: Int {
     case vertical
 }
 
-class PXOneTapHeaderView: UIStackView {
+class PXOneTapHeaderView: UIStackView, PXOneTapHeaderMerchantViewDelegate {
     private var model: PXOneTapHeaderViewModel {
         willSet(newModel) {
             updateLayout(newModel: newModel, oldModel: model)
@@ -97,7 +97,7 @@ private extension PXOneTapHeaderView {
             }
         case .extraLarge:
             // On extra-large devices always use vertical header
-            return false
+            return pxOneTapContext.hasInstallments && pxOneTapContext.hasSplit && pxOneTapContext.hasCharges && pxOneTapContext.hasDiscounts
         default:
             return true
         }
@@ -168,7 +168,7 @@ private extension PXOneTapHeaderView {
     func render() {
         removeAllSubviews()
         
-        backgroundColor = ThemeManager.shared.navigationBar().backgroundColor
+        backgroundColor = UIColor.Andes.white
 
         self.axis = .vertical
         self.alignment = .fill
@@ -183,24 +183,23 @@ private extension PXOneTapHeaderView {
         merchantView.addGestureRecognizer(headerTapGesture)
 
         self.merchantView = merchantView
+        self.merchantView?.delegate = self
         self.addArrangedSubview(merchantView)
 
         PXLayout.matchWidth(ofView: merchantView).isActive = true
         PXLayout.centerHorizontally(view: merchantView).isActive = true
         
-        merchantView.heightAnchor.constraint(greaterThanOrEqualToConstant: 50.0).isActive = true
-        
         // Add Summary
         let summaryView = PXOneTapSummaryView(data: model.data, delegate: self, splitMoney: model.splitConfiguration != nil)
         
         self.summaryView = summaryView
-
+        
+        summaryView.removeMargins()
+        
         addArrangedSubview(summaryView)
         
         PXLayout.matchWidth(ofView: summaryView).isActive = true
         PXLayout.centerHorizontally(view: summaryView).isActive = true
-        
-        summaryView.heightAnchor.constraint(greaterThanOrEqualToConstant: 1.0).isActive = true
         
         // Add SplitPaymentView
         let splitPaymentView = PXOneTapSplitPaymentView(splitConfiguration: model.splitConfiguration) { (isOn, isUserSelection) in
@@ -208,12 +207,21 @@ private extension PXOneTapHeaderView {
         }
 
         self.splitPaymentView = splitPaymentView
+        splitPaymentView.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            splitPaymentView.heightAnchor.constraint(equalToConstant: PXLayout.XXXL_MARGIN)
+        ])
 
         addArrangedSubview(splitPaymentView)
         
         PXLayout.matchWidth(ofView: splitPaymentView).isActive = true
         self.splitPaymentView?.isHidden = model.splitConfiguration == nil
 
+    }
+    
+    internal func tappedBackButton() {
+        delegate?.didTapBackButton()
     }
 }
 

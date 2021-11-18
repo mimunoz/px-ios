@@ -2,6 +2,12 @@ import Foundation
 import MLCardForm
 
 class PXOneTapViewControllerTransition: NSObject, UIViewControllerAnimatedTransitioning {
+    
+    struct Offsets {
+        static let small: CGFloat = 65
+        static let large: CGFloat = 88
+    }
+    
     //make this zero for now and see if it matters when it comes time to make it interactive
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
         return 1.0
@@ -235,8 +241,11 @@ class PXOneTapViewControllerTransition: NSObject, UIViewControllerAnimatedTransi
         cardSnapshot.transform = CGAffineTransform.identity.scaledBy(x: 0.6, y: 0.6)
         let startOrigin = securityCodeVC.cardContainerView.superview?.convert(securityCodeVC.cardContainerView.frame.origin, to: nil) ?? CGPoint.zero
         cardSnapshot.frame.origin = startOrigin
+        
         var endOrigin = cell.superview?.convert(cell.frame.origin, to: nil) ?? CGPoint.zero
-        endOrigin.y -= navigationSnapshot?.frame.size.height ?? 0
+        
+        endOrigin.y -= navigationSnapshot?.frame.height ?? 0
+        endOrigin.y -= oneTapVC.navigationController?.navigationBar.frame.height ?? 0
 
         securityCodeVC.view.removeFromSuperview()
         containerView.addSubview(oneTapVC.view)

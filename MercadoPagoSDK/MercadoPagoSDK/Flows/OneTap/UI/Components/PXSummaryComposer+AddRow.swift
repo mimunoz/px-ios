@@ -4,11 +4,11 @@ extension PXSummaryComposer {
     func chargesRow() -> PXOneTapSummaryRowData {
         let amount = getChargesAmount()
         let shouldDisplayHelper = shouldDisplayChargesHelp
-        let helperImage = shouldDisplayHelper ? helpIcon(color: summaryColor()) : nil
+        let helperImage = shouldDisplayHelper ? helpIcon(color: UIColor.Andes.blueMP500) : nil
         let amountToShow = Utils.getAmountFormated(amount: amount, forCurrency: currency)
         let defaultChargeText = "Cargos".localized
         let chargeText = getChargesLabel() ?? additionalInfoSummary?.charges ?? defaultChargeText
-        let row = PXOneTapSummaryRowData(title: chargeText, value: amountToShow, highlightedColor: summaryColor(), alpha: textTransparency, isTotal: false, image: helperImage, type: .charges)
+        let row = PXOneTapSummaryRowData(title: chargeText, value: amountToShow, highlightedColor: UIColor.Andes.gray550, alpha: textTransparency, isTotal: false, image: helperImage, type: .charges)
         return row
     }
 

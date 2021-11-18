@@ -57,7 +57,7 @@ internal class MercadoPagoUIViewController: UIViewController, UIGestureRecognize
         super.viewWillDisappear(animated)
 
         if shouldHideNavigationBar {
-            navigationController?.setNavigationBarHidden(false, animated: false)
+            navigationController?.setNavigationBarHidden(true, animated: false)
         }
     }
 
@@ -71,7 +71,9 @@ internal class MercadoPagoUIViewController: UIViewController, UIGestureRecognize
             if titleDict.count > 0 {
                 self.navigationController!.navigationBar.titleTextAttributes = titleDict
             }
+            
             self.navigationItem.hidesBackButton = true
+            
             self.navigationController?.navigationBar.tintColor = navBarBackgroundColor
             self.navigationController?.navigationBar.barTintColor = navBarBackgroundColor
             self.navigationController?.navigationBar.removeBottomLine()
@@ -159,7 +161,7 @@ internal class MercadoPagoUIViewController: UIViewController, UIGestureRecognize
         return false
     }
 
-    func showNavBar() {
+    func showNavBar() {        
         if navigationController != nil {
             self.title = self.getNavigationBarTitle()
             self.navigationController?.navigationBar.setBackgroundImage(nil, for: UIBarMetrics.default)

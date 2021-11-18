@@ -8,7 +8,7 @@ final class PXOneTapInstallmentsSelectorCell: UITableViewCell {
         self.data = data
         self.selectionStyle = .default
         let selectedView = UIView()
-        selectedView.backgroundColor = #colorLiteral(red: 0.96, green: 0.96, blue: 0.96, alpha: 1.0)
+        selectedView.backgroundColor = UIColor.Andes.graySolid070
         self.selectedBackgroundView = selectedView
         
         let selectedIndicatorView = PXCheckbox(selected: data.isSelected)

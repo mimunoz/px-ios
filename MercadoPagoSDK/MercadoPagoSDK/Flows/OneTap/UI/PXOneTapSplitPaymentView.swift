@@ -1,6 +1,6 @@
 import UIKit
 
-class PXOneTapSplitPaymentView: PXComponentView {
+class PXOneTapSplitPaymentView: UIView {
     let callback : ((_ isOn: Bool, _ isUserSelection: Bool) -> Void)
     var splitConfiguration: PXSplitConfiguration?
     var splitPaymentSwitch: UISwitch?
@@ -11,7 +11,7 @@ class PXOneTapSplitPaymentView: PXComponentView {
     init(splitConfiguration: PXSplitConfiguration?, callback : @escaping ((_ isOn: Bool, _ isUserSelection: Bool) -> Void)) {
         self.splitConfiguration = splitConfiguration
         self.callback = callback
-        super.init()
+        super.init(frame: .zero)
         render()
     }
 
@@ -53,7 +53,7 @@ class PXOneTapSplitPaymentView: PXComponentView {
 
     private func render() {
         removeAllSubviews()
-        self.backgroundColor = .white
+        self.backgroundColor = UIColor.Andes.graySolid040
         let splitSwitch = UISwitch()
         self.splitPaymentSwitch = splitSwitch
         splitSwitch.addTarget(self, action: #selector(PXOneTapSplitPaymentView.switchStateChanged(_:)), for: UIControl.Event.valueChanged)
@@ -83,13 +83,13 @@ class PXOneTapSplitPaymentView: PXComponentView {
         } else {
             label.attributedText = "".toAttributedString()
         }
-
+        
         let separatorView = UIView()
         separatorView.translatesAutoresizingMaskIntoConstraints = false
         self.separatorView = separatorView
-        separatorView.backgroundColor = UIColor.black.withAlphaComponent(0.1)
+        separatorView.backgroundColor = UIColor.Andes.gray450
         self.addSubview(separatorView)
-        PXLayout.setHeight(owner: separatorView, height: 1).isActive = true
+        PXLayout.setHeight(owner: separatorView, height: 1.5).isActive = true
         PXLayout.pinBottom(view: separatorView).isActive = true
         PXLayout.pinLeft(view: separatorView, withMargin: PXLayout.L_MARGIN).isActive = true
         PXLayout.pinRight(view: separatorView, withMargin: PXLayout.L_MARGIN).isActive = true
@@ -108,9 +108,9 @@ class PXOneTapSplitPaymentView: PXComponentView {
     private func getSplitMessage(splitConfiguration: PXSplitConfiguration) -> NSMutableAttributedString {
         let amount: String = Utils.getAmountFormated(amount: splitConfiguration.getSplitAmountToPay(), forCurrency: SiteManager.shared.getCurrency())
 
-        let attributes: [NSAttributedString.Key: AnyObject] = [NSAttributedString.Key.font: Utils.getSemiBoldFont(size: PXLayout.XS_FONT), NSAttributedString.Key.foregroundColor: ThemeManager.shared.boldLabelTintColor()]
+        let attributes: [NSAttributedString.Key: AnyObject] = [NSAttributedString.Key.font: Utils.getSemiBoldFont(size: PXLayout.XXS_FONT), NSAttributedString.Key.foregroundColor: UIColor.Andes.gray900]
 
-        let messageAttributes: [NSAttributedString.Key: AnyObject] = [NSAttributedString.Key.font: Utils.getFont(size: PXLayout.XS_FONT), NSAttributedString.Key.foregroundColor: ThemeManager.shared.greyColor()]
+        let messageAttributes: [NSAttributedString.Key: AnyObject] = [NSAttributedString.Key.font: Utils.getFont(size: PXLayout.XXS_FONT), NSAttributedString.Key.foregroundColor: UIColor.Andes.gray550]
 
         let messageAttributed = NSAttributedString(string: splitConfiguration.secondaryPaymentMethod?.message ?? "", attributes: messageAttributes)
 

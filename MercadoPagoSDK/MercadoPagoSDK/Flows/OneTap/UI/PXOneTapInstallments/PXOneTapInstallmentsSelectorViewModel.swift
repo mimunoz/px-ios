@@ -30,7 +30,7 @@ final class PXOneTapInstallmentsSelectorViewModel {
             }
             let data = getDataFor(payerCost: payerCost, isSelected: isSelected)
             cell.updateData(data)
-            cell.backgroundColor = .white
+            cell.backgroundColor = UIColor.Andes.graySolid040
             return cell
         }
         return cell
@@ -53,8 +53,8 @@ final class PXOneTapInstallmentsSelectorViewModel {
     }
 
     func getTotalAmountFormetted(payerCost: PXPayerCost, currency: PXCurrency, showDescription: Bool) -> NSAttributedString? {
-        let fontSize = PXLayout.XS_FONT
-        let fontColor = ThemeManager.shared.greyColor()
+        let fontSize = PXLayout.XXS_FONT
+        let fontColor = UIColor.Andes.gray550
         let attributes: [NSAttributedString.Key: AnyObject] = [
             NSAttributedString.Key.font: Utils.getFont(size: fontSize),
             NSAttributedString.Key.foregroundColor: fontColor
@@ -70,8 +70,8 @@ final class PXOneTapInstallmentsSelectorViewModel {
     }
 
     func getRowTitle(payerCost: PXPayerCost, currency: PXCurrency) -> NSAttributedString {
-        let fontSize = PXLayout.XS_FONT
-        let fontColor = UIColor.black
+        let fontSize = PXLayout.XXS_FONT
+        let fontColor = UIColor.Andes.gray900
         let attributes: [NSAttributedString.Key: AnyObject] = [
             NSAttributedString.Key.font: Utils.getSemiBoldFont(size: fontSize),
             NSAttributedString.Key.foregroundColor: fontColor,

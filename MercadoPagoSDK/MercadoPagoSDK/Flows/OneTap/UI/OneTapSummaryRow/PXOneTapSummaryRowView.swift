@@ -11,7 +11,7 @@ class PXOneTapSummaryRowView: UIView {
     }
     
     static let DEFAULT_HEIGHT: CGFloat = 16
-    static let TOTAL_ROW_DEFAULT_HEIGHT: CGFloat = 52
+    static let TOTAL_ROW_DEFAULT_HEIGHT: CGFloat = 43
     static let MARGIN: CGFloat = 8
     private var data: PXOneTapSummaryRowData
     
@@ -40,6 +40,10 @@ class PXOneTapSummaryRowView: UIView {
         self.data = data
         super.init(frame: CGRect.zero)
         render()
+    }
+    
+    private struct Constants {
+        static let briefWidth: CGFloat = 250
     }
     
     @available(*, unavailable)
@@ -87,7 +91,7 @@ class PXOneTapSummaryRowView: UIView {
             
             titleLabel.text = data.title
             titleLabel.textColor = data.highlightedColor
-            titleLabel.font = data.isTotal ? UIFont.ml_regularSystemFont(ofSize: PXLayout.S_FONT) : UIFont.ml_regularSystemFont(ofSize: PXLayout.XXS_FONT)
+            titleLabel.font = data.isTotal ? UIFont.ml_semiboldSystemFont(ofSize: PXLayout.S_FONT) : UIFont.ml_regularSystemFont(ofSize: PXLayout.XS_FONT)
             
             if iconImageView == nil, data.image != nil {
                 buildAndAddIconImageView()
@@ -97,7 +101,7 @@ class PXOneTapSummaryRowView: UIView {
             
             valueLabel.text = data.value
             valueLabel.textColor = data.highlightedColor
-            valueLabel.font = data.isTotal ? UIFont.ml_semiboldSystemFont(ofSize: PXLayout.S_FONT) : UIFont.ml_regularSystemFont(ofSize: PXLayout.XXS_FONT)
+            valueLabel.font = data.isTotal ? UIFont.ml_semiboldSystemFont(ofSize: PXLayout.S_FONT) : UIFont.ml_regularSystemFont(ofSize: PXLayout.XS_FONT)
         } else {
             clearIconImageView()
             titleLabel.attributedText = data.getDescriptionText()
@@ -151,7 +155,7 @@ class PXOneTapSummaryRowView: UIView {
         let shouldAnimate = data.isTotal ? false : true
         
         if data.isTotal {
-            self.backgroundColor = ThemeManager.shared.navigationBar().backgroundColor
+            self.backgroundColor = UIColor.Andes.white
         }
         
         self.translatesAutoresizingMaskIntoConstraints = false
@@ -224,7 +228,7 @@ private extension PXOneTapSummaryRowView {
             titleLabel.heightAnchor.constraint(equalToConstant: 16),
             verStackView.topAnchor.constraint(equalTo: topAnchor),
             verStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: PXLayout.L_MARGIN),
-            verStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -100),
+            verStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: PXLayout.L_MARGIN),
             verStackView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
         
@@ -265,16 +269,19 @@ private extension PXOneTapSummaryRowView {
         brief.translatesAutoresizingMaskIntoConstraints = false
         brief.textAlignment = .left
         brief.numberOfLines = 2
+        brief.lineBreakMode = .byWordWrapping
         brief.attributedText = data.getBriefText()
         
         let containerView = UIView()
         containerView.addSubview(brief)
+        
         if let verStackView = verStackView {
             verStackView.addArrangedSubview(containerView)
         }
+        
         NSLayoutConstraint.activate([
             brief.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
-            brief.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
+            brief.widthAnchor.constraint(equalToConstant: Constants.briefWidth),
             brief.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 5)
         ])
     }

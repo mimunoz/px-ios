@@ -121,7 +121,7 @@
 "one_tap_discount_disclaimer" = "com limite de desconto";
 "total_row_title_percent_off" = "{0} OFF";
 "total_row_title_amount_off" = "{0} OFF";
-"total_row_title_default" = "Total a pagar";
+"total_row_title_default" = "Total";
 "total_row_consumed_discount" = "Você alcançou o limite do desconto";
 "modal_title_consumed_discount" = "Você atingiu o limite";
 "modal_content_consumed_discount" = "Este desconto não é aplicável, porque você atingiu o limite.";

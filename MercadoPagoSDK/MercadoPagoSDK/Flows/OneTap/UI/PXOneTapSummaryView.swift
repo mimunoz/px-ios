@@ -37,7 +37,7 @@ class PXOneTapSummaryView: PXComponentView {
     func render() {
         self.removeAllSubviews()
         self.pinContentViewToBottom()
-        self.backgroundColor = ThemeManager.shared.navigationBar().backgroundColor
+        self.backgroundColor = UIColor.Andes.white
 
         var offset: CGFloat = 0
         
@@ -244,13 +244,13 @@ class PXOneTapSummaryView: PXComponentView {
 
             //View Constraints
             self.addSubview(rowView)
-            let constraint = PXLayout.pinBottom(view: rowView, withMargin: -constraintConstant)
+            let constraint = PXLayout.pinBottom(view: rowView, withMargin: -(constraintConstant + 10))
 
             // Update constraint so as to fix animation when discount row with brief and charges row are shown
             if rowData.type == PXOneTapSummaryRowView.RowType.discount,
                 rowData.rowHasBrief(),
                 newRowsData.first?.type == PXOneTapSummaryRowView.RowType.charges {
-                constraint.constant = -(PXOneTapSummaryRowView.TOTAL_ROW_DEFAULT_HEIGHT + 24)
+                constraint.constant = -(PXOneTapSummaryRowView.TOTAL_ROW_DEFAULT_HEIGHT + 14)
             }
 
             PXLayout.centerHorizontally(view: rowView).isActive = true
@@ -311,7 +311,7 @@ private extension PXOneTapSummaryView {
         // Animation with discount row from 2 to 3 rows
         var distanceArray = [CGFloat]()
         if rowsToAdd?.count == 1 {
-            let rowDistance: CGFloat = UIDevice.isSmallDevice() ? PXOneTapSummaryRowView.TOTAL_ROW_DEFAULT_HEIGHT - 4 + (PXOneTapSummaryRowView.DEFAULT_HEIGHT * 2) + (PXOneTapSummaryRowView.MARGIN * 2) : PXOneTapSummaryRowView.TOTAL_ROW_DEFAULT_HEIGHT + (PXOneTapSummaryRowView.DEFAULT_HEIGHT * 2) + (PXOneTapSummaryRowView.MARGIN * 2)
+            let rowDistance: CGFloat = UIDevice.isSmallDevice() ? PXOneTapSummaryRowView.TOTAL_ROW_DEFAULT_HEIGHT - 4 + (PXOneTapSummaryRowView.DEFAULT_HEIGHT * 2) + (PXOneTapSummaryRowView.MARGIN * 2) : PXOneTapSummaryRowView.TOTAL_ROW_DEFAULT_HEIGHT + (PXOneTapSummaryRowView.DEFAULT_HEIGHT * 2) + (PXOneTapSummaryRowView.MARGIN)
             if let discountRow = rowsToMove?.first(where: { $0.data.type == PXOneTapSummaryRowView.RowType.discount }) {
                 distanceArray.append(-rowDistance)
                 if let newDiscountRowData = newData.first(where: { $0.type == PXOneTapSummaryRowView.RowType.discount }) {

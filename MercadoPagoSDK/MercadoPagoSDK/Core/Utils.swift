@@ -142,31 +142,31 @@ internal class Utils {
     }
 
     class func getFont(size: CGFloat) -> UIFont {
-        return getFontWithSize(font: ThemeManager.shared.getFontName(), size: size)
+        return getFontWithSize(font: ThemeManager.shared.getFontName(), size: size, weight: .regular)
     }
 
     class func getLightFont(size: CGFloat) -> UIFont {
-        return getFontWithSize(font: ThemeManager.shared.getLightFontName(), size: size)
+        return getFontWithSize(font: ThemeManager.shared.getLightFontName(), size: size, weight: .light)
     }
 
     class func getSemiBoldFont(size: CGFloat) -> UIFont {
-        return getFontWithSize(font: ThemeManager.shared.getSemiBoldFontName(), size: size, weight: UIFont.Weight.semibold)
+        return getFontWithSize(font: ThemeManager.shared.getSemiBoldFontName(), size: size, weight: .semibold)
     }
 
     private class func getFontWithSize(font: String, size: CGFloat, weight: UIFont.Weight? = nil) -> UIFont {
         let fontNameToIgnore: String = "Times New Roman"
-        let fallBackFontName: String = "Helvetica"
+
         if let thisFont = UIFont(name: font, size: size) {
             if thisFont.familyName != fontNameToIgnore {
                 return thisFont
             } else {
-                return UIFont(name: fallBackFontName, size: size) ?? getFallbackFont(size)
+                return getFallbackFont(size, weight: weight)
             }
         }
-        return getFallbackFont(size)
+        return getFallbackFont(size, weight: weight)
     }
 
-    private class func getFallbackFont(_ size: CGFloat, weight: UIFont.Weight?=nil) -> UIFont {
+    private class func getFallbackFont(_ size: CGFloat, weight: UIFont.Weight? = nil) -> UIFont {
         if let targetWeight = weight {
             return UIFont.systemFont(ofSize: size, weight: targetWeight)
         }

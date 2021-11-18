@@ -3,7 +3,6 @@ import UIKit
 final class PXOneTapInstallmentsSelectorView: PXComponentView {
     private var model: PXOneTapInstallmentsSelectorViewModel
     let tableView = UITableView()
-    let tableViewTopSeparator = UIView()
     let shadowView = UIImageView(image: ResourceManager.shared.getImage("one-tap-installments-shadow"))
     weak var delegate: PXOneTapInstallmentsSelectorProtocol?
     var tableViewHeightConstraint: NSLayoutConstraint?
@@ -30,7 +29,7 @@ extension PXOneTapInstallmentsSelectorView {
         pinContentViewToTop()
         addSubviewToBottom(tableView)
         backgroundColor = .clear
-        tableView.backgroundColor = .white
+        tableView.backgroundColor = UIColor.Andes.graySolid040
         tableViewHeightConstraint = PXLayout.setHeight(owner: tableView, height: 125)
         tableViewHeightConstraint?.isActive = true
         PXLayout.pinLeft(view: tableView).isActive = true
@@ -39,13 +38,6 @@ extension PXOneTapInstallmentsSelectorView {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.tableFooterView = UIView()
-        tableViewTopSeparator.translatesAutoresizingMaskIntoConstraints = false
-        tableViewTopSeparator.backgroundColor = tableView.separatorColor
-        tableView.tableHeaderView = tableViewTopSeparator
-        PXLayout.matchWidth(ofView: tableViewTopSeparator, toView: tableView).isActive = true
-        PXLayout.centerHorizontally(view: tableViewTopSeparator, to: tableView).isActive = true
-        PXLayout.pinTop(view: tableViewTopSeparator, to: tableView).isActive = true
-        PXLayout.setHeight(owner: tableViewTopSeparator, height: 0.5).isActive = true
         tableView.tableHeaderView?.layoutIfNeeded()
         tableView.reloadData()
         

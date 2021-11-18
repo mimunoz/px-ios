@@ -42,17 +42,17 @@ extension PXOneTapSummaryRowData {
     }
 
     func getAmountText() -> NSAttributedString? {
-        return discountOverview?.amount.getAttributedString(fontSize: PXLayout.XXS_FONT, textColor: highlightedColor, backgroundColor: .clear)
+        return discountOverview?.amount.getAttributedString(fontSize: PXLayout.XXS_FONT, textColor: UIColor.Andes.green600, backgroundColor: .clear)
     }
 
     func getDescriptionText() -> NSAttributedString? {
         guard let description = discountOverview?.description else { return nil }
-        return getAttributedText(array: description, textColor: highlightedColor, fontSize: PXLayout.XXS_FONT)
+        return getAttributedText(array: description, textColor: UIColor.Andes.gray550, fontSize: PXLayout.XXS_FONT)
     }
 
     func getBriefText() -> NSAttributedString? {
         guard let brief = discountOverview?.brief else { return nil }
-        return getAttributedText(array: brief, textColor: briefColor, fontSize: PXLayout.XXXS_FONT)
+        return getAttributedText(array: brief, textColor: UIColor.Andes.gray550, fontSize: PXLayout.XXXS_FONT)
     }
 
     func getIconUrl() -> String? {
