@@ -1,3 +1,8 @@
+# v4.50.0
+🚀Private Release - 4.50.0 date: 18/11/2021 🚀
+- Summary restyling support
+- ThreeDS SDK v1 support
+
 # v4.49.2
 🚀Private Release - 4.49.2 date: 28/10/2021 🚀
 - Fixed error screen when there is no payer payment methods but offline methods
