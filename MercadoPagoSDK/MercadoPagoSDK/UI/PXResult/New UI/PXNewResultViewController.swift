@@ -110,8 +110,9 @@ class PXNewResultViewController: MercadoPagoUIViewController {
     }
 
     private func setupScrollView() {
-        view.removeAllSubviews()
-        contentView.subviews.forEach { $0.removeFromSuperview() }
+        
+        view.clearSubViews()
+        
         view.addSubview(scrollView)
         view.backgroundColor = viewModel.getHeaderColor()
         scrollView.backgroundColor = .white
@@ -134,6 +135,9 @@ class PXNewResultViewController: MercadoPagoUIViewController {
     }
 
     private func renderContentView() {
+        
+        contentView.clearSubViews()
+        
         //CONTENT VIEW
         contentView.backgroundColor = .white
         contentView.translatesAutoresizingMaskIntoConstraints = false
