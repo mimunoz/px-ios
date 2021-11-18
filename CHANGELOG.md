@@ -1,5 +1,5 @@
 # v4.50.1
-🚀Private Release - 4.50.0 date: 18/11/2021 🚀
+🚀Private Release - 4.50.1 date: 18/11/2021 🚀
 - Fixed congrats screen repeated UX objects allocation each viewWillAppear() / viewDidAppear()
 
 # v4.50.0
