@@ -1,7 +1,6 @@
 # v4.50.2
 🚀Private Release - 4.50.2 date: 19/11/2021 🚀
 - Remove ThreeDS SDK v1 support
-- Fixed congrats screen repeated UX objects allocation each viewWillAppear() / viewDidAppear()
 
 # v4.50.0
 🚀Private Release - 4.50.0 date: 18/11/2021 🚀
