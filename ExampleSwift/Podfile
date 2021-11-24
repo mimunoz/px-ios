@@ -3,7 +3,7 @@ source 'https://cdn.cocoapods.org/'
 # Uncomment the next line to define a global platform for your project
 platform :ios, '10.0'
 
-# This plugin removes input and output files from 'Copy Pods Resources' build phases
+# This removes input and output files from 'Copy Pods Resources' build phases
 # because this issue https://github.com/CocoaPods/CocoaPods/issues/7042
 plugin 'cocoapods-clean_build_phases_scripts'
 
@@ -13,4 +13,5 @@ target 'ExampleSwift' do
 
   # Pods for ExampleSwift
   pod 'MercadoPagoSDKV4', :path => '../', :testspecs => ['MercadoPagoSDKTests']
+  pod 'SwiftLint', '~> 0.45.0'
 end

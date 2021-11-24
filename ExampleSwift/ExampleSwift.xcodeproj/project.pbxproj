@@ -167,6 +167,7 @@
 				23EDA1312147DFC90085CA7A /* Resources */,
 				F1FA247132DA0A1B83FD456D /* [CP] Embed Pods Frameworks */,
 				D462B6759FF0A41393585416 /* [CP] Copy Pods Resources */,
+				EB16643727356E4700445899 /* Swiftlint */,
 			);
 			buildRules = (
 			);
@@ -261,6 +262,24 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ExampleSwift/Pods-ExampleSwift-resources.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		EB16643727356E4700445899 /* Swiftlint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = Swiftlint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run SwiftLint\nSTART_DATE=$(date +\"%s\")\nSWIFT_LINT=\"${PODS_ROOT}/SwiftLint/swiftlint\"\n\nif which swiftlint >/dev/null; then\n    echo \"SwiftLint version: $(swiftlint version)\"\n    # Run for both staged and unstaged files\n    git diff --name-only --relative --diff-filter=d -- '*.swift' | while read filename; do \"$SWIFT_LINT\" lint --lenient --path \"${filename}\"; done\n    git diff --cached --name-only --relative --diff-filter=d -- '*.swift' | while read filename; do \"$SWIFT_LINT\" lint --lenient --path \"${filename}\"; done\nelse\n    echo \"swiftlint is not installed.\"\n    exit 0\nfi\n\nEND_DATE=$(date +\"%s\")\n\nDIFF=$(($END_DATE - $START_DATE))\necho \"SwiftLint took $(($DIFF / 60)) minutes and $(($DIFF % 60)) seconds to complete.\"\n";
 		};
 		F1FA247132DA0A1B83FD456D /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
