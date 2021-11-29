@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 ### Added
+- Add the checkout_type field to the checkout request
 - fix the infinite alloc/repeat of congrats content on each viewWillAppear()
 - Added danger and swiftlint to the project
 

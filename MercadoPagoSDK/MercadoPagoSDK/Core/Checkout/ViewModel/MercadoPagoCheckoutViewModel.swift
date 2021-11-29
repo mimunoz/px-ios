@@ -19,6 +19,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
     internal var publicKey: String
     internal var privateKey: String?
+    internal var checkoutType: String?
 
     var lifecycleProtocol: PXLifeCycleProtocol?
 
@@ -97,16 +98,17 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
     lazy var pxNavigationHandler: PXNavigationHandler = PXNavigationHandler.getDefault()
 
-    init(checkoutPreference: PXCheckoutPreference, publicKey: String, privateKey: String?, advancedConfig: PXAdvancedConfiguration? = nil, trackingConfig: PXTrackingConfiguration? = nil) {
+    init(checkoutPreference: PXCheckoutPreference, publicKey: String, privateKey: String?, advancedConfig: PXAdvancedConfiguration? = nil, trackingConfig: PXTrackingConfiguration? = nil, checkoutType: String?) {
         self.publicKey = publicKey
         self.privateKey = privateKey
+        self.checkoutType = checkoutType
         self.checkoutPreference = checkoutPreference
 
         if let advancedConfig = advancedConfig {
             self.advancedConfig = advancedConfig
         }
         self.trackingConfig = trackingConfig
-        mercadoPagoServices = MercadoPagoServices(publicKey: publicKey, privateKey: privateKey)
+        mercadoPagoServices = MercadoPagoServices(publicKey: publicKey, privateKey: privateKey, checkoutType: checkoutType)
         super.init()
         if String.isNullOrEmpty(checkoutPreference.id), checkoutPreference.payer != nil {
             paymentData.updatePaymentDataWith(payer: checkoutPreference.getPayer())
@@ -119,7 +121,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     }
 
     public func copy(with zone: NSZone? = nil) -> Any {
-        let copyObj = MercadoPagoCheckoutViewModel(checkoutPreference: self.checkoutPreference, publicKey: publicKey, privateKey: privateKey)
+        let copyObj = MercadoPagoCheckoutViewModel(checkoutPreference: self.checkoutPreference, publicKey: publicKey, privateKey: privateKey, checkoutType: checkoutType)
         copyObj.setNavigationHandler(handler: pxNavigationHandler)
         return copyObj
     }
