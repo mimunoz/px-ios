@@ -1,6 +1,5 @@
-included: # paths to include during linting. `--path` is ignored if present.
-  - ../MercadoPagoSDK
-  - ../ExampleSwift
+excluded: 
+  - ./Pods
 disabled_rules: 
   - custom_rules
 opt_in_rules: 
