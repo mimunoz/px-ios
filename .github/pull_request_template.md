@@ -1,6 +1,6 @@
 <!-- [
     Title template
-    [JIRA-XXX](Added|Changed|Deprecated|Removed|Fixed|Security) - Changelog description of this changes
+    (Added|Changed|Deprecated|Removed|Fixed|Security)[JIRA-XXX] - Changelog description of this changes
 
     The title will be used as the entry in the changelog for this changes. Please take time to write this the best way you can. To write better changelog messages, refer to https://keepachangelog.com/en/1.0.0/
 
@@ -14,13 +14,6 @@
 
 ## What have changed?
 
-
-## Kind of pr:
-
-- [ ] BugFix 
-- [ ] Feature
-- [x] Improvement
-- [ ] Refactor
 
 ## How to test:
 
