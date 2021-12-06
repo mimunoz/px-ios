@@ -3,7 +3,7 @@ import MLBusinessComponents
 import AndesUI
 
 class PXNewResultUtil {
-    //TRACKING
+    // TRACKING
     class func trackScreenAndConversion(viewModel: PXViewModelTrackingDataProtocol) {
         let path = viewModel.getTrackingPath()
         if let path = path {
@@ -14,7 +14,7 @@ class PXNewResultUtil {
         }
     }
 
-    //RECEIPT DATA
+    // RECEIPT DATA
     class func getDataForReceiptView(paymentId: String?) -> PXNewCustomViewData? {
         guard let paymentId = paymentId else {
             return nil
@@ -31,7 +31,7 @@ class PXNewResultUtil {
         return data
     }
 
-    //POINTS DATA
+    // POINTS DATA
     class func getDataForPointsView(points: PXPoints?) -> MLBusinessLoyaltyRingData? {
         guard let points = points else {
             return nil
@@ -40,7 +40,7 @@ class PXNewResultUtil {
         return data
     }
 
-    //DISCOUNTS DATA
+    // DISCOUNTS DATA
     class func getDataForDiscountsView(discounts: PXDiscounts?) -> MLBusinessDiscountBoxData? {
         guard let discounts = discounts else {
             return nil
@@ -57,17 +57,17 @@ class PXNewResultUtil {
         return data
     }
 
-    //DISCOUNTS ACCESSORY VIEW
+    // DISCOUNTS ACCESSORY VIEW
     class func getDataForDiscountsAccessoryViewData(discounts: PXDiscounts?) -> ResultViewData? {
         guard let discounts = discounts else {
             return nil
         }
-        
+
         let dataService = MLBusinessAppDataService()
         if dataService.isMpAlreadyInstalled() {
             let button = AndesButton(text: discounts.discountsAction.label, hierarchy: .quiet, size: .large)
             button.add(for: .touchUpInside) {
-                //open deep link
+                // open deep link
                 PXDeepLinkManager.open(discounts.discountsAction.target)
                 MPXTracker.sharedInstance.trackEvent(event: PXResultTrackingEvents.didTapOnAllDiscounts)
             }
@@ -75,8 +75,8 @@ class PXNewResultUtil {
         } else {
             let downloadAppDelegate = PXDownloadAppData(discounts: discounts)
             let downloadAppView = MLBusinessDownloadAppView(downloadAppDelegate)
-            downloadAppView.addTapAction { (deepLink) in
-                //open deep link
+            downloadAppView.addTapAction { deepLink in
+                // open deep link
                 PXDeepLinkManager.open(deepLink)
                 MPXTracker.sharedInstance.trackEvent(event: PXResultTrackingEvents.didtapOnDownload)
             }
@@ -84,12 +84,12 @@ class PXNewResultUtil {
         }
     }
 
-    //EXPENSE SPLIT DATA
+    // EXPENSE SPLIT DATA
     class func getDataForExpenseSplitView(expenseSplit: PXExpenseSplit) -> MLBusinessActionCardViewData {
         return PXExpenseSplitData(expenseSplitData: expenseSplit)
     }
 
-    //CROSS SELLING VIEW
+    // CROSS SELLING VIEW
     class func getDataForCrossSellingView(crossSellingItems: [PXCrossSellingItem]?) -> [MLBusinessCrossSellingBoxData]? {
         guard let crossSellingItems = crossSellingItems else {
             return nil
@@ -101,13 +101,13 @@ class PXNewResultUtil {
         return data
     }
 
-    //URL logic
-    internal enum PXAutoReturnTypes: String {
+    // URL logic
+    enum PXAutoReturnTypes: String {
         case APPROVED = "approved"
         case ALL = "all"
     }
 
-    internal class func openURL(url: URL, success: @escaping (Bool) -> Void) {
+    class func openURL(url: URL, success: @escaping (Bool) -> Void) {
         if UIApplication.shared.canOpenURL(url) {
             UIApplication.shared.open(url, options: [:], completionHandler: { result in
                 sleep(1)
@@ -121,8 +121,7 @@ class PXNewResultUtil {
 
 // MARK: Payment Method Logic
 extension PXNewResultUtil {
-
-    //ATTRIBUTES FOR DISPLAYING PAYMENT METHOD
+    // ATTRIBUTES FOR DISPLAYING PAYMENT METHOD
     static let totalAmountAttributes: [NSAttributedString.Key: Any] = [
         NSAttributedString.Key.font: Utils.getSemiBoldFont(size: PXLayout.XS_FONT),
         NSAttributedString.Key.foregroundColor: UIColor.black.withAlphaComponent(0.45)
@@ -139,7 +138,7 @@ extension PXNewResultUtil {
         NSAttributedString.Key.strikethroughStyle: NSUnderlineStyle.single.rawValue
     ]
 
-    //PAYMENT METHOD ICON URL
+    // PAYMENT METHOD ICON URL
     class func getPaymentMethodIconURL(for paymentMethodId: String, using paymentMethodsImageURLs: [String: String]) -> String? {
         guard paymentMethodsImageURLs.keys.contains(paymentMethodId), let iconURLString = paymentMethodsImageURLs[paymentMethodId] else {
             return nil

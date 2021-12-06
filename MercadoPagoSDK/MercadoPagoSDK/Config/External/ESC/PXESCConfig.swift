@@ -16,7 +16,7 @@ open class PXESCConfig: NSObject {
 }
 
 // MARK: Internals (Only PX)
-internal extension PXESCConfig {
+extension PXESCConfig {
     static func createConfig(withFlowIdentifier: String? = nil) -> PXESCConfig {
         var flowIdentifier = MPXTracker.sharedInstance.getFlowName() ?? "PX"
         if let withFlowIdentifier = withFlowIdentifier {

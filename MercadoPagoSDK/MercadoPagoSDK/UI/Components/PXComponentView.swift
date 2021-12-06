@@ -1,7 +1,6 @@
 import Foundation
 
-@objcMembers internal class PXComponentView: UIView {
-
+@objcMembers class PXComponentView: UIView {
     private var topGuideView = UIView()
     private var bottomGuideView = UIView()
     private var contentView = UIView()
@@ -12,7 +11,7 @@ import Foundation
     var bottomGuideZeroHeightContraint: NSLayoutConstraint?
 
     init() {
-        super.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+        super.init(frame: CGRect.zero)
         initComponent()
     }
 
@@ -93,7 +92,7 @@ import Foundation
         initComponent()
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -147,7 +146,7 @@ import Foundation
         super.addLine(yCoordinate: yCoordinate, height: height, horizontalMarginPercentage: horizontalMarginPercentage, color: color)
     }
 
-    //Pin first content view subview to top
+    // Pin first content view subview to top
     @discardableResult
     public func pinFirstSubviewToTop(withMargin margin: CGFloat = 0 ) -> NSLayoutConstraint? {
         guard let firstView = self.contentView.subviews.first else {
@@ -157,7 +156,7 @@ import Foundation
         return PXLayout.pinTop(view: firstView, to: self.contentView, withMargin: margin)
     }
 
-    //Pin last content view subview to bottom
+    // Pin last content view subview to bottom
     @discardableResult
     public func pinLastSubviewToBottom(withMargin margin: CGFloat = 0 ) -> NSLayoutConstraint? {
         guard let lastView = self.contentView.subviews.last else {
@@ -167,7 +166,7 @@ import Foundation
         return PXLayout.pinBottom(view: lastView, to: self.contentView, withMargin: margin)
     }
 
-    //Put view on bottom of content view last subview
+    // Put view on bottom of content view last subview
     @discardableResult
     public func putOnBottomOfLastView(view: UIView, withMargin margin: CGFloat = 0) -> NSLayoutConstraint? {
         if !self.contentView.subviews.contains(view) {
@@ -204,9 +203,9 @@ import Foundation
     }
 }
 
-internal extension CALayer {
+extension CALayer {
     func pxShadow(radius: CGFloat = 3, shadowOpacity: Float = 0.25) {
-        self.shadowOffset = CGSize(width: 0, height: 0)
+        self.shadowOffset = CGSize.zero
         self.shadowColor = UIColor.black.cgColor
         self.shadowRadius = radius
         self.shadowOpacity = shadowOpacity

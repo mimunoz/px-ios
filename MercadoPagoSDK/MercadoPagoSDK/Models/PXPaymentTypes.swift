@@ -102,44 +102,43 @@ public enum PXPaymentTypes: String {
      */
     case PAYMENT_METHOD_PLUGIN = "payment_method_plugin"
 
-    internal func isCard() -> Bool {
+    func isCard() -> Bool {
         return self == PXPaymentTypes.DEBIT_CARD || self == PXPaymentTypes.CREDIT_CARD || self == PXPaymentTypes.PREPAID_CARD
     }
 
-    internal func isDigitalCurrency() -> Bool {
+    func isDigitalCurrency() -> Bool {
         return self == PXPaymentTypes.DIGITAL_CURRENCY
     }
 
-    internal func isCreditCard() -> Bool {
+    func isCreditCard() -> Bool {
         return self == PXPaymentTypes.CREDIT_CARD
     }
 
-    internal func isPrepaidCard() -> Bool {
+    func isPrepaidCard() -> Bool {
         return self == PXPaymentTypes.PREPAID_CARD
     }
 
-    internal func isDebitCard() -> Bool {
+    func isDebitCard() -> Bool {
         return self == PXPaymentTypes.DEBIT_CARD
     }
 
-    internal func isOnlinePaymentType() -> Bool {
+    func isOnlinePaymentType() -> Bool {
         return PXPaymentTypes.onlinePaymentTypes().contains(self.rawValue)
     }
 
-    internal func isOfflinePaymentType() -> Bool {
+    func isOfflinePaymentType() -> Bool {
         return PXPaymentTypes.offlinePaymentTypes().contains(self.rawValue)
-
     }
 
-    internal static func onlinePaymentTypes() -> [String] {
+    static func onlinePaymentTypes() -> [String] {
         return [DEBIT_CARD.rawValue, CREDIT_CARD.rawValue, ACCOUNT_MONEY.rawValue, CONSUMER_CREDITS.rawValue, PREPAID_CARD.rawValue, PAYMENT_METHOD_PLUGIN.rawValue, DIGITAL_CURRENCY.rawValue, PREPAID_CARD.rawValue]
     }
 
-    internal static func offlinePaymentTypes() -> [String] {
+    static func offlinePaymentTypes() -> [String] {
         return [ATM.rawValue, TICKET.rawValue, BANK_TRANSFER.rawValue, BOLBRADESCO.rawValue, PEC.rawValue]
     }
 
-    internal static func isCard(paymentTypeId: String) -> Bool {
+    static func isCard(paymentTypeId: String) -> Bool {
         guard let paymentTypeIdEnum = PXPaymentTypes(rawValue: paymentTypeId)
             else {
                 return false
@@ -147,8 +146,7 @@ public enum PXPaymentTypes: String {
         return paymentTypeIdEnum.isCard()
     }
 
-    internal static func isOnlineType(paymentTypeId: String) -> Bool {
-
+    static func isOnlineType(paymentTypeId: String) -> Bool {
         guard let paymentTypeIdEnum = PXPaymentTypes(rawValue: paymentTypeId)
             else {
                 return false
@@ -156,8 +154,7 @@ public enum PXPaymentTypes: String {
         return paymentTypeIdEnum.isOnlinePaymentType()
     }
 
-    internal static func isOfflineType(paymentTypeId: String) -> Bool {
-
+    static func isOfflineType(paymentTypeId: String) -> Bool {
         guard let paymentTypeIdEnum = PXPaymentTypes(rawValue: paymentTypeId)
             else {
                 return false

@@ -1,7 +1,6 @@
 import Foundation
 
-internal extension PXCurrency {
-
+extension PXCurrency {
     func getCurrencySymbolOrDefault() -> String {
         return self.symbol ?? "$"
     }

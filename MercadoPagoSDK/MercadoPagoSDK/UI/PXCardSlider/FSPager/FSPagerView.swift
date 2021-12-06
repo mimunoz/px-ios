@@ -2,7 +2,6 @@ import UIKit
 
 @objc
 public protocol FSPagerViewDataSource: NSObjectProtocol {
-
     /// Asks your data source object for the number of items in the pager view.
     @objc(numberOfItemsInPagerView:)
     func numberOfItems(in pagerView: FSPagerView) -> Int
@@ -10,12 +9,10 @@ public protocol FSPagerViewDataSource: NSObjectProtocol {
     /// Asks your data source object for the cell that corresponds to the specified item in the pager view.
     @objc(pagerView:cellForItemAtIndex:)
     func pagerView(_ pagerView: FSPagerView, cellForItemAt index: Int) -> FSPagerViewCell
-
 }
 
 @objc
 public protocol FSPagerViewDelegate: NSObjectProtocol {
-
     /// Asks the delegate if the item should be highlighted during tracking.
     @objc(pagerView:shouldHighlightItemAtIndex:)
     optional func pagerView(_ pagerView: FSPagerView, shouldHighlightItemAt index: Int) -> Bool
@@ -59,16 +56,14 @@ public protocol FSPagerViewDelegate: NSObjectProtocol {
     /// Tells the delegate that the pager view has ended decelerating the scrolling movement.
     @objc(pagerViewDidEndDecelerating:)
     optional func pagerViewDidEndDecelerating(_ pagerView: FSPagerView)
-
 }
 
 @IBDesignable
 open class FSPagerView: UIView, UICollectionViewDataSource, UICollectionViewDelegate {
-
     // MARK: - Public properties
 
     /// The object that acts as the data source of the pager view.
-    @IBOutlet open weak var dataSource: FSPagerViewDataSource?
+    @IBOutlet open var dataSource: FSPagerViewDataSource?
 
     /// The object that acts as the delegate of the pager view.
     @IBOutlet open weak var delegate: FSPagerViewDelegate?
@@ -82,7 +77,6 @@ open class FSPagerView: UIView, UICollectionViewDataSource, UICollectionViewDele
     }
 
     open weak var accessibilityDelegate: ChangeCardAccessibilityProtocol?
-
 
     /// The time interval of automatic sliding. 0 means disabling automatic sliding. Default is 0.
     @IBInspectable
@@ -213,20 +207,20 @@ open class FSPagerView: UIView, UICollectionViewDataSource, UICollectionViewDele
 
     // MARK: - Private properties
 
-    internal weak var collectionViewLayout: FSPagerViewLayout!
-    internal weak var collectionView: FSPagerViewCollectionView!
-    internal weak var contentView: UIView!
+    weak var collectionViewLayout: FSPagerViewLayout!
+    weak var collectionView: FSPagerViewCollectionView!
+    weak var contentView: UIView!
 
-    internal var timer: Timer?
-    internal var numberOfItems: Int = 0
-    internal var numberOfSections: Int = 0
+    var timer: Timer?
+    var numberOfItems: Int = 0
+    var numberOfSections: Int = 0
 
     fileprivate var dequeingSection = 0
     fileprivate var centermostIndexPath: IndexPath {
         guard self.numberOfItems > 0, self.collectionView.contentSize != .zero else {
             return IndexPath(item: 0, section: 0)
         }
-        let sortedIndexPaths = self.collectionView.indexPathsForVisibleItems.sorted { (l, r) -> Bool in
+        let sortedIndexPaths = self.collectionView.indexPathsForVisibleItems.sorted { l, r -> Bool in
             let leftFrame = self.collectionViewLayout.frame(for: l)
             let rightFrame = self.collectionViewLayout.frame(for: r)
             var leftCenter: CGFloat, rightCenter: CGFloat, ruler: CGFloat
@@ -253,7 +247,7 @@ open class FSPagerView: UIView, UICollectionViewDataSource, UICollectionViewDele
 
     // MARK: - Overriden functions
 
-    public override init(frame: CGRect) {
+    override public init(frame: CGRect) {
         super.init(frame: frame)
         self.commonInit()
     }
@@ -263,14 +257,14 @@ open class FSPagerView: UIView, UICollectionViewDataSource, UICollectionViewDele
         self.commonInit()
     }
 
-    open override func layoutSubviews() {
+    override open func layoutSubviews() {
         super.layoutSubviews()
         self.backgroundView?.frame = self.bounds
         self.contentView.frame = self.bounds
         self.collectionView.frame = self.contentView.bounds
     }
 
-    open override func willMove(toWindow newWindow: UIWindow?) {
+    override open func willMove(toWindow newWindow: UIWindow?) {
         super.willMove(toWindow: newWindow)
         if newWindow != nil {
             self.startTimer()
@@ -281,7 +275,7 @@ open class FSPagerView: UIView, UICollectionViewDataSource, UICollectionViewDele
 
     #if TARGET_INTERFACE_BUILDER
 
-    open override func prepareForInterfaceBuilder() {
+    override open func prepareForInterfaceBuilder() {
         super.prepareForInterfaceBuilder()
         self.contentView.layer.borderWidth = 1
         self.contentView.layer.cornerRadius = 5
@@ -385,7 +379,7 @@ open class FSPagerView: UIView, UICollectionViewDataSource, UICollectionViewDele
         if self.numberOfItems > 0 {
             // In case someone is using KVO
             let currentIndex = lround(Double(self.scrollOffset)) % self.numberOfItems
-            if (currentIndex != self.currentIndex) {
+            if currentIndex != self.currentIndex {
                 self.currentIndex = currentIndex
             }
         }
@@ -551,7 +545,6 @@ open class FSPagerView: UIView, UICollectionViewDataSource, UICollectionViewDele
     // MARK: - Private functions
 
     fileprivate func commonInit() {
-
         // Content View
         let contentView = UIView(frame: CGRect.zero)
         contentView.backgroundColor = UIColor.clear
@@ -570,7 +563,6 @@ open class FSPagerView: UIView, UICollectionViewDataSource, UICollectionViewDele
 
         collectionView.clipsToBounds = false
         collectionView.layer.masksToBounds = false
-
     }
 
     fileprivate func startTimer() {
@@ -609,17 +601,15 @@ open class FSPagerView: UIView, UICollectionViewDataSource, UICollectionViewDele
         let currentSection = self.centermostIndexPath.section
         if abs(currentIndex - index) <= self.numberOfItems / 2 {
             return IndexPath(item: index, section: currentSection)
-        } else if (index - currentIndex >= 0) {
+        } else if index - currentIndex >= 0 {
             return IndexPath(item: index, section: currentSection - 1)
         } else {
             return IndexPath(item: index, section: currentSection + 1)
         }
     }
-
 }
 
 extension FSPagerView {
-
     /// Constants indicating the direction of scrolling for the pager view.
     @objc
     public enum ScrollDirection: Int {
@@ -634,7 +624,6 @@ extension FSPagerView {
 
     /// Requests that FSPagerView use the default value for a given size.
     public static let automaticSize: CGSize = .zero
-
 }
 
 // MARK: Accessibility

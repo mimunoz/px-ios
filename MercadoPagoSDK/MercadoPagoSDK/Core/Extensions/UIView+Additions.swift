@@ -1,6 +1,5 @@
-internal extension UIView {
-
-    //Eventualmente hay que borrar esto. Cuando summary deje de usarlo
+extension UIView {
+    // Eventualmente hay que borrar esto. Cuando summary deje de usarlo
     func addSeparatorLineToTop(horizontalMargin: CGFloat, width: CGFloat, height: CGFloat) {
         let lineFrame = CGRect(origin: CGPoint(x: horizontalMargin, y: 0), size: CGSize(width: width, height: height))
         let line = UIView(frame: lineFrame)
@@ -20,7 +19,7 @@ internal extension UIView {
         PXLayout.setHeight(owner: line, height: height).isActive = true
     }
 
-    //Eventualmente hay que borrar esto. Cuando summary deje de usarlo
+    // Eventualmente hay que borrar esto. Cuando summary deje de usarlo
     func addSeparatorLineToBottom(horizontalMargin: CGFloat, width: CGFloat, height: CGFloat) {
         let lineFrame = CGRect(origin: CGPoint(x: horizontalMargin, y: self.frame.size.height - height), size: CGSize(width: width, height: height))
         let line = UIView(frame: lineFrame)
@@ -40,7 +39,7 @@ internal extension UIView {
         PXLayout.setHeight(owner: line, height: height).isActive = true
     }
 
-    //Eventualmente hay que borrar esto. Cuando summary deje de usarlo
+    // Eventualmente hay que borrar esto. Cuando summary deje de usarlo
     func addLine(posY: CGFloat, horizontalMargin: CGFloat, width: CGFloat, height: CGFloat) {
         let lineFrame = CGRect(origin: CGPoint(x: horizontalMargin, y: posY), size: CGSize(width: width, height: height))
         let line = UIView(frame: lineFrame)

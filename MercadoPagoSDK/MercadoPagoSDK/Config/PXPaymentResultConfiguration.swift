@@ -36,15 +36,15 @@ import Foundation
 
     // MARK: FOOTER
     // To deprecate post v4. SP integration.
-    internal var approvedSecondaryExitButtonText = ""
-    internal var approvedSecondaryExitButtonCallback: ((PaymentResult) -> Void)?
-    internal var hidePendingSecondaryButton = false
-    internal var pendingSecondaryExitButtonText: String?
-    internal var pendingSecondaryExitButtonCallback: ((PaymentResult) -> Void)?
-    internal var hideRejectedSecondaryButton = false
-    internal var rejectedSecondaryExitButtonText: String?
-    internal var rejectedSecondaryExitButtonCallback: ((PaymentResult) -> Void)?
-    internal var exitButtonTitle: String?
+    var approvedSecondaryExitButtonText = ""
+    var approvedSecondaryExitButtonCallback: ((PaymentResult) -> Void)?
+    var hidePendingSecondaryButton = false
+    var pendingSecondaryExitButtonText: String?
+    var pendingSecondaryExitButtonCallback: ((PaymentResult) -> Void)?
+    var hideRejectedSecondaryButton = false
+    var rejectedSecondaryExitButtonText: String?
+    var rejectedSecondaryExitButtonCallback: ((PaymentResult) -> Void)?
+    var exitButtonTitle: String?
 
     // MARK: Approved
     // To deprecate post v4. SP integration.
@@ -53,66 +53,66 @@ import Foundation
     open var approvedBadge: ApprovedBadge? = ApprovedBadge.check
     private var _approvedLabelText = ""
     private var _disableApprovedLabelText = true
-    internal lazy var approvedTitle = PXHeaderResutlConstants.APPROVED_HEADER_TITLE.localized
-    internal var approvedSubtitle = ""
-    internal var approvedURLImage: String?
-    internal var approvedIconName = "default_item_icon"
-    internal var approvedIconBundle = MercadoPagoBundle.bundle()
+    lazy var approvedTitle = PXHeaderResutlConstants.APPROVED_HEADER_TITLE.localized
+    var approvedSubtitle = ""
+    var approvedURLImage: String?
+    var approvedIconName = "default_item_icon"
+    var approvedIconBundle = MercadoPagoBundle.bundle()
 
     // MARK: Pending
     // To deprecate post v4. SP integration.
     private var _pendingLabelText = ""
     private var _disablePendingLabelText = true
-    internal lazy var pendingTitle = PXHeaderResutlConstants.PENDING_HEADER_TITLE.localized
-    internal var pendingSubtitle = ""
-    internal lazy var pendingContentTitle = PXPaymentResultConfiguration.PENDING_CONTENT_TITLE.localized
-    internal var pendingContentText = ""
-    internal var pendingIconName = "default_item_icon"
-    internal var pendingIconBundle = MercadoPagoBundle.bundle()
-    internal var pendingURLImage: String?
-    internal var hidePendingContentText = false
-    internal var hidePendingContentTitle = false
+    lazy var pendingTitle = PXHeaderResutlConstants.PENDING_HEADER_TITLE.localized
+    var pendingSubtitle = ""
+    lazy var pendingContentTitle = PXPaymentResultConfiguration.PENDING_CONTENT_TITLE.localized
+    var pendingContentText = ""
+    var pendingIconName = "default_item_icon"
+    var pendingIconBundle = MercadoPagoBundle.bundle()
+    var pendingURLImage: String?
+    var hidePendingContentText = false
+    var hidePendingContentTitle = false
 
     // MARK: Rejected
     // To deprecate post v4. SP integration.
     private var disableRejectedLabelText = false
-    internal lazy var rejectedTitle = PXHeaderResutlConstants.REJECTED_HEADER_TITLE.localized
-    internal var rejectedSubtitle = ""
-    internal var rejectedTitleSetted = false
-    internal lazy var rejectedIconSubtext = PXHeaderResutlConstants.REJECTED_ICON_SUBTEXT.localized
-    internal var rejectedBolbradescoIconName = "MPSDK_payment_result_bolbradesco_error"
-    internal var rejectedPaymentMethodPluginIconName = "MPSDK_payment_result_plugin_error"
-    internal var rejectedIconBundle = MercadoPagoBundle.bundle()
-    internal var rejectedDefaultIconName: String?
-    internal var rejectedURLImage: String?
-    internal var rejectedIconName: String?
-    internal lazy var rejectedContentTitle = PXPaymentResultConfiguration.REJECTED_CONTENT_TITLE.localized
-    internal var rejectedContentText = ""
-    internal var hideRejectedContentText = false
-    internal var hideRejectedContentTitle = false
+    lazy var rejectedTitle = PXHeaderResutlConstants.REJECTED_HEADER_TITLE.localized
+    var rejectedSubtitle = ""
+    var rejectedTitleSetted = false
+    lazy var rejectedIconSubtext = PXHeaderResutlConstants.REJECTED_ICON_SUBTEXT.localized
+    var rejectedBolbradescoIconName = "MPSDK_payment_result_bolbradesco_error"
+    var rejectedPaymentMethodPluginIconName = "MPSDK_payment_result_plugin_error"
+    var rejectedIconBundle = MercadoPagoBundle.bundle()
+    var rejectedDefaultIconName: String?
+    var rejectedURLImage: String?
+    var rejectedIconName: String?
+    lazy var rejectedContentTitle = PXPaymentResultConfiguration.REJECTED_CONTENT_TITLE.localized
+    var rejectedContentText = ""
+    var hideRejectedContentText = false
+    var hideRejectedContentTitle = false
 
     // MARK: Commons
     // To deprecate post v4. SP integration.
-    internal var showBadgeImage = true
-    internal var showLabelText = true
-    internal var pmDefaultIconName = "card_icon"
-    internal var pmBolbradescoIconName = "boleto_icon"
-    internal var pmIconBundle = MercadoPagoBundle.bundle()
-    internal var statusBackgroundColor: UIColor?
-    internal var hideApprovedPaymentBodyCell = false
-    internal var hideContentCell = false
-    internal var hideAmount = false
-    internal var hidePaymentId = false
-    internal var hidePaymentMethod = false
+    var showBadgeImage = true
+    var showLabelText = true
+    var pmDefaultIconName = "card_icon"
+    var pmBolbradescoIconName = "boleto_icon"
+    var pmIconBundle = MercadoPagoBundle.bundle()
+    var statusBackgroundColor: UIColor?
+    var hideApprovedPaymentBodyCell = false
+    var hideContentCell = false
+    var hideAmount = false
+    var hidePaymentId = false
+    var hidePaymentMethod = false
 }
 
 // MARK: - Internal Getters.
 extension PXPaymentResultConfiguration {
-    internal func getTopCustomView() -> UIView? {
+    func getTopCustomView() -> UIView? {
         return topCustomView
     }
 
-    internal func getBottomCustomView() -> UIView? {
+    func getBottomCustomView() -> UIView? {
         return bottomCustomView
     }
 }

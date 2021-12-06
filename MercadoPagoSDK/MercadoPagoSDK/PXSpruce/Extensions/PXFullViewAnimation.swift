@@ -1,7 +1,6 @@
 import UIKit
 
-internal extension PXSpruce {
-
+extension PXSpruce {
     /// Use this method to setup all of your views before the animation occurs. This could include hiding, fading, translating them, etc... 
     ///
     /// - Parameters:
@@ -28,7 +27,7 @@ internal extension PXSpruce {
     ///   - completion: a closure that is called upon the final animation completing. A `Bool` is passed into the closure letting you know if the animation has completed. **Note:** If you stop animations on the whole animating view, then `false` will be passed into the completion closure. However, if the final animation is allowed to proceed then `true` will be the value passed into the completion closure.
     func animate(withSortFunction sortFunction: SortFunction, prepare: PrepareHandler? = nil, animation: Animation, exclude: [UIView]? = nil, recursiveDepth: Int = 0, completion: CompletionHandler? = nil) {
         var timedViews = sortFunction.timeOffsets(view: self.view, recursiveDepth: recursiveDepth)
-        timedViews = timedViews.sorted { (left, right) -> Bool in
+        timedViews = timedViews.sorted { left, right -> Bool in
             return left.timeOffset < right.timeOffset
         }
         for (index, timedView) in timedViews.enumerated() {

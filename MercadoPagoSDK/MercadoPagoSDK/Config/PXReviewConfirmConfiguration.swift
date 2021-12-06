@@ -27,15 +27,15 @@ import Foundation
 
 // MARK: - Internal Getters.
 extension PXReviewConfirmConfiguration {
-    internal func hasItemsEnabled() -> Bool {
+    func hasItemsEnabled() -> Bool {
         return itemsEnabled
     }
 
-    internal func getTopCustomView() -> UIView? {
+    func getTopCustomView() -> UIView? {
         return self.topCustomView
     }
 
-    internal func getBottomCustomView() -> UIView? {
+    func getBottomCustomView() -> UIView? {
         return self.bottomCustomView
     }
 }

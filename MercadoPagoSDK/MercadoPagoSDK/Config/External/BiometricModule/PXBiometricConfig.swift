@@ -9,7 +9,7 @@ open class PXBiometricConfig: NSObject {
     public let flowIdentifier: String
     public var params: [String: Any] = [:]
 
-    internal enum ParamKey: String {
+    enum ParamKey: String {
         case amount
     }
 
@@ -19,7 +19,7 @@ open class PXBiometricConfig: NSObject {
 }
 
 // MARK: Internals (Only PX)
-internal extension PXBiometricConfig {
+extension PXBiometricConfig {
     func setAmount(_ amount: NSDecimalNumber) {
         self.params[ParamKey.amount.rawValue] = amount
     }

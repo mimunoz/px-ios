@@ -14,9 +14,9 @@ public final class PXPaymentTypeChargeRule: NSObject, Codable {
             paymentTypeId = newValue
         }
     }
-    internal var paymentTypeId: String
+    var paymentTypeId: String
     let amountCharge: Double
-    internal let detailModal: UIViewController?
+    let detailModal: UIViewController?
     let message: String?
     var label: String?
     var taxable: Bool = true
@@ -45,7 +45,7 @@ public final class PXPaymentTypeChargeRule: NSObject, Codable {
         super.init()
     }
 
-    //Amount zero init with message
+    // Amount zero init with message
     /**
      - parameter paymentTypeId: paymentTypeId for which the currrent charge applies.
      - parameter message: Message that is shown whenever the amount is set to zero.
@@ -58,7 +58,7 @@ public final class PXPaymentTypeChargeRule: NSObject, Codable {
         super.init()
     }
 
-    required public init(from decoder: Decoder) throws {
+    public required init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: PXPaymentTypeChargeRuleKeys.self)
         paymentTypeId = try values.decode(String.self, forKey: .paymentTypeId)
         amountCharge = try values.decode(Double.self, forKey: .amountCharge)
@@ -80,14 +80,14 @@ public final class PXPaymentTypeChargeRule: NSObject, Codable {
         var container = encoder.container(keyedBy: PXPaymentTypeChargeRuleKeys.self)
         try container.encodeIfPresent(self.paymentTypeId, forKey: .paymentTypeId)
         try container.encodeIfPresent(self.amountCharge, forKey: .amountCharge)
-        
+
         // TODO: Replace when changed on backend
         if amountCharge == 0 {
             try container.encodeIfPresent(self.message, forKey: .message)
         } else {
             try container.encodeIfPresent(self.label, forKey: .message)
         }
-        
+
         try container.encodeIfPresent(self.taxable, forKey: .taxable)
     }
 }

@@ -1,6 +1,6 @@
 import Foundation
 
-internal typealias PXDiscountConfigurationType = (discount: PXDiscount?, campaign: PXCampaign?, isAvailable: Bool, reason: PXDiscountReason?, discountDescription: PXDiscountDescription?, discountOverview: PXDiscountOverview?)
+typealias PXDiscountConfigurationType = (discount: PXDiscount?, campaign: PXCampaign?, isAvailable: Bool, reason: PXDiscountReason?, discountDescription: PXDiscountDescription?, discountOverview: PXDiscountOverview?)
 
 /**
  Configuration related to Mercadopago discounts and campaigns. More details: `PXDiscount` and `PXCampaign`.
@@ -14,7 +14,7 @@ open class PXDiscountConfiguration: NSObject, Codable {
     private var discountDescription: PXDiscountDescription?
     private var discountOverview: PXDiscountOverview?
 
-    internal override init() {
+    override init() {
         self.discount = nil
         self.campaign = nil
         isAvailable = false
@@ -42,7 +42,7 @@ open class PXDiscountConfiguration: NSObject, Codable {
         self.discountOverview = discountOverview
     }
 
-    internal convenience init(isAvailable: Bool) {
+    convenience init(isAvailable: Bool) {
         self.init()
         self.isAvailable = isAvailable
     }
@@ -50,7 +50,7 @@ open class PXDiscountConfiguration: NSObject, Codable {
     public enum CodingKeys: String, CodingKey {
         case discount
         case campaign
-        case isAvailable =  "is_available"
+        case isAvailable = "is_available"
         case reason
         case discountDescription = "discount_description"
         case discountOverview = "discount_overview"
@@ -71,7 +71,7 @@ open class PXDiscountConfiguration: NSObject, Codable {
 
 // MARK: - Internals
 extension PXDiscountConfiguration {
-    internal func getDiscountConfiguration() -> PXDiscountConfigurationType {
+    func getDiscountConfiguration() -> PXDiscountConfigurationType {
         return (discount, campaign, isAvailable, reason, discountDescription, discountOverview)
     }
 }

@@ -1,7 +1,6 @@
 import Foundation
 
-internal extension UIDevice {
-
+extension UIDevice {
     static func isSmallDevice() -> Bool {
         let devices = ["iPhone SE", "iPhone 5s", "iPhone 5c", "iPhone 5"]
         let modelName = self.modelName.replacingOccurrences(of: "Simulator ", with: "")

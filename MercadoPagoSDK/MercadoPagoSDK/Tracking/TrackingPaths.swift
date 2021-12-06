@@ -1,6 +1,6 @@
 import Foundation
 
-internal struct TrackingPaths {
+struct TrackingPaths {
     static let pxTrack = "/px_checkout"
     static let payments = "/payments"
     static let selectMethod = "/select_method"
@@ -9,22 +9,22 @@ internal struct TrackingPaths {
     static let paymentCongrats = "/payment_congrats"
 }
 
-internal struct Tracking {
-    internal struct Style {
+struct Tracking {
+    struct Style {
         static let customComponent = "custom_component"
         static let screen = "screen"
         static let noScreen = "non_screen"
         static let snackbar = "snackbar"
     }
 
-    internal struct Error {
-        internal struct Atrributable {
+    struct Error {
+        struct Atrributable {
             static let user = "user"
             static let mercadopago = "mercadopago"
             static let merchant = "merchant"
         }
 
-        internal struct Id {
+        struct Id {
             static let genericError = "px_generic_error"
             static let invalidDocument = "invalid_document_number"
             static let invalidCVV = "invalid_cvv"

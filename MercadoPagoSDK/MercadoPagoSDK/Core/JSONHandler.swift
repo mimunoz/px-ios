@@ -1,7 +1,6 @@
 import UIKit
 
-internal class JSONHandler: NSObject {
-
+class JSONHandler: NSObject {
     class func jsonCoding(_ jsonDictionary: [String: Any]) -> String {
         var result: String = ""
         do {
@@ -40,7 +39,6 @@ internal class JSONHandler: NSObject {
     }
 
     class func attemptParseToDouble(_ anyobject: Any?, defaultReturn: Double? = nil) -> Double? {
-
         guard let string = attemptParseToString(anyobject) else {
             return defaultReturn
         }
@@ -59,7 +57,6 @@ internal class JSONHandler: NSObject {
     }
 
     class func attemptParseToString(_ anyobject: Any?, defaultReturn: String? = nil) -> String? {
-
         guard anyobject != nil, let string = (anyobject! as AnyObject).description else {
             return defaultReturn
         }
@@ -71,7 +68,6 @@ internal class JSONHandler: NSObject {
     }
 
     class func attemptParseToInt(_ anyobject: Any?, defaultReturn: Int? = nil) -> Int? {
-
         guard let string = attemptParseToString(anyobject) else {
             return defaultReturn
         }
@@ -86,10 +82,10 @@ internal class JSONHandler: NSObject {
         return value
     }
 
-    internal class var null: NSNull { return NSNull() }
+    class var null: NSNull { return NSNull() }
  }
 
-internal extension String {
+extension String {
     func toBool() -> Bool? {
         switch self {
         case "True", "true", "YES", "yes", "1":

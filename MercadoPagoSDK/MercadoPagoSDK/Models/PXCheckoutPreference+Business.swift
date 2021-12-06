@@ -1,6 +1,6 @@
 import Foundation
 extension PXCheckoutPreference {
-    internal func isExpired() -> Bool {
+    func isExpired() -> Bool {
         let date = Date()
         if let expirationDateTo = expirationDateTo {
             return expirationDateTo < date
@@ -8,7 +8,7 @@ extension PXCheckoutPreference {
         return false
     }
 
-    internal func isActive() -> Bool {
+    func isActive() -> Bool {
         let date = Date()
         if let expirationDateFrom = expirationDateFrom {
             return expirationDateFrom < date
@@ -16,11 +16,11 @@ extension PXCheckoutPreference {
         return true
     }
 
-    internal func hasMultipleItems() -> Bool {
+    func hasMultipleItems() -> Bool {
         return items.count > 1
     }
 
-    internal func clearCardId() {
+    func clearCardId() {
         self.paymentPreference.cardId = nil
     }
 }
@@ -107,7 +107,7 @@ extension PXCheckoutPreference {
 
     /**
      Default paymetMethodId selection.
-     WARNING: This is an internal method not intended for public use.
+     WARNING: This is an method not intended for public use.
      It is not considered part of the public API.
      - parameter paymetMethodId: Payment method ID to make default.
      */
@@ -118,7 +118,7 @@ extension PXCheckoutPreference {
     // MARK: MoneyIn
     /**
      Default cardId selection.
-     WARNING: This is an internal method not intended for public use.
+     WARNING: This is an method not intended for public use.
      It is not considered part of the public API. Only to support Moneyin feature.
      - parameter paymetMethodId: cardId to autoselection Moneyin feature.
      */
@@ -239,14 +239,14 @@ extension PXCheckoutPreference {
         self.payer = payer
     }
 
-    internal func getPayer() -> PXPayer {
+    func getPayer() -> PXPayer {
         return payer
     }
 }
 
 // MARK: Validation
 extension PXCheckoutPreference {
-    internal func validate(privateKey: String?) -> String? {
+    func validate(privateKey: String?) -> String? {
         if let itemError = itemsValid() {
             return itemError
         }
@@ -271,7 +271,7 @@ extension PXCheckoutPreference {
         return nil
     }
 
-    internal func itemsValid() -> String? {
+    func itemsValid() -> String? {
         if Array.isNullOrEmpty(items) {
             return "No hay items".localized
         }

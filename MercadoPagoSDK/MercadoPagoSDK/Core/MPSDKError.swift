@@ -1,7 +1,6 @@
 import UIKit
 
-internal class MPSDKError {
-
+class MPSDKError {
     open var message: String = ""
     open var errorDetail: String = ""
     open var apiException: ApiException?
@@ -9,7 +8,6 @@ internal class MPSDKError {
     open var retry: Bool?
 
     init () {
-
     }
 
     init(message: String, errorDetail: String, retry: Bool, requestOrigin: String?=nil) {
@@ -41,7 +39,7 @@ internal class MPSDKError {
         return mpError
     }
 
-    internal func toJSON() -> [String: Any] {
+    func toJSON() -> [String: Any] {
         let obj: [String: Any] = [
             "message": self.message,
             "error_detail": self.errorDetail,
@@ -50,7 +48,7 @@ internal class MPSDKError {
         return obj
     }
 
-    internal func toJSONString() -> String {
+    func toJSONString() -> String {
         return JSONHandler.jsonCoding(self.toJSON())
     }
 
@@ -102,12 +100,11 @@ internal class MPSDKError {
 }
 // MARK: Tracking
 extension MPSDKError {
-
     func getErrorForTracking() -> [String: Any] {
         var errorDic: [String: Any] = [:]
-        errorDic["url"] =  requestOrigin
+        errorDic["url"] = requestOrigin
         errorDic["retry_available"] = retry ?? false
-        errorDic["status"] =  apiException?.status
+        errorDic["status"] = apiException?.status
 
         if let causes = apiException?.cause {
             var causesDic: [String: Any] = [:]

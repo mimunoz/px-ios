@@ -1,7 +1,6 @@
 import Foundation
 
-internal class NavigationControllerMemento {
-
+class NavigationControllerMemento {
     var navBarTintColor: UIColor?
     var navTintColor: UIColor?
     var navTitleTextAttributes: [NSAttributedString.Key: Any]?

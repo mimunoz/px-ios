@@ -1,6 +1,6 @@
 import Foundation
 
-internal class TokenizationService {
+class TokenizationService {
     var paymentOptionSelected: PaymentMethodOption?
     var cardToken: PXCardToken?
     var pxNavigationHandler: PXNavigationHandler
@@ -18,7 +18,6 @@ internal class TokenizationService {
     }
 
     func createCardToken(securityCode: String? = nil, token: PXToken? = nil) {
-
         // Clone token
         if let token = token, token.canBeClone() {
             guard let securityCode = securityCode else {
@@ -56,7 +55,7 @@ internal class TokenizationService {
             createSavedCardToken(cardInformation: cardInfo, securityCode: securityCode)
         }
     }
-    
+
     func createCardTokenWithoutCVV() {
         // New Card Token
         guard let cardInfo = paymentOptionSelected as? PXCardInformation else {
@@ -74,10 +73,9 @@ internal class TokenizationService {
         }
         pxNavigationHandler.presentLoading()
 
-        mercadoPagoServices.createToken(cardToken: cardToken, callback: { (token) in
+        mercadoPagoServices.createToken(cardToken: cardToken, callback: { token in
             self.resultHandler?.finishFlow(token: token, shouldResetESC: false)
-
-        }, failure: { (error) in
+        }, failure: { error in
             self.trackTokenApiError()
             let error = MPSDKError.convertFrom(error, requestOrigin: ApiUtil.RequestOrigin.CREATE_TOKEN.rawValue)
             if error.apiException?.containsCause(code: ApiUtil.ErrorCauseCodes.INVALID_IDENTIFICATION_NUMBER.rawValue) == true {
@@ -99,13 +97,12 @@ internal class TokenizationService {
 
         let saveCardToken = PXSavedCardToken(card: cardInformation, securityCode: securityCode, securityCodeRequired: true)
 
-        mercadoPagoServices.createToken(savedCardToken: saveCardToken, callback: { (token) in
-
+        mercadoPagoServices.createToken(savedCardToken: saveCardToken, callback: { token in
             if token.lastFourDigits.isEmpty {
                 token.lastFourDigits = cardInformation.getCardLastForDigits()
             }
             self.resultHandler?.finishFlow(token: token, shouldResetESC: true)
-        }, failure: { (error) in
+        }, failure: { error in
             self.trackTokenApiError()
             let error = MPSDKError.convertFrom(error, requestOrigin: ApiUtil.RequestOrigin.CREATE_TOKEN.rawValue)
             self.resultHandler?.finishWithError(error: error, securityCode: securityCode)
@@ -117,8 +114,7 @@ internal class TokenizationService {
             self.pxNavigationHandler.presentLoading()
         }
 
-        mercadoPagoServices.createToken(savedESCCardToken: savedESCCardToken, callback: { (token) in
-
+        mercadoPagoServices.createToken(savedESCCardToken: savedESCCardToken, callback: { token in
             if token.lastFourDigits.isEmpty {
                 let cardInformation = self.paymentOptionSelected as? PXCardInformation
                 token.lastFourDigits = cardInformation?.getCardLastForDigits() ?? ""
@@ -129,7 +125,7 @@ internal class TokenizationService {
                 shouldResetESC = true
             }
             self.resultHandler?.finishFlow(token: token, shouldResetESC: shouldResetESC)
-        }, failure: { (error) in
+        }, failure: { error in
             self.trackTokenApiError()
             let error = MPSDKError.convertFrom(error, requestOrigin: ApiUtil.RequestOrigin.CREATE_TOKEN.rawValue)
             self.trackInvalidESC(error: error, cardId: savedESCCardToken.cardId, esc_length: savedESCCardToken.esc?.count)
@@ -140,9 +136,9 @@ internal class TokenizationService {
 
     private func cloneCardToken(token: PXToken, securityCode: String) {
         pxNavigationHandler.presentLoading()
-        mercadoPagoServices.cloneToken(tokenId: token.id, securityCode: securityCode, callback: { (token) in
+        mercadoPagoServices.cloneToken(tokenId: token.id, securityCode: securityCode, callback: { token in
             self.resultHandler?.finishFlow(token: token, shouldResetESC: true)
-        }, failure: { (error) in
+        }, failure: { error in
             self.trackTokenApiError()
             let error = MPSDKError.convertFrom(error, requestOrigin: ApiUtil.RequestOrigin.CREATE_TOKEN.rawValue)
             self.resultHandler?.finishWithError(error: error, securityCode: securityCode)

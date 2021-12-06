@@ -1,6 +1,6 @@
 import Foundation
 
-internal final class PXPaymentFlowModel: NSObject {
+final class PXPaymentFlowModel: NSObject {
     var amountHelper: PXAmountHelper?
     var checkoutPreference: PXCheckoutPreference?
     let paymentPlugin: PXSplitPaymentProcessor?
@@ -124,7 +124,7 @@ internal final class PXPaymentFlowModel: NSObject {
     }
 }
 
-internal extension PXPaymentFlowModel {
+extension PXPaymentFlowModel {
     func hasPluginPaymentScreen() -> Bool {
         guard let paymentPlugin = paymentPlugin else {
             return false
@@ -137,7 +137,7 @@ internal extension PXPaymentFlowModel {
 }
 
 // MARK: Manage ESC
-internal extension PXPaymentFlowModel {
+extension PXPaymentFlowModel {
     func handleESCForPayment(status: String, statusDetails: String, errorPaymentType: String?) {
         guard let token = amountHelper?.getPaymentData().getToken() else {
             return

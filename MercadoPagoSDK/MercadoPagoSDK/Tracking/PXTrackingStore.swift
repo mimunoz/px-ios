@@ -1,6 +1,6 @@
 import Foundation
 
-internal final class PXTrackingStore {
+final class PXTrackingStore {
     enum TrackingChoType: String {
         case one_tap
         case traditional

@@ -5,17 +5,17 @@ import Foundation
  */
 @objcMembers
 open class MercadoPagoCheckoutBuilder: NSObject {
-    internal let publicKey: String
-    internal var preferenceId: String?
-    internal var checkoutPreference: PXCheckoutPreference?
+    let publicKey: String
+    var preferenceId: String?
+    var checkoutPreference: PXCheckoutPreference?
 
-    internal var privateKey: String?
+    var privateKey: String?
 
-    internal var paymentConfig: PXPaymentConfiguration?
-    internal var advancedConfig: PXAdvancedConfiguration?
-    internal var trackingConfig: PXTrackingConfiguration?
+    var paymentConfig: PXPaymentConfiguration?
+    var advancedConfig: PXAdvancedConfiguration?
+    var trackingConfig: PXTrackingConfiguration?
 
-    internal var defaultUIColor: UIColor?
+    var defaultUIColor: UIColor?
 
     // MARK: Initialization
     /**

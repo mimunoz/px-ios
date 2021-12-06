@@ -1,6 +1,6 @@
 import UIKit
 
-internal class PXBodyComponent: PXComponentizable {
+class PXBodyComponent: PXComponentizable {
     var props: PXBodyProps
 
     init(props: PXBodyProps) {
@@ -106,10 +106,9 @@ internal class PXBodyComponent: PXComponentizable {
     func render() -> UIView {
         return PXBodyRenderer().render(self)
     }
-
 }
 
-internal class PXBodyProps {
+class PXBodyProps {
     let paymentResult: PaymentResult
     let instruction: PXInstruction?
     let amountHelper: PXAmountHelper

@@ -1,7 +1,7 @@
 import Foundation
 import UIKit
 
-internal class ViewUtils {
+class ViewUtils {
     class func loadImageFromUrl(_ imageURL: String?) -> UIImage? {
         guard let imageURL = imageURL else {
             return nil

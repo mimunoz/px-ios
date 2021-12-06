@@ -1,8 +1,7 @@
 import UIKit
 
 @objcMembers
-internal class MPButton: UIButton {
-
+class MPButton: UIButton {
     var actionLink: String?
 
     override init(frame: CGRect) {
@@ -10,16 +9,15 @@ internal class MPButton: UIButton {
         updateFonts()
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         updateFonts()
     }
-
 }
 
 // MARK: - Internals
 extension MPButton {
-    internal func updateFonts() {
+    func updateFonts() {
         if let titleLabel = titleLabel, let titleFont = titleLabel.font {
             self.titleLabel?.font = Utils.getFont(size: titleFont.pointSize)
         }

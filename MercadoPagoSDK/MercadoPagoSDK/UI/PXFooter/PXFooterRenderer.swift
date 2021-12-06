@@ -2,7 +2,6 @@ import UIKit
 import AndesUI
 
 final class PXFooterRenderer: NSObject {
-
     let BUTTON_HEIGHT: CGFloat = 50.0
     weak var termsDelegate: PXTermsAndConditionViewDelegate?
 
@@ -65,7 +64,7 @@ final class PXFooterRenderer: NSObject {
         return fooView
     }
 
-    internal func buildAnimatedButton(props: PXFooterProps, delegate: PXFooterTrackingProtocol?) -> PXAnimatedButton? {
+    func buildAnimatedButton(props: PXFooterProps, delegate: PXFooterTrackingProtocol?) -> PXAnimatedButton? {
         guard let buttonAction = props.buttonAction else { return nil }
 
         let mainButton = PXAnimatedButton(normalText: "Pagar".localized, loadingText: "Procesando tu pago".localized, retryText: "Reintentar".localized)

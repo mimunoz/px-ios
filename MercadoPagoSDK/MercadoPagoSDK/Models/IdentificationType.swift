@@ -9,7 +9,7 @@ import Foundation
     open var minLength: Int = 0
     open var maxLength: Int = 0
 
-    internal class func fromJSON(_ json: NSDictionary) -> IdentificationType {
+    class func fromJSON(_ json: NSDictionary) -> IdentificationType {
                 let identificationType: IdentificationType = IdentificationType()
                 if let identificationTypeId = JSONHandler.attemptParseToString(json["id"]) {
                         identificationType.identificationTypeId = identificationTypeId

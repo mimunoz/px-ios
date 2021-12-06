@@ -1,8 +1,7 @@
 import Foundation
 
 @objc
-internal protocol PXCardInformationForm: NSObjectProtocol {
-
+protocol PXCardInformationForm: NSObjectProtocol {
     func getCardBin() -> String?
 
     func getCardLastForDigits() -> String

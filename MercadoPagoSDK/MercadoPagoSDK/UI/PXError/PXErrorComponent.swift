@@ -1,6 +1,6 @@
 import UIKit
 
-internal class PXErrorComponent: PXComponentizable {
+class PXErrorComponent: PXComponentizable {
     var props: PXErrorProps
 
     init(props: PXErrorProps) {
@@ -11,7 +11,7 @@ internal class PXErrorComponent: PXComponentizable {
     }
 }
 
-internal class PXErrorProps {
+class PXErrorProps {
     var title: NSAttributedString?
     var message: NSAttributedString?
     var secondaryTitle: NSAttributedString?

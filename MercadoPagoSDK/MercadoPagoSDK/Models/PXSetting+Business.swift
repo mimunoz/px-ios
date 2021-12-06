@@ -1,6 +1,6 @@
 import Foundation
 
-internal extension PXSetting {
+extension PXSetting {
     class func getSettingByBin(_ settings: [PXSetting]!, bin: String!) -> [PXSetting]? {
         var selectedSetting = [PXSetting]()
         if settings != nil && settings.count > 0 {
@@ -12,7 +12,6 @@ internal extension PXSetting {
                     }
                 }
             }
-
         }
         return selectedSetting.isEmpty ? nil : selectedSetting
     }

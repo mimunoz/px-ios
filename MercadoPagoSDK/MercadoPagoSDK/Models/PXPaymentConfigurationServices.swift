@@ -1,7 +1,6 @@
 import UIKit
 
-internal class PXPaymentConfigurationServices {
-
+class PXPaymentConfigurationServices {
     private var configurations: Set<PXPaymentMethodConfiguration> = []
     private var defaultDiscountConfiguration: PXDiscountConfiguration?
 
@@ -58,7 +57,7 @@ internal class PXPaymentConfigurationServices {
         }
         return nil
     }
-    
+
     // Amount for Payment Method
     func getAmount(paymentOptionId: String?, paymentMethodId: String?, paymentTypeId: String?) -> Double? {
         guard let paymentOptionId = paymentOptionId else {
@@ -69,7 +68,7 @@ internal class PXPaymentConfigurationServices {
         }
         return nil
     }
-    
+
     // Tax Free Amount for Payment Method
     func getTaxFreeAmount(paymentOptionId: String?, paymentMethodId: String?, paymentTypeId: String?) -> Double? {
         guard let paymentOptionId = paymentOptionId else {
@@ -80,7 +79,7 @@ internal class PXPaymentConfigurationServices {
         }
         return nil
     }
-    
+
     // No Discount Amount for Payment Method
     func getNoDiscountAmount(paymentOptionId: String?, paymentMethodId: String?, paymentTypeId: String?) -> Double? {
         guard let paymentOptionId = paymentOptionId else {

@@ -6,7 +6,6 @@ import Foundation
  */
 @objcMembers
 public final class PXPaymentCongrats: NSObject {
-
     // Header
     private(set) var type: PXCongratsType = .rejected
     private(set) var headerColor: UIColor?
@@ -50,7 +49,7 @@ public final class PXPaymentCongrats: NSObject {
 
     // Remedies
     private(set) var remedyViewData: PXRemedyViewData?
-    
+
     private(set) var creditsExpectationView: UIView?
 
     // Payment Info
@@ -77,12 +76,12 @@ public final class PXPaymentCongrats: NSObject {
 
     // Buttons
     private(set) var primaryButton: PXButton?
-    
+
     // AndesMessage
     private(set) var infoOperation: InfoOperation?
 
     // MARK: Initializer
-    public override init() {
+    override public init() {
         super.init()
     }
 }
@@ -95,7 +94,7 @@ extension PXPaymentCongrats {
      - returns: this builder `PXPaymentCongrats`
      */
     @discardableResult
-    internal func withHeaderColor(_ color: UIColor) -> PXPaymentCongrats {
+    func withHeaderColor(_ color: UIColor) -> PXPaymentCongrats {
         self.headerColor = color
         return self
     }
@@ -107,7 +106,7 @@ extension PXPaymentCongrats {
      - returns: this builder `PXPaymentCongrats`
      */
     @discardableResult
-    internal func withHeaderImage(_ image: UIImage?) -> PXPaymentCongrats {
+    func withHeaderImage(_ image: UIImage?) -> PXPaymentCongrats {
         self.headerImage = image
         return self
     }
@@ -118,7 +117,7 @@ extension PXPaymentCongrats {
      - returns: this builder `PXPaymentCongrats`
      */
     @discardableResult
-    internal func withHeaderBadgeImage(_ image: UIImage?) -> PXPaymentCongrats {
+    func withHeaderBadgeImage(_ image: UIImage?) -> PXPaymentCongrats {
         self.headerBadgeImage = image
         return self
     }
@@ -129,13 +128,13 @@ extension PXPaymentCongrats {
      - returns: this builder `PXPaymentCongrats`
      */
     @discardableResult
-    internal func withInstructions(_ instruction: PXInstruction?) -> PXPaymentCongrats {
+    func withInstructions(_ instruction: PXInstruction?) -> PXPaymentCongrats {
         self.instructions = instruction
         return self
     }
-    
+
     @discardableResult
-    internal func withInfoOperation(_ infoOperation: InfoOperation?) -> PXPaymentCongrats {
+    func withInfoOperation(_ infoOperation: InfoOperation?) -> PXPaymentCongrats {
         self.infoOperation = infoOperation
         return self
     }
@@ -148,7 +147,7 @@ extension PXPaymentCongrats {
      - returns: this builder `PXPaymentCongrats`
      */
     @discardableResult
-    internal func withRemedyViewData(_ remedyViewData: PXRemedyViewData?) -> PXPaymentCongrats {
+    func withRemedyViewData(_ remedyViewData: PXRemedyViewData?) -> PXPaymentCongrats {
         self.remedyViewData = remedyViewData
         return self
     }
@@ -159,35 +158,35 @@ extension PXPaymentCongrats {
     - returns: this builder `PXPaymentCongrats`
      */
     @discardableResult
-    internal func withFlowBehaviorResult(_ result: PXResultKey) -> PXPaymentCongrats {
+    func withFlowBehaviorResult(_ result: PXResultKey) -> PXPaymentCongrats {
         self.internalFlowBehaviourResult = result
         return self
     }
 
     /**
-    The data that will be requested for internal tracking
+    The data that will be requested for tracking
     - parameter trackingProperties: a `[String:Any]`
     - returns: this builder `PXPaymentCongrats`
     */
     @discardableResult
-    internal func withTrackingProperties(_ trackingProperties: [String: Any]) -> PXPaymentCongrats {
+    func withTrackingProperties(_ trackingProperties: [String: Any]) -> PXPaymentCongrats {
         self.internalTrackingValues = trackingProperties
         return self
     }
 
     @discardableResult
-    internal func withTrackingPath(_ event: TrackingEvents?) -> PXPaymentCongrats {
+    func withTrackingPath(_ event: TrackingEvents?) -> PXPaymentCongrats {
         self.internalTrackingPath = event
         return self
     }
-  
+
     /**
     Navigate to another place when closing Congrats
     - parameter redirectURL: a `URL`
     - returns: this builder `PXPaymentCongrats`
     */
     @discardableResult
-    internal func withRedirectURLs(_ redirectURL: URL?) -> PXPaymentCongrats {
+    func withRedirectURLs(_ redirectURL: URL?) -> PXPaymentCongrats {
         self.redirectURL = redirectURL
         return self
     }
@@ -198,7 +197,7 @@ extension PXPaymentCongrats {
     - returns: this builder `PXPaymentCongrats`
     */
     @discardableResult
-    internal func shouldAutoReturn(_ shouldAutoReturn: Bool) -> PXPaymentCongrats {
+    func shouldAutoReturn(_ shouldAutoReturn: Bool) -> PXPaymentCongrats {
         self.shouldAutoReturn = shouldAutoReturn
         return self
     }
@@ -207,7 +206,7 @@ extension PXPaymentCongrats {
     Sets the navigation handler used by checkout. Internal use only.
     - parameter navHandler: a `PXNavigationHandler`
     */
-    internal func start(using navHandler: PXNavigationHandler, with finishButtonAnimation: (() -> Void)?) {
+    func start(using navHandler: PXNavigationHandler, with finishButtonAnimation: (() -> Void)?) {
         let viewModel = PXPaymentCongratsViewModel(paymentCongrats: self)
         viewModel.launch(navigationHandler: navHandler, showWithAnimation: false, finishButtonAnimation: finishButtonAnimation)
     }
@@ -428,7 +427,7 @@ extension PXPaymentCongrats {
     - returns: this builder `PXPaymentCongrats`
     */
     @discardableResult
-    internal func withStatementDescription(_ statementDescription: String?) -> PXPaymentCongrats {
+    func withStatementDescription(_ statementDescription: String?) -> PXPaymentCongrats {
         self.statementDescription = statementDescription
         return self
     }

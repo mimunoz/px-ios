@@ -1,7 +1,7 @@
 import Foundation
 import MLCardDrawer
 
-internal class PXCardDataFactory: NSObject, CardData {
+class PXCardDataFactory: NSObject, CardData {
     var name = ""
     var number = ""
     var securityCode = ""

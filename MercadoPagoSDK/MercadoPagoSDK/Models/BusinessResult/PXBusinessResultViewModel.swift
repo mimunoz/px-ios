@@ -2,14 +2,13 @@ import UIKit
 import MLBusinessComponents
 
 class PXBusinessResultViewModel: NSObject {
-
     let businessResult: PXBusinessResult
     let pointsAndDiscounts: PXPointsAndDiscounts?
     let paymentData: PXPaymentData
     let amountHelper: PXAmountHelper
     var callback: ((PaymentResult.CongratsState, String?) -> Void)?
 
-    //Default Image
+    // Default Image
     private lazy var approvedIconName = "default_item_icon"
 
     init(businessResult: PXBusinessResult, paymentData: PXPaymentData, amountHelper: PXAmountHelper, pointsAndDiscounts: PXPointsAndDiscounts?) {
@@ -37,7 +36,7 @@ class PXBusinessResultViewModel: NSObject {
                 }
 
                 if let autoReturnUrl = autoReturnUrl {
-                    PXNewResultUtil.openURL(url: autoReturnUrl, success: { (_) in
+                    PXNewResultUtil.openURL(url: autoReturnUrl, success: { _ in
                         callback(PaymentResult.CongratsState.EXIT, nil)
                     })
                 } else {
@@ -96,7 +95,7 @@ class PXBusinessResultViewModel: NSObject {
     }
 
     func creditsExpectationView() -> UIView? {
-        guard paymentData.paymentMethod?.id == PXPaymentTypes.CONSUMER_CREDITS.rawValue else { return nil}
+        guard paymentData.paymentMethod?.id == PXPaymentTypes.CONSUMER_CREDITS.rawValue else { return nil }
         if let resultInfo = amountHelper.getPaymentData().getPaymentMethod()?.creditsDisplayInfo?.resultInfo,
             let title = resultInfo.title,
             let subtitle = resultInfo.subtitle,
@@ -133,7 +132,7 @@ class PXBusinessResultViewModel: NSObject {
         return businessResult.getSecondaryAction() != nil ? businessResult.getSecondaryAction() : PXCloseLinkAction()
     }
 
-    internal func getRedirectUrl() -> URL? {
+    func getRedirectUrl() -> URL? {
         if let redirectURL = pointsAndDiscounts?.redirectUrl, !redirectURL.isEmpty {
             return getUrl(url: redirectURL, appendLanding: true)
         }
@@ -213,7 +212,7 @@ extension PXBusinessResultViewModel {
             .withCustomSorting(pointsAndDiscounts?.customOrder)
             .withExpenseSplit(pointsAndDiscounts?.expenseSplit)
             .withAutoReturn(pointsAndDiscounts?.autoReturn)
-        
+
         paymentCongratsData.withInstructions(pointsAndDiscounts?.instruction)
 
         // Payment Info
@@ -247,15 +246,15 @@ extension PXBusinessResultViewModel {
         paymentCongratsData.withTrackingProperties(getTrackingProperties())
             .withFlowBehaviorResult(getFlowBehaviourResult())
             .withTrackingPath(getTrackingPath())
-        
+
         // URL Managment
         paymentCongratsData.withRedirectURLs(getRedirectUrl())
             .shouldAutoReturn(shouldAutoReturn())
-        
+
         if let infoOperation = pointsAndDiscounts?.infoOperation {
             paymentCongratsData.withInfoOperation(infoOperation)
         }
-        
+
         return paymentCongratsData
     }
 

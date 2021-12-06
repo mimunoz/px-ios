@@ -10,7 +10,7 @@ import Foundation
     case pay_button
     case pay_button_progress
 
-    internal var getValue: String {
+    var getValue: String {
         switch self {
         case .total_to_pay, .total_to_pay_onetap: return "total_row_title_default"
         case .how_to_pay: return "¿Cómo quieres pagar?"
@@ -19,7 +19,7 @@ import Foundation
         }
     }
 
-    internal var description: String {
+    var description: String {
         switch self {
         case .total_to_pay: return "total_to_pay"
         case .total_to_pay_onetap: return "total_to_pay_onetap"

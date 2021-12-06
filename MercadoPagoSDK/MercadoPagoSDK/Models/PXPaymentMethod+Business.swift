@@ -2,25 +2,24 @@ import Foundation
 
 /// :nodoc:
 extension PXPaymentMethod {
-
-    internal var isIssuerRequired: Bool {
+    var isIssuerRequired: Bool {
         return isAdditionalInfoNeeded("issuer_id")
     }
 
-    internal var isIdentificationRequired: Bool {
+    var isIdentificationRequired: Bool {
         if isAdditionalInfoNeeded("cardholder_identification_number") || isAdditionalInfoNeeded("identification_number") || isEntityTypeRequired {
             return true
         }
         return false
     }
-    internal var isIdentificationTypeRequired: Bool {
+    var isIdentificationTypeRequired: Bool {
         if isAdditionalInfoNeeded("cardholder_identification_type") || isAdditionalInfoNeeded("identification_type") || isEntityTypeRequired {
             return true
         }
         return false
     }
 
-    internal var isPayerInfoRequired: Bool {
+    var isPayerInfoRequired: Bool {
         if isAdditionalInfoNeeded("bolbradesco_name") || isAdditionalInfoNeeded("bolbradesco_identification_type") || isAdditionalInfoNeeded("bolbradesco_identification_number")
             || isAdditionalInfoNeeded("pec_name") || isAdditionalInfoNeeded("pec_identification_type") || isAdditionalInfoNeeded("pec_identification_number") {
             return true
@@ -28,47 +27,46 @@ extension PXPaymentMethod {
         return false
     }
 
-    internal var isEntityTypeRequired: Bool {
+    var isEntityTypeRequired: Bool {
         return isAdditionalInfoNeeded("entity_type")
     }
 
-    internal var isDigitalCurrency: Bool {
+    var isDigitalCurrency: Bool {
         if let paymentTypeId = PXPaymentTypes(rawValue: self.paymentTypeId) {
             return paymentTypeId.isDigitalCurrency()
         }
         return false
     }
 
-    internal var isCard: Bool {
+    var isCard: Bool {
         if let paymentTypeId = PXPaymentTypes(rawValue: self.paymentTypeId) {
             return paymentTypeId.isCard()
         }
         return false
     }
 
-    internal var isCreditCard: Bool {
+    var isCreditCard: Bool {
         if let paymentTypeId = PXPaymentTypes(rawValue: self.paymentTypeId) {
             return paymentTypeId.isCreditCard()
         }
         return false
-
     }
 
-    internal var isPrepaidCard: Bool {
+    var isPrepaidCard: Bool {
         if let paymentTypeId = PXPaymentTypes(rawValue: self.paymentTypeId) {
             return paymentTypeId.isPrepaidCard()
         }
         return false
     }
 
-    internal var isDebitCard: Bool {
+    var isDebitCard: Bool {
         if let paymentTypeId = PXPaymentTypes(rawValue: self.paymentTypeId) {
             return paymentTypeId.isDebitCard()
         }
         return false
     }
 
-    internal func isSecurityCodeRequired(_ bin: String) -> Bool {
+    func isSecurityCodeRequired(_ bin: String) -> Bool {
         let settings: [PXSetting]? = PXSetting.getSettingByBin(self.settings, bin: bin)
         if let setting = settings?.first, let securityCode = setting.securityCode {
             if securityCode.length != 0 {
@@ -78,7 +76,7 @@ extension PXPaymentMethod {
         return false
     }
 
-    internal func isAdditionalInfoNeeded(_ param: String!) -> Bool {
+    func isAdditionalInfoNeeded(_ param: String!) -> Bool {
         if let additionalInfoNeeded = additionalInfoNeeded {
             for info in additionalInfoNeeded where info == param {
                 return true
@@ -87,11 +85,11 @@ extension PXPaymentMethod {
         return false
     }
 
-    internal var isAccountMoney: Bool {
+    var isAccountMoney: Bool {
         return self.id == PXPaymentTypes.ACCOUNT_MONEY.rawValue
     }
 
-    internal func secCodeLenght(_ bin: String? = nil) -> Int {
+    func secCodeLenght(_ bin: String? = nil) -> Int {
         if let bin = bin {
             var binSettings: [PXSetting]?
             binSettings = PXSetting.getSettingByBin(self.settings, bin: bin)
@@ -107,27 +105,27 @@ extension PXPaymentMethod {
 
     open func cardNumberLenght() -> Int {
         guard let firstSetting = settings.first, let firstSettingCardLength = firstSetting.cardNumber?.length else {
-            return 0 //Si no tiene settings la longitud es cero
+            return 0 // Si no tiene settings la longitud es cero
         }
 
         let filterList = settings.filter({ return $0.cardNumber?.length == firstSettingCardLength })
         if filterList.count == self.settings.count {
             return firstSettingCardLength
         } else {
-            return 0 //si la longitud de sus numberos, en sus settings no es siempre la misma entonces responde 0
+            return 0 // si la longitud de sus numberos, en sus settings no es siempre la misma entonces responde 0
         }
     }
 
     open func secCodeInBack() -> Bool {
         guard let firstSetting = settings.first, let firstSettingCardLocation = firstSetting.securityCode?.cardLocation else {
-            return true //si no tiene settings, por defecto el codigo de seguridad ira atras
+            return true // si no tiene settings, por defecto el codigo de seguridad ira atras
         }
 
         let filterList = settings.filter({ return $0.securityCode?.cardLocation == firstSettingCardLocation })
         if filterList.count == self.settings.count {
             return firstSettingCardLocation == "back"
         } else {
-            return true //si sus settings no coinciden el codigo ira atras por default
+            return true // si sus settings no coinciden el codigo ira atras por default
         }
     }
 
@@ -135,8 +133,7 @@ extension PXPaymentMethod {
         return self.isCard || self.isAccountMoney || self.isDigitalCurrency
     }
 
-    internal func conformsPaymentPreferences(_ paymentPreference: PXPaymentPreference?) -> Bool {
-
+    func conformsPaymentPreferences(_ paymentPreference: PXPaymentPreference?) -> Bool {
         if paymentPreference == nil {
             return true
         }
@@ -167,17 +164,17 @@ extension PXPaymentMethod {
     }
 
     // IMAGE
-    internal func getImage() -> UIImage? {
+    func getImage() -> UIImage? {
         return ResourceManager.shared.getImageFor(self)
     }
 
-    internal func setExternalPaymentMethodImage(externalImage: UIImage?) {
+    func setExternalPaymentMethodImage(externalImage: UIImage?) {
         if let imageResource = externalImage {
             externalPaymentPluginImageData = imageResource.pngData() as NSData?
         }
     }
 
-    internal func getImageForExtenalPaymentMethod() -> UIImage? {
+    func getImageForExtenalPaymentMethod() -> UIImage? {
         if let imageDataStream = externalPaymentPluginImageData as Data? {
             return UIImage(data: imageDataStream)
         }
@@ -186,7 +183,7 @@ extension PXPaymentMethod {
 
     // COLORS
     // First Color
-    internal func getColor(bin: String?) -> UIColor {
+    func getColor(bin: String?) -> UIColor {
         var settings: [PXSetting]?
 
         if let bin = bin {
@@ -196,7 +193,7 @@ extension PXPaymentMethod {
         return ResourceManager.shared.getColorFor(self, settings: settings)
     }
     // Font Color
-    internal func getFontColor(bin: String?) -> UIColor {
+    func getFontColor(bin: String?) -> UIColor {
         var settings: [PXSetting]?
 
         if let bin = bin {
@@ -206,7 +203,7 @@ extension PXPaymentMethod {
         return ResourceManager.shared.getFontColorFor(self, settings: settings)
     }
     // Edit Font Color
-    internal func getEditingFontColor(bin: String?) -> UIColor {
+    func getEditingFontColor(bin: String?) -> UIColor {
         var settings: [PXSetting]?
 
         if let bin = bin {
@@ -218,7 +215,7 @@ extension PXPaymentMethod {
 
     // MASKS
     // Label Mask
-    internal func getLabelMask(bin: String?) -> String {
+    func getLabelMask(bin: String?) -> String {
         var settings: [PXSetting]?
 
         if let bin = bin {
@@ -227,7 +224,7 @@ extension PXPaymentMethod {
         return ResourceManager.shared.getLabelMaskFor(self, settings: settings)
     }
     // Edit Text Mask
-    internal func getEditTextMask(bin: String?) -> String {
+    func getEditTextMask(bin: String?) -> String {
         var settings: [PXSetting]?
 
         if let bin = bin {
@@ -244,14 +241,12 @@ extension PXPaymentMethod {
         return self.id.contains(PXPaymentTypes.PEC.rawValue)
     }
 
-    internal var isPlugin: Bool {
+    var isPlugin: Bool {
         return paymentTypeId == PXPaymentMethodPlugin.PAYMENT_METHOD_TYPE_ID
     }
 
-    internal func getAccreditationTimeMessage() -> String? {
-
+    func getAccreditationTimeMessage() -> String? {
         if let accreditationMinutes = self.accreditationTime {
-
             var accreditationMessage: String = ""
 
             if accreditationMinutes == 0 {

@@ -1,6 +1,6 @@
 import Foundation
 
-internal final class PXPaymentFlow: NSObject, PXFlow {
+final class PXPaymentFlow: NSObject, PXFlow {
     private var validationProgramId: String?
     let model: PXPaymentFlowModel
     weak var resultHandler: PXPaymentResultHandlerProtocol?
@@ -29,7 +29,7 @@ internal final class PXPaymentFlow: NSObject, PXFlow {
             self.model.amountHelper?.getPaymentData().campaign?.id = discountToken
         }
     }
-    
+
     func setupValidationProgramId(validationProgramId: String?) {
         self.validationProgramId = validationProgramId
     }

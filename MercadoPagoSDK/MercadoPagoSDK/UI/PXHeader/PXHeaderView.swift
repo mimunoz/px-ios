@@ -1,6 +1,6 @@
 import UIKit
 
-internal final class PXHeaderView: PXComponentView {
+final class PXHeaderView: PXComponentView {
     weak var delegate: PXHeaderTrackingProtocol?
     var circleImage: PXUIImageView?
     var badgeImage: PXAnimatedImageView?

@@ -1,7 +1,6 @@
 import Foundation
 
-internal struct PXDisabledOption {
-
+struct PXDisabledOption {
     private var disabledPaymentMethodId: String?
     private var disabledCardId: String?
     private var status: PXStatus?
@@ -14,8 +13,8 @@ internal struct PXDisabledOption {
         if let paymentResult = paymentResult {
             status = getStatusFor(statusDetail: paymentResult.statusDetail)
 
-            guard let paymentMethod = paymentResult.paymentData?.getPaymentMethod() else {return}
-            guard disabledStatusDetails.contains(paymentResult.statusDetail) else {return}
+            guard let paymentMethod = paymentResult.paymentData?.getPaymentMethod() else { return }
+            guard disabledStatusDetails.contains(paymentResult.statusDetail) else { return }
 
             if !paymentMethod.isCard {
                 disabledPaymentMethodId = paymentMethod.getId()
@@ -54,12 +53,12 @@ internal struct PXDisabledOption {
 // MARK: Getters and public methods
 extension PXDisabledOption {
     public func isPMDisabled(paymentMethodId: String?) -> Bool {
-        guard let disabledPaymentMethodId = disabledPaymentMethodId, let paymentMethodId = paymentMethodId else {return false}
+        guard let disabledPaymentMethodId = disabledPaymentMethodId, let paymentMethodId = paymentMethodId else { return false }
         return disabledPaymentMethodId == paymentMethodId
     }
 
     public func isCardIdDisabled(cardId: String?) -> Bool {
-        guard let disabledCardId = disabledCardId, let cardId = cardId else {return false}
+        guard let disabledCardId = disabledCardId, let cardId = cardId else { return false }
         return disabledCardId == cardId
     }
 

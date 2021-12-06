@@ -1,7 +1,7 @@
 import Foundation
 
-internal struct ApiDomain {
-    internal static let BASE_DOMAIN = "mercadopago.sdk."
+struct ApiDomain {
+    static let BASE_DOMAIN = "mercadopago.sdk."
     static let CREATE_PAYMENT = "\(BASE_DOMAIN)CustomService.createPayment"
     static let GET_TOKEN = "\(BASE_DOMAIN)GatewayService.getToken"
     static let CLONE_TOKEN = "\(BASE_DOMAIN)GatewayService.cloneToken"

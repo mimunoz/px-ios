@@ -1,8 +1,7 @@
 import Foundation
 
-internal class PaymentResult {
-
-    internal enum CongratsState: Int {
+class PaymentResult {
+    enum CongratsState: Int {
         case EXIT
         case SELECT_OTHER
         case RETRY
@@ -134,7 +133,7 @@ internal class PaymentResult {
     func isInvalidESC() -> Bool {
         return self.statusDetail == PXRejectedStatusDetail.INVALID_ESC.rawValue
     }
-    
+
     func isPixOrOfflinePayment() -> Bool {
         return self.statusDetail == PXRejectedStatusDetail.PENDING_WAITING_TRANSFER.rawValue &&
             self.status == PXPaymentStatus.PENDING.rawValue

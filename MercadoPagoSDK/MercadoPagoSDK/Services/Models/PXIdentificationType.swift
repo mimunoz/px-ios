@@ -23,7 +23,7 @@ open class PXIdentificationType: NSObject, Codable {
         case type
     }
 
-    required public convenience init(from decoder: Decoder) throws {
+    public required convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXIdentificationTypeKeys.self)
         let minLength: Int = try container.decodeIfPresent(Int.self, forKey: .minLength) ?? 0
         let maxLength: Int = try container.decodeIfPresent(Int.self, forKey: .maxLength) ?? 0
@@ -43,7 +43,7 @@ open class PXIdentificationType: NSObject, Codable {
         try container.encodeIfPresent(self.type, forKey: .type)
     }
 
-    internal func isNumberType() -> Bool {
+    func isNumberType() -> Bool {
         return self.type == "number"
     }
 
@@ -66,8 +66,7 @@ open class PXIdentificationType: NSObject, Codable {
         return try JSONDecoder().decode([PXIdentificationType].self, from: data)
     }
 
-    internal func validate(identification: String) -> Bool {
+    func validate(identification: String) -> Bool {
         return true
     }
-
 }

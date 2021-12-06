@@ -1,7 +1,6 @@
 import Foundation
 
-internal class SiteManager {
-
+class SiteManager {
     // TODO: REMOVE FORCE
     private var site: PXSite?
     private var currency: PXCurrency!

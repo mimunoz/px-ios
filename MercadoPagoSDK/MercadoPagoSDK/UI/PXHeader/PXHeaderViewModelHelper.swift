@@ -1,7 +1,7 @@
 import UIKit
 
 // MARK: Build Helpers
-internal extension PXResultViewModel {
+extension PXResultViewModel {
     func iconImageHeader() -> UIImage? {
         if paymentResult.isAccepted() {
             if self.paymentResult.isApproved() {
@@ -16,7 +16,6 @@ internal extension PXResultViewModel {
         } else {
             return preference.getHeaderRejectedIcon(paymentResult.paymentData?.paymentMethod)
         }
-
     }
 
     func badgeImage() -> UIImage? {

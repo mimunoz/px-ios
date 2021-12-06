@@ -4,26 +4,26 @@ import UIKit
  Data needed for payment.
  */
 @objcMembers public class PXPaymentData: NSObject, NSCopying {
-    internal var paymentMethod: PXPaymentMethod?
-    internal var issuer: PXIssuer? {
+    var paymentMethod: PXPaymentMethod?
+    var issuer: PXIssuer? {
         didSet {
             processIssuer()
         }
     }
-    internal var payerCost: PXPayerCost?
-    internal var token: PXToken?
-    internal var payer: PXPayer?
-    internal var transactionAmount: NSDecimalNumber?
-    internal var transactionDetails: PXTransactionDetails?
-    internal private(set) var discount: PXDiscount?
-    internal private(set) var campaign: PXCampaign?
-    internal private(set) var consumedDiscount: Bool?
-    internal private(set) var discountDescription: PXDiscountDescription?
+    var payerCost: PXPayerCost?
+    var token: PXToken?
+    var payer: PXPayer?
+    var transactionAmount: NSDecimalNumber?
+    var transactionDetails: PXTransactionDetails?
+    private(set) var discount: PXDiscount?
+    private(set) var campaign: PXCampaign?
+    private(set) var consumedDiscount: Bool?
+    private(set) var discountDescription: PXDiscountDescription?
     private let paymentTypesWithoutInstallments = [PXPaymentTypes.PREPAID_CARD.rawValue]
-    internal var paymentOptionId: String?
-    internal var amount: Double?
-    internal var taxFreeAmount: Double?
-    internal var noDiscountAmount: Double?
+    var paymentOptionId: String?
+    var amount: Double?
+    var taxFreeAmount: Double?
+    var noDiscountAmount: Double?
 
     /// :nodoc:
     public func copy(with zone: NSZone? = nil) -> Any {
@@ -46,8 +46,7 @@ import UIKit
         return copyObj
     }
 
-    internal func isComplete(shouldCheckForToken: Bool = true) -> Bool {
-
+    func isComplete(shouldCheckForToken: Bool = true) -> Bool {
         guard let paymentMethod = self.paymentMethod else {
             return false
         }
@@ -88,23 +87,23 @@ import UIKit
         return true
     }
 
-    internal func hasToken() -> Bool {
+    func hasToken() -> Bool {
         return token != nil
     }
 
-    internal func hasIssuer() -> Bool {
+    func hasIssuer() -> Bool {
         return issuer != nil
     }
 
-    internal func hasPayerCost() -> Bool {
+    func hasPayerCost() -> Bool {
         return payerCost != nil
     }
 
-    internal func hasPaymentMethod() -> Bool {
+    func hasPaymentMethod() -> Bool {
         return paymentMethod != nil
     }
 
-    internal func hasCustomerPaymentOption() -> Bool {
+    func hasCustomerPaymentOption() -> Bool {
         return hasPaymentMethod() && (self.paymentMethod!.isAccountMoney || (hasToken() && !String.isNullOrEmpty(self.token!.cardId)))
     }
 }
@@ -169,23 +168,20 @@ extension PXPaymentData {
     public func getRawAmount() -> NSDecimalNumber? {
         return transactionAmount
     }
-    
-    
+
     /**
      backend payment_option amount
      */
     public func getAmount() -> Double? {
         return amount
     }
-    
-    
+
     /**
      backend paymentt_option tax_free_amount
      */
     public func getTaxFreeAmount() -> Double? {
         return taxFreeAmount
     }
-    
 
     /**
      backend paymentt_option no_discount_amount
@@ -194,7 +190,7 @@ extension PXPaymentData {
         return noDiscountAmount
     }
 
-    internal func getTransactionAmountWithDiscount() -> Double? {
+    func getTransactionAmountWithDiscount() -> Double? {
         if let transactionAmount = transactionAmount {
             let transactionAmountDouble = transactionAmount.doubleValue
 
@@ -210,14 +206,14 @@ extension PXPaymentData {
 
 // MARK: Setters
 extension PXPaymentData {
-    internal func setDiscount(_ discount: PXDiscount?, withCampaign campaign: PXCampaign, consumedDiscount: Bool, discountDescription: PXDiscountDescription? = nil) {
+    func setDiscount(_ discount: PXDiscount?, withCampaign campaign: PXCampaign, consumedDiscount: Bool, discountDescription: PXDiscountDescription? = nil) {
         self.discount = discount
         self.campaign = campaign
         self.consumedDiscount = consumedDiscount
         self.discountDescription = discountDescription
     }
 
-    internal func updatePaymentDataWith(paymentMethod: PXPaymentMethod?) {
+    func updatePaymentDataWith(paymentMethod: PXPaymentMethod?) {
         guard let paymentMethod = paymentMethod else {
             return
         }
@@ -227,8 +223,8 @@ extension PXPaymentData {
         cleanPaymentOptionId()
         self.paymentMethod = paymentMethod
     }
-    
-    internal func updatePaymentDataWith(paymentMethod: PXPaymentMethod?, paymentOptionId: String?) {
+
+    func updatePaymentDataWith(paymentMethod: PXPaymentMethod?, paymentOptionId: String?) {
         guard let paymentMethod = paymentMethod else {
             return
         }
@@ -240,21 +236,21 @@ extension PXPaymentData {
         self.paymentOptionId = paymentOptionId
     }
 
-    internal func updatePaymentDataWith(token: PXToken?) {
+    func updatePaymentDataWith(token: PXToken?) {
         guard let token = token else {
             return
         }
         self.token = token
     }
 
-    internal func updatePaymentDataWith(payerCost: PXPayerCost?) {
+    func updatePaymentDataWith(payerCost: PXPayerCost?) {
         guard let payerCost = payerCost else {
             return
         }
         self.payerCost = payerCost
     }
 
-    internal func updatePaymentDataWith(issuer: PXIssuer?) {
+    func updatePaymentDataWith(issuer: PXIssuer?) {
         guard let issuer = issuer else {
             return
         }
@@ -262,7 +258,7 @@ extension PXPaymentData {
         self.issuer = issuer
     }
 
-    internal func updatePaymentDataWith(payer: PXPayer?) {
+    func updatePaymentDataWith(payer: PXPayer?) {
         guard let payer = payer else {
             return
         }
@@ -272,32 +268,32 @@ extension PXPaymentData {
 
 // MARK: Clears
 extension PXPaymentData {
-    internal func cleanToken() {
+    func cleanToken() {
         self.token = nil
     }
 
-    internal func cleanPayerCost() {
+    func cleanPayerCost() {
         self.payerCost = nil
     }
 
-    internal func cleanIssuer() {
+    func cleanIssuer() {
         self.issuer = nil
     }
 
-    internal func cleanPaymentMethod() {
+    func cleanPaymentMethod() {
         self.paymentMethod = nil
     }
-    
-    internal func cleanPaymentOptionId() {
+
+    func cleanPaymentOptionId() {
         self.paymentOptionId = nil
     }
 
-    internal func clearCollectedData() {
+    func clearCollectedData() {
         clearPaymentMethodData()
         clearPayerData()
     }
 
-    internal func clearPaymentMethodData() {
+    func clearPaymentMethodData() {
         self.paymentMethod = nil
         self.issuer = nil
         self.payerCost = nil
@@ -307,12 +303,12 @@ extension PXPaymentData {
         // No borrar el descuento
     }
 
-    internal func clearPayerData() {
+    func clearPayerData() {
         self.payer = self.payer?.copy() as? PXPayer
         self.payer?.clearCollectedData()
     }
 
-    internal func clearDiscount() {
+    func clearDiscount() {
         self.discount = nil
         self.campaign = nil
         self.consumedDiscount = nil

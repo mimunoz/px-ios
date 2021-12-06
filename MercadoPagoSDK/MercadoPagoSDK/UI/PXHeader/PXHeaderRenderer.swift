@@ -1,8 +1,7 @@
 import UIKit
 
-internal final class PXHeaderRenderer: NSObject {
-
-    //Image
+final class PXHeaderRenderer: NSObject {
+    // Image
     let IMAGE_WIDTH: CGFloat = 90.0
     let IMAGE_HEIGHT: CGFloat = 90.0
 
@@ -10,14 +9,14 @@ internal final class PXHeaderRenderer: NSObject {
     let BADGE_HORIZONTAL_OFFSET: CGFloat = -6.0
     let BADGE_VERTICAL_OFFSET: CGFloat = 0.0
 
-    //Image Title
+    // Image Title
     let STATUS_TITLE_HEIGHT: CGFloat = 18.0
     static let LABEL_FONT_SIZE: CGFloat = PXLayout.XS_FONT
 
-    //Text
+    // Text
     static let TITLE_FONT_SIZE: CGFloat = PXLayout.XXXL_FONT
 
-    //Close Button
+    // Close Button
     let CLOSE_BUTTON_SIZE: CGFloat = 42
 
     let CONTENT_WIDTH_PERCENT: CGFloat = 86.0
@@ -27,7 +26,7 @@ internal final class PXHeaderRenderer: NSObject {
         headerView.backgroundColor = header.props.backgroundColor
         headerView.translatesAutoresizingMaskIntoConstraints = false
 
-        //Image
+        // Image
         if let imageURL = header.props.imageURL, imageURL.isNotEmpty {
             let pximage = PXUIImage(url: imageURL)
             headerView.circleImage = buildCircleImage(with: pximage)
@@ -40,13 +39,13 @@ internal final class PXHeaderRenderer: NSObject {
             PXLayout.pinTop(view: circleImage, withMargin: PXLayout.XXXL_MARGIN).isActive = true
         }
 
-        //Badge Image
+        // Badge Image
         headerView.badgeImage = buildBadgeImage(with: header.props.statusImage)
         headerView.addSubview(headerView.badgeImage!)
         PXLayout.pinRight(view: headerView.badgeImage!, to: headerView.circleImage!, withMargin: BADGE_HORIZONTAL_OFFSET).isActive = true
         PXLayout.pinBottom(view: headerView.badgeImage!, to: headerView.circleImage!, withMargin: BADGE_VERTICAL_OFFSET).isActive = true
 
-        //Close button
+        // Close button
         if let closeAction = header.props.closeAction {
             let button = buildCloseButton()
             headerView.closeButton = button
@@ -61,12 +60,12 @@ internal final class PXHeaderRenderer: NSObject {
             PXLayout.pinLeft(view: button, to: headerView, withMargin: PXLayout.XXXS_MARGIN).isActive = true
         }
 
-        //Status Label
+        // Status Label
         headerView.statusLabel = buildStatusLabel(with: header.props.labelText, in: headerView, onBottomOf: headerView.circleImage!)
         PXLayout.centerHorizontally(view: headerView.statusLabel!, to: headerView.statusLabel!.superview!).isActive = true
         PXLayout.matchWidth(ofView: headerView.statusLabel!, toView: headerView.statusLabel!.superview!, withPercentage: CONTENT_WIDTH_PERCENT).isActive = true
 
-        //Message Label
+        // Message Label
         headerView.messageLabel = buildMessageLabel(with: header.props.title)
         headerView.addSubview(headerView.messageLabel!)
         PXLayout.centerHorizontally(view: headerView.messageLabel!, to: headerView.messageLabel!.superview!).isActive = true

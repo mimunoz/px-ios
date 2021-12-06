@@ -1,8 +1,7 @@
 import Foundation
 import UIKit
 
-internal extension UIColor {
-
+extension UIColor {
     class func UIColorFromRGB(_ rgbValue: UInt) -> UIColor {
         return UIColor(
             red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
@@ -25,7 +24,7 @@ internal extension UIColor {
         case 8: (alpha, red, green, blue) = (hexInt >> 24, hexInt >> 16 & 0xFF, hexInt >> 8 & 0xFF, hexInt & 0xFF) // AARRGGBB
         default: return UIColor.black
         }
-        return UIColor(red: CGFloat(red)/255, green: CGFloat(green)/255, blue: CGFloat(blue)/255, alpha: CGFloat(alpha)/255)
+        return UIColor(red: CGFloat(red) / 255, green: CGFloat(green) / 255, blue: CGFloat(blue) / 255, alpha: CGFloat(alpha) / 255)
     }
 
     convenience init(red: Int, green: Int, blue: Int) {
@@ -147,7 +146,7 @@ internal extension UIColor {
 }
 
 // COMPONENTS
-internal extension UIColor {
+extension UIColor {
     class var pxWarmGray: UIColor {
         return UIColor(white: 153.0 / 255.0, alpha: 1.0)
     }

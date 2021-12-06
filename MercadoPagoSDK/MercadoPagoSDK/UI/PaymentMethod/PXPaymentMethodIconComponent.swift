@@ -1,6 +1,6 @@
 import UIKit
 
-internal class PXPaymentMethodIconComponent: PXComponentizable {
+class PXPaymentMethodIconComponent: PXComponentizable {
     var props: PXPaymentMethodIconProps
 
     init(props: PXPaymentMethodIconProps) {
@@ -11,7 +11,7 @@ internal class PXPaymentMethodIconComponent: PXComponentizable {
     }
 }
 
-internal class PXPaymentMethodIconProps {
+class PXPaymentMethodIconProps {
     var paymentMethodIcon: UIImage?
 
     init(paymentMethodIcon: UIImage?) {

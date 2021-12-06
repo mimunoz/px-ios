@@ -2,7 +2,7 @@ import Foundation
 
 // MARK: - MoneyIn "ChoExpress"
 extension MercadoPagoCheckoutViewModel {
-    internal func getPreferenceDefaultPaymentOption() -> PaymentMethodOption? {
+    func getPreferenceDefaultPaymentOption() -> PaymentMethodOption? {
         guard let cardId = amountHelper.preference.paymentPreference.cardId else {
             return nil
         }

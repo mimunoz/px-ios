@@ -1,11 +1,11 @@
 import Foundation
 
-@objc internal protocol PXComponentizable {
+@objc protocol PXComponentizable {
     func render() -> UIView
     @objc optional func oneTapRender() -> UIView
 }
 
-internal protocol PXXibComponentizable {
+protocol PXXibComponentizable {
     func xibName() -> String
     func containerView() -> UIView
     func renderXib() -> UIView

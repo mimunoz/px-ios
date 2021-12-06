@@ -5,8 +5,7 @@ import Foundation
  */
 @objcMembers
 open class PXAdvancedConfiguration: NSObject {
-
-    internal var productId: String?
+    var productId: String?
 
     // MARK: Public accessors.
     /**
@@ -21,7 +20,7 @@ open class PXAdvancedConfiguration: NSObject {
      */
     @available(*, deprecated)
     open var escEnabled: Bool = true
-    
+
     /**
      Add the possibility to accept cards from people different than the user.
      If set as true, then it will be accept.
@@ -38,7 +37,6 @@ open class PXAdvancedConfiguration: NSObject {
             return true
         }
         set(value) {
-            
         }
     }
 
@@ -92,7 +90,7 @@ open class PXAdvancedConfiguration: NSObject {
         self.productId = id
     }
 
-    internal func isESCEnabled() -> Bool {
+    func isESCEnabled() -> Bool {
         return true
     }
 }

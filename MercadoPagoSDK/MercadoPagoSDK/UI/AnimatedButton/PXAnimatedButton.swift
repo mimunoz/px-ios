@@ -1,7 +1,7 @@
 import Foundation
 import MLUI
 
-internal class PXAnimatedButton: UIButton {
+class PXAnimatedButton: UIButton {
     weak var animationDelegate: PXAnimatedButtonDelegate?
     var progressView: ProgressView?
     var status: Status = .normal
@@ -28,7 +28,7 @@ internal class PXAnimatedButton: UIButton {
         fatalError("init(coder:) has not been implemented")
     }
 
-    internal func anchorView() -> UIView? {
+    func anchorView() -> UIView? {
         return self.superview
     }
 

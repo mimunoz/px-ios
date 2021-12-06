@@ -1,12 +1,11 @@
 import UIKit
 
-internal typealias ChangeFunction = (_ view: UIView) -> Void
-internal typealias CompletionHandler = (_ finished: Bool) -> Void
-internal typealias PrepareHandler = (_ view: UIView) -> Void
+typealias ChangeFunction = (_ view: UIView) -> Void
+typealias CompletionHandler = (_ finished: Bool) -> Void
+typealias PrepareHandler = (_ view: UIView) -> Void
 
 /// An animation type that handles how the views will change. Most of these are simply wrappers around the standard `UIViewAnimation` methods. This gives `Spruce` the flexibility to work with any style of animating.
-internal protocol Animation {
-
+protocol Animation {
     /// Animate the given view using the `changeFunction`.
     ///
     /// - Parameters:

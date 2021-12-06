@@ -1,7 +1,6 @@
 import UIKit
 
-internal class PXHeaderComponent: PXComponentizable {
-
+class PXHeaderComponent: PXComponentizable {
     var props: PXHeaderProps
 
     init (props: PXHeaderProps) {

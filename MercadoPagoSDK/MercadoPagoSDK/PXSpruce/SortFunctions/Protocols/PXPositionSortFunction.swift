@@ -1,8 +1,7 @@
 import UIKit
 
 /// A position on the screen. Use this to define specific locations on the screen where the animation should start
-internal enum Position {
-
+enum Position {
     /// the top left point of the view
     case topLeft
 
@@ -32,13 +31,12 @@ internal enum Position {
 }
 
 /// A `DistanceSortFunction` that uses a position attribute to define an animation's starting point.
-internal protocol PositionSortFunction: DistanceSortFunction {
-
+protocol PositionSortFunction: DistanceSortFunction {
     /// the starting position of the animation
     var position: Position { get set }
 }
 
-internal extension PositionSortFunction {
+extension PositionSortFunction {
     func distancePoint(view: UIView, subviews: [View]) -> CGPoint {
         guard subviews.count > 0 else {
             return .zero

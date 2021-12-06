@@ -17,11 +17,11 @@ class PXOneTapHeaderViewModel {
         self.pxOneTapContext = pxOneTapContext
     }
 
-    internal func hasLargeHeaderOrLarger() -> Bool {
+    func hasLargeHeaderOrLarger() -> Bool {
         return self.splitConfiguration != nil && self.isLargeSummaryOrLarger()
     }
 
-    internal func hasMediumHeaderOrLarger() -> Bool {
+    func hasMediumHeaderOrLarger() -> Bool {
         let splitCondition = self.splitConfiguration != nil && self.isMediumSummaryOrLarger()
         let noSplitCondition = self.isLargeSummaryOrLarger()
         let hasMediumHeader = splitCondition || noSplitCondition

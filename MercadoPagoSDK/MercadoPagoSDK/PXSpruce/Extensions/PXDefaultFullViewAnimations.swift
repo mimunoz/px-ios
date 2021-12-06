@@ -1,7 +1,6 @@
 import UIKit
 
-internal extension PXSpruce {
-
+extension PXSpruce {
     /// Run a spruce style animation on this view. This method is the most basic form of a spruce animation and allows you to setup your view with stock spruce animations. Feel free to chain together animations that would work nicely together.
     ///
     /// - Note: Possible animations include
@@ -66,7 +65,6 @@ internal extension PXSpruce {
     ///   - prepare: a `bool` as to whether we should run `prepare` on your view for you. If set to `true`, then we will run `prepare` right before the animation using the stock animations that you provided. If `false`, then `prepare` will not run. (default is `true`)
     ///   - completion: a closure that is called upon the final animation completing. A `Bool` is passed into the closure letting you know if the animation has completed. **Note:** If you stop animations on the whole animating view, then `false` will be passed into the completion closure. However, if the final animation is allowed to proceed then `true` will be the value passed into the completion closure.
     func animate(_ animations: [StockAnimation], duration: TimeInterval = 0.3, animationType: Animation, sortFunction: SortFunction, prepare: Bool = true, completion: CompletionHandler? = nil) {
-
         if prepare {
             self.prepare(with: animations)
         }

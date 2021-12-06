@@ -1,6 +1,6 @@
 import Foundation
 
-internal class SecurityCodeViewModel {
+class SecurityCodeViewModel {
     var paymentMethod: PXPaymentMethod
     var cardInfo: PXCardInformationForm
     var reason: Reason
@@ -53,7 +53,7 @@ internal class SecurityCodeViewModel {
         return CGRect(x: getCardX(), y: getCardY(), width: getCardWidth(), height: getCardHeight())
     }
 
-    internal enum Reason: String {
+    enum Reason: String {
         case SAVED_CARD = "saved_card"
         case INVALID_ESC = "invalid_esc"
         case INVALID_FINGERPRINT = "invalid_fingerprint"
@@ -101,7 +101,7 @@ extension SecurityCodeViewModel {
         var properties: [String: Any] = [:]
         properties["payment_method_id"] = paymentMethod.getPaymentIdForTracking()
         if let token = cardInfo as? PXCardInformation {
-            properties["card_id"] =  token.getCardId()
+            properties["card_id"] = token.getCardId()
         }
         properties["reason"] = reason.rawValue
         return properties

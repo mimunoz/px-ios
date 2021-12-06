@@ -1,7 +1,6 @@
 import UIKit
 
-internal class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDelegate {
-
+class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDelegate {
     private static let MLNavigationBarBackgroundViewTag = 569242
 
     var callbackCancel: (() -> Void)?
@@ -31,7 +30,7 @@ internal class MercadoPagoUIViewController: UIViewController, UIGestureRecognize
         return ThemeManager.shared.statusBarStyle()
     }
 
-    open override func viewWillAppear(_ animated: Bool) {
+    override open func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.interactivePopGestureRecognizer?.isEnabled = false
         self.loadMPStyles()
@@ -53,7 +52,7 @@ internal class MercadoPagoUIViewController: UIViewController, UIGestureRecognize
         }
     }
 
-    open override func viewWillDisappear(_ animated: Bool) {
+    override open func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
 
         if shouldHideNavigationBar {
@@ -61,26 +60,26 @@ internal class MercadoPagoUIViewController: UIViewController, UIGestureRecognize
         }
     }
 
-    internal func loadMPStyles() {
+    func loadMPStyles() {
         if self.navigationController != nil {
             var titleDict: [NSAttributedString.Key: Any] = [:]
-            //Navigation bar colors
+            // Navigation bar colors
             let fontChosed = Utils.getFont(size: navBarFontSize)
             titleDict = [NSAttributedString.Key.foregroundColor: navBarTextColor, NSAttributedString.Key.font: fontChosed]
 
             if titleDict.count > 0 {
                 self.navigationController!.navigationBar.titleTextAttributes = titleDict
             }
-            
+
             self.navigationItem.hidesBackButton = true
-            
+
             self.navigationController?.navigationBar.tintColor = navBarBackgroundColor
             self.navigationController?.navigationBar.barTintColor = navBarBackgroundColor
             self.navigationController?.navigationBar.removeBottomLine()
             self.navigationController?.navigationBar.isTranslucent = false
             self.navigationController?.view.backgroundColor = navBarBackgroundColor
 
-            //Create navigation buttons
+            // Create navigation buttons
             displayBackButton()
         }
     }
@@ -93,7 +92,7 @@ internal class MercadoPagoUIViewController: UIViewController, UIGestureRecognize
         return UIInterfaceOrientationMask.portrait
     }
 
-    internal func displayBackButton() {
+    func displayBackButton() {
         if shouldShowBackArrow {
             let backButton = UIBarButtonItem()
             backButton.image = ResourceManager.shared.getImage("back")
@@ -106,11 +105,11 @@ internal class MercadoPagoUIViewController: UIViewController, UIGestureRecognize
         }
     }
 
-    internal func hideBackButton() {
+    func hideBackButton() {
         self.navigationItem.leftBarButtonItem = nil
     }
 
-    @objc internal func executeBack() {
+    @objc func executeBack() {
         if let targetNavigationController = navigationController {
             // TODO: Tener en cuenta las pantallas que no son de PX.
             let vcs = targetNavigationController.viewControllers.filter { $0.isKind(of: MercadoPagoUIViewController.self) }
@@ -140,12 +139,12 @@ internal class MercadoPagoUIViewController: UIViewController, UIGestureRecognize
         navigationController?.popViewController(animated: true)
     }
 
-    internal func hideLoading() {
+    func hideLoading() {
         PXComponentFactory.Loading.instance().hide()
         loadingView = nil
     }
 
-    internal func showLoading() {
+    func showLoading() {
         loadingView = PXComponentFactory.Loading.instance().showInView(view)
         if let lView = loadingView {
             view.bringSubviewToFront(lView)
@@ -153,15 +152,14 @@ internal class MercadoPagoUIViewController: UIViewController, UIGestureRecognize
     }
 
     open func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
-
-        //En caso de que el vc no sea root
+        // En caso de que el vc no sea root
         if navigationController != nil && navigationController!.viewControllers.count > 1 && navigationController!.viewControllers[0] != self {
             return true
         }
         return false
     }
 
-    func showNavBar() {        
+    func showNavBar() {
         if navigationController != nil {
             self.title = self.getNavigationBarTitle()
             self.navigationController?.navigationBar.setBackgroundImage(nil, for: UIBarMetrics.default)
@@ -178,7 +176,6 @@ internal class MercadoPagoUIViewController: UIViewController, UIGestureRecognize
             let titleDict: [NSAttributedString.Key: Any] = [NSAttributedString.Key.foregroundColor: ThemeManager.shared.navigationBar().tintColor, NSAttributedString.Key.font: font]
             self.navigationController?.navigationBar.titleTextAttributes = titleDict
         }
-
     }
 
     func hideNavBar() {
@@ -235,7 +232,7 @@ extension UINavigationController {
     }
 }
 
-internal extension UINavigationBar {
+extension UINavigationBar {
     func removeBottomLine() {
         self.setValue(true, forKey: "hidesShadow")
     }

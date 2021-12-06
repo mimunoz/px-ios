@@ -14,7 +14,7 @@ open class PXCardToken: NSObject, Encodable {
     let MAX_LENGTH_NUMBER: Int = 19
     let now = (Calendar.current as NSCalendar).components([.year, .month], from: Date())
 
-    internal init (cardNumber: String?, expirationMonth: Int, expirationYear: Int, securityCode: String?, cardholderName: String, docType: String, docNumber: String, requireESC: Bool = false) {
+    init (cardNumber: String?, expirationMonth: Int, expirationYear: Int, securityCode: String?, cardholderName: String, docType: String, docNumber: String, requireESC: Bool = false) {
         super.init()
         self.cardholder = PXCardHolder(name: cardholderName, identification: PXIdentification(number: docNumber, type: docType))
         self.cardholder?.name = cardholderName
@@ -26,11 +26,10 @@ open class PXCardToken: NSObject, Encodable {
     }
 
     override init() {
-
     }
 
     // Set if esc is enabled
-    internal func setRequireESC(escEnabled: Bool) {
+    func setRequireESC(escEnabled: Bool) {
         requireESC = escEnabled
     }
 
@@ -53,7 +52,6 @@ open class PXCardToken: NSObject, Encodable {
         try container.encodeIfPresent(self.expirationYear, forKey: .expirationYear)
         try container.encodeIfPresent(self.securityCode, forKey: .securityCode)
         try container.encodeIfPresent(self.requireESC, forKey: .requireEsc)
-
     }
 
     open func toJSONString() throws -> String? {

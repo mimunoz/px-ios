@@ -18,7 +18,7 @@ open class PXThreeDSConfig: NSObject {
 }
 
 // MARK: Internals (Only PX)
-internal extension PXThreeDSConfig {
+extension PXThreeDSConfig {
     static func createConfig(privateKey: String? = nil) -> PXThreeDSConfig {
         let flowIdentifier = MPXTracker.sharedInstance.getFlowName() ?? "PX"
         let sessionId = MPXTracker.sharedInstance.getSessionID()

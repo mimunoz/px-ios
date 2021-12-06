@@ -38,7 +38,7 @@ open class PXItem: NSObject, Codable {
         self.id = ""
     }
 
-    internal init(categoryId: String?, currencyId: String?, description: String?, id: String, pictureUrl: String?, quantity: Int, title: String, unitPrice: Double) {
+    init(categoryId: String?, currencyId: String?, description: String?, id: String, pictureUrl: String?, quantity: Int, title: String, unitPrice: Double) {
         self.categoryId = categoryId
         self.currencyId = currencyId
         self._description = description
@@ -61,7 +61,7 @@ open class PXItem: NSObject, Codable {
         case unitPrice = "unit_price"
     }
 
-    required public convenience init(from decoder: Decoder) throws {
+    public required convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXItemKeys.self)
         let categoryId: String? = try container.decodeIfPresent(String.self, forKey: .categoryId)
         let currencyId: String? = try container.decodeIfPresent(String.self, forKey: .currencyId)
@@ -110,7 +110,6 @@ open class PXItem: NSObject, Codable {
     open class func fromJSON(data: Data) throws -> [PXItem] {
         return try JSONDecoder().decode([PXItem].self, from: data)
     }
-
 }
 
 // MARK: Setters

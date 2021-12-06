@@ -1,10 +1,10 @@
 import Foundation
 
-internal protocol PXOneTapSheetViewControllerProtocol: class {
+protocol PXOneTapSheetViewControllerProtocol: class {
     func didTapOneTapSheetOption(sheetOption: PXOneTapSheetOptionsDto)
 }
 
-internal class PXOneTapSheetViewController: UIViewController {
+class PXOneTapSheetViewController: UIViewController {
     weak var delegate: PXOneTapSheetViewControllerProtocol?
     private let rowHeight: CGFloat = 80.0
     private let iconSize: CGFloat = 24.0

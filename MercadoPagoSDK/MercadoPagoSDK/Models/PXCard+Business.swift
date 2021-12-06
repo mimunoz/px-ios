@@ -1,11 +1,11 @@
 import Foundation
 /// :nodoc:
 extension PXCard: PXCardInformation {
-    internal func getIssuer() -> PXIssuer? {
+    func getIssuer() -> PXIssuer? {
         return issuer
     }
 
-    internal func isSecurityCodeRequired() -> Bool {
+    func isSecurityCodeRequired() -> Bool {
         if securityCode != nil {
             if securityCode!.length != 0 {
                 return true
@@ -17,58 +17,57 @@ extension PXCard: PXCardInformation {
         }
     }
 
-    internal func getFirstSixDigits() -> String {
+    func getFirstSixDigits() -> String {
         return firstSixDigits ?? ""
     }
 
-    internal func getCardDescription() -> String {
+    func getCardDescription() -> String {
         return "terminada en".localized + " " + lastFourDigits!
     }
 
-    internal func getPaymentMethod() -> PXPaymentMethod? {
+    func getPaymentMethod() -> PXPaymentMethod? {
         return self.paymentMethod
     }
 
-    internal func getCardId() -> String {
+    func getCardId() -> String {
         return id ?? ""
     }
 
-    internal func getPaymentMethodId() -> String {
+    func getPaymentMethodId() -> String {
         return self.paymentMethod?.id ?? ""
     }
 
-    internal func getPaymentTypeId() -> String {
+    func getPaymentTypeId() -> String {
         return self.paymentMethod?.paymentTypeId ?? ""
     }
 
-    internal func getCardSecurityCode() -> PXSecurityCode? {
+    func getCardSecurityCode() -> PXSecurityCode? {
         return self.securityCode
     }
 
-    internal func getCardBin() -> String? {
+    func getCardBin() -> String? {
         return self.firstSixDigits
     }
 
-    internal func getCardLastForDigits() -> String {
+    func getCardLastForDigits() -> String {
         return self.lastFourDigits ?? ""
     }
 
-    internal func setupPaymentMethodSettings(_ settings: [PXSetting]) {
+    func setupPaymentMethodSettings(_ settings: [PXSetting]) {
         self.paymentMethod?.settings = settings
     }
 
-    internal func setupPaymentMethod(_ paymentMethod: PXPaymentMethod) {
+    func setupPaymentMethod(_ paymentMethod: PXPaymentMethod) {
         self.paymentMethod = paymentMethod
     }
 
-    internal func isIssuerRequired() -> Bool {
+    func isIssuerRequired() -> Bool {
         return self.issuer == nil
     }
 
-    internal func canBeClone() -> Bool {
+    func canBeClone() -> Bool {
         return false
     }
-
 }
 /// :nodoc:
 extension PXCard: PaymentOptionDrawable {

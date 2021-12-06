@@ -1,7 +1,7 @@
 import Foundation
 
 extension MercadoPagoCheckout {
-    internal class func showPayerCostDescription() -> Bool {
+    class func showPayerCostDescription() -> Bool {
         let dictionary = ResourceManager.shared.getDictionaryForResource(named: "PayerCostPreferences")
         let site = SiteManager.shared.getSiteId()
 

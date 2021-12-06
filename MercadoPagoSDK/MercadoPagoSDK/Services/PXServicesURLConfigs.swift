@@ -1,13 +1,13 @@
 import Foundation
 
-enum PX_ENVIRONMENTS : CaseIterable {
+enum PX_ENVIRONMENTS: CaseIterable {
     case alpha
     case beta
     case gamma
     case prod
 }
 
-internal class PXServicesURLConfigs {
+class PXServicesURLConfigs {
     static let MP_ALPHA_ENV = "/alpha"
     static let MP_BETA_ENV = "/beta"
     static let MP_GAMMA_ENV = "/gamma"
@@ -17,21 +17,21 @@ internal class PXServicesURLConfigs {
     static let NEW_API_BETA_ENV = "/beta"
     static let NEW_API_GAMMA_ENV = "/gamma"
     static let NEW_API_PROD_ENV = "/production"
-    
+
     static let API_VERSION = "2.0"
-    
+
     static let MP_API_BASE_URL: String = "https://api.mercadopago.com"
 
     static let MP_DEFAULT_PROCESSING_MODE = "aggregator"
     static let MP_DEFAULT_PROCESSING_MODES = [MP_DEFAULT_PROCESSING_MODE]
-    
+
     static let MP_CREATE_TOKEN_URI = "/v1/card_tokens"
-    var MP_REMEDY_URI : String
-    var MP_PAYMENTS_URI : String
-    var MP_INIT_URI : String
-    var MP_RESET_ESC_CAP : String
-    var MP_POINTS_URI : String
-    
+    var MP_REMEDY_URI: String
+    var MP_PAYMENTS_URI: String
+    var MP_INIT_URI: String
+    var MP_RESET_ESC_CAP: String
+    var MP_POINTS_URI: String
+
     private static var sharedPXServicesURLConfigs: PXServicesURLConfigs = {
         let pxServicesURLConfigs = PXServicesURLConfigs()
         return pxServicesURLConfigs
@@ -60,7 +60,7 @@ internal class PXServicesURLConfigs {
                     NEW_API_SELECTED_ENV = PXServicesURLConfigs.NEW_API_PROD_ENV
             }
         }
-        
+
         self.MP_REMEDY_URI = NEW_API_SELECTED_ENV + "/px_mobile/v1/remedies/${payment_id}"
         self.MP_PAYMENTS_URI = MP_SELECTED_ENV + "/px_mobile/payments"
         self.MP_INIT_URI = NEW_API_SELECTED_ENV + "/px_mobile/v2/checkout"

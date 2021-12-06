@@ -1,13 +1,13 @@
 import Foundation
 
-internal class Localizator {
+class Localizator {
     static let sharedInstance = Localizator()
     private var language: String = NSLocale.preferredLanguages[0]
     private var customTrans: [PXCustomTranslationKey: String]?
 }
 
 // MARK: Privates.
-internal extension Localizator {
+extension Localizator {
     private func localizableDictionary() -> NSDictionary? {
         let languageBundle = Bundle(path: getLocalizedPath())
         let languageID = getParentLanguageID()
@@ -32,7 +32,7 @@ internal extension Localizator {
 }
 
 // MARK: Getters/ Setters
-internal extension Localizator {
+extension Localizator {
     func setLanguage(language: PXLanguages) {
         if language == PXLanguages.PORTUGUESE {
             self.language = PXLanguages.PORTUGUESE_BRAZIL.rawValue
@@ -106,7 +106,6 @@ extension Localizator {
 
     func localize(string: String) -> String {
         guard let localizedStringDictionary = localizableDictionary()?.value(forKey: string) as? NSDictionary, let localizedString = localizedStringDictionary.value(forKey: "value") as? String else {
-
             let parentLocalizableDictionary = self.parentLocalizableDictionary()?.value(forKey: string) as? NSDictionary
             if let parentLocalizedString = parentLocalizableDictionary?.value(forKey: "value") as? String {
                 return parentLocalizedString
@@ -133,7 +132,7 @@ extension Localizator {
 }
 
 // MARK: localized capability for Strings.
-internal extension String {
+extension String {
     var localized: String {
         if let customTrans = Localizator.sharedInstance.getCustomTrans(self) {
             return customTrans

@@ -1,6 +1,6 @@
 class PXTermsAndConditionView: PXComponentView {
     var SCREEN_TITLE = "terms_and_conditions_title"
-    internal let DEFAULT_CREDITS_HEIGHT = CGFloat(80)
+    let DEFAULT_CREDITS_HEIGHT = CGFloat(80)
 
     private let termsAndConditionsText: MPTextView = MPTextView()
     var termsAndConditionsDto: PXTermsDto?
@@ -23,7 +23,7 @@ class PXTermsAndConditionView: PXComponentView {
         termsAndConditionsText.backgroundColor = .clear
 
         if termsAndConditionsDto == nil {
-            //generic terms and conditions case, the whole cell will react presenting the generic tyc webview
+            // generic terms and conditions case, the whole cell will react presenting the generic tyc webview
             let tap = UITapGestureRecognizer(target: self, action: #selector(handleTap(_:)))
             tap.delegate = self
             self.addGestureRecognizer(tap)
@@ -58,7 +58,6 @@ class PXTermsAndConditionView: PXComponentView {
 }
 
 extension PXTermsAndConditionView {
-
     func getTyCText() -> NSMutableAttributedString {
         let termsAndConditionsText = termsAndConditionsDto?.text ?? "review_terms_and_conditions".localized
 

@@ -1,7 +1,6 @@
 import UIKit
 
-internal protocol PXCardInformation: PXCardInformationForm, PaymentOptionDrawable {
-
+protocol PXCardInformation: PXCardInformationForm, PaymentOptionDrawable {
     func isSecurityCodeRequired() -> Bool
 
     func getCardId() -> String
@@ -23,5 +22,4 @@ internal protocol PXCardInformation: PXCardInformationForm, PaymentOptionDrawabl
     func getIssuer() -> PXIssuer?
 
     func getFirstSixDigits() -> String
-
 }

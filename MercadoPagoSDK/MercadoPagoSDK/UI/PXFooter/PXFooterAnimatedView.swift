@@ -1,4 +1,4 @@
 import Foundation
-final internal class PXFooterAnimatedView: UIView {
+final class PXFooterAnimatedView: UIView {
     var animatedButton: PXAnimatedButton?
 }

@@ -1,7 +1,6 @@
 import Foundation
 
-internal class Cause {
-
+class Cause {
     open var code: String!
     open var causeDescription: String!
 

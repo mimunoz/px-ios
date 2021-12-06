@@ -1,6 +1,6 @@
 import Foundation
 
-internal class MercadoPagoBundle {
+class MercadoPagoBundle {
     static func bundle() -> Bundle {
         let bundle = Bundle(for: MercadoPagoBundle.self)
         if let path = bundle.path(forResource: "MercadoPagoSDKResources", ofType: "bundle"),

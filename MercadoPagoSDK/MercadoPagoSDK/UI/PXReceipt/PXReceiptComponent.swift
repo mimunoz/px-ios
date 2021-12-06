@@ -1,6 +1,6 @@
 import UIKit
 
-internal class PXReceiptComponent: PXComponentizable {
+class PXReceiptComponent: PXComponentizable {
     var props: PXReceiptProps
 
     init(props: PXReceiptProps) {

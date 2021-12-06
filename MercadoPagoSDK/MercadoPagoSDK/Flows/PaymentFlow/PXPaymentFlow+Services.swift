@@ -1,19 +1,19 @@
 import Foundation
 
-internal extension PXPaymentFlow {
+extension PXPaymentFlow {
     func createPaymentWithPlugin(plugin: PXSplitPaymentProcessor?, programId: String?) {
         guard let plugin = plugin else {
             showError()
             return
         }
-        
+
         if let programId = programId {
             PXCheckoutStore.sharedInstance.validationProgramId = programId
         }
 
         plugin.didReceive?(checkoutStore: PXCheckoutStore.sharedInstance)
 
-        plugin.startPayment?(checkoutStore: PXCheckoutStore.sharedInstance, errorHandler: self as PXPaymentProcessorErrorHandler, successWithBasePayment: { [weak self] (basePayment) in
+        plugin.startPayment?(checkoutStore: PXCheckoutStore.sharedInstance, errorHandler: self as PXPaymentProcessorErrorHandler, successWithBasePayment: { [weak self] basePayment in
             self?.handlePayment(basePayment: basePayment)
         })
     }
@@ -23,9 +23,9 @@ internal extension PXPaymentFlow {
             showError()
             return
         }
-        
+
         model.assignToCheckoutStore(programId: programId)
-        
+
         guard let paymentBody = (try? JSONEncoder().encode(PXCheckoutStore.sharedInstance)) else {
             fatalError("Cannot make payment json body")
         }
@@ -34,14 +34,13 @@ internal extension PXPaymentFlow {
         if let productId = model.productId {
             headers[HeaderFields.productId.rawValue] = productId
         }
-        headers[HeaderFields.idempotencyKey.rawValue] =  model.generateIdempotecyKey()
+        headers[HeaderFields.idempotencyKey.rawValue] = model.generateIdempotecyKey()
         headers[HeaderFields.security.rawValue] = PXCheckoutStore.sharedInstance.getSecurityType()
         headers[HeaderFields.profileID.rawValue] = PXConfiguratorManager.profileIDProtocol.getProfileID()
-        
 
-        model.mercadoPagoServices.createPayment(url: PXServicesURLConfigs.MP_API_BASE_URL, uri: PXServicesURLConfigs.shared().MP_PAYMENTS_URI, paymentDataJSON: paymentBody, query: nil, headers: headers, callback: { [weak self] (payment) in
+        model.mercadoPagoServices.createPayment(url: PXServicesURLConfigs.MP_API_BASE_URL, uri: PXServicesURLConfigs.shared().MP_PAYMENTS_URI, paymentDataJSON: paymentBody, query: nil, headers: headers, callback: { [weak self] payment in
             self?.handlePayment(payment: payment)
-        }, failure: { [weak self] (error) in
+        }, failure: { [weak self] error in
             guard let self = self else { return }
             self.trackPaymentsApiError()
             let mpError = MPSDKError.convertFrom(error, requestOrigin: ApiUtil.RequestOrigin.CREATE_PAYMENT.rawValue)
@@ -94,16 +93,16 @@ internal extension PXPaymentFlow {
         let ifpe = false
 
         var headers: [String: String] = [:]
-        
+
         if let productId = model.productId {
             headers[HeaderFields.productId.rawValue] = productId
         }
-        
+
         headers[HeaderFields.locationEnabled.rawValue] = LocationService.isLocationEnabled() ? "true" : "false"
 
         model.shouldSearchPointsAndDiscounts = false
         let platform = MLBusinessAppDataService().getAppIdentifier().rawValue
-        model.mercadoPagoServices.getPointsAndDiscounts(url: PXServicesURLConfigs.MP_API_BASE_URL, uri: PXServicesURLConfigs.shared().MP_POINTS_URI, paymentIds: paymentIds, paymentMethodsIds: paymentMethodsIds, campaignId: campaignId, prefId: model.checkoutPreference?.id, platform: platform, ifpe: ifpe, merchantOrderId: model.checkoutPreference?.merchantOrderId, headers: headers, paymentTypeId: model.businessResult?.getPaymentMethodTypeId(), callback: { [weak self] (pointsAndBenef) in
+        model.mercadoPagoServices.getPointsAndDiscounts(url: PXServicesURLConfigs.MP_API_BASE_URL, uri: PXServicesURLConfigs.shared().MP_POINTS_URI, paymentIds: paymentIds, paymentMethodsIds: paymentMethodsIds, campaignId: campaignId, prefId: model.checkoutPreference?.id, platform: platform, ifpe: ifpe, merchantOrderId: model.checkoutPreference?.merchantOrderId, headers: headers, paymentTypeId: model.businessResult?.getPaymentMethodTypeId(), callback: { [weak self] pointsAndBenef in
                 guard let self = self else { return }
                 self.model.pointsAndDiscounts = pointsAndBenef
                 self.model.instructionsInfo = pointsAndBenef.instruction
@@ -121,7 +120,6 @@ private extension PXPaymentFlow {
     func trackPaymentsApiError() {
         let lastVC = self.pxNavigationHandler.navigationController.viewControllers.last
         if let securityCodeVC = lastVC as? PXSecurityCodeViewController {
-            
             securityCodeVC.trackEvent(event: GeneralErrorTrackingEvents.error(
                 securityCodeVC.viewModel.getFrictionProperties(path: TrackingPaths.Events.SecurityCode.getPaymentsFrictionPath(), id: "payments_api_error")
             ))

@@ -5,25 +5,25 @@ import Foundation
 open class PXConfiguratorManager: NSObject {
     // MARK: Internal definitions. (Only PX)
     // PX Biometric
-    internal static var biometricProtocol: PXBiometricProtocol = PXBiometricDefault()
-    internal static var biometricConfig: PXBiometricConfig = PXBiometricConfig.createConfig()
-    internal static func hasSecurityValidation() -> Bool {
+    static var biometricProtocol: PXBiometricProtocol = PXBiometricDefault()
+    static var biometricConfig: PXBiometricConfig = PXBiometricConfig.createConfig()
+    static func hasSecurityValidation() -> Bool {
         return biometricProtocol.isValidationRequired(config: biometricConfig)
     }
 
     // PX Flow Behaviour
-    internal static var flowBehaviourProtocol: PXFlowBehaviourProtocol = PXFlowBehaviourDefault()
+    static var flowBehaviourProtocol: PXFlowBehaviourProtocol = PXFlowBehaviourDefault()
 
     // ESC
-    internal static var escProtocol: PXESCProtocol = PXESCDefault()
-    internal static var escConfig: PXESCConfig = PXESCConfig.createConfig()
-    
+    static var escProtocol: PXESCProtocol = PXESCDefault()
+    static var escConfig: PXESCConfig = PXESCConfig.createConfig()
+
     // 3DS
-    internal static var threeDSProtocol: PXThreeDSProtocol = PXThreeDSDefault()
-    internal static var threeDSConfig: PXThreeDSConfig = PXThreeDSConfig.createConfig()
-    
+    static var threeDSProtocol: PXThreeDSProtocol = PXThreeDSDefault()
+    static var threeDSConfig: PXThreeDSConfig = PXThreeDSConfig.createConfig()
+
     // ProfileID
-    internal static var profileIDProtocol: PXProfileIDProtocol = PXProfileIDDefault()
+    static var profileIDProtocol: PXProfileIDProtocol = PXProfileIDDefault()
 
     // MARK: Public
     // Set external implementation of PXBiometricProtocol
@@ -40,12 +40,12 @@ open class PXConfiguratorManager: NSObject {
     public static func with(escProtocol: PXESCProtocol) {
         self.escProtocol = escProtocol
     }
-    
+
     // Set external implementation of PXThreeDSProtocol
     public static func with(threeDSProtocol: PXThreeDSProtocol) {
         self.threeDSProtocol = threeDSProtocol
     }
-    
+
     // Set external implementation of PXProfileIDProtocol
     public static func with(profileIDProtocol: PXProfileIDProtocol) {
         self.profileIDProtocol = profileIDProtocol

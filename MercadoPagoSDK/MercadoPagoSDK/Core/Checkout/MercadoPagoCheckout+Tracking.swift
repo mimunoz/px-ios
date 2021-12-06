@@ -2,8 +2,7 @@ import Foundation
 
 // MARK: Tracking
 extension MercadoPagoCheckout {
-
-    internal func startTracking(then: @escaping (() -> Void)) {
+    func startTracking(then: @escaping (() -> Void)) {
         viewModel.trackingConfig?.updateTracker()
         MPXTracker.sharedInstance.startNewSession()
 
@@ -25,7 +24,7 @@ extension MercadoPagoCheckout {
         then()
     }
 
-    internal func trackInitFlowFriction(flowError: InitFlowError) {
+    func trackInitFlowFriction(flowError: InitFlowError) {
         var properties: [String: Any] = [:]
         properties["path"] = TrackingPaths.Screens.PaymentVault.getPaymentVaultPath()
         properties["style"] = Tracking.Style.screen
@@ -36,9 +35,9 @@ extension MercadoPagoCheckout {
         var extraDic: [String: Any] = [:]
         var errorDic: [String: Any] = [:]
 
-        errorDic["url"] =  flowError.requestOrigin?.rawValue
+        errorDic["url"] = flowError.requestOrigin?.rawValue
         errorDic["retry_available"] = flowError.shouldRetry
-        errorDic["status"] =  flowError.apiException?.status
+        errorDic["status"] = flowError.apiException?.status
 
         if let causes = flowError.apiException?.cause {
             var causesDic: [String: Any] = [:]
@@ -53,7 +52,7 @@ extension MercadoPagoCheckout {
         MPXTracker.sharedInstance.trackEvent(event: GeneralErrorTrackingEvents.error(properties))
     }
 
-    internal func trackInitFlowRefreshFriction(cardId: String) {
+    func trackInitFlowRefreshFriction(cardId: String) {
         var properties: [String: Any] = [:]
         properties["path"] = TrackingPaths.Screens.OneTap.getOneTapPath()
         properties["style"] = Tracking.Style.noScreen
@@ -61,7 +60,7 @@ extension MercadoPagoCheckout {
         properties["message"] = "No se pudo recuperar la tarjeta ingresada"
         properties["attributable_to"] = Tracking.Error.Atrributable.mercadopago
         var extraDic: [String: Any] = [:]
-        extraDic["cardId"] =  cardId
+        extraDic["cardId"] = cardId
         properties["extra_info"] = extraDic
         MPXTracker.sharedInstance.trackEvent(event: GeneralErrorTrackingEvents.error(properties))
     }

@@ -1,8 +1,7 @@
 import UIKit
 import MLBusinessComponents
 
-internal class PXResultViewModel: NSObject {
-
+class PXResultViewModel: NSObject {
     let amountHelper: PXAmountHelper
     var paymentResult: PaymentResult
     var instructionsInfo: PXInstruction?
@@ -21,7 +20,7 @@ internal class PXResultViewModel: NSObject {
         self.remedy = remedy
         self.oneTapDto = oneTapDto
     }
-    
+
     func getPaymentData() -> PXPaymentData {
         guard let paymentData = paymentResult.paymentData else {
             fatalError("paymentResult.paymentData cannot be nil")
@@ -52,13 +51,13 @@ internal class PXResultViewModel: NSObject {
     func primaryResultColor() -> UIColor {
         return ResourceManager.shared.getResultColorWith(status: paymentResult.status, statusDetail: paymentResult.statusDetail)
     }
-    
+
     func headerCloseAction() -> () -> Void {
         return { [weak self] in
             guard let self = self else { return }
             if let callback = self.callback {
                 if let url = self.getBackUrl() {
-                    PXNewResultUtil.openURL(url: url, success: { (_) in
+                    PXNewResultUtil.openURL(url: url, success: { _ in
                         callback(PaymentResult.CongratsState.EXIT, nil)
                     })
                 } else {
@@ -102,7 +101,6 @@ internal class PXResultViewModel: NSObject {
 
     private func getRemedyButtonAction() -> ((String?) -> Void)? {
         let action = { (text: String?) in
-            
             MPXTracker.sharedInstance.trackEvent(event: PXResultTrackingEvents.didShowRemedyError(self.getRemedyProperties()))
 
             if let callback = self.callback {
@@ -258,7 +256,7 @@ extension PXResultViewModel {
         return nil
     }
 
-    internal func getRedirectUrl() -> URL? {
+    func getRedirectUrl() -> URL? {
         if let redirectURL = pointsAndDiscounts?.redirectUrl, !redirectURL.isEmpty {
             return getUrl(url: redirectURL, appendLanding: true)
         }
@@ -395,7 +393,7 @@ extension PXResultViewModel: PXViewModelTrackingDataProtocol {
 
         return properties
     }
-    
+
     func getTrackingRemediesProperties(isFromModal: Bool) -> [String: Any] {
         var properties: [String: Any] = amountHelper.getPaymentData().getPaymentDataForTracking()
         properties["style"] = "custom"
@@ -415,7 +413,7 @@ extension PXResultViewModel: PXViewModelTrackingDataProtocol {
         }
         return properties
     }
-    
+
     func getViewErrorPaymentResult() -> [String: Any] {
         var properties: [String: Any] = [:]
             properties["style"] = "generic"
@@ -458,7 +456,7 @@ extension PXResultViewModel: PXViewModelTrackingDataProtocol {
 
             return properties
     }
-    
+
     func getDidShowRemedyErrorModal() -> [String: Any] {
         var properties: [String: Any] = [:]
         properties["index"] = 0
@@ -505,7 +503,7 @@ extension PXResultViewModel {
             let splitPaymentInfo = getPaymentMethod(paymentData: splitPaymentData, amountHelper: amountHelper) {
             paymentcongrats.withSplitPaymentInfo(splitPaymentInfo)
         }
-        
+
         if let infoOperation = pointsAndDiscounts?.infoOperation {
             paymentcongrats.withInfoOperation(infoOperation)
         }
@@ -532,8 +530,7 @@ extension PXResultViewModel {
 
     private func assemblePaymentMethodInfo(paymentData: PXPaymentData, amountHelper: PXAmountHelper, currency: PXCurrency, paymentType: PXPaymentTypes, paymentMethodId: String, externalPaymentMethodInfo: Data?) -> PXCongratsPaymentInfo {
         var paidAmount: String
-        
-        
+
         if let paymentOptionsAmount = paymentData.amount {
             paidAmount = Utils.getAmountFormated(amount: paymentOptionsAmount, forCurrency: currency)
         } else if let transactionAmountWithDiscount = paymentData.getTransactionAmountWithDiscount() {
@@ -541,8 +538,8 @@ extension PXResultViewModel {
         } else {
             paidAmount = Utils.getAmountFormated(amount: amountHelper.amountToPay, forCurrency: currency)
         }
-        
-        var noDiscountAmount : String?
+
+        var noDiscountAmount: String?
         if let paymentDataNoDiscountAmount = paymentData.noDiscountAmount {
             noDiscountAmount = Utils.getAmountFormated(amount: paymentDataNoDiscountAmount, forCurrency: currency)
         }

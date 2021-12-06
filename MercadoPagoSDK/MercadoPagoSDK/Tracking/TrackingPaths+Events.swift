@@ -2,8 +2,7 @@ import Foundation
 
 // MARK: Events
 extension TrackingPaths {
-    internal struct Events {
-
+    struct Events {
         static func getInitPath() -> String {
             return TrackingPaths.pxTrack + "/init"
         }
@@ -32,11 +31,11 @@ extension TrackingPaths {
         static func getRecognizedCardPath() -> String {
             return TrackingPaths.pxTrack + TrackingPaths.addPaymentMethod + "/number" + "/recognized_card"
         }
-        
+
         static func getProgramValidation() -> String {
             return TrackingPaths.pxTrack + "/program_validation"
         }
-        
+
         static func getComboSwitch() -> String {
             return TrackingPaths.pxTrack + "/combo_switch"
         }
@@ -44,8 +43,7 @@ extension TrackingPaths {
 }
 
 extension TrackingPaths.Events {
-    internal struct OneTap {
-
+    struct OneTap {
         static func getSwipePath() -> String {
             return TrackingPaths.pxTrack + "/review/one_tap/swipe"
         }
@@ -93,8 +91,7 @@ extension TrackingPaths.Events {
 }
 
 extension TrackingPaths.Events {
-    internal struct ReviewConfirm {
-
+    struct ReviewConfirm {
         static func getChangePaymentMethodPath() -> String {
             return TrackingPaths.pxTrack + "/review/traditional/change_payment_method"
         }
@@ -117,8 +114,7 @@ enum EventsPaths: String {
 
 // MARK: Congrats events.
 extension TrackingPaths.Events {
-    internal struct Congrats {
-
+    struct Congrats {
         private static let success = "/success"
         private static let result = TrackingPaths.pxTrack + "/result"
 
@@ -145,7 +141,7 @@ extension TrackingPaths.Events {
         static func getSuccessTapSeeAllDiscountsPath() -> String {
             return getSuccessPath() + EventsPaths.tapSeeAllDiscounts.rawValue
         }
-        
+
         static func getSuccessTapViewReceiptPath() -> String {
             return getSuccessPath() + "/tap_view_receipt"
         }

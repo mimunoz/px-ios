@@ -6,8 +6,7 @@ import UIKit
 /// - topRight: top right corner of the view
 /// - bottomLeft: bottom left corner of the view
 /// - bottomRight: bottom right corner of the view
-internal enum Corner {
-
+enum Corner {
     /// top left corner of the view
     case topLeft
 
@@ -22,13 +21,12 @@ internal enum Corner {
 }
 
 /// A `DistanceSortFunction` that uses a corner attribute to define an animation's starting point.
-internal protocol CornerSortFunction: DistanceSortFunction {
-
+protocol CornerSortFunction: DistanceSortFunction {
     /// The starting corner for the animation. Views will animate vertically and horizontally from this corner.
     var corner: Corner { get set }
 }
 
-internal extension CornerSortFunction {
+extension CornerSortFunction {
     func distancePoint(view: UIView, subviews: [View] = []) -> CGPoint {
         let distancePoint: CGPoint
         let bounds = view.bounds

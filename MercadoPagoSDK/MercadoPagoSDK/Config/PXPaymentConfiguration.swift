@@ -1,6 +1,6 @@
 import Foundation
 
-internal typealias PXPaymentConfigurationType = (chargeRules: [PXPaymentTypeChargeRule]?, paymentPlugin: PXSplitPaymentProcessor)
+typealias PXPaymentConfigurationType = (chargeRules: [PXPaymentTypeChargeRule]?, paymentPlugin: PXSplitPaymentProcessor)
 
 /**
  Any configuration related to the Payment. You can set you own `PXPaymentProcessor`. Configuration of discounts, charges and custom Payment Method Plugin.
@@ -65,13 +65,13 @@ extension PXPaymentConfiguration {
 
 // MARK: - Internals
 extension PXPaymentConfiguration {
-    internal func getPaymentConfiguration() -> PXPaymentConfigurationType {
+    func getPaymentConfiguration() -> PXPaymentConfigurationType {
         return (chargeRules, splitPaymentProcessor)
     }
 }
 
 extension PXPaymentConfiguration {
-    internal func getProcessorType() -> String {
+    func getProcessorType() -> String {
         switch choiceProcessorType {
         case .CUSTOM_SCHEDULED:
             return PXCheckoutType.CUSTOM_SCHEDULED.rawValue

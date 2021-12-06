@@ -1,6 +1,6 @@
 import UIKit
 
-internal enum CheckoutStep: String {
+enum CheckoutStep: String {
     case START
     case ACTION_FINISH
     case SCREEN_SECURITY_CODE
@@ -13,13 +13,13 @@ internal enum CheckoutStep: String {
     case FLOW_ONE_TAP
 }
 
-internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
+class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
     private var advancedConfig: PXAdvancedConfiguration = PXAdvancedConfiguration()
-    internal var trackingConfig: PXTrackingConfiguration?
+    var trackingConfig: PXTrackingConfiguration?
 
-    internal var publicKey: String
-    internal var privateKey: String?
-    internal var checkoutType: String?
+    var publicKey: String
+    var privateKey: String?
+    var checkoutType: String?
 
     var lifecycleProtocol: PXLifeCycleProtocol?
 
@@ -53,10 +53,10 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
     var rootVC = true
 
-    internal var paymentData = PXPaymentData()
-    internal var splitAccountMoney: PXPaymentData?
+    var paymentData = PXPaymentData()
+    var splitAccountMoney: PXPaymentData?
     var payment: PXPayment?
-    internal var paymentResult: PaymentResult?
+    var paymentResult: PaymentResult?
     var disabledOption: PXDisabledOption?
     var businessResult: PXBusinessResult?
     open var payerCosts: [PXPayerCost]?
@@ -189,7 +189,8 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         .filter { PXConfiguratorManager.escProtocol.getESC(config: PXConfiguratorManager.escConfig,
                                                            cardId: $0.getCardId(),
                                                            firstSixDigits: $0.getFirstSixDigits(),
-                                                           lastFourDigits: $0.getCardLastForDigits()) != nil }
+                                                           lastFourDigits: $0.getCardLastForDigits()) != nil
+        }
         .map { $0.getCardId() }
     }
 
@@ -240,7 +241,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         return PXResultViewModel(amountHelper: amountHelper, paymentResult: paymentResult, instructionsInfo: instructionsInfo, pointsAndDiscounts: pointsAndDiscounts, resultConfiguration: advancedConfig.paymentResultConfiguration, remedy: remedy, oneTapDto: oneTapDto)
     }
 
-    //SEARCH_PAYMENT_METHODS
+    // SEARCH_PAYMENT_METHODS
     public func updateCheckoutModel(paymentMethods: [PXPaymentMethod], cardToken: PXCardToken?) {
         self.cleanPayerCostSearch()
         self.cleanRemedy()
@@ -250,7 +251,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         self.cardToken?.setRequireESC(escEnabled: getAdvancedConfiguration().isESCEnabled())
     }
 
-    //CREDIT_DEBIT
+    // CREDIT_DEBIT
     public func updateCheckoutModel(paymentMethod: PXPaymentMethod?) {
         if let paymentMethod = paymentMethod {
             self.paymentData.updatePaymentDataWith(paymentMethod: paymentMethod)
@@ -422,7 +423,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         return configurations
     }
 
-    internal func updateCustomTexts() {
+    func updateCustomTexts() {
         // If AdditionalInfo has custom texts override the ones set by MercadoPagoCheckoutBuilder
         if let customTexts = checkoutPreference.pxAdditionalInfo?.pxCustomTexts {
             if let translation = customTexts.payButton {
@@ -523,7 +524,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         self.checkoutComplete = isCheckoutComplete
     }
 
-    internal func findAndCompletePaymentMethodFor(paymentMethodId: String) {
+    func findAndCompletePaymentMethodFor(paymentMethodId: String) {
         guard let availablePaymentMethods = availablePaymentMethods else {
             fatalError("availablePaymentMethods cannot be nil")
         }
@@ -543,7 +544,7 @@ internal class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
         return !Array.isNullOrEmpty(self.customPaymentOptions)
     }
 
-    internal func handleCustomerPaymentMethod() {
+    func handleCustomerPaymentMethod() {
         guard let availablePaymentMethods = availablePaymentMethods else {
             fatalError("availablePaymentMethods cannot be nil")
         }
@@ -712,7 +713,7 @@ extension MercadoPagoCheckoutViewModel {
         self.paymentData.cleanToken()
     }
 
-    static internal func clearEnviroment() {
+    static func clearEnviroment() {
         MercadoPagoCheckoutViewModel.error = nil
     }
     func inRootGroupSelection() -> Bool {
@@ -768,13 +769,12 @@ private extension MercadoPagoCheckoutViewModel {
         if let alternativePaymentMethod = suggestedPaymentMethod.alternativePaymentMethod,
             let paymentResult = paymentResult,
             let sliderViewModel = onetapFlow?.model.pxOneTapViewModel?.getCardSliderViewModel() {
-
             var cardId = alternativePaymentMethod.customOptionId ?? paymentResult.cardId
             let paymentMethodId = alternativePaymentMethod.paymentMethodId ?? paymentResult.paymentMethodId
             if paymentMethodId == PXPaymentTypes.CONSUMER_CREDITS.rawValue {
                 cardId = paymentMethodId
             }
-            if let targetModel = sliderViewModel.first(where: { $0.cardId == cardId  }) {
+            if let targetModel = sliderViewModel.first(where: { $0.cardId == cardId }) {
                 guard let selectedApplication = targetModel.selectedApplication else { return }
                 if let paymentMethods = availablePaymentMethods,
                    let newPaymentMethod = Utils.findPaymentMethod(paymentMethods, paymentMethodId: selectedApplication.paymentMethodId) {

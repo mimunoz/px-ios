@@ -1,5 +1,5 @@
 import Foundation
-internal extension Array {
+extension Array {
     static func isNullOrEmpty(_ value: Array?) -> Bool {
         return value == nil || value?.count == 0
     }

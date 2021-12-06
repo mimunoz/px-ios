@@ -1,8 +1,7 @@
 import UIKit
 
 // MARK: Build Helpers
-internal extension PXResultViewModel {
-
+extension PXResultViewModel {
     typealias Action = (() -> Void)?
 
     func getActionButton() -> PXAction? {
@@ -10,7 +9,7 @@ internal extension PXResultViewModel {
     }
 
     func getActionLink() -> PXAction? {
-        return getButtonLabel() ==  getLinkLabel() ? nil : getAction(label: getLinkLabel(), action: getLinkAction())
+        return getButtonLabel() == getLinkLabel() ? nil : getAction(label: getLinkLabel(), action: getLinkAction())
     }
 
     private func getAction(label: String?, action: Action) -> PXAction? {
@@ -55,8 +54,7 @@ internal extension PXResultViewModel {
             return PXFooterResultConstants.GENERIC_ERROR_BUTTON_TEXT.localized
         }
     }
-    
-    
+
     private func selectOther() {
         guard let callback = callback else { return }
         MPXTracker.sharedInstance.trackEvent(event: PXRemediesTrackEvents.changePaymentMethod(isFromModal: false))
@@ -113,13 +111,13 @@ internal extension PXResultViewModel {
 
             if self.pointsAndDiscounts?.primaryButton != nil {
                 if let url = self.getPrimaryButtonBackUrl() {
-                    PXNewResultUtil.openURL(url: url, success: { (_) in
+                    PXNewResultUtil.openURL(url: url, success: { _ in
                         self.callback?(PaymentResult.CongratsState.EXIT, nil)
                     })
                 }
             } else {
                 if let url = self.getBackUrl() {
-                    PXNewResultUtil.openURL(url: url, success: { [weak self] (_) in
+                    PXNewResultUtil.openURL(url: url, success: { [weak self] _ in
                         self?.pressLink()
                     })
                 } else {

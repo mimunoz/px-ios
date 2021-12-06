@@ -1,6 +1,6 @@
 import Foundation
 
-final internal class OneTapFlowModel: PXFlowModel {
+final class OneTapFlowModel: PXFlowModel {
     enum Steps: String {
         case finish
         case screenOneTap
@@ -12,9 +12,9 @@ final internal class OneTapFlowModel: PXFlowModel {
         case service3DS
         case payment
     }
-    internal var publicKey: String = ""
-    internal var privateKey: String?
-    internal var siteId: String = ""
+    var publicKey: String = ""
+    var privateKey: String?
+    var siteId: String = ""
     var paymentData: PXPaymentData
     let checkoutPreference: PXCheckoutPreference
     var paymentOptionSelected: PaymentMethodOption?
@@ -29,7 +29,7 @@ final internal class OneTapFlowModel: PXFlowModel {
     var splitAccountMoney: PXPaymentData?
     var disabledOption: PXDisabledOption?
     var pxOneTapViewModel: PXOneTapViewModel?
-    
+
     // MARK: - Private properties
     private var didCall3ds = false
 
@@ -45,7 +45,7 @@ final internal class OneTapFlowModel: PXFlowModel {
     var invalidESCReason: PXESCDeleteReason?
 
     // In order to ensure data updated create new instance for every usage
-    internal var amountHelper: PXAmountHelper {
+    var amountHelper: PXAmountHelper {
         return PXAmountHelper(preference: self.checkoutPreference, paymentData: self.paymentData, chargeRules: chargeRules, paymentConfigurationService: self.paymentConfigurationService, splitAccountMoney: splitAccountMoney)
     }
 
@@ -65,11 +65,11 @@ final internal class OneTapFlowModel: PXFlowModel {
         mercadoPagoServices = checkoutViewModel.mercadoPagoServices
         paymentConfigurationService = checkoutViewModel.paymentConfigurationService
         disabledOption = checkoutViewModel.disabledOption
-        
+
         // Process custom charges and charge rules
-        
-        var mergedChargeRules : [PXPaymentTypeChargeRule] = []
-        
+
+        var mergedChargeRules: [PXPaymentTypeChargeRule] = []
+
         if let customCharges = search.customCharges {
             // If there is custom charges iterate each one
             customCharges.keys.forEach { customChargeKey in
@@ -89,20 +89,20 @@ final internal class OneTapFlowModel: PXFlowModel {
                             // If the original chargeRule don't have detailModal nor message use the basic init
                             newChargeRule = PXPaymentTypeChargeRule(paymentTypeId: chargeRule.paymentTypeId, amountCharge: customCharge.charge)
                         }
-                        
+
                         if let label = customCharge.label {
                             newChargeRule.label = label
                         }
-                        
+
                         mergedChargeRules.append(newChargeRule)
                     } else {
                         // If there isn't a chargeRule for this customCharge then create one and add it to the mergedChargeRules array
                         var newChargeRule = PXPaymentTypeChargeRule(paymentTypeId: customChargeKey, amountCharge: customCharge.charge)
-                        
+
                         if let label = customCharge.label {
                             newChargeRule.label = label
                         }
-                        
+
                         mergedChargeRules.append(newChargeRule)
                     }
                 }
@@ -145,7 +145,7 @@ final internal class OneTapFlowModel: PXFlowModel {
 }
 
 // MARK: Create view model
-internal extension OneTapFlowModel {
+extension OneTapFlowModel {
     func savedCardSecurityCodeViewModel() -> PXSecurityCodeViewModel {
         guard let cardInformation = self.paymentOptionSelected as? PXCardInformation else {
             fatalError("Cannot convert payment option selected to CardInformation")
@@ -158,8 +158,8 @@ internal extension OneTapFlowModel {
         let reason = PXSecurityCodeViewModel.getSecurityCodeReason(invalidESCReason: invalidESCReason)
         let cardSliderViewModel = pxOneTapViewModel?.getCardSliderViewModel(cardId: paymentOptionSelected?.getId())
         let cardUI = cardSliderViewModel?.cardUI ?? TemplateCard()
-        let cardData = cardSliderViewModel?.selectedApplication?.cardData  ?? PXCardDataFactory()
-        
+        let cardData = cardSliderViewModel?.selectedApplication?.cardData ?? PXCardDataFactory()
+
         return PXSecurityCodeViewModel(paymentMethod: paymentMethod, cardInfo: cardInformation, reason: reason, cardUI: cardUI, cardData: cardData, internetProtocol: mercadoPagoServices)
     }
 
@@ -180,7 +180,7 @@ internal extension OneTapFlowModel {
 }
 
 // MARK: Update view models
-internal extension OneTapFlowModel {
+extension OneTapFlowModel {
     func updateCheckoutModel(paymentData: PXPaymentData, splitAccountMoneyEnabled: Bool) {
         self.paymentData = paymentData
 
@@ -192,7 +192,7 @@ internal extension OneTapFlowModel {
             // Set total amount to pay with card without discount
             paymentData.transactionAmount = PXAmountHelper.getRoundedAmountAsNsDecimalNumber(amount: splitConfiguration?.primaryPaymentMethod?.amount)
 
-            let accountMoneyPMs = search.availablePaymentMethods.filter { (paymentMethod) -> Bool in
+            let accountMoneyPMs = search.availablePaymentMethods.filter { paymentMethod -> Bool in
                 return paymentMethod.id == splitConfiguration?.secondaryPaymentMethod?.id
             }
             if let accountMoneyPM = accountMoneyPMs.first {
@@ -222,7 +222,7 @@ internal extension OneTapFlowModel {
     func updateCheckoutModel(token: PXToken) {
         self.paymentData.updatePaymentDataWith(token: token)
     }
-    
+
     func updateCheckoutModel(threeDSAuthorization: Bool) {
         self.threeDSAuthorization = threeDSAuthorization
     }
@@ -241,7 +241,7 @@ internal extension OneTapFlowModel {
 }
 
 // MARK: Flow logic
-internal extension OneTapFlowModel {
+extension OneTapFlowModel {
     func needShowOneTap() -> Bool {
         if readyToPay {
             return false
@@ -250,7 +250,7 @@ internal extension OneTapFlowModel {
         return true
     }
 
-    func needSecurityCode() -> Bool {        
+    func needSecurityCode() -> Bool {
         guard let paymentMethod = self.paymentData.getPaymentMethod() else {
             return false
         }
@@ -272,7 +272,7 @@ internal extension OneTapFlowModel {
             !paymentData.hasToken() &&
             hasInstallmentsIfNeeded &&
             hasSecurityCode(),
-            search.oneTap?.first(where: { $0.oneTapCard?.cardId == paymentOptionSelected.getId()})?.oneTapCard?.cardUI?.securityCode?.mode == .mandatory {
+            search.oneTap?.first(where: { $0.oneTapCard?.cardId == paymentOptionSelected.getId() })?.oneTapCard?.cardUI?.securityCode?.mode == .mandatory {
             var paymentMethodId: String?
             if let cardInformation = paymentOptionSelected as? PXCardInformation {
                 paymentMethodId = cardInformation.getPaymentMethodId()
@@ -305,7 +305,7 @@ internal extension OneTapFlowModel {
 
         return savedCardWithESC
     }
-    
+
     func needCreateOptionalToken() -> Bool {
         guard let paymentMethod = self.paymentData.getPaymentMethod(),
                 let paymentOptionSelected = paymentOptionSelected,
@@ -313,19 +313,19 @@ internal extension OneTapFlowModel {
                 !paymentData.hasToken() else {
           return false
         }
-        
+
         let hasInstallmentsIfNeeded = paymentData.hasPayerCost() || !paymentMethod.isCreditCard
         let paymentOptionSelectedId = paymentOptionSelected.getId()
         let isCustomerCard = paymentOptionSelected.isCustomerPaymentMethod() && paymentOptionSelectedId != PXPaymentTypes.ACCOUNT_MONEY.rawValue && paymentOptionSelectedId != PXPaymentTypes.CONSUMER_CREDITS.rawValue
-        
+
         if isCustomerCard &&
             !paymentData.hasToken() &&
             hasInstallmentsIfNeeded &&
             hasSecurityCode(),
-           search.oneTap?.first(where: { $0.oneTapCard?.cardId == paymentOptionSelected.getId()})?.oneTapCard?.cardUI?.securityCode?.mode == .optional {
+           search.oneTap?.first(where: { $0.oneTapCard?.cardId == paymentOptionSelected.getId() })?.oneTapCard?.cardUI?.securityCode?.mode == .optional {
             return true
         }
-        
+
         return false
     }
 
@@ -343,7 +343,7 @@ internal extension OneTapFlowModel {
     func needKyC() -> Bool {
         return !(search.payerCompliance?.offlineMethods.isCompliant ?? true) && paymentOptionSelected?.additionalInfoNeeded?() ?? false
     }
-    
+
     func need3DS() -> Bool {
         if getProgramValidation() == "stp", didCall3ds == false {
             didCall3ds = true
@@ -352,13 +352,13 @@ internal extension OneTapFlowModel {
 
         return false
     }
-    
+
     func getProgramValidation() -> String? {
-        return search.oneTap?.first(where: { $0.oneTapCard?.cardId == paymentOptionSelected?.getId()})?.applications?.first(where: { $0.paymentMethod.id == pxOneTapViewModel?.getCardSliderViewModel(cardId: paymentOptionSelected?.getId())?.selectedApplication?.paymentMethodId})?.validationPrograms?.first?.id
+        return search.oneTap?.first(where: { $0.oneTapCard?.cardId == paymentOptionSelected?.getId() })?.applications?.first(where: { $0.paymentMethod.id == pxOneTapViewModel?.getCardSliderViewModel(cardId: paymentOptionSelected?.getId())?.selectedApplication?.paymentMethodId })?.validationPrograms?.first?.id
     }
-    
+
     func getCardHolderName() -> String? {
-        return search.oneTap?.first(where: { $0.oneTapCard?.cardId == paymentOptionSelected?.getId()})?.oneTapCard?.cardUI?.name
+        return search.oneTap?.first(where: { $0.oneTapCard?.cardId == paymentOptionSelected?.getId() })?.oneTapCard?.cardUI?.name
     }
 
     func needCreatePayment() -> Bool {

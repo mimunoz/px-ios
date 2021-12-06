@@ -1,7 +1,6 @@
 import Foundation
 
-internal extension NSDictionary {
-
+extension NSDictionary {
     func toJsonString() -> String {
         do {
             let jsonData = try JSONSerialization.data(withJSONObject: self, options: .prettyPrinted)
@@ -10,7 +9,6 @@ internal extension NSDictionary {
                 return jsonString
             }
             return ""
-
         } catch {
             return error.localizedDescription
         }
@@ -33,7 +31,6 @@ internal extension NSDictionary {
     }
 
     func parseToLiteral() -> [String: Any] {
-
         var anyDict = [String: Any]()
 
         for (key, value) in self {
@@ -51,5 +48,4 @@ internal extension NSDictionary {
         let dictValue: Any? = self[dictKey]
         return (dictValue == nil || dictValue is NSNull) ? false : true
     }
-
 }

@@ -11,9 +11,9 @@ open class PXCheckoutStore: NSObject {
     }
 
     static let sharedInstance = PXCheckoutStore()
-    internal var checkoutPreference: PXCheckoutPreference?
-    internal var paymentDatas: [PXPaymentData] = []
-    internal var validationProgramId: String?
+    var checkoutPreference: PXCheckoutPreference?
+    var paymentDatas: [PXPaymentData] = []
+    var validationProgramId: String?
     private var data = [String: Any]()
 }
 
@@ -39,7 +39,7 @@ extension PXCheckoutStore {
     public func getCheckoutPreference() -> PXCheckoutPreference? {
         return checkoutPreference
     }
-    
+
     /**
      Get `validationProgramId` propertie.
      */
@@ -93,7 +93,7 @@ extension PXCheckoutStore {
     }
 }
 
-internal extension PXCheckoutStore {
+extension PXCheckoutStore {
     func clean() {
         removeAll()
         checkoutPreference = nil

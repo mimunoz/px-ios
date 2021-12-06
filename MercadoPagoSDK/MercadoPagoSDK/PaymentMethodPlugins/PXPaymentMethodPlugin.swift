@@ -11,13 +11,13 @@ open class PXPaymentMethodPlugin: NSObject {
         case BOTTOM
     }
 
-    internal static let PAYMENT_METHOD_TYPE_ID = PXPaymentTypes.PAYMENT_METHOD_PLUGIN.rawValue
-    internal var paymentMethodPluginId: String
-    internal var name: String
-    internal var paymentMethodPluginDescription: String?
-    internal var image: UIImage
-    internal var paymentMethodConfigPlugin: PXPaymentMethodConfigProtocol?
-    internal var displayOrder = DisplayOrder.TOP
+    static let PAYMENT_METHOD_TYPE_ID = PXPaymentTypes.PAYMENT_METHOD_PLUGIN.rawValue
+    var paymentMethodPluginId: String
+    var name: String
+    var paymentMethodPluginDescription: String?
+    var image: UIImage
+    var paymentMethodConfigPlugin: PXPaymentMethodConfigProtocol?
+    var displayOrder = DisplayOrder.TOP
 
     // MARK: Init.
     /**
@@ -38,14 +38,14 @@ open class PXPaymentMethodPlugin: NSObject {
     /**
      Async block to initialize your payment method plugin.
      */
-    open var initPaymentMethodPlugin: (PXCheckoutStore, @escaping (_ success: Bool) -> Void) -> Void = {store, callback in
+    open var initPaymentMethodPlugin: (PXCheckoutStore, @escaping (_ success: Bool) -> Void) -> Void = {_, callback in
         callback(true)
     }
 
     /**
      Determinate if your payment method plugin should be show.
      */
-    open var mustShowPaymentMethodPlugin: (PXCheckoutStore) -> Bool = { shouldShowPlugin in return true }
+    open var mustShowPaymentMethodPlugin: (PXCheckoutStore) -> Bool = { _ in return true }
 }
 
 // MARK: - Setters
@@ -111,8 +111,8 @@ extension PXPaymentMethodPlugin: PaymentMethodOption, PaymentOptionDrawable {
 }
 
 extension PXPaymentMethodPlugin {
-    internal func toPaymentMethod(financialInstitutions: [PXFinancialInstitution]? = nil) -> PXPaymentMethod {
-        //all PXPaymentMethodPlugin will only have aggregator processing mode available
+    func toPaymentMethod(financialInstitutions: [PXFinancialInstitution]? = nil) -> PXPaymentMethod {
+        // all PXPaymentMethodPlugin will only have aggregator processing mode available
         let paymentMethod = PXPaymentMethod(additionalInfoNeeded: nil, id: self.getId(), name: self.getTitle(), paymentTypeId: PXPaymentMethodPlugin.PAYMENT_METHOD_TYPE_ID, status: nil, secureThumbnail: nil, thumbnail: nil, deferredCapture: nil, settings: [], minAllowedAmount: nil, maxAllowedAmount: nil, accreditationTime: nil, merchantAccountId: nil, financialInstitutions: financialInstitutions, description: self.paymentMethodPluginDescription, processingModes: PXServicesURLConfigs.MP_DEFAULT_PROCESSING_MODES)
         paymentMethod.setExternalPaymentMethodImage(externalImage: self.getImage())
         return paymentMethod

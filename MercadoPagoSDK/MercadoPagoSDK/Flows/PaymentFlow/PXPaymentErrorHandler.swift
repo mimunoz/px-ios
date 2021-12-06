@@ -1,6 +1,6 @@
 import Foundation
 
-@objc internal protocol PXPaymentErrorHandlerProtocol: NSObjectProtocol {
+@objc protocol PXPaymentErrorHandlerProtocol: NSObjectProtocol {
     func escError(reason: PXESCDeleteReason)
     func exitCheckout()
 }

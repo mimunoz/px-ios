@@ -1,5 +1,5 @@
 import Foundation
-internal extension Date {
+extension Date {
     func stringDate() -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"

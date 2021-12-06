@@ -6,7 +6,6 @@ struct PXAnimatedButtonNotificationObject {
 }
 
 struct PXNotificationManager {
-
 }
 
 extension PXNotificationManager {
@@ -25,7 +24,6 @@ extension PXNotificationManager {
             let notificationCenter = NotificationCenter.default
             notificationCenter.addObserver(observer, selector: selector, name: .cardFormReset, object: nil)
         }
-
     }
 }
 
@@ -65,7 +63,7 @@ extension PXNotificationManager {
     }
 }
 
-internal extension NSNotification.Name {
+extension NSNotification.Name {
     static let attemptToClose = Notification.Name(rawValue: "PXAttemptToClose")
     static let animateButton = Notification.Name(rawValue: "PXAnimateButton")
     static let cardFormReset = Notification.Name(rawValue: "PXCardFormReset")

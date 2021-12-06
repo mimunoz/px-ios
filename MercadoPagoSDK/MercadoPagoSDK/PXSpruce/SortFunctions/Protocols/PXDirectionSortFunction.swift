@@ -6,8 +6,7 @@ import UIKit
 /// - bottomToTop: the animation will run with bottom views animating first and then top views animating last
 /// - leftToRight: the animation will run with left views animating first and right views animating last
 /// - rightToLeft: the animation will run with right views animating first and left views animating last
-internal enum Direction {
-
+enum Direction {
     /// the animation will run with top views animating first and then bottom views animating last
     case topToBottom
 
@@ -22,13 +21,12 @@ internal enum Direction {
 }
 
 /// A `DistanceSortFunction` that defines it's `distancePoint` based on a `Direction`. Any distance based sort functions that use a direction variable in order to determine the setup of the animation should implement this protocol.
-internal protocol DirectionSortFunction: DistanceSortFunction {
-
+protocol DirectionSortFunction: DistanceSortFunction {
     /// the direction that the animation should follow
     var direction: Direction { get set }
 }
 
-internal extension DirectionSortFunction {
+extension DirectionSortFunction {
     func distancePoint(view: UIView, subviews: [View] = []) -> CGPoint {
         let bounds = view.bounds
         switch direction {

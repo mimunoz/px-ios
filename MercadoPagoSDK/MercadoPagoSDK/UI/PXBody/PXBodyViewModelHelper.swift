@@ -1,6 +1,6 @@
 import UIKit
 
-internal extension PXResultViewModel {
+extension PXResultViewModel {
     func buildBodyComponent() -> PXComponentizable? {
         let instruction = instructionsInfo
         let props = PXBodyProps(paymentResult: paymentResult, amountHelper: amountHelper, instruction: instruction)

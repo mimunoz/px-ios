@@ -7,7 +7,7 @@ import Foundation
 open class PXPaymentProcessorNavigationHandler: NSObject {
     private var flow: PXPaymentFlow?
 
-    internal init(flow: PXPaymentFlow) {
+    init(flow: PXPaymentFlow) {
         self.flow = flow
     }
 
@@ -22,7 +22,6 @@ open class PXPaymentProcessorNavigationHandler: NSObject {
 
     /// :nodoc:
     open func didFinishPayment(paymentStatus: PXGenericPayment.RemotePaymentStatus, statusDetails: String = "", paymentId: String? = nil) {
-
         if statusDetails == PXRejectedStatusDetail.INVALID_ESC.rawValue {
             flow?.paymentErrorHandler?.escError(reason: .ESC_CAP)
             return
@@ -38,7 +37,6 @@ open class PXPaymentProcessorNavigationHandler: NSObject {
 
         // Set paymentPlugin image into payment method.
         if self.flow?.model.amountHelper?.getPaymentData().paymentMethod?.paymentTypeId == PXPaymentTypes.PAYMENT_METHOD_PLUGIN.rawValue {
-
             // Defaults status details for paymentMethod plugin
             if paymentStatus == .APPROVED {
                 statusDetailsStr = ""
@@ -59,7 +57,6 @@ open class PXPaymentProcessorNavigationHandler: NSObject {
      - parameter paymentId: Id of your payment.
      */
     open func didFinishPayment(status: String, statusDetail: String, paymentId: String? = nil) {
-
         if statusDetail == PXRejectedStatusDetail.INVALID_ESC.rawValue {
             flow?.paymentErrorHandler?.escError(reason: .ESC_CAP)
             return

@@ -1,14 +1,14 @@
 import Foundation
 
-internal typealias PXOfflineMethodsCellData = (title: PXText?, subtitle: PXText?, imageUrl: String?, isSelected: Bool)
+typealias PXOfflineMethodsCellData = (title: PXText?, subtitle: PXText?, imageUrl: String?, isSelected: Bool)
 
 final class PXOfflineMethodsCell: UITableViewCell {
     static let identifier = "PXOfflineMethodsCell"
 
-    //Selection Indicator
+    // Selection Indicator
     let INDICATOR_IMAGE_SIZE: CGFloat = 16.0
 
-    //Icon
+    // Icon
     let ICON_SIZE: CGFloat = 48.0
 
     func render(data: PXOfflineMethodsCellData) {
@@ -28,7 +28,7 @@ final class PXOfflineMethodsCell: UITableViewCell {
             indicatorImageView.widthAnchor.constraint(equalToConstant: INDICATOR_IMAGE_SIZE)
         ])
 
-        //Image
+        // Image
         var image: UIImage?
         if let imageURL = data.imageUrl, imageURL.isNotEmpty {
             image = PXUIImage(url: imageURL)

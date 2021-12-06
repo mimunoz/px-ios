@@ -1,7 +1,6 @@
 import Foundation
 
-internal class ResourceManager {
-
+class ResourceManager {
     static let shared = ResourceManager()
 
     let DEFAULT_FONT_NAME = ".SFUIDisplay-Regular"
@@ -32,7 +31,7 @@ extension ResourceManager {
     func getImageFor(_ paymentMethod: PXPaymentMethod, forCell: Bool? = false) -> UIImage? {
         if forCell == true {
             return ResourceManager.shared.getImage(paymentMethod.id.lowercased())
-        } else if let pmImage = ResourceManager.shared.getImage("icoTc_"+paymentMethod.id.lowercased()) {
+        } else if let pmImage = ResourceManager.shared.getImage("icoTc_" + paymentMethod.id.lowercased()) {
             return pmImage
         } else {
             return ResourceManager.shared.getCardDefaultLogo()
@@ -62,7 +61,6 @@ extension ResourceManager {
             }
         }
         return UIColor.cardDefaultColor()
-
     }
 
     func getLabelMaskFor(_ paymentMethod: PXPaymentMethod, settings: [PXSetting]?, forCell: Bool? = false) -> String {
@@ -118,7 +116,6 @@ extension ResourceManager {
                 }            }
         }
         return defaultColor
-
     }
 
     func getEditingFontColorFor(_ paymentMethod: PXPaymentMethod, settings: [PXSetting]?) -> UIColor {
@@ -141,7 +138,6 @@ extension ResourceManager {
             }
         }
         return defaultColor
-
     }
 }
 
@@ -149,7 +145,7 @@ extension ResourceManager {
 extension ResourceManager {
     func getResultColorWith(status: String, statusDetail: String? = nil) -> UIColor {
         if let statusDetail = statusDetail {
-            //Payment Result Logic
+            // Payment Result Logic
             let paymentResult = PaymentResult(status: status, statusDetail: statusDetail, paymentData: PXPaymentData(), splitAccountMoney: nil, payerEmail: nil, paymentId: nil, statementDescription: nil)
             if paymentResult.isApproved() || paymentResult.isWaitingForPayment() {
                 return ThemeManager.shared.successColor()
@@ -184,9 +180,8 @@ extension ResourceManager {
     }
 
     func getBadgeImageWith(status: String, statusDetail: String? = nil, clearBackground: Bool = false) -> UIImage? {
-
         if let statusDetail = statusDetail {
-            //Payment Result Logic
+            // Payment Result Logic
             let paymentResult = PaymentResult(status: status, statusDetail: statusDetail, paymentData: PXPaymentData(), splitAccountMoney: nil, payerEmail: nil, paymentId: nil, statementDescription: nil)
             if paymentResult.isAccepted() {
                 if paymentResult.isApproved() {
@@ -208,7 +203,7 @@ extension ResourceManager {
                 }
             }
         } else {
-            //Business Result Logic
+            // Business Result Logic
             if status == PXBusinessResultStatus.APPROVED.getDescription() {
                 return getBadgeImage(name: "ok_badge", clearBackground: clearBackground)
             } else if status == PXBusinessResultStatus.REJECTED.getDescription() {

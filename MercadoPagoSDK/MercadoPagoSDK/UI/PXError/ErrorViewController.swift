@@ -1,17 +1,16 @@
 import UIKit
 
-internal class ErrorViewController: MercadoPagoUIViewController {
-
-    @IBOutlet weak var  errorTitle: MPLabel!
-    @IBOutlet internal weak var errorSubtitle: MPLabel!
-    @IBOutlet internal weak var errorIcon: UIImageView!
-    @IBOutlet weak var exitButton: UIButton!
-    @IBOutlet weak var retryButton: UIButton!
+class ErrorViewController: MercadoPagoUIViewController {
+    @IBOutlet var  errorTitle: MPLabel!
+    @IBOutlet var errorSubtitle: MPLabel!
+    @IBOutlet var errorIcon: UIImageView!
+    @IBOutlet var exitButton: UIButton!
+    @IBOutlet var retryButton: UIButton!
 
     var error: MPSDKError!
     var callback: (() -> Void)?
     open var exitErrorCallback: (() -> Void)!
-    internal static var defaultErrorCancel: (() -> Void)?
+    static var defaultErrorCancel: (() -> Void)?
 
     public init(error: MPSDKError!, callback: (() -> Void)?, callbackCancel: (() -> Void)? = nil) {
         super.init(nibName: "ErrorViewController", bundle: ResourceManager.shared.getBundle())
@@ -27,7 +26,7 @@ internal class ErrorViewController: MercadoPagoUIViewController {
         self.callback = callback
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -62,7 +61,7 @@ internal class ErrorViewController: MercadoPagoUIViewController {
         trackScreenView()
     }
 
-    @objc internal func invokeCallback() {
+    @objc func invokeCallback() {
         if callback != nil {
             callback!()
         } else {
@@ -74,7 +73,7 @@ internal class ErrorViewController: MercadoPagoUIViewController {
         }
     }
 
-    @objc internal func invokeExitCallback() {
+    @objc func invokeExitCallback() {
         if let cancelCallback = ErrorViewController.defaultErrorCancel {
             cancelCallback()
         }
@@ -84,7 +83,6 @@ internal class ErrorViewController: MercadoPagoUIViewController {
 
 // MARK: Tracking
 extension ErrorViewController {
-
     func trackErrorEvent() {
         var properties: [String: Any] = [:]
         properties["path"] = TrackingPaths.Screens.getErrorPath()

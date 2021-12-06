@@ -6,7 +6,6 @@ import Foundation
  Some values like: binary mode are not present on API call.
  */
 @objcMembers open class PXCheckoutPreference: NSObject, Codable {
-
     // MARK: Public accessors.
     /**
      id
@@ -82,8 +81,8 @@ import Foundation
      */
     open var merchantOrderId: Int?
 
-    internal var binaryModeEnabled: Bool = false
-    internal var pxAdditionalInfo: PXAdditionalInfo?
+    var binaryModeEnabled: Bool = false
+    var pxAdditionalInfo: PXAdditionalInfo?
 
     // MARK: Initialization
     /**
@@ -109,7 +108,7 @@ import Foundation
         self.payer = PXPayer(email: payerEmail)
     }
 
-    internal init(id: String, items: [PXItem], payer: PXPayer, paymentPreference: PXPaymentPreference?, siteId: String, expirationDateTo: Date?, expirationDateFrom: Date?, site: PXSite?, differentialPricing: PXDifferentialPricing?, marketplace: String?, branchId: String?, processingModes: [String] = PXServicesURLConfigs.MP_DEFAULT_PROCESSING_MODES, collectorId: String?, orderId: Int? = nil, merchantOrderId: Int? = nil) {
+    init(id: String, items: [PXItem], payer: PXPayer, paymentPreference: PXPaymentPreference?, siteId: String, expirationDateTo: Date?, expirationDateFrom: Date?, site: PXSite?, differentialPricing: PXDifferentialPricing?, marketplace: String?, branchId: String?, processingModes: [String] = PXServicesURLConfigs.MP_DEFAULT_PROCESSING_MODES, collectorId: String?, orderId: Int? = nil, merchantOrderId: Int? = nil) {
         self.id = id
         self.items = items
         self.payer = payer
@@ -153,7 +152,7 @@ import Foundation
         case merchantOrderId = "merchant_order_id"
     }
 
-    required public convenience init(from decoder: Decoder) throws {
+    public required convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let id: String? = try container.decodeIfPresent(String.self, forKey: .id)
         let branchId: String? = try container.decodeIfPresent(String.self, forKey: .branchId)
@@ -182,7 +181,7 @@ import Foundation
     }
 }
 
-internal extension PXCheckoutPreference {
+extension PXCheckoutPreference {
     static func getIdOrDefaultValue(_ targetId: String?) -> String {
         guard let remoteId = targetId else { return "" }
         return remoteId

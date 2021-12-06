@@ -19,8 +19,8 @@ open class PXTrackingConfiguration: NSObject {
         self.sessionId = sessionId
     }
 
-    internal func updateTracker() {
-        //TODO: replace PXTracker internally with a better solution based on this class
+    func updateTracker() {
+        // TODO: replace PXTracker internally with a better solution based on this class
         if let trackListener = trackListener {
             MPXTracker.sharedInstance.setTrack(listener: trackListener)
         }

@@ -1,6 +1,6 @@
 import Foundation
 
-internal protocol ThreeDSServiceResultHandler: NSObjectProtocol {
+protocol ThreeDSServiceResultHandler: NSObjectProtocol {
     func finishFlow(threeDSAuthorization: Bool)
     func finishWithError(error: MPSDKError)
 }

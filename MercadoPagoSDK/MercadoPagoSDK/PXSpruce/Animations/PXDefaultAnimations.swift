@@ -6,7 +6,7 @@ import UIKit
 /// - down: start the view above its current position, and then slide downwards to where it currently is
 /// - left: start the view to the right of its current position, and then slide left to where it currently is
 /// - right: start the view to the left of its current position, and then slide right to where it currently is
-internal enum SlideDirection {
+enum SlideDirection {
     /// start the view below its current position, and then slide upwards to where it currently is
     case up
 
@@ -26,7 +26,7 @@ internal enum SlideDirection {
 /// - moderately: the object should move a moderate amount
 /// - severely: the object should move very noticeably
 /// - toAngle: provide your own angle value that you feel the object should rotate
-internal enum Angle {
+enum Angle {
     /// slightly animate the object
     case slightly
 
@@ -46,8 +46,7 @@ internal enum Angle {
 /// - moderately: the object should scale a moderate amount
 /// - severely: the object should scale very noticeably
 /// - toScale: provide your own scale value that you feel the object should grow/shrink
-internal enum Scale {
-
+enum Scale {
     /// slightly animate the object
     case slightly
 
@@ -67,7 +66,7 @@ internal enum Scale {
 /// - moderately: the object should move a moderate amount
 /// - severely: the object should move very noticeably
 /// - byPoints: provide your own distance value that you feel the object should slide over
-internal enum Distance {
+enum Distance {
     /// slightly move the object
     case slightly
 
@@ -82,7 +81,7 @@ internal enum Distance {
 }
 
 /// A few stock animations that you can use with Spruce. We want to make it really easy for you to include animations so we tried to include the basics. Use these stock animations to `slide`, `fade`, `spin`, `expand`, or `contract` your views.
-internal enum StockAnimation {
+enum StockAnimation {
     /// Have your view slide to where it currently is. Provide a `SlideDirection` and `Size` to determine what the animation should look like.
     case slide(SlideDirection, Distance)
 

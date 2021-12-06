@@ -1,7 +1,7 @@
 import UIKit
 
 @objc
-internal protocol PaymentOptionDrawable {
+protocol PaymentOptionDrawable {
     func getId() -> String
 
     func getTitle() -> String
@@ -10,7 +10,7 @@ internal protocol PaymentOptionDrawable {
 }
 
 @objc
-internal protocol PaymentMethodOption {
+protocol PaymentMethodOption {
     func getId() -> String
 
     func hasChildren() -> Bool

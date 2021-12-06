@@ -1,6 +1,6 @@
 import Foundation
 
-internal extension PXOneTapItem {
+extension PXOneTapItem {
     func getPaymentOptionId() -> String {
         if let oneTapCard = oneTapCard {
             return oneTapCard.cardId

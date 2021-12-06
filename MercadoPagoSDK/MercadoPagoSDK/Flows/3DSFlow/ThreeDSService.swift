@@ -1,6 +1,6 @@
 import Foundation
 
-internal class ThreeDSService {
+class ThreeDSService {
     var paymentData: PXPaymentData
     var oneTap: [PXOneTapDto]?
     var amountToPay: Double
@@ -18,29 +18,28 @@ internal class ThreeDSService {
         self.needToShowLoading = needToShowLoading
         self.resultHandler = resultHandler
     }
-    
+
     func authorize3DS(programUsed: String, cardHolderName: String) {
         if let cardTokenID = paymentData.token?.getId(),
            let paymentMethod = paymentData.paymentMethod,
            let paymentMethodId = paymentMethod.getId() {
-            
             if needToShowLoading {
                 self.pxNavigationHandler.presentLoading()
             }
-            
+
             let currencyId = SiteManager.shared.getCurrency().getCurrencySymbolOrDefault()
             let decimalPlaces = SiteManager.shared.getCurrency().getDecimalPlacesOrDefault()
             let decimalSeparator = SiteManager.shared.getCurrency().getDecimalSeparatorOrDefault()
             let thousandsSeparator = SiteManager.shared.getCurrency().getThousandsSeparatorOrDefault()
             let purchaseAmount = Utils.getAmountFormatted(amount: amountToPay, thousandSeparator: thousandsSeparator, decimalSeparator: decimalSeparator, addingCurrencySymbol: nil, addingParenthesis: false)
-            
-            MPXTracker.sharedInstance.trackEvent(event: ThreeDSTrackingEvents.didGetProgramValidation(["validation_program_used" : programUsed.uppercased()]))
-            
+
+            MPXTracker.sharedInstance.trackEvent(event: ThreeDSTrackingEvents.didGetProgramValidation(["validation_program_used": programUsed.uppercased()]))
+
             PXConfiguratorManager.threeDSProtocol.authenticate(config: PXConfiguratorManager.threeDSConfig,
                                                                cardTokenID: cardTokenID,
                                                                cardHolderName: cardHolderName,
                                                                paymentMethodId: paymentMethodId,
-                                                               purchaseAmount: purchaseAmount, 
+                                                               purchaseAmount: purchaseAmount,
                                                                currencyId: currencyId,
                                                                decimalPlaces: decimalPlaces,
                                                                decimalSeparator: decimalSeparator,
@@ -51,7 +50,7 @@ internal class ThreeDSService {
                                                                 case .success(let authorized):
                                                                     authorized ? self.resultHandler?.finishFlow(threeDSAuthorization: authorized) :
                                                                                  self.resultHandler?.finishWithError(error: MPSDKError())
-                                                                case .failure(_):
+                                                                case .failure:
                                                                     self.resultHandler?.finishWithError(error: MPSDKError())
                                                                 }
             })

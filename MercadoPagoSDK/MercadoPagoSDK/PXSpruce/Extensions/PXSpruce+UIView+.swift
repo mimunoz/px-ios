@@ -4,7 +4,7 @@ import UIKit
 /// simple all Spruce functions are under the computed variable `spruce` or use our spruce tree emoji!
 extension UIView: PXPropertyStoring {
     /// Access to all of the Spruce library animations. Use this to call functions such as `.animate` or `.prepare`
-    internal var pxSpruce: PXSpruce {
+    var pxSpruce: PXSpruce {
         return PXSpruce(view: self)
     }
 

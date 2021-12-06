@@ -1,8 +1,7 @@
 import UIKit
 
 @objcMembers
-internal class PXNavigationHeaderLabel: UILabel {
-
+class PXNavigationHeaderLabel: UILabel {
     override init(frame: CGRect) {
         super.init(frame: frame)
         if self.font != nil {
@@ -10,7 +9,7 @@ internal class PXNavigationHeaderLabel: UILabel {
         }
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         if self.font != nil {
             self.font = Utils.getFont(size: self.font!.pointSize)
@@ -18,4 +17,4 @@ internal class PXNavigationHeaderLabel: UILabel {
     }
 }
 
-internal class PXToolbar: UIToolbar {}
+class PXToolbar: UIToolbar {}

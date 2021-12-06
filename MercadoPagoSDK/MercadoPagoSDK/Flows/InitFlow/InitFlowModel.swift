@@ -1,9 +1,9 @@
 import Foundation
 
-internal typealias InitFlowProperties = (paymentData: PXPaymentData, checkoutPreference: PXCheckoutPreference, paymentPlugin: PXSplitPaymentProcessor?, paymentMethodSearchResult: PXInitDTO?, chargeRules: [PXPaymentTypeChargeRule]?, serviceAdapter: MercadoPagoServices, advancedConfig: PXAdvancedConfiguration, paymentConfigurationService: PXPaymentConfigurationServices, privateKey: String?, productId: String?)
-internal typealias InitFlowError = (errorStep: InitFlowModel.Steps, shouldRetry: Bool, requestOrigin: ApiUtil.RequestOrigin?, apiException: ApiException?)
+typealias InitFlowProperties = (paymentData: PXPaymentData, checkoutPreference: PXCheckoutPreference, paymentPlugin: PXSplitPaymentProcessor?, paymentMethodSearchResult: PXInitDTO?, chargeRules: [PXPaymentTypeChargeRule]?, serviceAdapter: MercadoPagoServices, advancedConfig: PXAdvancedConfiguration, paymentConfigurationService: PXPaymentConfigurationServices, privateKey: String?, productId: String?)
+typealias InitFlowError = (errorStep: InitFlowModel.Steps, shouldRetry: Bool, requestOrigin: ApiUtil.RequestOrigin?, apiException: ApiException?)
 
-internal protocol InitFlowProtocol: NSObjectProtocol {
+protocol InitFlowProtocol: NSObjectProtocol {
     func didFinishInitFlow()
     func didFailInitFlow(flowError: InitFlowError)
 }
@@ -121,7 +121,6 @@ extension InitFlowModel {
 
 // MARK: Needs methods
 extension InitFlowModel {
-
     // Use this method for init property.
     func needSkipRyC() -> Bool {
         if let paymentProc = properties.paymentPlugin, let shouldSkip = paymentProc.shouldSkipUserConfirmation, shouldSkip() {

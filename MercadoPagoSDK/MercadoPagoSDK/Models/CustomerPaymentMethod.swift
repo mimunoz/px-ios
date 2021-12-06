@@ -1,7 +1,6 @@
 import UIKit
 
-@objcMembers internal class CustomerPaymentMethod: NSObject, PXCardInformation, PaymentMethodOption {
-
+@objcMembers class CustomerPaymentMethod: NSObject, PXCardInformation, PaymentMethodOption {
     var id: String
     var customerPaymentMethodDescription: String
     var paymentMethodId: String

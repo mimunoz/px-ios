@@ -2,8 +2,7 @@ import Foundation
 
 // MARK: Screens
 extension TrackingPaths {
-
-    internal struct Screens {
+    struct Screens {
         // Terms and condition Path
         static func getTermsAndCondiontionPath() -> String {
             return TrackingPaths.pxTrack + payments + "/terms_and_conditions"
@@ -28,7 +27,7 @@ extension TrackingPaths {
 
 // MARK: Payment Result Screen Paths
 extension TrackingPaths.Screens {
-    internal struct PaymentResult {
+    struct PaymentResult {
         private static let success = "/success"
         private static let furtherAction = "/further_action_needed"
         private static let error = "/error"
@@ -109,7 +108,7 @@ extension TrackingPaths.Screens {
 
 // MARK: Payment Result Screen Paths
 extension TrackingPaths.Screens {
-    internal struct PaymentVault {
+    struct PaymentVault {
         private static let ticket = "/ticket"
         private static let cardType = "/cards"
 
@@ -128,8 +127,7 @@ extension TrackingPaths.Screens {
 }
 // MARK: OneTap Screen Paths
 extension TrackingPaths.Screens {
-    internal struct OneTap {
-
+    struct OneTap {
         static func getOneTapPath() -> String {
             return TrackingPaths.pxTrack + "/review/one_tap"
         }

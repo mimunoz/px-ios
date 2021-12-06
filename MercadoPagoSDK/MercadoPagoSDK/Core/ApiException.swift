@@ -1,7 +1,6 @@
 import Foundation
 
-internal class ApiException {
-
+class ApiException {
     open var cause: [Cause]?
     open var error: String?
     open var message: String?

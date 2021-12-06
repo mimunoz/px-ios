@@ -1,7 +1,6 @@
 import Foundation
 
-internal class PXNavigationHandler: NSObject {
-
+class PXNavigationHandler: NSObject {
     var countLoadings: Int = 0
     var navigationController: UINavigationController!
     var viewControllerBase: UIViewController?
@@ -36,7 +35,7 @@ internal class PXNavigationHandler: NSObject {
     func presentLoading(animated: Bool = false, completion: (() -> Swift.Void)? = nil) {
         self.countLoadings += 1
         if self.countLoadings == 1 {
-            let when = DispatchTime.now() //+ 0.3
+            let when = DispatchTime.now() // + 0.3
             DispatchQueue.main.asyncAfter(deadline: when) {
                 if self.countLoadings > 0 && self.currentLoadingView == nil {
                     self.createCurrentLoading()
@@ -74,11 +73,11 @@ internal class PXNavigationHandler: NSObject {
         return self.currentLoadingView != nil
     }
 
-    internal func createCurrentLoading() {
+    func createCurrentLoading() {
         self.currentLoadingView = PXLoadingViewController()
     }
 
-    internal func showErrorScreen(error: MPSDKError?, callbackCancel: (() -> Void)?, errorCallback: (() -> Void)?) {
+    func showErrorScreen(error: MPSDKError?, callbackCancel: (() -> Void)?, errorCallback: (() -> Void)?) {
         let errorVC = ErrorViewController(error: error, callback: nil, callbackCancel: callbackCancel)
         errorVC.modalPresentationStyle = .fullScreen
 
@@ -96,7 +95,7 @@ internal class PXNavigationHandler: NSObject {
         }
     }
 
-    internal func pushViewController(viewController: MercadoPagoUIViewController,
+    func pushViewController(viewController: MercadoPagoUIViewController,
                                      animated: Bool, backToFirstPaymentVault: Bool = false) {
         viewController.hidesBottomBarWhenPushed = true
 
@@ -128,7 +127,7 @@ internal class PXNavigationHandler: NSObject {
         navigationController.popViewController(animated: true)
     }
 
-    internal func removeRootLoading() {
+    func removeRootLoading() {
         let currentViewControllers = self.navigationController.viewControllers.filter { (viewController: UIViewController) -> Bool in
             return viewController != self.rootViewController
         }
@@ -159,10 +158,9 @@ internal class PXNavigationHandler: NSObject {
         }
         return false
     }
-
 }
 
-internal extension PXNavigationHandler {
+extension PXNavigationHandler {
     static func getDefault() -> PXNavigationHandler {
         return PXNavigationHandler(navigationController: UINavigationController())
     }

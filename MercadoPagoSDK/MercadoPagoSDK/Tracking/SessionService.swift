@@ -1,7 +1,6 @@
 import Foundation
 
-final internal class SessionService {
-
+final class SessionService {
     static let SESSION_ID_KEY: String = "session_id"
     private var sessionId: String
 
@@ -27,7 +26,7 @@ final internal class SessionService {
 }
 
 // MARK: - Internal functions.
-internal extension SessionService {
+extension SessionService {
     static func getUUID() -> String {
         return UUID().uuidString.lowercased()
     }

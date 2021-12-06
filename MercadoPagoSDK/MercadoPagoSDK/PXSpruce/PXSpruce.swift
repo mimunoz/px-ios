@@ -2,8 +2,7 @@ import UIKit
 
 /// Access to all of the Spruce library animations. Use this to call functions such as `.animate` or `.prepare`
 
-internal struct PXSpruce {
-
+struct PXSpruce {
     struct PXDefaultAnimation {
         static let slideUpAnimation: [StockAnimation] = [.slide(.up, .moderately), .fadeIn]
         static let rightToLeftAnimation: [StockAnimation] = [.slide(.left, .slightly), .fadeIn]
@@ -11,8 +10,8 @@ internal struct PXSpruce {
     }
 
     /// Internal housing of a `UIView` so that we do not conflict with namespaces
-    internal let view: UIView
-    internal init(view: UIView) {
+    let view: UIView
+    init(view: UIView) {
         self.view = view
     }
 }
@@ -21,14 +20,14 @@ internal struct PXSpruce {
 /// recursive subview lookup, we need to handle changing the coordinate space. Once the coordinate space
 /// has been accounted for we can then alter the reference point.
 
-internal protocol View {
+protocol View {
     /// The view that should be animating
     var view: UIView? { get }
     /// The adjusted for reference point.
     var referencePoint: CGPoint { get set }
 }
 
-internal struct PXSpruceUIView: View {
+struct PXSpruceUIView: View {
     weak var view: UIView?
     var referencePoint: CGPoint
     init(view: UIView, referencePoint: CGPoint) {

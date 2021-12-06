@@ -2,8 +2,7 @@ import UIKit
 
 /// A wrapper around the standard `UIViewAnimation` block with options publicly accessible. See, [UIViewAnimation](apple-reference-documentation://hsLqXZ_dD1) for more
 /// - Note: `animationOptions` defaults to `.curveEaseOut`. If you do not update this value before calling the animate method than the changes will not be reflected.
-internal struct StandardAnimation: Animation {
-
+struct StandardAnimation: Animation {
     var changeFunction: ChangeFunction?
     var duration: TimeInterval
     var animationOptions: UIView.AnimationOptions = .curveEaseOut

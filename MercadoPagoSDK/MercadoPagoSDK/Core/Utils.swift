@@ -21,8 +21,7 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
     }
 }
 
-internal class Utils {
-
+class Utils {
     class func getAttributedAmount(_ formattedString: String, thousandSeparator: String, decimalSeparator: String, currencySymbol: String, color: UIColor = .white, fontSize: CGFloat = 20, centsFontSize: CGFloat = 10, baselineOffset: Int = 7) -> NSAttributedString {
         let cents = getCentsFormatted(formattedString, decimalSeparator: decimalSeparator)
         let amount = getAmountFormatted(String(describing: Int(formattedString)), thousandSeparator: thousandSeparator, decimalSeparator: decimalSeparator)
@@ -87,7 +86,6 @@ internal class Utils {
     }
 
     class func getAttributedAmount(withAttributes attributes: [NSAttributedString.Key: Any], amount: Double, currency: PXCurrency, negativeAmount: Bool) -> NSMutableAttributedString {
-
         let amount = getAmountFormatted(amount: amount, thousandSeparator: currency.getThousandsSeparatorOrDefault(), decimalSeparator: currency.getDecimalSeparatorOrDefault(), addingCurrencySymbol: currency.getCurrencySymbolOrDefault(), addingParenthesis: false)
 
         var symbols = ""
@@ -122,7 +120,7 @@ internal class Utils {
         }
         return amountFotmated
     }
-    
+
     class func addParenthesis(_ string: String) -> String {
         return "(\(string))"
     }
@@ -211,7 +209,6 @@ internal class Utils {
      returns 10,200
      **/
     class func getAmountFormatted(_ formattedString: String, thousandSeparator: String, decimalSeparator: String) -> String {
-
         let amount = self.getAmountDigits(formattedString, decimalSeparator: decimalSeparator)
         let length = amount.count
         if length <= 3 {
@@ -242,7 +239,7 @@ internal class Utils {
         return ""
     }
 
-    static internal func findCardInformationIn(customOptions: [PXCardInformation], paymentData: PXPaymentData, savedESCCardToken: PXSavedESCCardToken? = nil) -> PXCardInformation? {
+    static func findCardInformationIn(customOptions: [PXCardInformation], paymentData: PXPaymentData, savedESCCardToken: PXSavedESCCardToken? = nil) -> PXCardInformation? {
         let customOptionsFound = customOptions.filter { (cardInformation: PXCardInformation) -> Bool in
             if paymentData.getPaymentMethod()!.isAccountMoney {
                 return  cardInformation.getPaymentMethodId() == PXPaymentTypes.ACCOUNT_MONEY.rawValue
@@ -258,8 +255,7 @@ internal class Utils {
         return !Array.isNullOrEmpty(customOptionsFound) ? customOptionsFound[0] : nil
     }
 
-
-    internal static func findPaymentMethod(_ paymentMethods: [PXPaymentMethod], paymentMethodId: String) -> PXPaymentMethod? {
+    static func findPaymentMethod(_ paymentMethods: [PXPaymentMethod], paymentMethodId: String) -> PXPaymentMethod? {
         var paymentTypeSelected = ""
 
         let paymentMethod = paymentMethods.filter({ (paymentMethod: PXPaymentMethod) -> Bool in
@@ -273,11 +269,10 @@ internal class Utils {
                     }
                 }
                 return true
-
             }
             return false
         })
-        
+
         guard let firstPaymentMethod = paymentMethod.first else {
             return nil
         }
@@ -289,7 +284,7 @@ internal class Utils {
         return firstPaymentMethod
     }
 
-    internal static func findOfflinePaymentMethod(_ paymentMethods: [PXPaymentMethod], offlinePaymentMethod: PXOfflinePaymentMethod) -> PXPaymentMethod {
+    static func findOfflinePaymentMethod(_ paymentMethods: [PXPaymentMethod], offlinePaymentMethod: PXOfflinePaymentMethod) -> PXPaymentMethod {
         var paymentTypeSelected = ""
         let paymentMethod = paymentMethods.filter({ (paymentMethod: PXPaymentMethod) -> Bool in
             if offlinePaymentMethod.getId().lowercased() == paymentMethod.id.lowercased() {
@@ -348,7 +343,6 @@ internal class Utils {
     static let imageCache = NSCache<NSString, AnyObject>()
 
     func loadImageFromURLWithCache(withUrl urlStr: String?, targetView: UIView, placeholderView: UIView?, fallbackView: UIView?, fadeInEnabled: Bool = false, shouldAddInsets: Bool = false, didFinish: ((UIImage) -> Void)? = nil) {
-
         guard let urlString = urlStr else {
             if let fallbackView = fallbackView {
                 targetView.removeAllSubviews()
@@ -357,13 +351,13 @@ internal class Utils {
             return
         }
 
-        //Set placeholder view
+        // Set placeholder view
         if let placeholderView = placeholderView {
             targetView.removeAllSubviews()
             targetView.addSubviewAtFullSize(with: placeholderView)
         }
 
-        //Check & Load cached image
+        // Check & Load cached image
         if let cachedImage = Utils.imageCache.object(forKey: urlString as NSString) as? UIImage {
             let imageView = self.createImageView(with: cachedImage, contentMode: targetView.contentMode)
             targetView.removeAllSubviews()
@@ -374,8 +368,7 @@ internal class Utils {
 
         if let url = URL(string: urlString) {
             // Request image.
-            URLSession.shared.dataTask(with: url, completionHandler: { (data, _, error) in
-
+            URLSession.shared.dataTask(with: url, completionHandler: { data, _, error in
                 if error != nil {
                     DispatchQueue.main.async {
                         if let fallbackView = fallbackView {
@@ -393,19 +386,19 @@ internal class Utils {
                             let imageWithInset = imageFromData.addInset(percentage: 58) {
                             image = imageWithInset
                         }
-                        //Save image to cache
+                        // Save image to cache
                         Utils.imageCache.setObject(image, forKey: urlString as NSString)
 
-                        //Add image
+                        // Add image
                         let imageView = self.createImageView(with: image, contentMode: targetView.contentMode)
                         imageView.alpha = 0
                         targetView.addSubviewAtFullSize(with: imageView)
 
                         if fadeInEnabled {
-                            //ImageView fade in animation
+                            // ImageView fade in animation
                             UIView.animate(withDuration: 0.5, animations: {
                                 imageView.alpha = 1
-                            }, completion: { (_) in
+                            }, completion: { _ in
                                 targetView.removeAllSubviews(except: [imageView])
                             })
                         } else {

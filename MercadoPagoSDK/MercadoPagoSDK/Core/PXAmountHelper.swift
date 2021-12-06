@@ -1,12 +1,11 @@
 import Foundation
 
-internal struct PXAmountHelper {
-
-    internal let preference: PXCheckoutPreference
+struct PXAmountHelper {
+    let preference: PXCheckoutPreference
     private let paymentData: PXPaymentData
-    internal let chargeRules: [PXPaymentTypeChargeRule]?
-    internal let paymentConfigurationService: PXPaymentConfigurationServices
-    internal var splitAccountMoney: PXPaymentData?
+    let chargeRules: [PXPaymentTypeChargeRule]?
+    let paymentConfigurationService: PXPaymentConfigurationServices
+    var splitAccountMoney: PXPaymentData?
 
     init (preference: PXCheckoutPreference, paymentData: PXPaymentData, chargeRules: [PXPaymentTypeChargeRule]?, paymentConfigurationService: PXPaymentConfigurationServices, splitAccountMoney: PXPaymentData?) {
         self.preference = preference
@@ -16,7 +15,7 @@ internal struct PXAmountHelper {
         self.splitAccountMoney = splitAccountMoney
     }
 
-    internal var consumedDiscount: Bool {
+    var consumedDiscount: Bool {
         return paymentData.consumedDiscount ?? false
     }
 
@@ -36,22 +35,22 @@ internal struct PXAmountHelper {
         // preferenceAmount + chargeRuleAmount
         let decimalPreferenceAmount = PXAmountHelper.getRoundedAmountAsNsDecimalNumber(amount: preferenceAmount)
         let decimalChargeRuleAmount = PXAmountHelper.getRoundedAmountAsNsDecimalNumber(amount: chargeRuleAmount)
-        
+
         let sum = decimalPreferenceAmount.adding(decimalChargeRuleAmount)
-        
+
         guard let doubleSum = Double(sum.stringValue) else { return preferenceAmount + chargeRuleAmount }
-        
+
         return doubleSum
     }
-    
+
     var amount: Double? {
         return paymentData.amount
     }
-    
+
     var taxFreeAmount: Double? {
         return paymentData.taxFreeAmount
     }
-    
+
     var noDiscountAmount: Double? {
         return paymentData.noDiscountAmount
     }
@@ -81,11 +80,11 @@ internal struct PXAmountHelper {
             let decimalPreferenceAmount = PXAmountHelper.getRoundedAmountAsNsDecimalNumber(amount: preferenceAmount)
             let decimalCouponAmount = PXAmountHelper.getRoundedAmountAsNsDecimalNumber(amount: couponAmount)
             let decimalChargeRuleAmount = PXAmountHelper.getRoundedAmountAsNsDecimalNumber(amount: chargeRuleAmount)
-            
+
             let sum = (decimalPreferenceAmount.subtracting(decimalCouponAmount)).adding(decimalChargeRuleAmount)
-            
+
             guard let doubleSum = Double(sum.stringValue) else { return preferenceAmount + chargeRuleAmount }
-            
+
             return doubleSum
         } else {
             // preferenceAmount + chargeRuleAmount
@@ -107,7 +106,7 @@ internal struct PXAmountHelper {
         return nil
     }
 
-    internal var chargeRuleAmount: Double {
+    var chargeRuleAmount: Double {
         guard let rules = chargeRules else {
             return 0
         }
@@ -119,11 +118,11 @@ internal struct PXAmountHelper {
         return 0
     }
 
-    internal var chargeRuleLabel: String? {
+    var chargeRuleLabel: String? {
         guard let rules = chargeRules else {
             return nil
         }
-        
+
         for rule in rules {
             if rule.paymentTypeId == paymentData.paymentMethod?.paymentTypeId {
                 return rule.label
@@ -131,11 +130,10 @@ internal struct PXAmountHelper {
         }
         return nil
     }
-    
-    internal func getPaymentData() -> PXPaymentData {
+
+    func getPaymentData() -> PXPaymentData {
         // Set total card amount with charges without discount
         if paymentData.transactionAmount == nil || paymentData.transactionAmount == 0 {
-            
             if let paymentMethod = paymentData.paymentMethod,
                let paymentOptionId = paymentData.paymentOptionId,
                let amount = paymentConfigurationService.getAmount(paymentOptionId: paymentOptionId, paymentMethodId: paymentMethod.id, paymentTypeId: paymentMethod.paymentTypeId),
@@ -153,7 +151,7 @@ internal struct PXAmountHelper {
     }
 }
 
-internal extension PXAmountHelper {
+extension PXAmountHelper {
     static func getRoundedAmountAsNsDecimalNumber(amount: Double?, forInit: Bool = false) -> NSDecimalNumber {
          guard let targetAmount = amount else { return 0 }
          let decimalPlaces: Double = forInit ? 2 : Double(SiteManager.shared.getCurrency().getDecimalPlacesOrDefault())
@@ -164,7 +162,7 @@ internal extension PXAmountHelper {
 }
 
 // MARK: Tracking usage
-internal extension PXAmountHelper {
+extension PXAmountHelper {
     func getDiscountCouponAmountForTracking() -> Decimal {
         guard let couponAmount = paymentData.getDiscount()?.getCouponAmount()?.decimalValue else { return 0 }
         if let amPaymentDataAmount = splitAccountMoney?.getDiscount()?.getCouponAmount() {

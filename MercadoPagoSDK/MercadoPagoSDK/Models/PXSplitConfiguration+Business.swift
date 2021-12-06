@@ -1,7 +1,6 @@
 import Foundation
 
-internal extension PXSplitConfiguration {
-
+extension PXSplitConfiguration {
     func getSplitAmountToPay() -> Double {
         guard let amount = secondaryPaymentMethod?.amount else {
             return 0

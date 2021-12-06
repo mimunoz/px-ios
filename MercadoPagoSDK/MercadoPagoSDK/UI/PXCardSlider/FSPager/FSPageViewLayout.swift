@@ -1,14 +1,13 @@
 import UIKit
 
 class FSPagerViewLayout: UICollectionViewLayout {
+    var contentSize: CGSize = .zero
+    var leadingSpacing: CGFloat = 0
+    var itemSpacing: CGFloat = 0
+    var needsReprepare = true
+    var scrollDirection: FSPagerView.ScrollDirection = .horizontal
 
-    internal var contentSize: CGSize = .zero
-    internal var leadingSpacing: CGFloat = 0
-    internal var itemSpacing: CGFloat = 0
-    internal var needsReprepare = true
-    internal var scrollDirection: FSPagerView.ScrollDirection = .horizontal
-
-    open override class var layoutAttributesClass: AnyClass {
+    override open class var layoutAttributesClass: AnyClass {
         return FSPagerViewLayoutAttributes.self
     }
 
@@ -28,7 +27,7 @@ class FSPagerViewLayout: UICollectionViewLayout {
         self.commonInit()
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         self.commonInit()
     }
@@ -128,7 +127,6 @@ class FSPagerViewLayout: UICollectionViewLayout {
             origin += self.itemSpacing
         }
         return layoutAttributes
-
     }
 
     override open func layoutAttributesForItem(at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
@@ -191,12 +189,12 @@ class FSPagerViewLayout: UICollectionViewLayout {
 
     // MARK: - Internal functions
 
-    internal func forceInvalidate() {
+    func forceInvalidate() {
         self.needsReprepare = true
         self.invalidateLayout()
     }
 
-    internal func contentOffset(for indexPath: IndexPath) -> CGPoint {
+    func contentOffset(for indexPath: IndexPath) -> CGPoint {
         let origin = self.frame(for: indexPath).origin
         guard let collectionView = self.collectionView else {
             return origin
@@ -219,7 +217,7 @@ class FSPagerViewLayout: UICollectionViewLayout {
         return contentOffset
     }
 
-    internal func frame(for indexPath: IndexPath) -> CGRect {
+    func frame(for indexPath: IndexPath) -> CGRect {
         let numberOfItems = self.numberOfItems * indexPath.section + indexPath.item
         let originX: CGFloat = {
             if self.scrollDirection == .vertical {
@@ -284,5 +282,4 @@ class FSPagerViewLayout: UICollectionViewLayout {
         attributes.zIndex = Int(self.numberOfItems) - Int(attributes.position)
         transformer.applyTransform(to: attributes)
     }
-
 }

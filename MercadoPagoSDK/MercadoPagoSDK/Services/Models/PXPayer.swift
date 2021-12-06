@@ -2,7 +2,6 @@ import Foundation
 /// :nodoc:
 @objcMembers
 open class PXPayer: NSObject, Codable, NSCopying {
-
     open var id: String?
     open var accessToken: String?
     open var identification: PXIdentification?
@@ -22,7 +21,7 @@ open class PXPayer: NSObject, Codable, NSCopying {
         self.email = email
         self.firstName = firstName
         self.lastName = lastName
-        //hack for money in first integration, if no legal name has been set, first name is used as such
+        // hack for money in first integration, if no legal name has been set, first name is used as such
         self.legalName = legalName ?? firstName
     }
 
@@ -30,7 +29,7 @@ open class PXPayer: NSObject, Codable, NSCopying {
         self.email = email
     }
 
-    required public convenience init(from decoder: Decoder) throws {
+    public required convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXPayerKeys.self)
         let accessToken: String? = try container.decodeIfPresent(String.self, forKey: .accessToken)
         let type: String? = try container.decodeIfPresent(String.self, forKey: .type)
@@ -87,7 +86,7 @@ extension PXPayer {
         self.legalName = lastName
     }
 
-    internal func setAccessToken(accessToken: String) {
+    func setAccessToken(accessToken: String) {
         self.accessToken = accessToken
     }
 }
@@ -130,7 +129,7 @@ extension PXPayer {
         return legalName
     }
 
-    internal func getAccessToken() -> String? {
+    func getAccessToken() -> String? {
         return accessToken
     }
 }
@@ -159,8 +158,8 @@ extension PXPayer {
         try container.encodeIfPresent(self.email, forKey: .email)
         try container.encodeIfPresent(self.id, forKey: .id)
         try container.encodeIfPresent(self.entityType, forKey: .entityType)
-        var name: String? = nil
-        //if "first name" or "legal name" variable is present, it's expected to be sent using "first_name" as key; in the unexpected case where both fields have an assigned value, "legal name" is prioritized to use the aformentioned key
+        var name: String?
+        // if "first name" or "legal name" variable is present, it's expected to be sent using "first_name" as key; in the unexpected case where both fields have an assigned value, "legal name" is prioritized to use the aformentioned key
         if let firstName = self.firstName, !firstName.isEmpty {
             name = firstName
         }

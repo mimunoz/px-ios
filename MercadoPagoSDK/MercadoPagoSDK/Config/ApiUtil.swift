@@ -1,6 +1,6 @@
 import Foundation
 
-internal class ApiUtil {
+class ApiUtil {
     enum ErrorCauseCodes: String {
         case INVALID_IDENTIFICATION_NUMBER = "324"
         case INVALID_ESC = "E216"

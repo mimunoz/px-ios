@@ -1,7 +1,7 @@
 import Foundation
 
 extension TokenizationService {
-    internal func trackInvalidESC(error: MPSDKError, cardId: String, esc_length: Int?) {
+    func trackInvalidESC(error: MPSDKError, cardId: String, esc_length: Int?) {
         var properties: [String: Any] = [:]
 
         properties["path"] = TrackingPaths.Events.getCreateTokenPath()
@@ -19,7 +19,6 @@ extension TokenizationService {
     }
 
     private func getErrorId(error: MPSDKError) -> String {
-
         if let apiException = error.apiException, apiException.containsCause(code: ApiUtil.ErrorCauseCodes.INVALID_ESC.rawValue) {
             return Tracking.Error.Id.invalidESC
         } else if let apiException = error.apiException, apiException.containsCause(code: ApiUtil.ErrorCauseCodes.INVALID_FINGERPRINT.rawValue) {

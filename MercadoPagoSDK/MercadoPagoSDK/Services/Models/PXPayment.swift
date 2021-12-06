@@ -142,13 +142,12 @@ import Foundation
     open var tokenId: String?
 
     /// :nodoc:
-    internal init(id: Int64, status: String) {
+    init(id: Int64, status: String) {
         self.id = id
         self.status = status
     }
 
-    internal init(binaryMode: Bool?, callForAuthorizeId: String?, captured: Bool?, card: PXCard?, collectorId: Int?, couponAmount: Double?, currencyId: String?, dateApproved: Date?, dateCreated: Date?, dateLastUpdated: Date?, description: String?, differentialPricingId: Int64?, externalReference: String?, feeDetails: [PXFeeDetail]?, id: Int64, installments: Int?, issuerId: String?, liveMode: Bool?, metadata: [String: String]?, moneyReleaseDate: Date?, notificationUrl: String?, operationType: String?, order: PXOrder?, payer: PXPayer?, paymentMethodId: String?, paymentTypeId: String?, refunds: [PXRefund]?, statementDescriptor: String?, status: String, statusDetail: String, transactionAmount: Double?, transactionAmountRefunded: Double?, transactionDetails: PXTransactionDetails?, tokenId: String?) {
-
+    init(binaryMode: Bool?, callForAuthorizeId: String?, captured: Bool?, card: PXCard?, collectorId: Int?, couponAmount: Double?, currencyId: String?, dateApproved: Date?, dateCreated: Date?, dateLastUpdated: Date?, description: String?, differentialPricingId: Int64?, externalReference: String?, feeDetails: [PXFeeDetail]?, id: Int64, installments: Int?, issuerId: String?, liveMode: Bool?, metadata: [String: String]?, moneyReleaseDate: Date?, notificationUrl: String?, operationType: String?, order: PXOrder?, payer: PXPayer?, paymentMethodId: String?, paymentTypeId: String?, refunds: [PXRefund]?, statementDescriptor: String?, status: String, statusDetail: String, transactionAmount: Double?, transactionAmountRefunded: Double?, transactionDetails: PXTransactionDetails?, tokenId: String?) {
         self.binaryMode = binaryMode
         self.callForAuthorizeId = callForAuthorizeId
         self.captured = captured
@@ -183,7 +182,6 @@ import Foundation
         self.transactionAmountRefunded = transactionAmountRefunded
         self.transactionDetails = transactionDetails
         self.tokenId = tokenId
-
     }
 
     /// :nodoc:
@@ -225,7 +223,7 @@ import Foundation
     }
 
     /// :nodoc:
-    required public convenience init(from decoder: Decoder) throws {
+    public required convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXPaymentKeys.self)
         let binaryMode: Bool? = try container.decodeIfPresent(Bool.self, forKey: .binaryMode)
         let callForAuthorizeId: String? = try container.decodeIfPresent(String.self, forKey: .callForAuthorizeId)
@@ -356,12 +354,10 @@ extension PXPayment {
     public func getPaymentMethodTypeId() -> String? {
         return paymentTypeId
     }
-
 }
 
 /// :nodoc:
 extension PXPayment {
-
     open class Status: NSObject {
         public static let APPROVED = "approved"
         public static let IN_PROCESS = "in_process"

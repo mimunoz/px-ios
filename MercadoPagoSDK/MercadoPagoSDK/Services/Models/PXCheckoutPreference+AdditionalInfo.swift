@@ -1,6 +1,6 @@
 import Foundation
 
-internal extension PXCheckoutPreference {
+extension PXCheckoutPreference {
     func populateAdditionalInfoModel() {
         if let additionalInfo = additionalInfo,
             !additionalInfo.isEmpty,

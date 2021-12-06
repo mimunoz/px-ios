@@ -6,8 +6,7 @@ import Foundation
 /// - medium: a default value, 1.0
 /// - heavy: a large value, 2.0
 /// - custom: you can specify your own value for weight
-internal enum Weight {
-
+enum Weight {
     /// a small value, 0.5
     case light
 
@@ -37,8 +36,7 @@ internal enum Weight {
 }
 
 /// A `SortFunction` that takes into account the vertical and horizontal weight of the position of views. The lighter the weight the the faster those views will start to animate. For example, if you had a light `verticalWeight` and a heavy `horizontalWeight`, the views that are vertically aligned with the starting position will animate before those that are horizontally aligned. This allows you to define the exact rigidness of a `radial` like `SortFunction`.
-internal protocol WeightSortFunction: SortFunction {
-
+protocol WeightSortFunction: SortFunction {
     /// the horizontal weight that should be applied to each of the distances between views
     var horizontalWeight: Weight { get set }
 

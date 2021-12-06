@@ -1,6 +1,6 @@
 import Foundation
 
-internal struct ApiErrorCode {
+struct ApiErrorCode {
     static let INTERNAL_SERVER_ERROR = 500
     static let PROCESSING = 499
     static let BAD_REQUEST = 400

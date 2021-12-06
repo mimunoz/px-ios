@@ -1,11 +1,10 @@
 import UIKit
 
 class PXReviewViewModel: NSObject {
-
     static let ERROR_DELTA = 0.001
     public static var CUSTOMER_ID = ""
 
-    internal var amountHelper: PXAmountHelper
+    var amountHelper: PXAmountHelper
     var paymentOptionSelected: PaymentMethodOption?
     var advancedConfiguration: PXAdvancedConfiguration
     var userLogged: Bool
@@ -69,7 +68,6 @@ extension PXReviewViewModel {
 
 // MARK: Item component
 extension PXReviewViewModel {
-
     // HotFix: TODO - Move to OneTapViewModel
     func buildOneTapItemComponents() -> [PXItemComponent] {
         var pxItemComponents = [PXItemComponent]()

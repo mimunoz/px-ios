@@ -14,8 +14,7 @@ enum BackendEnvironment: String {
     case gamma = "gamma/"
 }
 
-internal protocol RequestInfos {
-
+protocol RequestInfos {
     var baseURL: URL { get }
 
     var environment: BackendEnvironment { get }
@@ -33,11 +32,10 @@ internal protocol RequestInfos {
     var body: Data? { get }
 
     var parameterEncoding: ParameterEncode { get }
-    
-    var accessToken: String? { get }
-    
-    var mockURL: URL? { get }
 
+    var accessToken: String? { get }
+
+    var mockURL: URL? { get }
 }
 
 extension RequestInfos {
@@ -56,7 +54,7 @@ extension RequestInfos {
     var shouldSetEnvironment: Bool {
         return true
     }
-    
+
     var mockURL: URL? {
         return nil
     }

@@ -1,7 +1,6 @@
 import UIKit
 
-internal class MPLabel: UILabel {
-
+class MPLabel: UILabel {
     static let defaultColorText = UIColor(red: 51, green: 51, blue: 51)
     static let highlightedColorText = UIColor(red: 51, green: 51, blue: 51)
     static let errorColorText = UIColor(red: 51, green: 51, blue: 51)
@@ -11,7 +10,7 @@ internal class MPLabel: UILabel {
         updateFonts()
      }
 
-    required public init?(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         updateFonts()
     }
@@ -42,7 +41,7 @@ internal class MPLabel: UILabel {
 
 // MARK: - Internals
 extension MPLabel {
-    internal func updateFonts() {
+    func updateFonts() {
         if let labelFont = font {
             self.font = Utils.getFont(size: labelFont.pointSize)
         }

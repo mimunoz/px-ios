@@ -10,7 +10,7 @@ extension PXInstructions {
         }
     }
 
-    internal func getInstruction() -> PXInstruction? {
+    func getInstruction() -> PXInstruction? {
         if instructions.isEmpty {
             return nil
         } else {

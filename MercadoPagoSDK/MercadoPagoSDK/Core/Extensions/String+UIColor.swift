@@ -1,6 +1,6 @@
 import UIKit
 
-internal extension String {
+extension String {
     func hexToUIColor() -> UIColor {
         var cString: String = self.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
 

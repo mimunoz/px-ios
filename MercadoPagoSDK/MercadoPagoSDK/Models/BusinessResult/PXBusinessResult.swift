@@ -166,8 +166,7 @@ extension PXBusinessResult {
 }
 
 // MARK: Getters
-internal extension PXBusinessResult {
-
+extension PXBusinessResult {
     func getBusinessStatus() -> PXBusinessResultStatus {
         return self.status
     }
@@ -225,15 +224,15 @@ internal extension PXBusinessResult {
 }
 
 extension PXBusinessResult {
-    internal func isAccepted() -> Bool {
+    func isAccepted() -> Bool {
         return self.status == .APPROVED
     }
 
-    internal func isWarning() -> Bool {
+    func isWarning() -> Bool {
         return self.status == .PENDING || self.status == .IN_PROGRESS
     }
 
-    internal func isError() -> Bool {
+    func isError() -> Bool {
         return self.status == .REJECTED
     }
 }

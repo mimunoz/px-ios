@@ -6,19 +6,19 @@ import UIKit
  */
 @objcMembers
 open class MercadoPagoCheckout: NSObject {
-    internal enum InitMode {
+    enum InitMode {
         case normal
         case lazy
     }
 
-    internal var initMode: InitMode = .normal
-    internal var initProtocol: PXLazyInitProtocol?
-    internal static var currentCheckout: MercadoPagoCheckout?
-    internal var paymentConfiguration: PXPaymentConfiguration?
-    internal var viewModel: MercadoPagoCheckoutViewModel
+    var initMode: InitMode = .normal
+    var initProtocol: PXLazyInitProtocol?
+    static var currentCheckout: MercadoPagoCheckout?
+    var paymentConfiguration: PXPaymentConfiguration?
+    var viewModel: MercadoPagoCheckoutViewModel
     // This struct will hold the value of the new card added by MLCardForm
     // until the init flow is refreshed with this new payment method
-    internal struct InitFlowRefresh {
+    struct InitFlowRefresh {
         static var cardId: String?
         static let retryDelay: Double = 0.5
 
@@ -68,7 +68,6 @@ open class MercadoPagoCheckout: NSObject {
 
 // MARK: Publics
 extension MercadoPagoCheckout {
-
     /**
      Start checkout experience. This method push our ViewController in your navigation stack.
      - parameter navigationController: Instance of your `UINavigationController`.
@@ -113,7 +112,7 @@ extension MercadoPagoCheckout {
 
 // MARK: Internals
 extension MercadoPagoCheckout {
-    internal func setPaymentResult(paymentResult: PaymentResult) {
+    func setPaymentResult(paymentResult: PaymentResult) {
         self.viewModel.paymentResult = paymentResult
         self.viewModel.splitAccountMoney = self.viewModel.paymentResult?.splitAccountMoney
         if let paymentData = paymentResult.paymentData {
@@ -121,19 +120,19 @@ extension MercadoPagoCheckout {
         }
     }
 
-    internal func setCheckoutPreference(checkoutPreference: PXCheckoutPreference) {
+    func setCheckoutPreference(checkoutPreference: PXCheckoutPreference) {
         self.viewModel.checkoutPreference = checkoutPreference
     }
 
-    internal func executePreviousStep(animated: Bool = true) {
+    func executePreviousStep(animated: Bool = true) {
         viewModel.pxNavigationHandler.navigationController.popViewController(animated: animated)
     }
 
-    internal func executeNextStep() {
+    func executeNextStep() {
         DispatchQueue.main.async {
             switch self.viewModel.nextStep() {
             case .START :
-                self.startTracking() { [weak self] in
+                self.startTracking { [weak self] in
                     guard let self = self else { return }
                     self.initialize()
                 }
@@ -159,7 +158,7 @@ extension MercadoPagoCheckout {
         }
     }
 
-    internal func finish() {
+    func finish() {
         commonFinish()
         viewModel.pxNavigationHandler.removeRootLoading()
         HtmlStorage.shared.clean()
@@ -174,7 +173,7 @@ extension MercadoPagoCheckout {
         }
     }
 
-    internal func cancelCheckout() {
+    func cancelCheckout() {
         closeCheckout()
     }
 
@@ -207,7 +206,6 @@ extension MercadoPagoCheckout {
 
 // MARK: Privates
 extension MercadoPagoCheckout {
-
     private func initialize() {
         MercadoPagoCheckout.currentCheckout = self
 

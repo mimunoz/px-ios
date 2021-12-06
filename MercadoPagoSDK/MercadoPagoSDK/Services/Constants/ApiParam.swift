@@ -1,6 +1,6 @@
 import Foundation
 
-internal struct ApiParam {
+struct ApiParam {
     static let PAYER_ACCESS_TOKEN = "access_token"
     static let PUBLIC_KEY = "public_key"
     static let BIN = "bin"

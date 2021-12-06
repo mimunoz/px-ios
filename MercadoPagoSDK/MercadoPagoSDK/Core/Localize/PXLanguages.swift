@@ -2,7 +2,7 @@ import Foundation
 
 /**
 We use PXLanguages raw string values. `WARNING:`
- - This is an internal method not intended for public use. Only for reference.
+ - This is an method not intended for public use. Only for reference.
  - It is not considered part of the public API.
  - warning: Use this enum only for reference. Don´t use it.
  */
@@ -34,11 +34,11 @@ public enum PXLanguages: String {
     /**
      PORTUGUESE pt
      */
-    case PORTUGUESE =  "pt"
+    case PORTUGUESE = "pt"
     /**
      PORTUGUESE Brazil
      */
-    case PORTUGUESE_BRAZIL =  "pt-BR"
+    case PORTUGUESE_BRAZIL = "pt-BR"
     /**
      ENGLISH
      */

@@ -1,18 +1,18 @@
 import Foundation
 
-internal extension Int {
+extension Int {
     var stringValue: String {
         return "\(self)"
     }
 }
 
-internal extension Int64 {
+extension Int64 {
     var stringValue: String {
         return "\(self)"
     }
 }
 
-internal extension Double {
+extension Double {
     var stringValue: String {
         return "\(self)"
     }

@@ -1,6 +1,6 @@
 import UIKit
 
-internal class PXPaymentMethodComponent: NSObject, PXComponentizable {
+class PXPaymentMethodComponent: NSObject, PXComponentizable {
     var props: PXPaymentMethodProps
 
     init(props: PXPaymentMethodProps) {
@@ -13,7 +13,7 @@ internal class PXPaymentMethodComponent: NSObject, PXComponentizable {
 }
 
 // MARK: - Helper functions
-internal extension PXPaymentMethodComponent {
+extension PXPaymentMethodComponent {
     func getPaymentMethodIconComponent() -> PXPaymentMethodIconComponent {
         let paymentMethodIconProps = PXPaymentMethodIconProps(paymentMethodIcon: self.props.paymentMethodIcon)
         let paymentMethodIconComponent = PXPaymentMethodIconComponent(props: paymentMethodIconProps)

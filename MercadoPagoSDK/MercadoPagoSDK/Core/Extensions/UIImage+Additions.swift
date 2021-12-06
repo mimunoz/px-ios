@@ -1,7 +1,6 @@
 import Foundation
 
-internal extension UIImage {
-
+extension UIImage {
     func grayscale() -> UIImage? {
         if let currentFilter = CIFilter(name: "CIPhotoEffectMono") {
             let context = CIContext(options: nil)
@@ -22,7 +21,6 @@ internal extension UIImage {
             bitsPerComponent: 8, bytesPerRow: 0,
             space: CGColorSpaceCreateDeviceGray(),
             bitmapInfo: CGBitmapInfo(rawValue: CGImageAlphaInfo.none.rawValue).rawValue
-
         )
         let alphaContext = CGContext(data: nil, width: Int(self.size.width), height: Int(self.size.height), bitsPerComponent: 8, bytesPerRow: 0, space: CGColorSpaceCreateDeviceGray(), bitmapInfo: CGImageAlphaInfo.none.rawValue
         )
@@ -54,7 +52,6 @@ internal extension UIImage {
     }
 
     func mask(color: UIColor) -> UIImage? {
-
         UIGraphicsBeginImageContextWithOptions(self.size, false, self.scale)
         guard let context = UIGraphicsGetCurrentContext() else {
             return nil

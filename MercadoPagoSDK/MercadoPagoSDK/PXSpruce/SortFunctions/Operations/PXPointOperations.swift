@@ -1,7 +1,6 @@
 import UIKit
 
-internal extension SprucePoint {
-
+extension SprucePoint {
     /// Calculate the euclidean distance between two points
     ///
     /// ```

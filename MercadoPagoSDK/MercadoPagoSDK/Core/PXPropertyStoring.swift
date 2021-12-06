@@ -1,7 +1,7 @@
 import Foundation
 
 // Stored properties
-internal protocol PXPropertyStoring {
+protocol PXPropertyStoring {
     associatedtype CustomT
     func getAssociatedObject(_ key: UnsafeRawPointer, defaultValue: CustomT) -> CustomT
 }

@@ -1,7 +1,7 @@
 import Foundation
 
 @objcMembers
-internal class Regex {
+class Regex {
     let internalExpression: NSRegularExpression?
     let pattern: String
 

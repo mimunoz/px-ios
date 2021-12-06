@@ -1,6 +1,6 @@
 import Foundation
 
-internal extension PXResultViewModel {
+extension PXResultViewModel {
     func hasReceiptComponent() -> Bool {
         if self.paymentResult.paymentId == nil {
             return false

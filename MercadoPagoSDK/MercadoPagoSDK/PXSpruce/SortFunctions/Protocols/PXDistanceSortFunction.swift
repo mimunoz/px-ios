@@ -1,8 +1,7 @@
 import UIKit
 
 /// A `SortFunction` implementation that contain basic methods needed for doing distance comparisons. If you are implementing a `SortFunction` that considers distance to be one of it's weighting mechanisms for sorting the views on the screen, then implementing this protocol would provide improvements over the standard `SortFunction`.
-internal protocol DistanceSortFunction: SortFunction {
-
+protocol DistanceSortFunction: SortFunction {
     /// the time interval of delay between each of the objects on the screen when animating
     var interObjectDelay: TimeInterval { get set }
 
@@ -34,8 +33,7 @@ internal protocol DistanceSortFunction: SortFunction {
     func translate(distancePoint: CGPoint, intoSubviews subviews: [View]) -> CGPoint
 }
 
-internal extension DistanceSortFunction {
-
+extension DistanceSortFunction {
     /// Given a view, view sort the subviews in a way that matches the desired specification of the `SortFunction`. In an example case, if you wanted a radial sort function then this method would return an array of the subviews such that their time offets would be smaller near the center of the view and grow as they get further from the center point.
     /// - Note: With a `DistanceSortFunction` a comparison point is initially found that helps compute the offsets for each of the views. This comparison point is found by calling the method `distancePoint` on `self`. From there the default implementation is that the further the distance from the `comparisonPoint` to the `referencePoint` of each view the longer the offset. Since this is setup with a `interObjectDelay` every view with the same distance will have the same delay and those with different distances will have an incrementally large delay. For example, consider the distances [1,2,2,3,4]. If we were to analyze those distances with an `interObjectDelay of .1 seconds, then the delays would look like `[0, 0.1, 0.1, 0.2, 0.3]`. Notice that those views with the same distance have the same delay.
     /// - Note: A floor value is taken of the distances when comparing so that floating point operations don't mess up the joining of like distances. Considering that distances are in terms of points on the screen, there was not need to consider half points in reality.
@@ -50,7 +48,7 @@ internal extension DistanceSortFunction {
 
         let distancedViews = subviews.map {
             return (view: $0, distance: distanceBetween(comparisonPoint, and: $0.referencePoint))
-        }.sorted { (left, right) -> Bool in
+        }.sorted { left, right -> Bool in
                 if reversed {
                     return left.distance > right.distance
                 }
@@ -79,7 +77,7 @@ internal extension DistanceSortFunction {
     }
 
     func translate(distancePoint: CGPoint, intoSubviews subviews: [View]) -> CGPoint {
-        if let referenceView = subviews.min(by: {(left, right) in
+        if let referenceView = subviews.min(by: {left, right in
             let leftDistance = left.referencePoint.spruce.euclideanDistance(to: distancePoint)
             let rightDistance = right.referencePoint.spruce.euclideanDistance(to: distancePoint)
             return leftDistance < rightDistance

@@ -4,12 +4,11 @@ import AndesUI
 import MLUI
 
 class PXNewResultViewController: MercadoPagoUIViewController {
-
     private weak var ringView: MLBusinessLoyaltyRingView?
     private lazy var elasticHeader = UIView()
     private let statusBarHeight = PXLayout.getStatusBarHeight()
     private var contentViewHeightConstraint: NSLayoutConstraint?
-    internal var modalTeste: MLModal?
+    var modalTeste: MLModal?
     let scrollView = UIScrollView()
     let contentView = UIView()
     let viewModel: PXNewResultViewModelInterface
@@ -29,7 +28,7 @@ class PXNewResultViewController: MercadoPagoUIViewController {
         self.shouldHideNavigationBar = true
     }
 
-    @available(*,unavailable)
+    @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -44,7 +43,7 @@ class PXNewResultViewController: MercadoPagoUIViewController {
         super.viewDidAppear(animated)
         animateScrollView()
         animateRing()
-        
+
         PXNewResultUtil.trackScreenAndConversion(viewModel: viewModel)
         if viewModel.shouldAutoReturn() {
             autoReturnWorkItem = DispatchWorkItem { [weak self] in
@@ -110,9 +109,8 @@ class PXNewResultViewController: MercadoPagoUIViewController {
     }
 
     private func setupScrollView() {
-        
         scrollView.clearSubViews()
-        
+
         view.addSubview(scrollView)
         view.backgroundColor = viewModel.getHeaderColor()
         scrollView.backgroundColor = .white
@@ -135,15 +133,14 @@ class PXNewResultViewController: MercadoPagoUIViewController {
     }
 
     private func renderContentView() {
-
         contentView.clearSubViews()
 
-        //CONTENT VIEW
+        // CONTENT VIEW
         contentView.backgroundColor = .white
         contentView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.addSubview(contentView)
 
-        //Content View Layout
+        // Content View Layout
         NSLayoutConstraint.activate([
             contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
             contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
@@ -151,14 +148,14 @@ class PXNewResultViewController: MercadoPagoUIViewController {
             contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor)
         ])
 
-        //FOOTER VIEW
+        // FOOTER VIEW
         let footerView = buildFooterView()
         if let model = viewModel as? PXResultViewModel, model.getPaymentStatus() != PXPayment.Status.REJECTED {
             footerView.addSeparatorLineToTop(height: 1)
         }
         scrollView.addSubview(footerView)
 
-        //Footer View Layout
+        // Footer View Layout
         var footerTopAnchor = footerView.topAnchor.constraint(equalTo: contentView.bottomAnchor)
         NSLayoutConstraint.activate([
             footerView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
@@ -166,7 +163,7 @@ class PXNewResultViewController: MercadoPagoUIViewController {
             footerView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor)
         ])
 
-        //Calculate content view min height
+        // Calculate content view min height
         self.view.layoutIfNeeded()
         let scrollViewMinHeight: CGFloat = PXLayout.getScreenHeight() - footerView.frame.height - PXLayout.getSafeAreaTopInset() - PXLayout.getSafeAreaBottomInset()
         contentViewHeightConstraint = contentView.heightAnchor.constraint(greaterThanOrEqualToConstant: scrollViewMinHeight)
@@ -174,7 +171,7 @@ class PXNewResultViewController: MercadoPagoUIViewController {
             contentViewHeightConstraint.isActive = true
         }
 
-        //Load content views
+        // Load content views
         let views = getContentViews()
         if views.count > 0 {
             for data in views {
@@ -233,7 +230,7 @@ extension PXNewResultViewController: UIScrollViewDelegate {
     }
 }
 
-internal extension UIView {
+extension UIView {
     func addViewToBottom(_ view: UIView, withMargin margin: CGFloat = 0) {
         view.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(view)
@@ -260,11 +257,11 @@ extension PXNewResultViewController {
         let customOrder = viewModel.getCustomOrder() ?? false
         var views = [ResultViewData]()
 
-        //Header View
+        // Header View
         let view = buildHeaderView()
         views.append(ResultViewData(view: view))
 
-        //Remedy body View
+        // Remedy body View
         if let view = viewModel.getRemedyView(animatedButtonDelegate: self, termsAndCondDelegate: self, remedyViewProtocol: self) {
             subscribeToKeyboardNotifications()
             views.append(ResultViewData(view: view))
@@ -272,7 +269,7 @@ extension PXNewResultViewController {
             return views
         }
 
-        //Top text box View
+        // Top text box View
         if let instruction = viewModel.getInstructions() {
             views.append(ResultViewData(view: InstructionView(instruction: instruction, delegate: self)))
         }
@@ -281,7 +278,7 @@ extension PXNewResultViewController {
             views.append(ResultViewData(view: topTextBoxView, verticalMargin: PXLayout.ZERO_MARGIN, horizontalMargin: PXLayout.ZERO_MARGIN))
         }
 
-        //Important View
+        // Important View
         if let view = viewModel.getImportantView() {
             views.append(ResultViewData(view: view))
         }
@@ -294,43 +291,42 @@ extension PXNewResultViewController {
         if customOrder == true {
             views.append(contentsOf: addReceiptAndPaymentViews(customOrder))
         }
-        
-        //AndesMessage
+
+        // AndesMessage
         if let message = viewModel.getAndesMessage() {
             views.append(ResultViewData(view: AndesMessage(hierarchy: message.andesHierarchy,
                                                            type: message.andesType,
                                                            title: "",
                                                            body: message.body), verticalMargin: PXLayout.S_MARGIN, horizontalMargin: PXLayout.L_MARGIN))
-            
         }
 
-        //Points and Discounts
+        // Points and Discounts
         let pointsView = buildPointsView()
         let discountsView = buildDiscountsView()
 
-        //Points
+        // Points
         if let pointsView = pointsView {
             views.append(ResultViewData(view: pointsView, verticalMargin: PXLayout.M_MARGIN, horizontalMargin: PXLayout.L_MARGIN))
         }
 
-        //Discounts
+        // Discounts
         if let discountsView = discountsView {
             var margin = PXLayout.M_MARGIN
             if pointsView != nil {
-                //Dividing Line
+                // Dividing Line
                 views.append(ResultViewData(view: MLBusinessDividingLineView(hasTriangle: true), verticalMargin: PXLayout.M_MARGIN, horizontalMargin: PXLayout.L_MARGIN))
                 margin -= 8
             }
 
-            //Discounts Top View
+            // Discounts Top View
             if let discountsTopViewData = buildDiscountsTopView() {
                 views.append(discountsTopViewData)
             }
 
-            //Discount Component
+            // Discount Component
             views.append(ResultViewData(view: discountsView, verticalMargin: margin, horizontalMargin: PXLayout.M_MARGIN))
 
-            //Discounts Accessory View
+            // Discounts Accessory View
             if let discountsAccessoryViewData = buildDiscountsAccessoryView() {
                 views.append(discountsAccessoryViewData)
             }
@@ -341,7 +337,7 @@ extension PXNewResultViewController {
             views.append(ResultViewData(view: expenseSplitView, verticalMargin: PXLayout.M_MARGIN, horizontalMargin: PXLayout.L_MARGIN))
         }
 
-        //Cross Selling View
+        // Cross Selling View
         if let crossSellingViews = buildCrossSellingViews() {
             var margin: CGFloat = 0
             if isActionCardViewLastView(views) {
@@ -356,7 +352,7 @@ extension PXNewResultViewController {
             }
         }
 
-        //Error body View
+        // Error body View
         if let view = viewModel.getErrorBodyView() {
             views.append(ResultViewData(view: view))
         }
@@ -371,17 +367,17 @@ extension PXNewResultViewController {
             views.append(contentsOf: addReceiptAndPaymentViews(customOrder, verticalMargin))
         }
 
-        //View receipt action view
+        // View receipt action view
         if let viewReceiptActionView = buildViewReceiptActionView() {
             views.append(ResultViewData(view: viewReceiptActionView, verticalMargin: PXLayout.M_MARGIN, horizontalMargin: PXLayout.L_MARGIN))
         }
 
-        //Bottom Custom View
+        // Bottom Custom View
         if let view = viewModel.getBottomCustomView() {
             views.append(ResultViewData(view: view, verticalMargin: isActionCardViewLastView(views) ? PXLayout.M_MARGIN : 0))
         }
 
-        //AutoReturn view
+        // AutoReturn view
         if let autoReturnView = buildAutoReturnView() {
             views.append(ResultViewData(view: autoReturnView, verticalMargin: PXLayout.M_MARGIN, horizontalMargin: PXLayout.L_MARGIN))
         }
@@ -393,34 +389,34 @@ extension PXNewResultViewController {
         var views = [ResultViewData]()
 
         if customOrder == false {
-            //Top Custom View
+            // Top Custom View
             if let view = viewModel.getTopCustomView() {
                 views.append(ResultViewData(view: view, verticalMargin: getVerticalMarginForViews(verticalMargin, views)))
             }
 
-            //Receipt View
+            // Receipt View
             if let view = buildReceiptView() {
                 views.append(ResultViewData(view: view, verticalMargin: getVerticalMarginForViews(verticalMargin, views)))
             }
         }
 
-        //Payment Method View
+        // Payment Method View
         if viewModel.shouldShowPaymentMethod(), let view = buildPaymentMethodView() {
             views.append(ResultViewData(view: view, verticalMargin: getVerticalMarginForViews(verticalMargin, views)))
         }
 
-        //Split Payment View
+        // Split Payment View
         if viewModel.shouldShowPaymentMethod(), let view = buildSplitPaymentMethodView() {
             views.append(ResultViewData(view: view, verticalMargin: getVerticalMarginForViews(verticalMargin, views)))
         }
 
         if customOrder == true {
-            //Receipt View
+            // Receipt View
             if let view = buildReceiptView() {
                 views.append(ResultViewData(view: view))
             }
 
-            //Top Custom View
+            // Top Custom View
             if let view = viewModel.getTopCustomView() {
                 views.append(ResultViewData(view: view))
             }
@@ -454,7 +450,7 @@ private extension PXNewResultViewController {
 
 // MARK: Views builders
 extension PXNewResultViewController {
-    //HEADER
+    // HEADER
     func buildHeaderView() -> UIView {
         let headerData = PXNewResultHeaderData(color: viewModel.getHeaderColor(),
                                                title: viewModel.getHeaderTitle(),
@@ -465,7 +461,7 @@ extension PXNewResultViewController {
         return PXNewResultHeader(data: headerData)
     }
 
-    //RECEIPT
+    // RECEIPT
     func buildReceiptView() -> UIView? {
         guard let data = PXNewResultUtil.getDataForReceiptView(paymentId: viewModel.getReceiptId()), viewModel.mustShowReceipt() else {
             return nil
@@ -474,8 +470,8 @@ extension PXNewResultViewController {
         return PXNewCustomView(data: data)
     }
 
-    //POINTS AND DISCOUNTS
-    ////POINTS
+    // POINTS AND DISCOUNTS
+    //// POINTS
     func buildPointsView() -> UIView? {
         guard let data = PXNewResultUtil.getDataForPointsView(points: viewModel.getPoints()) else {
             return nil
@@ -485,20 +481,20 @@ extension PXNewResultViewController {
         if let tapAction = viewModel.getPointsTapAction() {
             pointsView.addTapAction(tapAction)
         }
-        
+
         let broadcaster = MLBusinessLoyaltyBroadcaster.instance as MLBusinessLoyaltyBroadcaster
-        
-        broadcaster.updateInfo(MLBusinessLoyaltyBroadcastData(level:data.getRingNumber(),percentage:data.getRingPercentage() ,primaryColor:data.getRingHexaColor()))
+
+        broadcaster.updateInfo(MLBusinessLoyaltyBroadcastData(level: data.getRingNumber(), percentage: data.getRingPercentage(), primaryColor: data.getRingHexaColor()))
 
         return pointsView
     }
 
-    ////DISCOUNTS
+    //// DISCOUNTS
     func buildDiscountsTopView() -> ResultViewData? {
         return getDataForDiscountTopView(discounts: viewModel.getDiscounts())
     }
 
-    //DISCOUNTS TOP VIEW
+    // DISCOUNTS TOP VIEW
     func getDataForDiscountTopView(discounts: PXDiscounts?) -> ResultViewData? {
         if let discounts = discounts, discounts.touchpoint != nil, let title = discounts.title {
             let stackview = UIStackView(frame: .zero)
@@ -548,12 +544,12 @@ extension PXNewResultViewController {
         return touchpointView
     }
 
-    ////DISCOUNTS ACCESSORY VIEW
+    //// DISCOUNTS ACCESSORY VIEW
     func buildDiscountsAccessoryView() -> ResultViewData? {
         return PXNewResultUtil.getDataForDiscountsAccessoryViewData(discounts: viewModel.getDiscounts())
     }
 
-    ////EXPENSE SPLIT VIEW
+    //// EXPENSE SPLIT VIEW
     private func buildExpenseSplitView() -> UIView? {
         guard let expenseSplit = viewModel.getExpenseSplit(),
             MLBusinessAppDataService().isMp()
@@ -567,7 +563,7 @@ extension PXNewResultViewController {
         return expenseSplitView
     }
 
-    ////CROSS SELLING
+    //// CROSS SELLING
     func buildCrossSellingViews() -> [UIView]? {
         guard let data = PXNewResultUtil.getDataForCrossSellingView(crossSellingItems: viewModel.getCrossSellingItems()) else {
             return nil
@@ -584,7 +580,7 @@ extension PXNewResultViewController {
         return itemsViews
     }
 
-    ////VIEW RECEIPT ACTION
+    //// VIEW RECEIPT ACTION
     func buildViewReceiptActionView() -> UIView? {
         guard let viewReceiptAction = viewModel.getViewReceiptAction() else {
             return nil
@@ -596,7 +592,7 @@ extension PXNewResultViewController {
         let button = AndesButton(text: viewReceiptAction.label, hierarchy: .quiet, size: AndesButtonSize.large)
         button.add(for: .touchUpInside) { [weak self] in
             self?.trackEvent(event: PXResultTrackingEvents.didTapOnReceipt)
-            //open deep link
+            // open deep link
             PXDeepLinkManager.open(viewReceiptAction.target)
         }
         return button
@@ -644,7 +640,7 @@ extension PXNewResultViewController {
         }
     }
 
-    ////TOP TEXT BOX
+    //// TOP TEXT BOX
     func buildTopTextBoxView() -> UIView? {
         guard let topTextBox = viewModel.getTopTextBox() else { return nil }
         let containerView = UIView()
@@ -667,32 +663,32 @@ extension PXNewResultViewController {
         return containerView
     }
 
-    //INSTRUCTIONS
+    // INSTRUCTIONS
     func getInstruction() -> PXInstruction? {
         return viewModel.getInstructions()
     }
 
-    //PAYMENT METHOD
+    // PAYMENT METHOD
     func buildPaymentMethodView() -> UIView? {
         guard let paymentData = viewModel.getPaymentViewData() else { return nil }
         let creditsExpectationView = viewModel.getCreditsExpectationView()
         return PXNewCustomView(data: paymentData, bottomView: creditsExpectationView)
     }
 
-    //SPLIT PAYMENT METHOD
+    // SPLIT PAYMENT METHOD
     func buildSplitPaymentMethodView() -> UIView? {
         guard let paymentData = viewModel.getSplitPaymentViewData() else { return nil }
         return PXNewCustomView(data: paymentData)
     }
-    
-    //FOOTER
+
+    // FOOTER
     func buildFooterView() -> UIView {
         if let primaryButton = viewModel.getPrimaryButton() {
             let hierarchy: AndesButtonHierarchy = primaryButton.type.uppercased() == AndesButtonHierarchy.loud.toString() ? .loud : .quiet
             let footerProps = PXFooterProps(buttonAction: viewModel.getFooterMainAction(), linkAction: viewModel.getFooterSecondaryAction(), useAndesButtonForLinkAction: true, andesButtonConfig: PXAndesButtonConfig(hierarchy: hierarchy, size: .large))
             return PXFooterComponent(props: footerProps).render()
         }
-        
+
         if viewModel.isSecondaryButtonStyle {
             let footerProps = PXFooterProps(linkAction: viewModel.getFooterSecondaryAction() ?? viewModel.getFooterMainAction(), useAndesButtonForLinkAction: viewModel.isPaymentResultRejectedWithRemedy())
             return PXFooterComponent(props: footerProps).render()
@@ -745,12 +741,12 @@ extension PXNewResultViewController: PXRemedyViewDelegate {
         MPXTracker.sharedInstance.trackEvent(event: PXRemediesTrackEvents.changePaymentMethod(isFromModal: isModal))
         (viewModel.getFooterSecondaryAction() ?? viewModel.getFooterMainAction())?.action()
     }
-    
+
     func dismissModal(fromCloseButton: Bool) {
         needsTrackCloseModal = fromCloseButton
         modalTeste?.dismiss()
     }
-    
+
     func showModal(modalInfos: PXOneTapDisabledViewController) {
         needsTrackCloseModal = true
         modalTeste = PXComponentFactory.Modal.show(viewController: modalInfos, dismissBlock: {
@@ -768,12 +764,11 @@ extension PXNewResultViewController: PXRemedyViewDelegate {
         hideBackButton()
         hideNavBar()
     }
-    
-    func trackingPay(isModal: Bool){
+
+    func trackingPay(isModal: Bool) {
             MPXTracker.sharedInstance.trackEvent(event: PXRemediesTrackEvents.didResultRemedyError(viewModel.getTrackingRemediesProperties(isFromModal: isModal)))
         }
 }
-
 
 // MARK: Notifications
 extension PXNewResultViewController {
@@ -818,7 +813,6 @@ extension PXNewResultViewController: ActionViewDelegate {
             UIApplication.shared.open(url, options: [:], completionHandler: nil)
         default: return
         }
-
     }
 }
 

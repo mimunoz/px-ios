@@ -1,6 +1,5 @@
 import Foundation
-internal extension String {
-
+extension String {
     static let NON_BREAKING_LINE_SPACE = "\u{00a0}"
     static let SPACE = " "
 
@@ -77,7 +76,7 @@ internal extension String {
     var isNumber: Bool {
         return rangeOfCharacter(from: CharacterSet.decimalDigits.inverted) == nil
     }
-    
+
     func insert(_ string: String, ind: Int) -> String {
         return  String(self.prefix(ind)) + string + String(self.suffix(self.count - ind))
     }

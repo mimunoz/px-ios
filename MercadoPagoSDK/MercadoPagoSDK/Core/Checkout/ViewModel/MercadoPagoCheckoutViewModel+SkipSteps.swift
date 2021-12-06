@@ -1,7 +1,6 @@
 import Foundation
 
-internal extension MercadoPagoCheckoutViewModel {
-
+extension MercadoPagoCheckoutViewModel {
     func shouldSkipReviewAndConfirm() -> Bool {
         // Check if the integrator want to skip RyC and we are ready to start a payment.
         // Loyalty usage.

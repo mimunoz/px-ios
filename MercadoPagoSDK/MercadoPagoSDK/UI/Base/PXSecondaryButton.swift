@@ -1,8 +1,7 @@
 import Foundation
 import MLUI
 
-internal class PXSecondaryButton: MLButton {
-
+class PXSecondaryButton: MLButton {
     override init() {
         let config = MLButtonStylesFactory.config(for: .primaryOption)
         super.init(config: config)

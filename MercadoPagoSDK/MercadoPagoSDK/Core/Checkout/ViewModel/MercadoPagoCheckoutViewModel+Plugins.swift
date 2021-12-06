@@ -1,7 +1,6 @@
 import Foundation
 
-internal extension MercadoPagoCheckoutViewModel {
-
+extension MercadoPagoCheckoutViewModel {
     func needToShowPaymentMethodConfigPlugin() -> Bool {
         guard let paymentMethodPluginSelected = paymentOptionSelected as? PXPaymentMethodPlugin else {
             return false
@@ -43,7 +42,7 @@ internal extension MercadoPagoCheckoutViewModel {
 }
 
 // MARK: Payment Plugin
-internal extension MercadoPagoCheckoutViewModel {
+extension MercadoPagoCheckoutViewModel {
     func needToCreatePaymentForPaymentPlugin() -> Bool {
         if paymentPlugin == nil {
             return false

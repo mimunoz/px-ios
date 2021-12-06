@@ -2,7 +2,6 @@ import Foundation
 
 @objcMembers
 public class PXText: NSObject, Codable {
-
     let message: String?
     let backgroundColor: String?
     let textColor: String?
@@ -28,22 +27,22 @@ public class PXText: NSObject, Codable {
         return lhs.message == rhs.message && lhs.backgroundColor == rhs.backgroundColor && lhs.textColor == rhs.textColor && lhs.weight == rhs.weight && lhs.defaultTextColor == rhs.defaultTextColor && lhs.defaultBackgroundColor == rhs.defaultBackgroundColor
     }
 
-    internal func getTextColor() -> UIColor {
+    func getTextColor() -> UIColor {
         guard let color = self.textColor, color.isNotEmpty else {
             return defaultTextColor
         }
         return UIColor.fromHex(color)
     }
 
-    internal func getBackgroundColor() -> UIColor {
+    func getBackgroundColor() -> UIColor {
         guard let color = self.backgroundColor, color.isNotEmpty else {
             return defaultBackgroundColor
         }
         return UIColor.fromHex(color)
     }
 
-    internal func getAttributedString(fontSize: CGFloat = PXLayout.XS_FONT, textColor: UIColor? = nil, backgroundColor: UIColor? = nil) -> NSAttributedString? {
-        guard let message = message else {return nil}
+    func getAttributedString(fontSize: CGFloat = PXLayout.XS_FONT, textColor: UIColor? = nil, backgroundColor: UIColor? = nil) -> NSAttributedString? {
+        guard let message = message else { return nil }
 
         var attributes: [NSAttributedString.Key: AnyObject] = [:]
 

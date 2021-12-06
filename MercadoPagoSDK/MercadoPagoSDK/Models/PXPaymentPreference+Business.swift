@@ -30,8 +30,7 @@ private func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
 }
 
 extension PXPaymentPreference {
-
-    internal func autoSelectPayerCost(_ payerCostList: [PXPayerCost]) -> PXPayerCost? {
+    func autoSelectPayerCost(_ payerCostList: [PXPayerCost]) -> PXPayerCost? {
         if payerCostList.count == 0 {
             return nil
         }
@@ -49,34 +48,32 @@ extension PXPaymentPreference {
         } else {
             return nil
         }
-
     }
 
-    internal func getExcludedPaymentTypesIds() -> [String] {
+    func getExcludedPaymentTypesIds() -> [String] {
             return excludedPaymentTypeIds
     }
 
-    internal func getDefaultInstallments() -> Int? {
+    func getDefaultInstallments() -> Int? {
         return defaultInstallments
     }
 
-    internal func getMaxAcceptedInstallments() -> Int {
+    func getMaxAcceptedInstallments() -> Int {
         return maxAcceptedInstallments > 0 ? maxAcceptedInstallments : 0
     }
 
-    internal func getExcludedPaymentMethodsIds() -> [String] {
+    func getExcludedPaymentMethodsIds() -> [String] {
         return excludedPaymentMethodIds
     }
 
-    internal func getDefaultPaymentMethodId() -> String? {
+    func getDefaultPaymentMethodId() -> String? {
         if defaultPaymentMethodId != nil && defaultPaymentMethodId!.isNotEmpty {
             return defaultPaymentMethodId
         }
         return nil
     }
 
-    internal func addSettings(_ defaultPaymentTypeId: String? = nil, excludedPaymentMethodsIds: [String] = [], excludedPaymentTypesIds: [String] = [], defaultPaymentMethodId: String? = nil, maxAcceptedInstallment: Int = 0, defaultInstallments: Int? = nil) -> PXPaymentPreference {
-
+    func addSettings(_ defaultPaymentTypeId: String? = nil, excludedPaymentMethodsIds: [String] = [], excludedPaymentTypesIds: [String] = [], defaultPaymentMethodId: String? = nil, maxAcceptedInstallment: Int = 0, defaultInstallments: Int? = nil) -> PXPaymentPreference {
         self.excludedPaymentMethodIds = excludedPaymentMethodsIds
         self.excludedPaymentTypeIds = excludedPaymentTypesIds
         self.maxAcceptedInstallments = maxAcceptedInstallment
