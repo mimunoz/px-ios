@@ -4,7 +4,6 @@ import MLCardDrawer
 import AndesUI
 
 final class PXSecurityCodeViewController: MercadoPagoUIViewController {
-
     let viewModel: PXSecurityCodeViewModel
     let cardContainerView = UIView()
     let titleLabel = UILabel()

@@ -1,7 +1,6 @@
 import Foundation
 
 extension PXCheckoutStore: Encodable {
-
     public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: PXCheckoutStoreCodingKeys.self)
         try container.encodeIfPresent(self.checkoutPreference?.id, forKey: .checkoutPreference)

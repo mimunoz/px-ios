@@ -1,7 +1,6 @@
 import Foundation
 /// :nodoc:
 open class PXBin: NSObject, Codable {
-
     open var exclusionPattern: String?
     open var installmentPattern: String?
     open var pattern: String?
@@ -18,7 +17,7 @@ open class PXBin: NSObject, Codable {
         case pattern
     }
 
-    required public convenience init(from decoder: Decoder) throws {
+    public required convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXBinKeys.self)
         let exclusionPattern: String? = try container.decodeIfPresent(String.self, forKey: .exclusionPattern)
         let installmentPattern: String? = try container.decodeIfPresent(String.self, forKey: .installmentPattern)
@@ -52,5 +51,4 @@ open class PXBin: NSObject, Codable {
     open class func fromJSON(data: Data) throws -> [PXBin] {
         return try JSONDecoder().decode([PXBin].self, from: data)
     }
-
 }

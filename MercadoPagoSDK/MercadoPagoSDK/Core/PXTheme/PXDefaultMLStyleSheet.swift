@@ -2,7 +2,6 @@ import Foundation
 import MLUI
 
 class PXDefaultMLStyleSheet: NSObject, MLStyleSheetProtocol {
-
     var primaryColor: UIColor
     var lightPrimaryColor: UIColor
     var secondaryColor: UIColor

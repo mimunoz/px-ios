@@ -2,7 +2,6 @@ import Foundation
 import MLBusinessComponents
 
 public class PXDiscountTracker: NSObject, MLBusinessDiscountTrackerProtocol {
-
     let basePath = "/discount_center/payers/touchpoint"
     var touchPointId: String?
 
@@ -10,7 +9,7 @@ public class PXDiscountTracker: NSObject, MLBusinessDiscountTrackerProtocol {
         self.touchPointId = touchPointId
     }
 
-    public override init() { }
+    override public init() { }
 
     public func setTouchpointId(with touchPointId: String) {
         self.touchPointId = touchPointId

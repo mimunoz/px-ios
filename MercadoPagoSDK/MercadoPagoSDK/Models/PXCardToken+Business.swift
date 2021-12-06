@@ -6,7 +6,7 @@ extension PXCardToken: PXCardInformationForm {
             return ""
         }
         let index = cardNumber.count
-        return String(cardNumber[cardNumber.index(cardNumber.startIndex, offsetBy: index-4)...cardNumber.index(cardNumber.startIndex, offsetBy: index - 1)])
+        return String(cardNumber[cardNumber.index(cardNumber.startIndex, offsetBy: index - 4)...cardNumber.index(cardNumber.startIndex, offsetBy: index - 1)])
     }
     func getCardBin() -> String? {
         return getBin()

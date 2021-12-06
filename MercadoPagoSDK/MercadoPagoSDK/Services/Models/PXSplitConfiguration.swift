@@ -1,7 +1,6 @@
 import Foundation
 /// :nodoc:
 open class PXSplitConfiguration: NSObject, Codable {
-
     open var primaryPaymentMethod: PXSplitPaymentMethod?
     open var secondaryPaymentMethod: PXSplitPaymentMethod?
     open var splitEnabled: Bool = false
@@ -18,7 +17,7 @@ open class PXSplitConfiguration: NSObject, Codable {
         case secondaryPaymentMethod = "secondary_payment_method"
     }
 
-    required public convenience init(from decoder: Decoder) throws {
+    public required convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXPayerCostConfiguration.self)
         let defaultSplit: Bool = try container.decodeIfPresent(Bool.self, forKey: .defaultSplit) ?? false
         let primaryPaymentMethod: PXSplitPaymentMethod? = try container.decodeIfPresent(PXSplitPaymentMethod.self, forKey: .primaryPaymentMethod)

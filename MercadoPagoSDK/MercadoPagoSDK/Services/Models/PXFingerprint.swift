@@ -8,7 +8,7 @@ open class PXFingerprint: NSObject, Codable {
     open var resolution: String?
     open var vendorSpecificAttributes: PXVendorSpecificAttributes?
 
-    public override init () {
+    override public init () {
         super.init()
         deviceFingerprint()
     }
@@ -74,7 +74,6 @@ open class PXFingerprint: NSObject, Codable {
                 let pxuuid = PXDeviceId(name: "uuid", value: uuid)
                 return [pxuuid]
             }
-
         } else {
             let vendorId: String = UIDevice.current.identifierForVendor!.uuidString
             let uuid: String = UUID().uuidString

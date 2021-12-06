@@ -9,7 +9,6 @@ import UIKit
 @available(*, deprecated, message: "Old CardForm flow will no longer be available")
 @objcMembers
 public class AddCardFlow: NSObject, PXFlow {
-
     public weak var delegate: AddCardFlowProtocol?
 
     @available(*, deprecated, message: "Old CardForm flow will no longer be available")
@@ -50,7 +49,6 @@ public class AddCardFlow: NSObject, PXFlow {
     // MARK: steps
 
     private func finish() {
-
     }
 
     private func reset() {
@@ -58,5 +56,4 @@ public class AddCardFlow: NSObject, PXFlow {
 
     @objc private func goBack() {
     }
-
 }

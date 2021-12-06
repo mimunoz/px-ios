@@ -1,7 +1,6 @@
 import UIKit
 
 open class FSPagerViewCell: UICollectionViewCell {
-
     /// Returns the label used for the main textual content of the pager view cell.
     @objc
     open var textLabel: UILabel? {
@@ -57,7 +56,7 @@ open class FSPagerViewCell: UICollectionViewCell {
         return view
     }
 
-    open override var isHighlighted: Bool {
+    override open var isHighlighted: Bool {
         set {
             super.isHighlighted = newValue
             if newValue {
@@ -71,7 +70,7 @@ open class FSPagerViewCell: UICollectionViewCell {
         }
     }
 
-    open override var isSelected: Bool {
+    override open var isSelected: Bool {
         set {
             super.isSelected = newValue
             self.selectedForegroundView?.layer.backgroundColor = newValue ? self.selectionColor.cgColor : UIColor.clear.cgColor
@@ -81,7 +80,7 @@ open class FSPagerViewCell: UICollectionViewCell {
         }
     }
 
-    public override init(frame: CGRect) {
+    override public init(frame: CGRect) {
         super.init(frame: frame)
         commonInit()
     }
@@ -132,7 +131,7 @@ open class FSPagerViewCell: UICollectionViewCell {
         }
     }
 
-    open override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
+    override open func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
         if context == kvoContext {
             if keyPath == "font" {
                 self.setNeedsLayout()
@@ -141,7 +140,6 @@ open class FSPagerViewCell: UICollectionViewCell {
             super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
         }
     }
-
 }
 
 // MARK: Accessibility

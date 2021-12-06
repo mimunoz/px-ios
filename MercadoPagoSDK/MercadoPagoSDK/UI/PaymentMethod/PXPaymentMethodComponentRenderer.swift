@@ -1,11 +1,11 @@
 import UIKit
 
 class PXPaymentMethodComponentRenderer: NSObject {
-    //Image
+    // Image
     let IMAGE_WIDTH: CGFloat = 48.0
     let IMAGE_HEIGHT: CGFloat = 48.0
 
-    //Action Button
+    // Action Button
     let BUTTON_HEIGHT: CGFloat = 34.0
 
     let TITLE_FONT_SIZE: CGFloat = PXLayout.M_FONT
@@ -114,7 +114,7 @@ class PXPaymentMethodComponentRenderer: NSObject {
 
             PXLayout.pinLeft(view: actionButton, withMargin: PXLayout.XXS_MARGIN).isActive = true
             PXLayout.pinRight(view: actionButton, withMargin: PXLayout.XXS_MARGIN).isActive = true
-            //PXLayout.setHeight(owner: actionButton, height: BUTTON_HEIGHT).isActive = true
+            // PXLayout.setHeight(owner: actionButton, height: BUTTON_HEIGHT).isActive = true
         }
 
         pmBodyView.pinLastSubviewToBottom(withMargin: PXLayout.L_MARGIN)?.isActive = true

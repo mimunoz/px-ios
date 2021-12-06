@@ -1,7 +1,6 @@
 import Foundation
 /// :nodoc:
 open class PXDifferentialPricing: NSObject, Codable {
-
     open var id: Int64?
 
     public init(id: Int64?) {

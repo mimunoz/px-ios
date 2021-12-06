@@ -11,7 +11,7 @@ import Foundation
         case .inProgress : return "IN PROGRESS"
         }
     }
-    
+
     func getRawValue() -> String {
         switch self {
         case .approved : return "approved"

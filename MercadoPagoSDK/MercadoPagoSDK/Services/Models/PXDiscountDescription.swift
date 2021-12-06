@@ -1,7 +1,6 @@
 import Foundation
 
 public struct PXDiscountDescription: Codable {
-
     let title: PXText
     let subtitle: PXText?
     let badge: PXDiscountInfo?

@@ -2,7 +2,6 @@ import UIKit
 import MLBusinessComponents
 
 class PXDiscountsTouchpointsData: NSObject, MLBusinessTouchpointsData {
-
     let touchpoint: PXDiscountsTouchpoint
 
     init(touchpoint: PXDiscountsTouchpoint) {

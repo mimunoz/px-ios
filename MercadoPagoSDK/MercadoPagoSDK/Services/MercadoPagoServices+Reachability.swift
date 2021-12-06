@@ -22,11 +22,11 @@ extension MercadoPagoServices: InternetConnectionProtocol {
             print("Unable to add reachability observer")
         }
 
-        reachability?.whenReachable = { [weak self] reachability in
+        reachability?.whenReachable = { [weak self] _ in
             self?.reachabilityChanged(true)
         }
 
-        reachability?.whenUnreachable = { [weak self] reachability in
+        reachability?.whenUnreachable = { [weak self] _ in
             self?.reachabilityChanged(false)
         }
 

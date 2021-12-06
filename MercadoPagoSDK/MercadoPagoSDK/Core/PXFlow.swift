@@ -7,7 +7,6 @@ enum PXFlowStatus {
 }
 
 protocol PXFlow {
-
     // Step logic
     func start()
     func executeNextStep()

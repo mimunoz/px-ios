@@ -22,12 +22,12 @@ protocol PXViewModelTrackingDataProtocol {
 
 final class PXCongratsTracking {
     enum TrackingKeys: String {
-        case hasBottomView  = "has_bottom_view"
+        case hasBottomView = "has_bottom_view"
         case hasTopView = "has_top_view"
         case hasImportantView = "has_important_view"
         case hasExpenseSplitView = "has_money_split_view"
         case scoreLevel = "score_level"
-        case discountsCount  = "discounts_count"
+        case discountsCount = "discounts_count"
         case campaignsIds = "campaigns_ids"
         case campaignId = "campaign_id"
     }

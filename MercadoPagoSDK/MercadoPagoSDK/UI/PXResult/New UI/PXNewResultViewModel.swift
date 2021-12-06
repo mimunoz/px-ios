@@ -15,7 +15,7 @@ struct ResultViewData {
 }
 
 protocol PXNewResultViewModelInterface: PXViewModelTrackingDataProtocol {
-    //HEADER
+    // HEADER
     func getHeaderColor() -> UIColor
     func getHeaderTitle() -> String
     func getHeaderIcon() -> UIImage?
@@ -23,81 +23,81 @@ protocol PXNewResultViewModelInterface: PXViewModelTrackingDataProtocol {
     func getHeaderBadgeImage() -> UIImage?
     func getHeaderCloseAction() -> (() -> Void)?
 
-    //RECEIPT
+    // RECEIPT
     func mustShowReceipt() -> Bool
     func getReceiptId() -> String?
 
-    //POINTS AND DISCOUNTS
-    ///POINTS
+    // POINTS AND DISCOUNTS
+    /// POINTS
     func getPoints() -> PXPoints?
     func getPointsTapAction() -> ((_ deepLink: String) -> Void)?
 
-    ///DISCOUNTS
+    /// DISCOUNTS
     func getDiscounts() -> PXDiscounts?
     func getDiscountsTapAction() -> ((_ index: Int, _ deepLink: String?, _ trackId: String?) -> Void)?
     func didTapDiscount(index: Int, deepLink: String?, trackId: String?)
 
-    ///EXPENSE SPLIT VIEW
+    /// EXPENSE SPLIT VIEW
     func getExpenseSplit() -> PXExpenseSplit?
     func getExpenseSplitTapAction() -> (() -> Void)?
 
-    ///CROSS SELLING
+    /// CROSS SELLING
     func getCrossSellingItems() -> [PXCrossSellingItem]?
     func getCrossSellingTapAction() -> ((_ deepLink: String) -> Void)?
 
-    ////VIEW RECEIPT ACTION
+    //// VIEW RECEIPT ACTION
     func getViewReceiptAction() -> PXRemoteAction?
 
-    ////TOP TEXT BOX
+    //// TOP TEXT BOX
     func getTopTextBox() -> PXText?
 
-    ////CUSTOM ORDER
+    //// CUSTOM ORDER
     func getCustomOrder() -> Bool?
-    
-    //INSTRUCTIONS
+
+    // INSTRUCTIONS
     func hasInstructions() -> Bool
     func getInstructions() -> PXInstruction?
 
-    //PAYMENT METHOD
+    // PAYMENT METHOD
     func shouldShowPaymentMethod() -> Bool
     func getPaymentViewData() -> PXNewCustomViewData?
 
-    //SPLIT PAYMENT METHOD
+    // SPLIT PAYMENT METHOD
     func getSplitPaymentViewData() -> PXNewCustomViewData?
 
-    //REJECTED BODY
+    // REJECTED BODY
     func shouldShowErrorBody() -> Bool
     func getErrorBodyView() -> UIView?
 
-    //REMEDY
+    // REMEDY
     var isSecondaryButtonStyle: Bool { get }
     func getRemedyView(animatedButtonDelegate: PXAnimatedButtonDelegate?, termsAndCondDelegate: PXTermsAndConditionViewDelegate?, remedyViewProtocol: PXRemedyViewDelegate?) -> UIView?
     func getRemedyButtonAction() -> ((String?) -> Void)?
     func isPaymentResultRejectedWithRemedy() -> Bool
 
-    //FOOTER
+    // FOOTER
     func getFooterMainAction() -> PXAction?
     func getFooterSecondaryAction() -> PXAction?
     func getPrimaryButton() -> PXButton?
 
-    //CUSTOM VIEWS
-    ///IMPORTANT
+    // CUSTOM VIEWS
+    /// IMPORTANT
     func getImportantView() -> UIView?
 
-    //CONSUMER CREDITS EXPECTATION VIEW
+    // CONSUMER CREDITS EXPECTATION VIEW
     func getCreditsExpectationView() -> UIView?
 
-    ///TOP CUSTOM
+    /// TOP CUSTOM
     func getTopCustomView() -> UIView?
 
-    ///BOTTOM CUSTOM
+    /// BOTTOM CUSTOM
     func getBottomCustomView() -> UIView?
 
-    //BACK URL & AUTORETURN
+    // BACK URL & AUTORETURN
     func shouldAutoReturn() -> Bool
     func getBackUrl() -> URL?
     func getAutoReturn() -> PXAutoReturn?
-    
-    ///AndesMessage
+
+    /// AndesMessage
     func getAndesMessage() -> InfoOperation?
 }

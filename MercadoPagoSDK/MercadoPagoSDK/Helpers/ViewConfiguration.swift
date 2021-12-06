@@ -13,6 +13,6 @@ extension ViewConfiguration {
         setupConstraints()
         viewConfigure()
     }
-    
+
     func viewConfigure() { }
 }

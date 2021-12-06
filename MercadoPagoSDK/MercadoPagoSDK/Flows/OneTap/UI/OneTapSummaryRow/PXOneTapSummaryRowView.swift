@@ -1,33 +1,32 @@
 import UIKit
 
 class PXOneTapSummaryRowView: UIView {
-    
     typealias Handler = () -> Void
-    
+
     enum RowType {
         case discount
         case charges
         case generic
     }
-    
+
     static let DEFAULT_HEIGHT: CGFloat = 16
     static let TOTAL_ROW_DEFAULT_HEIGHT: CGFloat = 43
     static let MARGIN: CGFloat = 8
     private var data: PXOneTapSummaryRowData
-    
+
     private lazy var titleLabel: UILabel = {
         let titleLabel = UILabel()
         titleLabel.textAlignment = .left
         return titleLabel
     }()
-    
+
     private lazy var valueLabel: UILabel = {
         let valueLabel = UILabel()
         valueLabel.translatesAutoresizingMaskIntoConstraints = false
         valueLabel.textAlignment = .right
         return valueLabel
     }()
-    
+
     private var iconImageView: UIImageView?
     private var discountIcon: UIImageView?
     private var verStackView: UIStackView?
@@ -35,34 +34,34 @@ class PXOneTapSummaryRowView: UIView {
     var heightConstraint = NSLayoutConstraint()
     var valueLabelTopConstraint = NSLayoutConstraint()
     var valueLabelCenterYConstraint = NSLayoutConstraint()
-    
+
     init(data: PXOneTapSummaryRowData) {
         self.data = data
         super.init(frame: CGRect.zero)
         render()
     }
-    
+
     private struct Constants {
         static let briefWidth: CGFloat = 250
     }
-    
+
     @available(*, unavailable)
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     open func getData() -> PXOneTapSummaryRowData {
         return data
     }
-    
+
     func getTotalHeightNeeded() -> CGFloat {
         return getRowHeight() + getRowMargin()
     }
-    
+
     open func getRowMargin() -> CGFloat {
         return data.isTotal ? PXLayout.ZERO_MARGIN : PXLayout.XXS_MARGIN
     }
-    
+
     open func getRowHeight() -> CGFloat {
         if data.isTotal {
             return !UIDevice.isSmallDevice() ? PXOneTapSummaryRowView.TOTAL_ROW_DEFAULT_HEIGHT : PXOneTapSummaryRowView.TOTAL_ROW_DEFAULT_HEIGHT - 4
@@ -70,35 +69,35 @@ class PXOneTapSummaryRowView: UIView {
             return data.rowHasBrief() ? PXOneTapSummaryRowView.DEFAULT_HEIGHT * 3 : PXOneTapSummaryRowView.DEFAULT_HEIGHT
         }
     }
-    
+
     func update(_ newData: PXOneTapSummaryRowData) {
         self.data = newData
         self.updateUI(animated: true)
     }
-    
+
     private func updateUI(animated: Bool = false) {
         if animated {
             titleLabel.fadeTransition(0.5)
             iconImageView?.fadeTransition(0.5)
             valueLabel.fadeTransition(0.5)
         }
-        
+
         titleLabel.alpha = data.alpha
         valueLabel.alpha = data.alpha
         if data.discountOverview == nil {
             clearDiscountIcon()
             clearOverviewBrief()
-            
+
             titleLabel.text = data.title
             titleLabel.textColor = data.highlightedColor
             titleLabel.font = data.isTotal ? UIFont.ml_semiboldSystemFont(ofSize: PXLayout.S_FONT) : UIFont.ml_regularSystemFont(ofSize: PXLayout.XS_FONT)
-            
+
             if iconImageView == nil, data.image != nil {
                 buildAndAddIconImageView()
             }
             iconImageView?.image = data.image
             iconImageView?.isHidden = data.image == nil
-            
+
             valueLabel.text = data.value
             valueLabel.textColor = data.highlightedColor
             valueLabel.font = data.isTotal ? UIFont.ml_semiboldSystemFont(ofSize: PXLayout.S_FONT) : UIFont.ml_regularSystemFont(ofSize: PXLayout.XS_FONT)
@@ -134,11 +133,11 @@ class PXOneTapSummaryRowView: UIView {
                     }
                 }
             }
-            
+
             if let url = data.getIconUrl() {
                 discountIcon?.setRemoteImage(imageUrl: url)
             }
-            
+
             valueLabel.attributedText = data.getAmountText()
             valueLabelCenterYConstraint.isActive = false
             valueLabelTopConstraint = valueLabel.topAnchor.constraint(equalTo: topAnchor)
@@ -146,24 +145,24 @@ class PXOneTapSummaryRowView: UIView {
         }
         setAccessibility(data)
     }
-    
+
     private func render() {
         removeAllSubviews()
         let rowHeight = getRowHeight()
         let titleFont = data.isTotal ? UIFont.ml_regularSystemFont(ofSize: PXLayout.S_FONT) : UIFont.ml_regularSystemFont(ofSize: PXLayout.XXS_FONT)
         let valueFont = data.isTotal ? UIFont.ml_semiboldSystemFont(ofSize: PXLayout.S_FONT) : UIFont.ml_regularSystemFont(ofSize: PXLayout.XXS_FONT)
         let shouldAnimate = data.isTotal ? false : true
-        
+
         if data.isTotal {
             self.backgroundColor = UIColor.Andes.white
         }
-        
+
         self.translatesAutoresizingMaskIntoConstraints = false
         self.pxShouldAnimatedOneTapRow = shouldAnimate
-        
+
         addSubview(valueLabel)
         PXLayout.pinRight(view: valueLabel, withMargin: PXLayout.L_MARGIN).isActive = true
-        
+
         if data.discountOverview == nil {
             titleLabel.translatesAutoresizingMaskIntoConstraints = false
             titleLabel.text = data.title
@@ -172,16 +171,16 @@ class PXOneTapSummaryRowView: UIView {
             PXLayout.pinLeft(view: titleLabel, withMargin: PXLayout.L_MARGIN).isActive = true
             titleLabel.trailingAnchor.constraint(lessThanOrEqualTo: valueLabel.leadingAnchor).isActive = true
             PXLayout.centerVertically(view: titleLabel).isActive = true
-            
+
             buildAndAddIconImageView()
-            
+
             valueLabel.text = data.value
             valueLabel.font = valueFont
             valueLabelCenterYConstraint = PXLayout.centerVertically(view: valueLabel)
         } else {
             buildDiscountRow()
         }
-        
+
         heightConstraint = PXLayout.setHeight(owner: self, height: rowHeight)
         isAccessibilityElement = true
         let rowValue = valueLabel.text?.replacingOccurrences(of: "$", with: "") ?? ""
@@ -196,12 +195,12 @@ extension PXOneTapSummaryRowView {
         guard let brief = overviewBrief else { return false }
         return brief.intrinsicContentSize.height < PXOneTapSummaryRowView.DEFAULT_HEIGHT ? true : false
     }
-    
+
     func briefNumberOfLines() -> Int {
         guard let brief = overviewBrief else { return 0 }
         return brief.intrinsicContentSize.height < PXOneTapSummaryRowView.DEFAULT_HEIGHT ? 1 : 2
     }
-    
+
     func updateHeightConstraint() {
         layoutIfNeeded()
         if !data.rowHasBrief() {
@@ -231,12 +230,12 @@ private extension PXOneTapSummaryRowView {
             verStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: PXLayout.L_MARGIN),
             verStackView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
-        
+
         let horStackview = UIStackView()
         horStackview.translatesAutoresizingMaskIntoConstraints = false
         horStackview.axis = .horizontal
         horStackview.addArrangedSubview(titleLabel)
-        
+
         // Overview Info icon
         if data.rowHasInfoIcon() {
             let icon = buildDiscountIcon()
@@ -251,18 +250,18 @@ private extension PXOneTapSummaryRowView {
             horStackview.addArrangedSubview(iconContainer)
         }
         verStackView.addArrangedSubview(horStackview)
-        
+
         // Overview brief
         if data.rowHasBrief() {
             buildAndAddBrief()
         }
-        
+
         // Overview amount
         valueLabel.attributedText = data.getAmountText()
         valueLabelTopConstraint = valueLabel.topAnchor.constraint(equalTo: topAnchor)
         valueLabelTopConstraint.isActive = true
     }
-    
+
     func buildAndAddBrief() {
         let brief = UILabel()
         overviewBrief = brief
@@ -271,21 +270,21 @@ private extension PXOneTapSummaryRowView {
         brief.numberOfLines = 2
         brief.lineBreakMode = .byWordWrapping
         brief.attributedText = data.getBriefText()
-        
+
         let containerView = UIView()
         containerView.addSubview(brief)
-        
+
         if let verStackView = verStackView {
             verStackView.addArrangedSubview(containerView)
         }
-        
+
         NSLayoutConstraint.activate([
             brief.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
             brief.widthAnchor.constraint(equalToConstant: Constants.briefWidth),
             brief.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 5)
         ])
     }
-    
+
     func buildDiscountIcon() -> UIImageView {
         let icon = UIImageView()
         discountIcon = icon
@@ -295,24 +294,24 @@ private extension PXOneTapSummaryRowView {
         icon.clipsToBounds = true
         return icon
     }
-    
+
     func clearDiscountIcon() {
         discountIcon?.removeFromSuperview()
         discountIcon = nil
     }
-    
+
     func clearIconImageView() {
         iconImageView?.removeFromSuperview()
         iconImageView = nil
     }
-    
+
     func clearOverviewBrief() {
         overviewBrief = nil
         if let verStackView = verStackView, verStackView.subviews.count == 2 {
             verStackView.subviews.last?.removeFromSuperview()
         }
     }
-    
+
     func buildAndAddIconImageView() {
         let imageView: UIImageView = UIImageView()
         self.iconImageView = imageView

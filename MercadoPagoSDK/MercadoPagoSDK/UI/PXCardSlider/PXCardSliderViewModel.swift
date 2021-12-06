@@ -4,35 +4,34 @@ import MLCardDrawer
 typealias PXApplicationId = String
 
 final class PXCardSliderViewModel {
-    
     let issuerId: String
     var cardUI: CardUI?
     var cardId: String?
     var displayInfo: PXOneTapDisplayInfo?
     var comboSwitch: ComboSwitchView?
-    
+
     var accountMoneyBalance: Double?
-    
+
     let creditsViewModel: PXCreditsViewModel?
-    
+
     var isCredits: Bool {
         return self.selectedApplication?.paymentMethodId == PXPaymentTypes.CONSUMER_CREDITS.rawValue
     }
-    
-    var applications : [PXApplicationId: PXCardSliderApplicationData]?
-    
-    var selectedApplicationId : PXApplicationId? {
+
+    var applications: [PXApplicationId: PXCardSliderApplicationData]?
+
+    var selectedApplicationId: PXApplicationId? {
         didSet {
             self.cardUI = self.selectedApplication?.cardUI
         }
     }
-    
+
     var selectedApplication: PXCardSliderApplicationData? {
         guard let applicationsData = applications, applicationsData.count > 0, let selectedApplicationId = selectedApplicationId else { return nil }
-        
-        return applicationsData[selectedApplicationId] ?? nil
+
+        return applicationsData[selectedApplicationId]
     }
-    
+
     init(_ applications: [PXApplicationId: PXCardSliderApplicationData], _ selectedApplicationId: String?, _ issuerId: String, _ cardId: String? = nil, creditsViewModel: PXCreditsViewModel? = nil, displayInfo: PXOneTapDisplayInfo?, comboSwitch: ComboSwitchView?) {
         self.issuerId = issuerId
         self.cardId = cardId
@@ -41,12 +40,12 @@ final class PXCardSliderViewModel {
         self.comboSwitch = comboSwitch
         self.applications = applications
         self.selectedApplicationId = selectedApplicationId
-        
+
         if let selectedApplicationId = selectedApplicationId {
             self.cardUI = applications[selectedApplicationId]?.cardUI
         }
     }
-    
+
     // MARK: - Public methods
     func trackCard(state: String) {
         MPXTracker.sharedInstance.trackEvent(event: PXCardSliderTrackingEvents.comboSwitch(state))

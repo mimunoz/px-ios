@@ -1,7 +1,6 @@
 import MLCardDrawer
 
 final class PXTermsAndConditionsTextView: UITextView {
-    
     init(terms: PXTermsDto, selectedInstallments: Int?, textColor: UIColor, linkColor: UIColor) {
         super.init(frame: .zero, textContainer: nil)
         linkTextAttributes = [.foregroundColor: linkColor]
@@ -10,12 +9,12 @@ final class PXTermsAndConditionsTextView: UITextView {
         self.textColor = textColor
         setupView()
     }
-    
+
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     private func setupView() {
         isEditable = false
         textAlignment = .center
@@ -23,7 +22,7 @@ final class PXTermsAndConditionsTextView: UITextView {
         isUserInteractionEnabled = true
         translatesAutoresizingMaskIntoConstraints = false
     }
-    
+
     private func getTermsAndConditionsText(terms: PXTermsDto, selectedCreditsInstallments: Int?) -> NSMutableAttributedString {
         let tycText = terms.text
         let attributedString = NSMutableAttributedString(string: tycText)

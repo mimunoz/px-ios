@@ -11,37 +11,37 @@ final class FeedbackView: UIView {
         label.textAlignment = .left
         return label
     }()
-    
+
     // MARK: - Initialization
     private init(feedbackMessage: String) {
         super.init(frame: .zero)
         setupViewConfiguration()
         feedbackMessageLabel.text = feedbackMessage
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     // MARK: - Public methods
     static func showFeedbackView(show feedbackMessage: String, in view: UIView) {
         let feedbackView = FeedbackView(feedbackMessage: feedbackMessage)
-        
+
         guard view.subviews.filter({ $0 is FeedbackView }).count == 0 else { return }
-        
+
         view.addSubviews(views: [feedbackView])
         view.bringSubviewToFront(feedbackView)
-        
+
         NSLayoutConstraint.activate([
             feedbackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 8),
             feedbackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -8),
             feedbackView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -8)
         ])
-        
+
         UIView.animate(withDuration: 0.3, animations: {
             feedbackView.layoutIfNeeded()
         })
-        
+
         DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
             UIView.animate(withDuration: 0.3, animations: {
                 feedbackView.alpha = 0
@@ -56,7 +56,7 @@ extension FeedbackView: ViewConfiguration {
     func buildHierarchy() {
         addSubviews(views: [feedbackMessageLabel])
     }
-    
+
     func setupConstraints() {
         NSLayoutConstraint.activate([
             feedbackMessageLabel.topAnchor.constraint(equalTo: topAnchor, constant: 16),
@@ -65,7 +65,7 @@ extension FeedbackView: ViewConfiguration {
             feedbackMessageLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16)
         ])
     }
-    
+
     func viewConfigure() {
         self.backgroundColor = .black
         layer.cornerRadius = 6

@@ -1,7 +1,6 @@
 import Foundation
 /// :nodoc:
 open class PXSecurityCode: NSObject, Codable {
-
     open var cardLocation: String?
     open var mode: PXSecurityMode?
     open var length: Int = 0
@@ -17,13 +16,13 @@ open class PXSecurityCode: NSObject, Codable {
         case mode
         case length
     }
-    
+
     public enum PXSecurityMode: String, Codable {
         case mandatory
         case optional
     }
 
-    required public convenience init(from decoder: Decoder) throws {
+    public required convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXSecurityCodeKeys.self)
         let cardLocation: String? = try container.decodeIfPresent(String.self, forKey: .cardLocation)
         let mode: PXSecurityMode? = try container.decodeIfPresent(PXSecurityMode.self, forKey: .mode)
@@ -57,5 +56,4 @@ open class PXSecurityCode: NSObject, Codable {
     open class func fromJSON(data: Data) throws -> [PXSecurityCode] {
         return try JSONDecoder().decode([PXSecurityCode].self, from: data)
     }
-
 }

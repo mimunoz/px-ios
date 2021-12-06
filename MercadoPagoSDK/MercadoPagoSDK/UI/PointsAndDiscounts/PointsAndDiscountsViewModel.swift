@@ -1,7 +1,6 @@
 import Foundation
 
 struct PointsAndDiscountsViewModel {
-
     let pointsAndDiscounts: PXPointsAndDiscounts
 
     init(_ withModel: PXPointsAndDiscounts) {

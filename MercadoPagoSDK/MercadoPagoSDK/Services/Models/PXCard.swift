@@ -15,7 +15,6 @@ open class PXCard: NSObject, Codable {
     open var securityCode: PXSecurityCode?
 
     public init(cardHolder: PXCardHolder?, customerId: String?, dateCreated: Date?, dateLastUpdated: Date?, expirationMonth: Int?, expirationYear: Int?, firstSixDigits: String?, id: String?, issuer: PXIssuer?, lastFourDigits: String?, paymentMethod: PXPaymentMethod?, securityCode: PXSecurityCode?) {
-
         self.cardHolder = cardHolder
         self.customerId = customerId
         self.dateCreated = dateCreated
@@ -45,7 +44,7 @@ open class PXCard: NSObject, Codable {
         case securityCode = "security_code"
     }
 
-    required public convenience init(from decoder: Decoder) throws {
+    public required convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXCardKeys.self)
         let cardHolder: PXCardHolder? = try container.decodeIfPresent(PXCardHolder.self, forKey: .cardHolder)
         let customerId: String? = try container.decodeIfPresent(String.self, forKey: .customerId)
@@ -97,5 +96,4 @@ open class PXCard: NSObject, Codable {
     open class func fromJSON(data: Data) throws -> [PXCard] {
         return try JSONDecoder().decode([PXCard].self, from: data)
     }
-
 }

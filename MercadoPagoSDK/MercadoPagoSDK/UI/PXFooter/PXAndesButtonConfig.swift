@@ -2,7 +2,6 @@ import Foundation
 import AndesUI
 
 struct PXAndesButtonConfig {
-
     let hierarchy: AndesButtonHierarchy
     let size: AndesButtonSize
 

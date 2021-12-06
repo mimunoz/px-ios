@@ -39,7 +39,7 @@ extension AccountMoneyCard {
         amImage.image = isDisabled ? amImageRaw?.imageGreyScale() : amImageRaw
         amImage.alpha = 0.6
         containerView.addSubview(amImage)
-        
+
         PXLayout.setWidth(owner: amImage, width: size.height * 0.65).isActive = true
         PXLayout.setHeight(owner: amImage, height: size.height * 0.65).isActive = true
         PXLayout.pinTop(view: amImage).isActive = true
@@ -62,7 +62,6 @@ extension AccountMoneyCard {
 
         // Logo
         guard let imageURL = self.cardLogoImageUrl, imageURL.isNotEmpty else {
-
             let amLogo = UIImageView()
             amLogo.backgroundColor = .clear
             amLogo.contentMode = .scaleAspectFit
@@ -71,12 +70,12 @@ extension AccountMoneyCard {
             amLogo.image = isDisabled ? logoImage?.imageGreyScale() : logoImage
 
             containerView.addSubview(amLogo)
-            
-            let scaleFactor : CGFloat = cardType == .large ? 1 : 0.5
-            
+
+            let scaleFactor: CGFloat = cardType == .large ? 1 : 0.5
+
             let xAMLogoScaleFactor = 0.6 * scaleFactor
             let yAMLogoScaleFactor = 0.35 * scaleFactor
-            
+
             PXLayout.setWidth(owner: amLogo, width: size.height * xAMLogoScaleFactor).isActive = true
             PXLayout.setHeight(owner: amLogo, height: size.height * yAMLogoScaleFactor).isActive = true
             PXLayout.pinTop(view: amLogo, withMargin: PXLayout.XXXS_MARGIN).isActive = true
@@ -84,6 +83,5 @@ extension AccountMoneyCard {
 
             return
         }
-
     }
 }

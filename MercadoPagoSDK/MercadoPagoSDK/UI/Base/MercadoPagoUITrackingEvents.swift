@@ -1,17 +1,17 @@
 enum MercadoPagoUITrackingEvents: TrackingEvents {
     // MARK: - Events
-    case didAbort(String, [String:Any])
+    case didAbort(String, [String: Any])
     case didGoBack(String)
-    
+
     // MARK: - Screen Events
-    case appliedDiscount([String:Any])
-    case termsAndConditions([String:Any])
-    case secureCode([String:Any])
-    case offlineMethodds([String:Any])
-    case reviewOneTap([String:Any])
+    case appliedDiscount([String: Any])
+    case termsAndConditions([String: Any])
+    case secureCode([String: Any])
+    case offlineMethodds([String: Any])
+    case reviewOneTap([String: Any])
     case disabledPaymentMethods
-    case installments([String:Any])
-    
+    case installments([String: Any])
+
     var name: String {
         switch self {
         case .didAbort(let screen, _): return "\(screen)/abort"
@@ -25,8 +25,8 @@ enum MercadoPagoUITrackingEvents: TrackingEvents {
         case .installments: return "/px_checkout/review/one_tap/installments"
         }
     }
-    
-    var properties: [String : Any] {
+
+    var properties: [String: Any] {
         switch self {
         case .didAbort(_, let properties), .appliedDiscount(let properties), .termsAndConditions(let properties),
              .secureCode(let properties), .offlineMethodds(let properties), .reviewOneTap(let properties),
@@ -34,7 +34,7 @@ enum MercadoPagoUITrackingEvents: TrackingEvents {
         case .didGoBack, .disabledPaymentMethods: return [:]
         }
     }
-    
+
     var needsExternalData: Bool {
         switch self {
         case .appliedDiscount, .termsAndConditions, .offlineMethodds, .installments, .disabledPaymentMethods:

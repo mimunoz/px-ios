@@ -13,7 +13,7 @@ final class PXOneTapInstallmentsSelectorView: PXComponentView {
         render()
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -40,9 +40,9 @@ extension PXOneTapInstallmentsSelectorView {
         tableView.tableFooterView = UIView()
         tableView.tableHeaderView?.layoutIfNeeded()
         tableView.reloadData()
-        
+
         self.layoutIfNeeded()
-        
+
         if let selectedInstallmentIndex = model.installmentData.payerCosts.firstIndex(where: { payerCost -> Bool in
             return model.selectedPayerCost?.installments == payerCost.installments
         }) {

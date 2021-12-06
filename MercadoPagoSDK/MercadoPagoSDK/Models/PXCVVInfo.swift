@@ -1,7 +1,6 @@
 import Foundation
 
 public struct PXCVVInfo: Codable {
-
     let title: String
     let message: String?
     let imageUrl: String?

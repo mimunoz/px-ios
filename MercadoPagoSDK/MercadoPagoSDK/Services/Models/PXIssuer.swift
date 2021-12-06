@@ -15,7 +15,7 @@ open class PXIssuer: NSObject, Codable {
         case name
     }
 
-    required public convenience init(from decoder: Decoder) throws {
+    public required convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXIssuerKeys.self)
         let name: String? = try container.decodeIfPresent(String.self, forKey: .name)
         var id = ""

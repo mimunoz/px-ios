@@ -14,7 +14,7 @@ open class PXOneTapCard: NSObject, Codable {
         case selectedPayerCost = "selected_payer_cost"
     }
 
-    required public convenience init(from decoder: Decoder) throws {
+    public required convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXOneTapCardKeys.self)
         let payerCost: PXPayerCost? = try container.decodeIfPresent(PXPayerCost.self, forKey: .selectedPayerCost)
         let cardId: String = try container.decode(String.self, forKey: .cardId)
@@ -46,5 +46,4 @@ open class PXOneTapCard: NSObject, Codable {
     open class func fromJSON(data: Data) throws -> PXOneTapCard {
         return try JSONDecoder().decode(PXOneTapCard.self, from: data)
     }
-
 }

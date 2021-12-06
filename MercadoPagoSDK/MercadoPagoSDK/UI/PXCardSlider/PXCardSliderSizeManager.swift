@@ -2,18 +2,17 @@ import UIKit
 import MLCardDrawer
 
 struct PXCardSliderSizeManager {
-
-    static let goldenRatio: CGFloat = 1/1.586
+    static let goldenRatio: CGFloat = 1 / 1.586
     static let interItemSpace: CGFloat = 16
     static let cardDeltaDecrease: CGFloat = 60
-    
+
     // Card type ratios
-    static let largeRatio : CGFloat = 0.61
-    static let mediumRatio : CGFloat = 0.492
-    static let smallRatio : CGFloat = 0.328
-    static let xSmallRatio : CGFloat = 0.265
-    static let miniRatio : CGFloat = 0.14
-    
+    static let largeRatio: CGFloat = 0.61
+    static let mediumRatio: CGFloat = 0.492
+    static let smallRatio: CGFloat = 0.328
+    static let xSmallRatio: CGFloat = 0.265
+    static let miniRatio: CGFloat = 0.14
+
     static func aspectRatio(forType type: MLCardDrawerTypeV3) -> CGFloat {
         switch type {
         case .large:
@@ -52,9 +51,8 @@ struct PXCardSliderSizeManager {
             return PXLayout.getAvailabelScreenHeight(in: viewController, applyingMarginFactor: 60)
         }
     }
-    
+
     static func getCardTypeForContext(deviceSize: PXDeviceSize.Sizes, hasCharges: Bool, hasDiscounts: Bool, hasInstallments: Bool, hasSplit: Bool) -> MLCardDrawerTypeV3 {
-        
         switch deviceSize {
         case .small:
             if hasInstallments || hasSplit {

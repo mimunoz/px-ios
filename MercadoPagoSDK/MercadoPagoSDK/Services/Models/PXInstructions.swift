@@ -10,12 +10,11 @@ open class PXInstructions: NSObject, Codable {
     }
 
     public enum PXInstructionsKeys: String, CodingKey {
-
         case amountInfo = "amount_info"
         case instructions
     }
 
-    required public convenience init(from decoder: Decoder) throws {
+    public required convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXInstructionsKeys.self)
         let amountInfo: PXAmountInfo? = try container.decodeIfPresent(PXAmountInfo.self, forKey: .amountInfo)
         let instructions: [PXInstruction] = try container.decodeIfPresent([PXInstruction].self, forKey: .instructions) ?? []

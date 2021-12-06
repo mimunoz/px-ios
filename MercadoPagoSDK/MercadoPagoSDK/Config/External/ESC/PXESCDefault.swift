@@ -28,19 +28,15 @@ final class PXESCDefault: NSObject, PXESCProtocol {
     }
 
     func deleteESC(config: PXESCConfig, cardId: String, reason: PXESCDeleteReason, detail: String?) {
-
     }
 
     func deleteESC(config: PXESCConfig, firstSixDigits: String, lastFourDigits: String, reason: PXESCDeleteReason, detail: String?) {
-
     }
 
     func deleteESC(config: PXESCConfig, token: PXToken, reason: PXESCDeleteReason, detail: String?) {
-
     }
 
     func deleteAllESC(config: PXESCConfig) {
-
     }
 
     func getSavedCardIds(config: PXESCConfig) -> [String] {

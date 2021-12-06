@@ -1,7 +1,6 @@
 import Foundation
 
 struct PXCreditsViewModel {
-
     let displayInfo: PXDisplayInfoDto
     let needsTermsAndConditions: Bool
 

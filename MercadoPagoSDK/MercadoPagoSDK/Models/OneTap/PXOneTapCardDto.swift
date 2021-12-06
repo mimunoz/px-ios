@@ -18,7 +18,7 @@ open class PXOneTapCardDto: NSObject, Codable {
         case retry = "retry"
     }
 
-    required public convenience init(from decoder: Decoder) throws {
+    public required convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXOneTapCardDtoKeys.self)
         let cardId: String = try container.decode(String.self, forKey: .cardId)
         let cardUI: PXCardDisplayInfoDto? = try container.decodeIfPresent(PXCardDisplayInfoDto.self, forKey: .cardUI)
@@ -49,15 +49,12 @@ open class PXOneTapCardDto: NSObject, Codable {
     }
 }
 
-
 open class PXRetry: NSObject, Codable {
     open var isNeeded: Bool?
     open var reason: String?
-    
+
     public enum CodingKeys: String, CodingKey {
         case isNeeded = "is_needed"
         case reason = "reason"
     }
 }
-
-

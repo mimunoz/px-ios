@@ -17,7 +17,7 @@ open class PXFeeDetail: NSObject, Codable {
         case type
     }
 
-    required public convenience init(from decoder: Decoder) throws {
+    public required convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXFeeDetailKeys.self)
         let amount: Double? = try container.decodeIfPresent(Double.self, forKey: .amount)
         let feePayer: String? = try container.decodeIfPresent(String.self, forKey: .feePayer)
@@ -51,5 +51,4 @@ open class PXFeeDetail: NSObject, Codable {
     open class func fromJSON(data: Data) throws -> [PXFeeDetail] {
         return try JSONDecoder().decode([PXFeeDetail].self, from: data)
     }
-
 }

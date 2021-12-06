@@ -144,7 +144,6 @@ extension OneTapFlow {
     }
 
     static func selectPaymentMethod(expressNode: PXOneTapDto, customerPaymentMethod: CustomerPaymentMethod, amountHelper: PXAmountHelper) -> PaymentMethodOption? {
-
         // payment method id and payment type id must coincide between the express node and the customer payment method to continue
         if expressNode.paymentMethodId != customerPaymentMethod.getPaymentMethodId() ||
             expressNode.paymentTypeId != customerPaymentMethod.getPaymentTypeId() {

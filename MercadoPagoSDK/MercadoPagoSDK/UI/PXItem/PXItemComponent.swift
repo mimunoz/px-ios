@@ -1,7 +1,6 @@
 import Foundation
 
 class PXItemComponent: PXComponentizable {
-
     public func render() -> UIView {
         return PXItemRenderer().render(self)
     }
@@ -46,7 +45,6 @@ extension PXItemComponent {
     }
 
     func shouldShowUnitAmount() -> Bool {
-
         return props.unitAmount != nil
     }
 

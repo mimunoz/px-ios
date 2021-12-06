@@ -96,7 +96,7 @@ class PXUIImageView: UIImageView {
     }
 
     private func buildEmptyView() -> UIView {
-        let view = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+        let view = UIView(frame: CGRect.zero)
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .white
         view.alpha = 0.2

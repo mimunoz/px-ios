@@ -20,7 +20,7 @@ open class PXInstallment: NSObject, Codable {
         case paymentTypeId = "payment_type_id"
     }
 
-    required public convenience init(from decoder: Decoder) throws {
+    public required convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXInstallmentKeys.self)
         let issuer: PXIssuer? = try container.decodeIfPresent(PXIssuer.self, forKey: .issuer)
         let payerCosts: [PXPayerCost] = try container.decodeIfPresent([PXPayerCost].self, forKey: .payerCosts) ?? []

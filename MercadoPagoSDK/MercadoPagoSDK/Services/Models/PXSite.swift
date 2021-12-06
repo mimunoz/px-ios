@@ -1,7 +1,6 @@
 import Foundation
 /// :nodoc:
 open class PXSite: NSObject, Codable {
-
     open var id: String!
     open var currencyId: String?
     open var termsAndConditionsUrl: String

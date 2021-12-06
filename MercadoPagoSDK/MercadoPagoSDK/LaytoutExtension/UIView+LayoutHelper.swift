@@ -16,9 +16,9 @@ protocol AnchoringRoot: AnyObject {
 }
 
 extension AnchoringRoot {
-    var leading: AnchorX { .init(anchor: leadingAnchor, root: self, type: .leading)}
-    var trailing: AnchorX { .init(anchor: trailingAnchor, root: self, type: .trailing)}
-    var centerX: AnchorX { .init(anchor: centerXAnchor, root: self, type: .centerX)}
+    var leading: AnchorX { .init(anchor: leadingAnchor, root: self, type: .leading) }
+    var trailing: AnchorX { .init(anchor: trailingAnchor, root: self, type: .trailing) }
+    var centerX: AnchorX { .init(anchor: centerXAnchor, root: self, type: .centerX) }
     var top: AnchorY { .init(anchor: topAnchor, root: self, type: .top) }
     var bottom: AnchorY { .init(anchor: bottomAnchor, root: self, type: .bottom) }
     var centerY: AnchorY { .init(anchor: centerYAnchor, root: self, type: .centerY) }
@@ -26,7 +26,7 @@ extension AnchoringRoot {
     var height: AnchorDimension { .init(anchor: heightAnchor, root: self, type: .height) }
     var centerXY: ComposedPositionAnchor { .init(root: self, anchors: [centerX, centerY]) }
     var edges: ComposedPositionAnchor { .init(root: self, anchors: [top, leading, bottom, trailing]) }
-    var size: ComposedDimensionAnchor { .init(root: self, anchors: [width, height] )}
+    var size: ComposedDimensionAnchor { .init(root: self, anchors: [width, height] ) }
 }
 
 extension UIView: AnchoringRoot {}

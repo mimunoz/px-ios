@@ -160,7 +160,7 @@ open class PXCampaign: NSObject, Codable {
     }
 
     /// :nodoc:
-    required public convenience init(from decoder: Decoder) throws {
+    public required convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXCampaignKeys.self)
         let id: Int64? = try container.decodeIfPresent(Int64.self, forKey: .id)
         let code: String? = try container.decodeIfPresent(String.self, forKey: .code)

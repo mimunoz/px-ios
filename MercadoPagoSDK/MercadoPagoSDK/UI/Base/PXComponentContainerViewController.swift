@@ -1,7 +1,6 @@
 import UIKit
 
 class PXComponentContainerViewController: MercadoPagoUIViewController {
-
     private lazy var elasticHeader = UIView()
     private lazy var customNavigationTitle: String = ""
     private lazy var secondaryCustomNavigationTitle: String = ""
@@ -111,7 +110,6 @@ extension PXComponentContainerViewController: UIScrollViewDelegate {
     }
 
     fileprivate func handleNavigationBarEffect(_ targetScrollView: UIScrollView) {
-
         let offset = targetScrollView.contentOffset.y
         let STATUS_TITLE_BREAKPOINT: Int = 2
 

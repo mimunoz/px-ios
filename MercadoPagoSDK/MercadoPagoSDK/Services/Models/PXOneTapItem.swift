@@ -17,7 +17,7 @@ open class PXOneTapItem: NSObject, Codable {
         case oneTapCard = "card"
     }
 
-    required public convenience init(from decoder: Decoder) throws {
+    public required convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXOneTapItemKeys.self)
         let oneTapCard: PXOneTapCard? = try container.decodeIfPresent(PXOneTapCard.self, forKey: .oneTapCard)
         let paymentMethodId: String = try container.decode(String.self, forKey: .paymentMethodId)

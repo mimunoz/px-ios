@@ -1,7 +1,6 @@
 import Foundation
 /// :nodoc:
 open class PXInstructionReference: NSObject, Codable {
-
     open var label: String?
     open var fieldValue: [String] = []
     open var separator: String = ""
@@ -21,7 +20,7 @@ open class PXInstructionReference: NSObject, Codable {
         case comment
     }
 
-    required public convenience init(from decoder: Decoder) throws {
+    public required convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXInstructionReferenceKeys.self)
         let label: String? = try container.decodeIfPresent(String.self, forKey: .label)
         let fieldValue: [String] = try container.decodeIfPresent([String].self, forKey: .fieldValue) ?? []
@@ -37,7 +36,6 @@ open class PXInstructionReference: NSObject, Codable {
         try container.encodeIfPresent(self.fieldValue, forKey: .fieldValue)
         try container.encodeIfPresent(self.separator, forKey: .separator)
         try container.encodeIfPresent(self.comment, forKey: .comment)
-
     }
 
     open func toJSONString() throws -> String? {

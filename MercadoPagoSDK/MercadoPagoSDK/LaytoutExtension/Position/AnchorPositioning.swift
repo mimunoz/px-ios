@@ -3,21 +3,21 @@ import UIKit
 protocol AnchorPositioning {
     var type: AnchorType { get }
     var root: AnchoringRoot { get }
-    
+
     @discardableResult
     func equalTo(
         _ otherConstraint: Self,
         constant: CGFloat,
         priority: UILayoutPriority
     ) -> NSLayoutConstraint
-    
+
     @discardableResult
     func lessThanOrEqualTo(
         _ otherConstraint: Self,
         constant: CGFloat,
         priority: UILayoutPriority)
     -> NSLayoutConstraint
-    
+
     @discardableResult
     func greaterThanOrEqualTo(
         _ otherConstraint: Self,
@@ -35,7 +35,7 @@ extension AnchorPositioning {
             priority: priority
         )
     }
-    
+
     @discardableResult
     func lessThanOrEqualToSuperview(constant: CGFloat = 0.0, priority: UILayoutPriority = .required) -> NSLayoutConstraint {
         lessThanOrEqualTo(
@@ -44,7 +44,7 @@ extension AnchorPositioning {
             priority: priority
         )
     }
-    
+
     @discardableResult
     func greaterThanOrEqualToSuperview(constant: CGFloat = 0.0, priority: UILayoutPriority = .required) -> NSLayoutConstraint {
         greaterThanOrEqualTo(
@@ -53,7 +53,7 @@ extension AnchorPositioning {
             priority: priority
         )
     }
-    
+
     @discardableResult
     func equalTo(_ root: AnchoringRoot, constant: CGFloat = 0.0, priority: UILayoutPriority = .required) -> NSLayoutConstraint {
         equalTo(
@@ -62,7 +62,7 @@ extension AnchorPositioning {
             priority: priority
         )
     }
-    
+
     @discardableResult
     func lessThanOrEqualTo(_ root: AnchoringRoot, constant: CGFloat = 0.0, priority: UILayoutPriority = .required) -> NSLayoutConstraint {
         lessThanOrEqualTo(
@@ -71,7 +71,7 @@ extension AnchorPositioning {
             priority: priority
         )
     }
-    
+
     @discardableResult
     func greaterThanOrEqualTo(_ root: AnchoringRoot, constant: CGFloat = 0.0, priority: UILayoutPriority = .required) -> NSLayoutConstraint {
         greaterThanOrEqualTo(
@@ -85,7 +85,7 @@ extension AnchorPositioning {
 private extension AnchorPositioning {
     func anchorFor(root: AnchoringRoot) -> Self {
         let anchor: Self?
-        
+
         switch type {
         case .leading:
             anchor = root.leading as? Self
@@ -102,19 +102,19 @@ private extension AnchorPositioning {
         default:
             anchor = nil
         }
-        
+
         if let anchor = anchor {
             return anchor
         }
-        
+
         preconditionFailure("Could not resolve \(type) anchor for this root \(root)")
     }
-    
+
     var rootSuperview: UIView {
         if let superview = root.superview {
             return superview
         }
-        
+
         preconditionFailure("Root doesn't have a superview")
     }
 }

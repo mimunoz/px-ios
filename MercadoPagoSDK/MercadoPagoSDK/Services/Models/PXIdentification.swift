@@ -1,7 +1,6 @@
 import Foundation
 /// :nodoc:
 open class PXIdentification: NSObject, Codable {
-
     open var number: String? = "null"
     open var type: String? = "null"
 

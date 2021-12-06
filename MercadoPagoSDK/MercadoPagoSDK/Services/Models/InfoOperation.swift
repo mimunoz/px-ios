@@ -4,7 +4,7 @@ struct InfoOperation: Codable {
     let hierarchy: String
     let type: String
     let body: String
-    
+
     var andesHierarchy: AndesMessageHierarchy {
         switch hierarchy.uppercased() {
         case "LOUD": return .loud
@@ -12,7 +12,7 @@ struct InfoOperation: Codable {
         default: return .quiet
         }
     }
-    
+
     var andesType: AndesMessageType {
         switch type.uppercased() {
         case "NEUTRAL": return .neutral

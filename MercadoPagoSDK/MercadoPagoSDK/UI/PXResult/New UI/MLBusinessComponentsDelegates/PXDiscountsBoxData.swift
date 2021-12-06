@@ -2,7 +2,6 @@ import UIKit
 import MLBusinessComponents
 
 class PXDiscountsBoxData: NSObject, MLBusinessDiscountBoxData {
-
     let discounts: PXDiscounts
 
     init(discounts: PXDiscounts) {

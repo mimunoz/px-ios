@@ -5,7 +5,7 @@ extension PXAmountHelper {
         guard let discount = discount, let campaign = campaign else {
             return nil
         }
-        
+
         var dic: [String: Any] = [:]
         dic["percent_off"] = discount.percentOff
         dic["amount_off"] = discount.amountOff

@@ -8,7 +8,7 @@ final class ActionView: UIView {
     // MARK: - Private properties
     private weak var delegate: ActionViewDelegate?
     private let action: PXInstructionAction?
-    
+
     private lazy var actionButton: UIButton = {
         let button = UIButton()
         button.titleLabel?.font = UIFont.ml_semiboldSystemFont(ofSize: 14)
@@ -17,7 +17,7 @@ final class ActionView: UIView {
         button.addTarget(self, action: #selector(didTapOnActionButton), for: .touchUpInside)
         return button
     }()
-    
+
     // MARK: - Initialization
     init(action: PXInstructionAction?, delegate: ActionViewDelegate?) {
         self.action = action
@@ -25,11 +25,11 @@ final class ActionView: UIView {
         super.init(frame: .zero)
         setupViewConfiguration()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     // MARK: - Private methods
     @objc private func didTapOnActionButton() {
         delegate?.didTapOnActionButton(action: action)
@@ -40,7 +40,7 @@ extension ActionView: ViewConfiguration {
     func buildHierarchy() {
         addSubviews(views: [actionButton])
     }
-    
+
     func setupConstraints() {
         NSLayoutConstraint.activate([
             actionButton.topAnchor.constraint(equalTo: topAnchor),

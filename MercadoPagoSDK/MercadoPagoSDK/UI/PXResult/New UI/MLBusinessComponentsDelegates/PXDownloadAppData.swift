@@ -2,7 +2,6 @@ import Foundation
 import MLBusinessComponents
 
 class PXDownloadAppData: NSObject, MLBusinessDownloadAppData {
-
     let discounts: PXDiscounts
 
     init(discounts: PXDiscounts) {

@@ -2,10 +2,10 @@ import Foundation
 
 extension OneTapFlow {
     func showOneTapViewController() {
-        let callbackPaymentData: ((PXPaymentData) -> Void) = { [weak self] (paymentData: PXPaymentData) in
+        let callbackPaymentData: ((PXPaymentData) -> Void) = { [weak self] (_: PXPaymentData) in
             self?.cancelFlowForNewPaymentSelection()
         }
-        let callbackConfirm: ((PXPaymentData, Bool) -> Void) = { [weak self] (paymentData, splitAccountMoneyEnabled) in
+        let callbackConfirm: ((PXPaymentData, Bool) -> Void) = { [weak self] paymentData, splitAccountMoneyEnabled in
             guard let self = self else { return }
             self.model.updateCheckoutModel(paymentData: paymentData, splitAccountMoneyEnabled: splitAccountMoneyEnabled)
             // Deletes default one tap option in payment method search
@@ -30,51 +30,45 @@ extension OneTapFlow {
         let finishButtonAnimation: (() -> Void) = { [weak self] in
             self?.executeNextStep()
         }
-        
+
         let viewModel = model.oneTapViewModel()
         model.pxOneTapViewModel = viewModel
-        
+
         let hasInstallments = model.search.payerPaymentMethods.contains { payerPaymentMethod -> Bool in
-             
             guard let paymentOptions = payerPaymentMethod.paymentOptions else { return false }
-            
-            return paymentOptions.contains { (key: String, amountConfiguration: PXAmountConfiguration) -> Bool in
-                
+
+            return paymentOptions.contains { (_: String, amountConfiguration: PXAmountConfiguration) -> Bool in
                 guard let payerCostsCount = amountConfiguration.payerCosts?.count else { return false }
-                
+
                 return  payerCostsCount > 1
-                
             }
         }
-        
+
         let hasSplit = model.search.payerPaymentMethods.contains { payerPaymentMethod -> Bool in
-            
             guard let paymentOptions = payerPaymentMethod.paymentOptions else { return false }
-            
-            return paymentOptions.contains { (key: String, amountConfiguration: PXAmountConfiguration) -> Bool in
-                
+
+            return paymentOptions.contains { (_: String, amountConfiguration: PXAmountConfiguration) -> Bool in
                 guard let _ = amountConfiguration.splitConfiguration else { return false }
-                
+
                 return true
-                
             }
         }
-        
-        let hasDiscounts = model.search.coupons.filter { ( key: String, value: PXDiscountConfiguration ) -> Bool in
+
+        let hasDiscounts = model.search.coupons.filter { ( key: String, _: PXDiscountConfiguration ) -> Bool in
             return key != "hash_no_discount"
         }.count > 0
-        
-        var hasCharges : Bool = false
-        
+
+        var hasCharges: Bool = false
+
         if let chargeRules = model.chargeRules,
-           chargeRules.contains(where: { (chargeRule) -> Bool in
+           chargeRules.contains(where: { chargeRule -> Bool in
             return chargeRule.amountCharge != 0
            }) {
             hasCharges = true
         }
-        
+
         let pxOneTapContext = PXOneTapContext(hasInstallments: hasInstallments, hasSplit: hasSplit, hasCharges: hasCharges, hasDiscounts: hasDiscounts)
-        
+
         let viewController = PXOneTapViewController(viewModel: viewModel, pxOneTapContext: pxOneTapContext, timeOutPayButton: model.getTimeoutForOneTapReviewController(), callbackPaymentData: callbackPaymentData, callbackConfirm: callbackConfirm, callbackUpdatePaymentOption: callbackUpdatePaymentOption, callbackRefreshInit: callbackRefreshInit, callbackExit: callbackExit, finishButtonAnimation: finishButtonAnimation)
 
         pxNavigationHandler.pushViewController(viewController: viewController, animated: true)

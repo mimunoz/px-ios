@@ -1,8 +1,7 @@
 import Foundation
 
 @objcMembers
-public class PXDiscounts: NSObject , Codable {
-
+public class PXDiscounts: NSObject, Codable {
     let title: String?
     let subtitle: String?
     let discountsAction: PXRemoteAction

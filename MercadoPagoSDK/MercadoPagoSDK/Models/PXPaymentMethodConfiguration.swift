@@ -8,7 +8,7 @@ class PXPaymentMethodConfiguration: NSObject {
     let creditsInfo: String?
     let paymentOptionsConfigurations: [PXPaymentOptionConfiguration]
     let selectedAmountConfiguration: String?
-    
+
     init(customOptionSearchItem: PXCustomOptionSearchItem, paymentOptionsConfigurations: [PXPaymentOptionConfiguration]) {
         self.paymentOptionID = customOptionSearchItem.id
         self.paymentMethodId = customOptionSearchItem.paymentMethodId

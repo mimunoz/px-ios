@@ -1,22 +1,21 @@
 import Foundation
 
 extension InitFlow {
-
     func getInitSearch() {
         let cardIdsWithEsc = PXConfiguratorManager.escProtocol.getSavedCardIds(config: PXConfiguratorManager.escConfig)
 
         let discountParamsConfiguration = initFlowModel.properties.advancedConfig.discountParamsConfiguration
-        let flowName: String? = MPXTracker.sharedInstance.getFlowName() ?? nil
+        let flowName: String? = MPXTracker.sharedInstance.getFlowName()
         let splitEnabled: Bool = initFlowModel.properties.paymentPlugin?.supportSplitPaymentMethodPayment(checkoutStore: PXCheckoutStore.sharedInstance) ?? false
         let serviceAdapter = initFlowModel.getService()
 
-        //payment method search service should be performed using the processing modes designated by the preference object
+        // payment method search service should be performed using the processing modes designated by the preference object
         let pref = initFlowModel.properties.checkoutPreference
         serviceAdapter.update(processingModes: pref.processingModes, branchId: pref.branchId)
 
         let charges = self.initFlowModel.amountHelper.chargeRules ?? []
 
-        //Add headers
+        // Add headers
         var headers: [String: String] = [:]
         if let prodId = initFlowModel.properties.productId {
             headers[HeaderFields.productId.rawValue] = prodId
@@ -48,10 +47,10 @@ extension InitFlow {
 
         initFlowModel.updateInitModel(paymentMethodsResponse: search)
 
-        //Tracking Experiments
+        // Tracking Experiments
         MPXTracker.sharedInstance.setExperiments(search.experiments)
 
-        //Set site
+        // Set site
         SiteManager.shared.setCurrency(currency: search.currency)
         SiteManager.shared.setSite(site: search.site)
 

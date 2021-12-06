@@ -8,7 +8,7 @@ extension RemedyRequestInfos: RequestInfos {
         case .getRemedy(let paymentId, _, _, _): return "px_mobile/v1/remedies/\(paymentId)"
         }
     }
-    
+
     var method: HTTPMethodType {
         .post
     }
@@ -19,21 +19,21 @@ extension RemedyRequestInfos: RequestInfos {
         }
     }
 
-    var headers: [String : String]? {
+    var headers: [String: String]? {
         switch self {
-        case .getRemedy(_, _, _, _): return nil
+        case .getRemedy: return nil
         }
     }
 
-    var parameters: [String : Any]? {
+    var parameters: [String: Any]? {
         switch self {
         case .getRemedy(_, _, let oneTap, _):
             return [
-            "one_tap" : oneTap ? "true" : "false"
+            "one_tap": oneTap ? "true" : "false"
             ]
         }
     }
-    
+
     var accessToken: String? {
         switch self {
         case .getRemedy(_, let privateKey, _, _): return privateKey

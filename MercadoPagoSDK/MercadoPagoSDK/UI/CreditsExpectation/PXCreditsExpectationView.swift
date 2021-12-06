@@ -1,7 +1,6 @@
 import Foundation
 
 final class PXCreditsExpectationView: UIView {
-
     let title: String
     let subtitle: String
 

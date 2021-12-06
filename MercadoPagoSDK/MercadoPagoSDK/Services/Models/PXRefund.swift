@@ -26,7 +26,7 @@ open class PXRefund: NSObject, Codable {
         case uniqueSecuenceNumber = "unique_secuence_number"
     }
 
-    required public convenience init(from decoder: Decoder) throws {
+    public required convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXRefundKeys.self)
         let metadata: [String: String]? = try container.decodeIfPresent([String: String].self, forKey: .metadata)
         let dateCreated: Date? = try container.decodeDateFromStringIfPresent(forKey: .dateCreated)
@@ -64,5 +64,4 @@ open class PXRefund: NSObject, Codable {
     open class func fromJSON(data: Data) throws -> [PXRefund] {
         return try JSONDecoder().decode([PXRefund].self, from: data)
     }
-
 }

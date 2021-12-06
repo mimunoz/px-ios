@@ -3,7 +3,7 @@ import UIKit
 protocol AnchorDimensionComposing {
     var root: AnchoringRoot { get }
     var type: AnchorType { get }
-    
+
     @discardableResult
     func equalTo(
         _ root: AnchoringRoot,
@@ -11,7 +11,7 @@ protocol AnchorDimensionComposing {
         constant: CGFloat,
         priority: UILayoutPriority
     ) -> NSLayoutConstraint
-    
+
     @discardableResult
     func lessThanOrEqualTo(
         _ root: AnchoringRoot,
@@ -27,19 +27,19 @@ protocol AnchorDimensionComposing {
         constant: CGFloat,
         priority: UILayoutPriority
     ) -> NSLayoutConstraint
-    
+
     @discardableResult
     func equalTo(
         constant: CGFloat,
         priority: UILayoutPriority
     ) -> NSLayoutConstraint
-    
+
     @discardableResult
     func lessThanOrEqualTo(
         constant: CGFloat,
         priority: UILayoutPriority
     ) -> NSLayoutConstraint
-    
+
     @discardableResult
     func greaterThanOrEqualTo(
         constant: CGFloat,
@@ -50,7 +50,7 @@ protocol AnchorDimensionComposing {
 extension AnchorDimensionComposing {
     var width: ComposedDimensionAnchor { .init(root: root, anchors: [self, root.width]) }
     var height: ComposedDimensionAnchor { .init(root: root, anchors: [self, root.height]) }
-    
+
     func equalToSuperview(
         multiplier: CGFloat = 1.0,
         constant: CGFloat = 0.0,
@@ -63,7 +63,7 @@ extension AnchorDimensionComposing {
             priority: priority
         )
     }
-    
+
     func lessThanOrEqualToSuperview(
         multiplier: CGFloat = 1.0,
         constant: CGFloat = 0.0,
@@ -76,7 +76,7 @@ extension AnchorDimensionComposing {
             priority: priority
         )
     }
-    
+
     func greaterThanOrEqualToSuperview(multiplier: CGFloat = 1.0, constant: CGFloat = 0.0, priority: UILayoutPriority = .required) -> NSLayoutConstraint {
         greaterThanOrEqualTo(
             rootSuperview,

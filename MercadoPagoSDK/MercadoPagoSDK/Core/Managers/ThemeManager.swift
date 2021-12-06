@@ -2,7 +2,6 @@ import Foundation
 import MLUI
 
 class ThemeManager {
-
     static let shared = ThemeManager()
 
     fileprivate var currentTheme: PXTheme = PXDefaultTheme(withPrimaryColor: #colorLiteral(red: 0.2196078431, green: 0.5411764706, blue: 0.8156862745, alpha: 1)) {
@@ -21,7 +20,6 @@ class ThemeManager {
 
 // MARK: - Public methods
 extension ThemeManager {
-
     func initialize() {
         currentStylesheet = MLStyleSheetManager.styleSheet
         customizeNavigationBar(theme: currentTheme)
@@ -66,7 +64,6 @@ extension ThemeManager {
 }
 
 extension ThemeManager {
-
     func boldLabelTintColor() -> UIColor {
         return currentStylesheet.blackColor
     }
@@ -96,7 +93,7 @@ extension ThemeManager {
     }
 
     func remedyWarningColor() -> UIColor {
-        return #colorLiteral(red: 1, green: 0.4663783312, blue: 0.2018467486, alpha: 1) //currentStylesheet.warningColor
+        return #colorLiteral(red: 1, green: 0.4663783312, blue: 0.2018467486, alpha: 1) // currentStylesheet.warningColor
     }
 
     func warningColor() -> UIColor {
@@ -138,7 +135,6 @@ extension ThemeManager {
 
 // MARK: - UI design exceptions
 extension ThemeManager: PXTheme {
-
     func navigationBar() -> PXThemeProperty {
         return currentTheme.navigationBar()
     }
@@ -181,7 +177,6 @@ extension ThemeManager: PXTheme {
     }
 
     func getTitleColorForReviewConfirmNavigation() -> UIColor {
-
         if currentTheme is PXDefaultTheme {
             return getMainColor()
         }
@@ -200,7 +195,6 @@ extension ThemeManager: PXTheme {
 
 // MARK: - UI Theme customization
 extension ThemeManager {
-
     fileprivate func customizeNavigationBar(theme: PXTheme) {
         UINavigationBar.appearance(whenContainedInInstancesOf: [MercadoPagoUIViewController.self]).tintColor = theme.navigationBar().tintColor
         UINavigationBar.appearance(whenContainedInInstancesOf: [MercadoPagoUIViewController.self]).backgroundColor = theme.navigationBar().backgroundColor

@@ -63,7 +63,7 @@ open class PXDiscount: NSObject, Codable {
     }
 
     /// :nodoc:
-    required public convenience init(from decoder: Decoder) throws {
+    public required convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXDiscountKeys.self)
         let percentOff: Double = try container.decodeIfPresent(Double.self, forKey: .percentOff) ?? 0
         let amountOff: Double = try container.decodeIfPresent(Double.self, forKey: .amountOff) ?? 0

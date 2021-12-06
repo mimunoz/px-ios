@@ -2,14 +2,13 @@ import Foundation
 
 @objcMembers
 public class PXDiscountsTouchpoint: NSObject, Codable {
-
     let id: String
     let type: String
     let content: PXCodableDictionary
     let tracking: PXCodableDictionary?
     let additionalEdgeInsets: PXCodableDictionary?
 
-    public init(id: String, type: String, content: [String:Any], tracking: [String:Any]?, additionalEdgeInsets: [String:Any]?){
+    public init(id: String, type: String, content: [String: Any], tracking: [String: Any]?, additionalEdgeInsets: [String: Any]?) {
         self.id = id
         self.type = type
         self.content = PXCodableDictionary(value: content)
@@ -26,7 +25,7 @@ public class PXDiscountsTouchpoint: NSObject, Codable {
             self.additionalEdgeInsets = nil
         }
     }
-    
+
     init(id: String, type: String, content: PXCodableDictionary, tracking: PXCodableDictionary?, additionalEdgeInsets: PXCodableDictionary?) {
         self.id = id
         self.type = type
@@ -43,4 +42,3 @@ public class PXDiscountsTouchpoint: NSObject, Codable {
         case additionalEdgeInsets = "additional_edge_insets"
     }
 }
-

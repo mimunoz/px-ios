@@ -3,7 +3,7 @@ import UIKit
 final class InstructionActionView: UIView {
     // MARK: - Private properties
     private weak var delegate: ActionViewDelegate?
-    
+
     private let mainStack: UIStackView = {
         let stack = UIStackView()
         stack.axis = .vertical
@@ -11,14 +11,14 @@ final class InstructionActionView: UIView {
         stack.spacing = 8
         return stack
     }()
-    
+
     private let instructionLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.ml_regularSystemFont(ofSize: 16)
         label.numberOfLines = 0
         return label
     }()
-    
+
     private let codeBorderView: UIView = {
         let view = UIView()
         view.backgroundColor = .clear
@@ -27,7 +27,7 @@ final class InstructionActionView: UIView {
         view.layer.cornerRadius = 6
         return view
     }()
-    
+
     private let codeLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.ml_semiboldSystemFont(ofSize: 16)
@@ -35,9 +35,9 @@ final class InstructionActionView: UIView {
         label.textAlignment = .left
         return label
     }()
-    
+
     private let actionButton: ActionView
-    
+
     // MARK: - Initialization
     init(instruction: PXInstructionInteraction, delegate: ActionViewDelegate?) {
         self.actionButton = ActionView(action: instruction.action, delegate: delegate)
@@ -46,11 +46,11 @@ final class InstructionActionView: UIView {
         setupInfos(with: instruction)
         setupViewConfiguration()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     // MARK: - Private methods
     private func setupInfos(with instruction: PXInstructionInteraction) {
         instructionLabel.attributedText = instruction.title?.htmlToAttributedString?.with(font: instructionLabel.font)
@@ -66,24 +66,24 @@ extension InstructionActionView: ViewConfiguration {
         codeBorderView.addSubviews(views: [codeLabel])
         mainStack.addArrangedSubviews(views: [instructionLabel, codeBorderView, actionButton])
     }
-    
+
     func setupConstraints() {
         NSLayoutConstraint.activate([
             mainStack.topAnchor.constraint(equalTo: topAnchor),
             mainStack.leadingAnchor.constraint(equalTo: leadingAnchor),
             mainStack.trailingAnchor.constraint(equalTo: trailingAnchor),
             mainStack.bottomAnchor.constraint(equalTo: bottomAnchor),
-            
+
             codeBorderView.leadingAnchor.constraint(equalTo: leadingAnchor),
             codeBorderView.trailingAnchor.constraint(equalTo: trailingAnchor),
 
             codeLabel.topAnchor.constraint(equalTo: codeBorderView.topAnchor, constant: 8),
             codeLabel.leadingAnchor.constraint(equalTo: codeBorderView.leadingAnchor, constant: 16),
             codeLabel.trailingAnchor.constraint(equalTo: codeBorderView.trailingAnchor, constant: -16),
-            codeLabel.bottomAnchor.constraint(equalTo: codeBorderView.bottomAnchor, constant: -8),
+            codeLabel.bottomAnchor.constraint(equalTo: codeBorderView.bottomAnchor, constant: -8)
         ])
     }
-    
+
     func viewConfigure() {
         backgroundColor = .white
     }

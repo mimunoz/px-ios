@@ -3,7 +3,6 @@ import MLCardDrawer
 import AndesUI
 
 final class PXSecurityCodeViewModel {
-
     enum Reason: String {
         case SAVED_CARD = "saved_card"
         case INVALID_ESC = "invalid_esc"
@@ -114,7 +113,7 @@ extension PXSecurityCodeViewModel {
         properties["payment_method_id"] = paymentMethod.getPaymentIdForTracking()
         properties["payment_method_type"] = paymentMethod.getPaymentTypeForTracking()
         if let cardInfo = cardInfo as? PXCardInformation {
-            properties["card_id"] =  cardInfo.getCardId()
+            properties["card_id"] = cardInfo.getCardId()
             properties["issuer_id"] = cardInfo.getIssuer()?.id
         }
         properties["bin"] = cardInfo.getCardBin()

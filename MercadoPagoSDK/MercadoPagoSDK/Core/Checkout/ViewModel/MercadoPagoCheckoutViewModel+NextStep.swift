@@ -1,9 +1,7 @@
 import Foundation
 
 extension MercadoPagoCheckoutViewModel {
-
     func isPaymentTypeSelected() -> Bool {
-
         let hasPaymentWithInvalidESC = paymentData.hasPaymentMethod() && !paymentData.hasToken() && paymentResult != nil && paymentResult!.isInvalidESC()
 
         if (self.paymentData.isComplete() || hasPaymentWithInvalidESC) && (self.search != nil) {
@@ -116,8 +114,8 @@ extension MercadoPagoCheckoutViewModel {
             return false
         }
 
-        //Note: this is being used only for new cards, saved cards tokenization is
-        //made in MercadoPagoCheckout#collectSecurityCode().
+        // Note: this is being used only for new cards, saved cards tokenization is
+        // made in MercadoPagoCheckout#collectSecurityCode().
         let hasInstallmentsIfNeeded = self.paymentData.getPayerCost() != nil || !pm.isCreditCard
 
         let newCard = !paymentData.hasToken() && pm.isCard && self.cardToken != nil

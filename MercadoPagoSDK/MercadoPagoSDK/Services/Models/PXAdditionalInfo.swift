@@ -17,7 +17,7 @@ final class PXAdditionalInfo: NSObject, Codable {
         case pxCustomTexts = "px_custom_texts"
     }
 
-    required public convenience init(from decoder: Decoder) throws {
+    public required convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXAdditionalInfoKeys.self)
         let pxSummary: PXAdditionalInfoSummary? = try container.decodeIfPresent(PXAdditionalInfoSummary.self, forKey: .pxSummary)
         let pxConfiguration: PXAdditionalInfoConfiguration? = try container.decodeIfPresent(PXAdditionalInfoConfiguration.self, forKey: .pxConfiguration)

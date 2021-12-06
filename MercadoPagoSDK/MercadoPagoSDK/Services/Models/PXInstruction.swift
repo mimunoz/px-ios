@@ -41,7 +41,7 @@ open class PXInstruction: NSObject, Codable {
         case info
     }
 
-    required public convenience init(from decoder: Decoder) throws {
+    public required convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXInstructionKeys.self)
         let title: String = try container.decodeIfPresent(String.self, forKey: .title) ?? ""
         let subtitle: String? = try container.decodeIfPresent(String.self, forKey: .subtitle)

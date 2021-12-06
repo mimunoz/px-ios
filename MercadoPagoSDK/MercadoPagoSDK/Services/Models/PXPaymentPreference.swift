@@ -2,7 +2,6 @@ import Foundation
 
 /// :nodoc:
 open class PXPaymentPreference: NSObject, Codable {
-
     open var maxAcceptedInstallments: Int = 0
     open var defaultInstallments: Int?
     open var excludedPaymentMethodIds: [String] = []
@@ -12,7 +11,6 @@ open class PXPaymentPreference: NSObject, Codable {
     open var cardId: String?
 
     override public init() {
-
     }
 
     public init(maxAcceptedInstallments: Int, defaultInstallments: Int?, excludedPaymentMethodIds: [String], excludedPaymentTypeIds: [String], defaultPaymentMethodId: String?, defaultPaymentTypeId: String?) {
@@ -25,7 +23,6 @@ open class PXPaymentPreference: NSObject, Codable {
     }
 
     init(maxAcceptedInstallments: Int, defaultInstallments: Int?, excludedPaymentMethods: [PXPaymentMethod], excludedPaymentTypes: [PXPaymentType], defaultPaymentMethodId: String?, defaultPaymentTypeId: String?, defaultCardId: String?) {
-
         var excludedPaymentTypeIds: [String] = []
         for paymentType in excludedPaymentTypes {
             if !String.isNullOrEmpty(paymentType.id) {
@@ -59,7 +56,7 @@ open class PXPaymentPreference: NSObject, Codable {
         case defaultCardId = "default_card_id"
     }
 
-    required public convenience init(from decoder: Decoder) throws {
+    public required convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXPaymentPreferenceKeys.self)
         let defaultInstallments: Int? = try container.decodeIfPresent(Int.self, forKey: .defaultInstallments)
         let maxAcceptedInstallments: Int = try container.decodeIfPresent(Int.self, forKey: .maxAcceptedInstallments) ?? 0
@@ -107,5 +104,4 @@ open class PXPaymentPreference: NSObject, Codable {
     open class func fromJSON(data: Data) throws -> PXPaymentPreference {
         return try JSONDecoder().decode(PXPaymentPreference.self, from: data)
     }
-
 }

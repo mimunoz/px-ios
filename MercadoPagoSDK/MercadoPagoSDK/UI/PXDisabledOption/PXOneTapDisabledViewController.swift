@@ -3,7 +3,6 @@ import MLUI
 import AndesUI
 
 class PXOneTapDisabledViewController: UIViewController {
-
     init(title: PXText?, description: PXText?, primaryButton: PXAction?, secondaryButton: PXAction?, iconUrl: String?) {
         super.init(nibName: nil, bundle: nil)
 

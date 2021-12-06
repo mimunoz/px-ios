@@ -11,7 +11,7 @@ extension UIImageView {
             printDebug("Retrieve image from Cache")
         } else {
             self.backgroundColor = placeHolderColor
-            URLSession.shared.dataTask(with: request, completionHandler: { data, response, error in
+            URLSession.shared.dataTask(with: request, completionHandler: { data, response, _ in
                 if let data = data, let response = response, ((response as? HTTPURLResponse)?.statusCode ?? 500) < 300, let image = UIImage(data: data) {
                     let cachedData = CachedURLResponse(response: response, data: data)
                     cache.storeCachedResponse(cachedData, for: request)

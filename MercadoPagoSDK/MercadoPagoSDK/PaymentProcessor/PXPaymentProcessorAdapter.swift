@@ -1,7 +1,6 @@
 import Foundation
 
 public class PXPaymentProcessorAdapter: NSObject, PXSplitPaymentProcessor {
-
     let paymentProcessor: PXPaymentProcessor
 
     init(paymentProcessor: PXPaymentProcessor) {
@@ -21,9 +20,9 @@ public class PXPaymentProcessorAdapter: NSObject, PXSplitPaymentProcessor {
     }
 
     func startPayment(checkoutStore: PXCheckoutStore, errorHandler: PXPaymentProcessorErrorHandler, successWithBasePayment: @escaping ((PXBasePayment) -> Void)) {
-        paymentProcessor.startPayment?(checkoutStore: checkoutStore, errorHandler: errorHandler, successWithBusinessResult: { (businessResult) in
+        paymentProcessor.startPayment?(checkoutStore: checkoutStore, errorHandler: errorHandler, successWithBusinessResult: { businessResult in
             successWithBasePayment(businessResult)
-        }, successWithPaymentResult: { (genericPayment) in
+        }, successWithPaymentResult: { genericPayment in
             successWithBasePayment(genericPayment)
         })
     }

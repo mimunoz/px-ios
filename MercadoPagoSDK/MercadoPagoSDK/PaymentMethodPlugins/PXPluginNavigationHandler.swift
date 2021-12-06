@@ -3,7 +3,6 @@ import Foundation
 /** :nodoc: */
 @objcMembers
 open class PXPluginNavigationHandler: NSObject {
-
     private var checkout: MercadoPagoCheckout?
 
     public init(withCheckout: MercadoPagoCheckout) {

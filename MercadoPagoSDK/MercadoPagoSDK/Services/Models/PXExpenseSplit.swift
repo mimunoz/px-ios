@@ -12,7 +12,7 @@ public class PXExpenseSplit: NSObject, Codable {
         self.imageUrl = imageUrl
         super.init()
     }
-    
+
     enum CodingKeys: String, CodingKey {
         case title
         case action

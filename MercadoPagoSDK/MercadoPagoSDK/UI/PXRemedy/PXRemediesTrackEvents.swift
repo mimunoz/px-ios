@@ -1,11 +1,10 @@
 enum PXRemediesTrackEvents: TrackingEvents {
-    case didResultRemedyError([String:Any])
-    case viewErrorPaymentResult([String:Any])
+    case didResultRemedyError([String: Any])
+    case viewErrorPaymentResult([String: Any])
     case changePaymentMethod(isFromModal: Bool)
     case didShowRemedyErrorModal
     case didCloseRemedyModalAbort
-    
-    
+
     var name: String {
         switch self {
         case .viewErrorPaymentResult: return "/px_checkout/result/error"
@@ -15,15 +14,15 @@ enum PXRemediesTrackEvents: TrackingEvents {
         case .didCloseRemedyModalAbort: return "/px_checkout/result/error/remedy/modal/abort"
         }
     }
-    
-    var properties: [String : Any] {
+
+    var properties: [String: Any] {
         switch self {
-        case .didResultRemedyError(let properties),.viewErrorPaymentResult(let properties): return properties
+        case .didResultRemedyError(let properties), .viewErrorPaymentResult(let properties): return properties
         case .changePaymentMethod(let isFromModal): return ["from": isFromModal ? "modal" : "view"]
         case .didCloseRemedyModalAbort, .didShowRemedyErrorModal: return [:]
         }
     }
-    
+
     var needsExternalData: Bool {
         switch self {
         case .didResultRemedyError, .viewErrorPaymentResult:

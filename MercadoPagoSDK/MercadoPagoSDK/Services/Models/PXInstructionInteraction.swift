@@ -1,7 +1,6 @@
 import Foundation
 /// :nodoc:
 open class PXInstructionInteraction: NSObject, Codable {
-
     open var title: String?
     open var content: String?
     open var action: PXInstructionAction?
@@ -21,7 +20,7 @@ open class PXInstructionInteraction: NSObject, Codable {
         case showMultiLine = "show_multiline_content"
     }
 
-    required public convenience init(from decoder: Decoder) throws {
+    public required convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXInstructionInteractionKeys.self)
         let title: String? = try container.decodeIfPresent(String.self, forKey: .title)
         let content: String? = try container.decodeIfPresent(String.self, forKey: .content)

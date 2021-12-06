@@ -1,7 +1,6 @@
 import UIKit
 
 class PXPaymentMethodIconRenderer: NSObject {
-
     let RADIUS_DELTA_FROM_ICON_TO_BACKGROUND: CGFloat = 58
 
     func render(component: PXPaymentMethodIconComponent) -> PXPaymentMethodIconView {

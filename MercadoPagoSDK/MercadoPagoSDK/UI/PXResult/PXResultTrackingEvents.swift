@@ -4,20 +4,19 @@ enum PXResultTrackingEvents: TrackingEvents {
     case didtapOnDownload
     case didTapOnReceipt
     case didTapOnScore
-    case didTapOnDeeplink([String:Any])
+    case didTapOnDeeplink([String: Any])
     case didTapOnCrossSelling
-    case didShowRemedyError([String:Any])
-    
+    case didShowRemedyError([String: Any])
+
     // MARK: - ScreenEvents
-    case checkoutPaymentApproved([String:Any])
-    case checkoutPaymentInProcess([String:Any])
-    case checkoutPaymentRejected([String:Any])
-    
-    case congratsPaymentApproved([String:Any])
-    case congratsPaymentInProcess([String:Any])
-    case congratsPaymentRejected([String:Any])
-    
-    
+    case checkoutPaymentApproved([String: Any])
+    case checkoutPaymentInProcess([String: Any])
+    case checkoutPaymentRejected([String: Any])
+
+    case congratsPaymentApproved([String: Any])
+    case congratsPaymentInProcess([String: Any])
+    case congratsPaymentRejected([String: Any])
+
     var name: String {
         switch self {
         case .didTapOnAllDiscounts: return "/px_checkout/result/success/tap_see_all_discounts"
@@ -35,18 +34,17 @@ enum PXResultTrackingEvents: TrackingEvents {
         case .congratsPaymentRejected: return "/payment_congrats/result/error"
         }
     }
-    
-    var properties: [String : Any] {
+
+    var properties: [String: Any] {
         switch self {
         case .didTapOnAllDiscounts, .didtapOnDownload, .didTapOnReceipt, .didTapOnScore, .didTapOnCrossSelling: return [:]
         case .didTapOnDeeplink(let properties), .didShowRemedyError(let properties), .checkoutPaymentApproved(let properties),
              .checkoutPaymentInProcess(let properties), .checkoutPaymentRejected(let properties),
              .congratsPaymentApproved(let properties), .congratsPaymentInProcess(let properties),
              .congratsPaymentRejected(let properties): return properties
-        
         }
     }
-    
+
     var needsExternalData: Bool {
         switch self {
         case .didTapOnAllDiscounts, .didtapOnDownload, .didTapOnReceipt, .didTapOnScore, .didTapOnDeeplink,

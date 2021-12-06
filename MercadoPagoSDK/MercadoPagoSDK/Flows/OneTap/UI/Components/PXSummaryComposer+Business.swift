@@ -24,20 +24,20 @@ extension PXSummaryComposer {
     func getChargesAmount() -> Double {
         return amountHelper.chargeRuleAmount
     }
-    
+
     func getChargesLabel() -> String? {
         return amountHelper.chargeRuleLabel
     }
-    
+
     func shouldDisplayDiscount() -> Bool {
         return getDiscountData() != nil
     }
 
     func getDiscountData() -> (discountConfiguration: PXDiscountConfiguration, campaign: PXCampaign)? {
         let paymentMethodId = selectedCard?.selectedApplication?.paymentMethodId
-        
+
         let paymentTypeId = selectedCard?.selectedApplication?.paymentTypeId
-        
+
         if let discountConfiguration = amountHelper.paymentConfigurationService.getDiscountConfigurationForPaymentMethodOrDefault(paymentOptionID: selectedCard?.cardId, paymentMethodId: paymentMethodId, paymentTypeId: paymentTypeId),
             let campaign = discountConfiguration.getDiscountConfiguration().campaign {
             return (discountConfiguration, campaign)

@@ -1,7 +1,6 @@
 import Foundation
 
 final class PXOfflineMethodsViewModel: PXReviewViewModel {
-
     let paymentTypes: [PXOfflinePaymentType]
     var paymentMethods: [PXPaymentMethod] = [PXPaymentMethod]()
     private let payerCompliance: PXPayerCompliance?

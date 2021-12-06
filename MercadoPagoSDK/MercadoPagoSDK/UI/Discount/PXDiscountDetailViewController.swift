@@ -1,16 +1,15 @@
 import UIKit
 
 final class PXDiscountDetailViewController: MercadoPagoUIViewController {
-
     private var amountHelper: PXAmountHelper
     private let discountDescription: PXDiscountDescriptionViewModel
 
     init(amountHelper: PXAmountHelper, discountDescription: PXDiscountDescriptionViewModel) {
         self.amountHelper = amountHelper
         self.discountDescription = discountDescription
-        
+
         super.init(nibName: nil, bundle: nil)
-        
+
         super.shouldHideNavigationBar = true
         super.shouldShowBackArrow = false
     }
@@ -20,7 +19,7 @@ final class PXDiscountDetailViewController: MercadoPagoUIViewController {
         trackScreen()
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 

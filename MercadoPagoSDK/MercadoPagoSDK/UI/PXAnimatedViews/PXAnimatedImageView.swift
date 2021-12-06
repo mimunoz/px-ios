@@ -7,16 +7,16 @@ final class PXAnimatedImageView: UIView, PXAnimatedViewProtocol {
 
     init(image: UIImage?, size: CGSize) {
         self.image = image
-        self.imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+        self.imageView = UIImageView(frame: CGRect.zero)
         self.imageView.translatesAutoresizingMaskIntoConstraints = false
         self.size = size
-        super.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+        super.init(frame: CGRect.zero)
         PXLayout.setHeight(owner: self, height: size.height).isActive = true
         PXLayout.setWidth(owner: self, width: size.width).isActive = true
         self.layoutIfNeeded()
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 

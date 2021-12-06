@@ -5,7 +5,6 @@ import Foundation
  */
 @objcMembers
 open class PXGenericPayment: NSObject, PXBasePayment {
-
     public func getPaymentMethodId() -> String? {
         return paymentMethodId
     }

@@ -7,7 +7,7 @@ extension UIStackView {
             self.addArrangedSubview(view)
         }
     }
-    
+
     func addBackground(color: UIColor) {
         let subView = UIView(frame: bounds)
         subView.backgroundColor = color

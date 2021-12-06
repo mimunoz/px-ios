@@ -24,7 +24,6 @@ struct PXRemedyViewData {
 }
 
 final class PXRemedyView: UIView {
-
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -36,7 +35,7 @@ final class PXRemedyView: UIView {
         label.lineBreakMode = .byTruncatingTail
         return label
     }()
-    
+
     private lazy var hintLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -64,7 +63,7 @@ final class PXRemedyView: UIView {
         }
         return button
     }()
-    
+
     private lazy var textField: MLCardFormField = {
         let title = getRemedyHintMessage()
         let lenght = getRemedyMaxLength()
@@ -74,7 +73,7 @@ final class PXRemedyView: UIView {
         textField.render()
         return textField
     }()
-    
+
     private let data: PXRemedyViewData
     private weak var termsAndCondDelegate: PXTermsAndConditionViewDelegate?
 
@@ -101,7 +100,7 @@ final class PXRemedyView: UIView {
 
     private func render() {
         removeAllSubviews()
-        
+
         // Title Label
         titleLabel.text = getRemedyMessage()
         addSubview(titleLabel)
@@ -148,7 +147,7 @@ final class PXRemedyView: UIView {
                 textField.centerXAnchor.constraint(equalTo: centerXAnchor)
             ])
 
-            //Hint Label
+            // Hint Label
             if let hintText = getRemedyFieldTitle() {
                 hintLabel.text = hintText
                 addSubview(hintLabel)
@@ -195,7 +194,6 @@ final class PXRemedyView: UIView {
             } else {
               cardUI = HybridAMCard(isDisabled: false, cardLogoImageUrl: accountMoney.paymentMethodImageURL, paymentMethodImageUrl: nil, color: accountMoney.color, gradientColors: accountMoney.gradientColors)
             }
-
         } else if let oneTapCardUI = oneTapDto.oneTapCard?.cardUI,
             let cardName = oneTapCardUI.name,
             let cardNumber = oneTapCardUI.lastFourDigits,
@@ -262,19 +260,19 @@ final class PXRemedyView: UIView {
                                                                                          bottomText: consumerCredits.displayInfo.bottomText))
             let creditsViewModel = PXCreditsViewModel(customConsumerCredits, needsTermsAndConditions: false)
             let view = controller.getCardView()
-     
+
             consumerCreditsCard.render(containerView: view, creditsViewModel: creditsViewModel, isDisabled: false, size: view.bounds.size, selectedInstallments: data.paymentData?.payerCost?.installments, cardType: cardSize)
         }
 
         return controller.view
     }
-    
+
     private func addCreditTermsIfNeeded(terms: PXTermsDto?) {
         guard let terms = terms else { return }
         let termsAndConditionsTextView = PXTermsAndConditionsTextView(terms: terms, selectedInstallments: nil, textColor: .black, linkColor: .pxBlueMp)
         termsAndConditionsTextView.delegate = self
         termsAndConditionsTextView.textAlignment = .center
-        
+
         let termsAndConditionsTextHeight: CGFloat = 50
         addSubview(termsAndConditionsTextView)
         NSLayoutConstraint.activate([
@@ -284,7 +282,7 @@ final class PXRemedyView: UIView {
             termsAndConditionsTextView.bottomAnchor.constraint(equalTo: payButton.topAnchor, constant: -PXLayout.S_MARGIN)
         ])
     }
-    
+
     private func buildTotalAmountView() -> UIView? {
         guard data.remedy.cvv == nil && data.remedy.suggestedPaymentMethod != nil,
             let paymentData = data.paymentData,
@@ -326,7 +324,7 @@ final class PXRemedyView: UIView {
                 let string = Utils.getAmountFormated(amount: payerCost.totalAmount, forCurrency: currency)
                 let attributedTitle = NSAttributedString(string: string, attributes: PXNewCustomView.titleAttributes)
                 firstString.append(attributedTitle)
-                
+
                 if let interestRate = payerCost.interestRate, let message = interestRate.message {
                     let foregroundColor: UIColor
                     if let textColor = interestRate.textColor {
@@ -334,7 +332,7 @@ final class PXRemedyView: UIView {
                     } else {
                         foregroundColor = UIColor.black.withAlphaComponent(0.65)
                     }
-                    
+
                     let attributedInsterest = NSAttributedString(string: message,
                                                                  attributes: [
                                                                     .font: UIFont.ml_semiboldSystemFont(ofSize: PXLayout.XS_FONT),
@@ -376,9 +374,9 @@ final class PXRemedyView: UIView {
         totalView.translatesAutoresizingMaskIntoConstraints = false
 
         let totalTitleLabel = UILabel()
-        
+
         let bottomMessage = data.remedy.suggestedPaymentMethod?.bottomMessage
-        
+
         switch bottomMessage?.weight {
         case "regular":
             defaultFont = UIFont.ml_regularSystemFont(ofSize: 16)
@@ -390,7 +388,7 @@ final class PXRemedyView: UIView {
             defaultFont = UIFont.ml_boldSystemFont(ofSize: 16)
         default: break
         }
-        
+
         totalTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         totalTitleLabel.textAlignment = .left
         totalTitleLabel.backgroundColor = bottomMessage?.backgroundColor.hexToUIColor()
@@ -430,38 +428,35 @@ final class PXRemedyView: UIView {
         if let remedyButtonTapped = data.remedyButtonTapped {
             remedyButtonTapped(textField.getValue())
         }
-        
+
         data.remedyViewProtocol?.remedyViewButtonTouchUpInside(payButton)
     }
-    
-    private func showModal()  {
-        
+
+    private func showModal() {
         guard let modalInfos = data.remedy.suggestedPaymentMethod?.modal else {
             handlePayment(isModal: false)
             return
         }
-        
+
         let primaryButton = PXAction(label: modalInfos.mainButton.label) { [weak self] in
             self?.data.remedyViewProtocol?.dismissModal(fromCloseButton: false)
             self?.handlePayment(isModal: true)
         }
-        
+
         let secondaryButton = PXAction(label: modalInfos.secondaryButton.label) { [weak self] in
             self?.data.remedyViewProtocol?.dismissModal(fromCloseButton: false)
             self?.data.remedyViewProtocol?.selectAnotherPaymentMethod(isModal: true)
         }
-        
 
         let modalController = PXOneTapDisabledViewController(title: modalInfos.title,
                                                              description: modalInfos.description,
                                                              primaryButton: primaryButton,
                                                              secondaryButton: secondaryButton,
                                                              iconUrl: nil)
-        
-        MPXTracker.sharedInstance.trackEvent(event: PXRemediesTrackEvents.didShowRemedyErrorModal)
-        
-        data.remedyViewProtocol?.showModal(modalInfos: modalController)
 
+        MPXTracker.sharedInstance.trackEvent(event: PXRemediesTrackEvents.didShowRemedyErrorModal)
+
+        data.remedyViewProtocol?.showModal(modalInfos: modalController)
     }
 }
 

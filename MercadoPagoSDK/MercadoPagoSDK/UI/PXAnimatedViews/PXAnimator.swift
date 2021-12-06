@@ -3,7 +3,6 @@ import UIKit
 typealias PXAnimation = (animation: () -> Void, delay: CGFloat)
 
 struct PXAnimator {
-
     private var animations: [PXAnimation] = []
     private var completions: [() -> Void] = []
     private let duration: Double
@@ -31,12 +30,11 @@ struct PXAnimator {
         }
 
         for completion in completions {
-            transitionAnimator.addCompletion { (_) in
+            transitionAnimator.addCompletion { _ in
                 completion()
             }
         }
 
         transitionAnimator.startAnimation()
     }
-
 }

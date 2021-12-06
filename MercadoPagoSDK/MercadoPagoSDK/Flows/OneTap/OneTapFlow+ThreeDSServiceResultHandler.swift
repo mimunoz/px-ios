@@ -5,7 +5,7 @@ extension OneTapFlow: ThreeDSServiceResultHandler {
         model.updateCheckoutModel(threeDSAuthorization: threeDSAuthorization)
         executeNextStep()
     }
-    
+
     func finishWithError(error: MPSDKError) {
         if isShowingLoading() {
             pxNavigationHandler.showErrorScreen(error: error,
@@ -18,7 +18,7 @@ extension OneTapFlow: ThreeDSServiceResultHandler {
             finishPaymentFlow(error: error)
         }
     }
-    
+
     func getThreeDSService() -> ThreeDSService {
         let needToShowLoading = isPXSecurityCodeViewControllerLastVC() ? false : model.needToShowLoading()
         return ThreeDSService(paymentData: model.paymentData, oneTap: model.search.oneTap, amountToPay: model.amountHelper.amountToPay, siteId: model.checkoutPreference.siteId, pxNavigationHandler: pxNavigationHandler, needToShowLoading: needToShowLoading, resultHandler: self)

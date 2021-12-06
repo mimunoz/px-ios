@@ -6,7 +6,6 @@ protocol PXOfflineMethodsViewControllerDelegate: class {
 }
 
 final class PXOfflineMethodsViewController: MercadoPagoUIViewController {
-
     let viewModel: PXOfflineMethodsViewModel
     var callbackConfirm: ((PXPaymentData, Bool) -> Void)
     let callbackFinishCheckout: (() -> Void)
@@ -22,7 +21,7 @@ final class PXOfflineMethodsViewController: MercadoPagoUIViewController {
     weak var delegate: PXOfflineMethodsViewControllerDelegate?
 
     var userDidScroll = false
-    
+
     private struct Constants {
         static let viewBorderWidth: CGFloat = 1.5
         static let viewCornerRadius: CGFloat = 10
@@ -76,19 +75,19 @@ final class PXOfflineMethodsViewController: MercadoPagoUIViewController {
         view.layer.borderColor = UIColor.Andes.graySolid070.cgColor
         view.layer.cornerRadius = 10
         view.backgroundColor = UIColor.Andes.white
-        
+
         tableView.layer.cornerRadius = 10
         tableView.layer.masksToBounds = true
-        
+
         if #available(iOS 12.0, *) {
             view.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
             tableView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         }
-        
+
         let footerView = getFooterView()
         view.addSubview(footerView)
 
-        //Footer view layout
+        // Footer view layout
         NSLayoutConstraint.activate([
             footerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             footerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
@@ -112,7 +111,7 @@ final class PXOfflineMethodsViewController: MercadoPagoUIViewController {
         ])
         tableView.reloadData()
 
-        //Inactivity View - rendered but hidden
+        // Inactivity View - rendered but hidden
         renderInactivityView(text: viewModel.getTitleForLastSection())
         view.bringSubviewToFront(footerView)
     }
@@ -255,9 +254,9 @@ extension PXOfflineMethodsViewController {
     }
 
     func hasHiddenPaymentTypes() -> Bool {
-        guard let indexPathsForVisibleRows = tableView.indexPathsForVisibleRows else {return false}
+        guard let indexPathsForVisibleRows = tableView.indexPathsForVisibleRows else { return false }
 
-        let visibleRowsLastSection = indexPathsForVisibleRows.filter { (indexPath) -> Bool in
+        let visibleRowsLastSection = indexPathsForVisibleRows.filter { indexPath -> Bool in
             return indexPath.section == viewModel.numberOfSections() - 1
         }
 
@@ -270,7 +269,7 @@ extension PXOfflineMethodsViewController {
         let inactivityView = UIView()
         inactivityView.translatesAutoresizingMaskIntoConstraints = false
         inactivityView.backgroundColor = ThemeManager.shared.navigationBar().backgroundColor
-        inactivityView.layer.cornerRadius = viewHeight/2
+        inactivityView.layer.cornerRadius = viewHeight / 2
 
         view.addSubview(inactivityView)
         NSLayoutConstraint.activate([
@@ -316,7 +315,6 @@ extension PXOfflineMethodsViewController {
 
 // MARK: UITableViewDelegate & DataSource
 extension PXOfflineMethodsViewController: UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate {
-
     func numberOfSections(in tableView: UITableView) -> Int {
         return viewModel.numberOfSections()
     }
@@ -339,14 +337,14 @@ extension PXOfflineMethodsViewController: UITableViewDelegate, UITableViewDataSo
         let view = UIView()
         view.backgroundColor = UIColor.Andes.white
         view.layer.cornerRadius = Constants.viewCornerRadius
-        
+
         if #available(iOS 12.0, *) {
             view.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         }
-        
+
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        
+
         if title?.weight == nil {
             label.text = title?.message
             label.font = UIFont.ml_semiboldSystemFont(ofSize: PXLayout.M_FONT)

@@ -2,15 +2,15 @@ import Foundation
 
 final class PXOneTapSummaryRowRenderer: PXXibRenderer {
     private var props: PXSummaryRowProps?
-    @IBOutlet weak var contentView: UIView!
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var subtitleLabel: UILabel!
-    @IBOutlet weak var amountLabel: UILabel!
+    @IBOutlet var contentView: UIView!
+    @IBOutlet var titleLabel: UILabel!
+    @IBOutlet var subtitleLabel: UILabel!
+    @IBOutlet var amountLabel: UILabel!
 
     var subtitleHeightConstraint: NSLayoutConstraint?
 
     init(withProps: PXSummaryRowProps) {
-        super.init(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+        super.init(frame: CGRect.zero)
         props = withProps
         loadXib(rendererComponentizableClass: self)
     }

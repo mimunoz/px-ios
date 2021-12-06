@@ -15,7 +15,7 @@ class PXOneTapSplitPaymentView: UIView {
         render()
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -83,7 +83,7 @@ class PXOneTapSplitPaymentView: UIView {
         } else {
             label.attributedText = "".toAttributedString()
         }
-        
+
         let separatorView = UIView()
         separatorView.translatesAutoresizingMaskIntoConstraints = false
         self.separatorView = separatorView

@@ -1,7 +1,6 @@
 import Foundation
 
 class PXPaymentCongratsViewModel {
-
     private let paymentCongrats: PXPaymentCongrats
 
     init(paymentCongrats: PXPaymentCongrats) {
@@ -31,11 +30,10 @@ class PXPaymentCongratsViewModel {
 }
 
 extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
-    
     func getAndesMessage() -> InfoOperation? {
         return paymentCongrats.infoOperation
     }
-    
+
     // HEADER
     func getHeaderColor() -> UIColor {
         guard let color = paymentCongrats.headerColor else {
@@ -67,7 +65,7 @@ extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
         return paymentCongrats.headerCloseAction
     }
 
-    //RECEIPT
+    // RECEIPT
     func mustShowReceipt() -> Bool {
         return paymentCongrats.shouldShowReceipt
     }
@@ -76,29 +74,29 @@ extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
         return paymentCongrats.receiptId
     }
 
-    //POINTS AND DISCOUNTS
-    ///POINTS
+    // POINTS AND DISCOUNTS
+    /// POINTS
     func getPoints() -> PXPoints? {
         return paymentCongrats.points
     }
 
     func getPointsTapAction() -> ((String) -> Void)? {
-        let action: (String) -> Void = { (deepLink) in
-            //open deep link
+        let action: (String) -> Void = { deepLink in
+            // open deep link
             PXDeepLinkManager.open(deepLink)
             MPXTracker.sharedInstance.trackEvent(event: PXResultTrackingEvents.didTapOnScore)
         }
         return action
     }
 
-    ///DISCOUNTS
+    /// DISCOUNTS
     func getDiscounts() -> PXDiscounts? {
         return paymentCongrats.discounts
     }
 
     func getDiscountsTapAction() -> ((Int, String?, String?) -> Void)? {
-        let action: (Int, String?, String?) -> Void = { (index, deepLink, trackId) in
-            //open deep link
+        let action: (Int, String?, String?) -> Void = { index, deepLink, trackId in
+            // open deep link
             PXDeepLinkManager.open(deepLink)
             PXCongratsTracking.trackTapDiscountItemEvent(index, trackId)
         }
@@ -110,7 +108,7 @@ extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
         PXCongratsTracking.trackTapDiscountItemEvent(index, trackId)
     }
 
-    ///EXPENSE SPLIT VIEW
+    /// EXPENSE SPLIT VIEW
     func getExpenseSplit() -> PXExpenseSplit? {
         return paymentCongrats.expenseSplit
     }
@@ -119,7 +117,7 @@ extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
     func getExpenseSplitTapAction() -> (() -> Void)? {
         let action: () -> Void = { [weak self] in
             PXDeepLinkManager.open(self?.paymentCongrats.expenseSplit?.action.target)
-            
+
             MPXTracker.sharedInstance.trackEvent(event: PXResultTrackingEvents.didTapOnDeeplink(
                 PXCongratsTracking.getDeeplinkProperties(type: "money_split", deeplink: self?.paymentCongrats.expenseSplit?.action.target ?? ""))
             )
@@ -131,33 +129,33 @@ extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
         return paymentCongrats.crossSelling
     }
 
-    ///CROSS SELLING
+    /// CROSS SELLING
     // This implementation is the same accross PXBusinessResultViewModel and PXResultViewModel, so it's ok to do it here
     func getCrossSellingTapAction() -> ((String) -> Void)? {
-        let action: (String) -> Void = { (deepLink) in
-            //open deep link
+        let action: (String) -> Void = { deepLink in
+            // open deep link
             PXDeepLinkManager.open(deepLink)
             MPXTracker.sharedInstance.trackEvent(event: PXResultTrackingEvents.didTapOnCrossSelling)
         }
         return action
     }
 
-    ////VIEW RECEIPT ACTION
+    //// VIEW RECEIPT ACTION
     func getViewReceiptAction() -> PXRemoteAction? {
         return paymentCongrats.receiptAction
     }
 
-    ////TOP TEXT BOX
+    //// TOP TEXT BOX
     func getTopTextBox() -> PXText? {
         return nil
     }
 
-    ////CUSTOM ORDER
+    //// CUSTOM ORDER
     func getCustomOrder() -> Bool? {
         return paymentCongrats.hasCustomSorting
     }
 
-    //INSTRUCTIONS
+    // INSTRUCTIONS
     func hasInstructions() -> Bool {
         return paymentCongrats.instructions != nil
     }
@@ -190,7 +188,7 @@ extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
     func getErrorBodyView() -> UIView? {
         return paymentCongrats.errorBodyView
     }
-    
+
     var isSecondaryButtonStyle: Bool {
         isPaymentResultRejectedWithRemedy() && paymentCongrats.remedyViewData != nil
     }
@@ -238,7 +236,7 @@ extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
         return paymentCongrats.bottomView
     }
 
-    //CALLBACKS & TRACKING
+    // CALLBACKS & TRACKING
     func getTrackingProperties() -> [String: Any] {
         if let internalTrackingValues = paymentCongrats.internalTrackingValues {
             return internalTrackingValues
@@ -296,7 +294,7 @@ extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
             return screenPath
         }
     }
-    
+
     func getFlowBehaviourResult() -> PXResultKey {
         guard let internalResult = paymentCongrats.internalFlowBehaviourResult else {
             switch paymentCongrats.type {
@@ -313,7 +311,7 @@ extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
         return paymentCongrats.primaryButton
     }
 
-    //URLs, and AutoReturn
+    // URLs, and AutoReturn
     func shouldAutoReturn() -> Bool {
         return paymentCongrats.shouldAutoReturn
     }
@@ -328,8 +326,7 @@ extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
 }
 
 extension PXPaymentCongratsViewModel {
-
-    func getTrackingRemediesProperties(isFromModal: Bool) -> [String : Any] {
+    func getTrackingRemediesProperties(isFromModal: Bool) -> [String: Any] {
             let from = isFromModal == true ? "modal" : "view"
             guard let extConf = paymentCongrats.externalTrackingValues else { return ["from": from] }
             var properties: [String: Any] = [:]

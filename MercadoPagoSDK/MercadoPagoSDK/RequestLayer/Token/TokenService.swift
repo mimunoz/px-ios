@@ -3,7 +3,7 @@ protocol TokenService {
                   publicKey: String,
                   cardTokenJSON: Data?,
                   completion: @escaping (Swift.Result<PXToken, PXError>) -> Void)
-    
+
     func cloneToken(tokenId: String, publicKey: String, securityCode: String, completion: @escaping (Swift.Result<PXToken, PXError>) -> Void)
     func validateToken(tokenId: String, publicKey: String, body: Data, completion: @escaping (Swift.Result<PXToken, PXError>) -> Void)
 }
@@ -11,12 +11,12 @@ protocol TokenService {
 final class TokenServiceImpl: TokenService {
     // MARK: - Private properties
     private let service: Request<TokenRequestInfos>
-    
+
     // MARK: - Initialization
     init(service: Request<TokenRequestInfos> = Request<TokenRequestInfos>()) {
         self.service = service
     }
-    
+
     // MARK: - Public methods
     func getToken(accessToken: String?, publicKey: String, cardTokenJSON: Data?, completion: @escaping (Swift.Result<PXToken, PXError>) -> Void) {
         service.requestObject(model: PXToken.self, .getToken(accessToken: accessToken, publicKey: publicKey, cardTokenJSON: cardTokenJSON)) { apiResponse in
@@ -31,13 +31,13 @@ final class TokenServiceImpl: TokenService {
             }
         }
     }
-    
+
     func cloneToken(tokenId: String, publicKey: String, securityCode: String, completion: @escaping (Swift.Result<PXToken, PXError>) -> Void) {
         service.requestData(target: .cloneToken(tokenId: tokenId, publicKey: publicKey)) { [weak self] apiResponse in
             switch apiResponse {
             case .success(let data):
-                if let token = try? JSONDecoder().decode(PXToken.self , from: data) {
-                    let secCodeDic : [String: Any] = ["security_code": securityCode]
+                if let token = try? JSONDecoder().decode(PXToken.self, from: data) {
+                    let secCodeDic: [String: Any] = ["security_code": securityCode]
                     guard let jsonData = try? JSONSerialization.data(withJSONObject: secCodeDic, options: .prettyPrinted) else {
                         completion(.failure(PXError(domain: ApiDomain.CLONE_TOKEN,
                                                     code: ErrorTypes.NO_INTERNET_ERROR,
@@ -47,7 +47,7 @@ final class TokenServiceImpl: TokenService {
                         ))
                         return
                     }
-                    
+
                     self?.validateToken(tokenId: token.id, publicKey: publicKey, body: jsonData) { apiResponse in
                         switch apiResponse {
                         case .success(let token): completion(.success(token))
@@ -64,7 +64,7 @@ final class TokenServiceImpl: TokenService {
             }
         }
     }
-    
+
     func validateToken(tokenId: String, publicKey: String, body: Data, completion: @escaping (Swift.Result<PXToken, PXError>) -> Void) {
         service.requestObject(model: PXToken.self, .validateToken(tokenId: tokenId, publicKey: publicKey, body: body)) { apiResponse in
             switch apiResponse {

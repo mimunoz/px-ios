@@ -13,18 +13,18 @@ public class PXCongratsPaymentInfo: NSObject {
     // Method
     /// A user friendly name for the payment method. For instance: `Visa` `Mastercad`
     let paymentMethodName: String?
-    
+
     /// For credit cards, the last for digits of it.
     let paymentMethodLastFourDigits: String?
 
     /// A String representing the payment method icon
     let paymentMethodIconURL: String?
-    
+
     let paymentMethodDescription: String?
-    
+
     /// Type of payment method
     let paymentMethodType: PXPaymentTypes
-    
+
     // Installments
     /// Interest rate applied to payment
     var installmentsRate: Double = 0
@@ -39,7 +39,7 @@ public class PXCongratsPaymentInfo: NSObject {
     /// When setting `installmentsCount` bigger than 1, `paidAmount` is
     /// ignored and `installmentsTotalAmount` is used.
     let installmentsTotalAmount: String?
-    
+
     // Discount
     /// Some friendly message to be shown when a discount is applied
     let discountName: String?
@@ -48,12 +48,12 @@ public class PXCongratsPaymentInfo: NSObject {
     public convenience init(paidAmount: String, rawAmount: String?, paymentMethodName: String?, paymentMethodLastFourDigits: String? = nil, paymentMethodDescription: String?, paymentMethodIconURL: String?, paymentMethodType: PXPaymentOBJC, installmentsRate: Double, installmentsCount: Int, installmentsAmount: String?, installmentsTotalAmount: String?, discountName: String?) {
         self.init(paidAmount: paidAmount, rawAmount: rawAmount, paymentMethodName: paymentMethodName, paymentMethodLastFourDigits: paymentMethodLastFourDigits, paymentMethodDescription: paymentMethodDescription, paymentMethodIconURL: paymentMethodIconURL, paymentMethodType: paymentMethodType.getRealCase(), installmentsRate: installmentsRate, installmentsCount: installmentsCount, installmentsAmount: installmentsAmount, installmentsTotalAmount: installmentsTotalAmount, discountName: discountName)
     }
-    
+
     /// Swift version
     @nonobjc public init(paidAmount: String, rawAmount: String?, paymentMethodName: String?, paymentMethodLastFourDigits: String? = nil, paymentMethodDescription: String?, paymentMethodIconURL: String?, paymentMethodType: PXPaymentTypes, installmentsRate: Double? = nil, installmentsCount: Int, installmentsAmount: String?, installmentsTotalAmount: String?, discountName: String?) {
         self.paidAmount = paidAmount
         self.rawAmount = rawAmount
-        
+
         self.paymentMethodName = paymentMethodName
         if let lastFourDigits = paymentMethodLastFourDigits {
             self.paymentMethodLastFourDigits = String(lastFourDigits.prefix(4))

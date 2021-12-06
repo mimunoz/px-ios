@@ -1,19 +1,18 @@
 protocol CustomService {
     func getPointsAndDiscounts(data: Data?, parameters: CustomParametersModel, response: @escaping (Swift.Result<PXPointsAndDiscounts, Error>) -> Void)
-    func resetESCCap(cardId:String, privateKey: String?, response: @escaping (Swift.Result<Void, PXError>) -> Void)
-    func createPayment(privateKey: String?, publicKey: String, data: Data?, header: [String : String]?, response: @escaping (Swift.Result<PXPayment, PXError>) -> Void)
+    func resetESCCap(cardId: String, privateKey: String?, response: @escaping (Swift.Result<Void, PXError>) -> Void)
+    func createPayment(privateKey: String?, publicKey: String, data: Data?, header: [String: String]?, response: @escaping (Swift.Result<PXPayment, PXError>) -> Void)
 }
-
 
 final class CustomServiceImpl: CustomService {
     // MARK: - private properties
     private let service: Request<CustomRequestInfos>
-    
+
     // MARK: - Initialization
     init(service: Request<CustomRequestInfos> = Request<CustomRequestInfos>()) {
         self.service = service
     }
-    
+
     // MARK: - Public methods
     func getPointsAndDiscounts(data: Data?, parameters: CustomParametersModel, response: @escaping (Swift.Result<PXPointsAndDiscounts, Error>) -> Void) {
         service.requestObject(model: PXPointsAndDiscounts.self, .getCongrats(data: data, congratsModel: parameters)) { apiResponse in
@@ -23,8 +22,8 @@ final class CustomServiceImpl: CustomService {
             }
         }
     }
-    
-    func resetESCCap(cardId:String, privateKey: String?, response: @escaping (Swift.Result<Void, PXError>) -> Void) {
+
+    func resetESCCap(cardId: String, privateKey: String?, response: @escaping (Swift.Result<Void, PXError>) -> Void) {
         guard let privateKey = privateKey else {
             response(.failure(PXError(domain: ApiDomain.RESET_ESC_CAP, code: ErrorTypes.API_UNKNOWN_ERROR, userInfo: ["message": "Missing key"])))
             return
@@ -36,8 +35,8 @@ final class CustomServiceImpl: CustomService {
             }
         }
     }
-    
-    func createPayment(privateKey: String?, publicKey: String, data: Data?, header: [String : String]?, response: @escaping (Swift.Result<PXPayment, PXError>) -> Void) {
+
+    func createPayment(privateKey: String?, publicKey: String, data: Data?, header: [String: String]?, response: @escaping (Swift.Result<PXPayment, PXError>) -> Void) {
         service.requestObject(model: PXPayment.self, .createPayment(privateKey: privateKey, publicKey: publicKey, data: data, header: header)) { apiResponse in
             switch apiResponse {
             case .success(let payment): response(.success(payment))

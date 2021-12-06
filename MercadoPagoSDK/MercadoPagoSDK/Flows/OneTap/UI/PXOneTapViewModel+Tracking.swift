@@ -5,9 +5,8 @@ extension PXOneTapViewModel {
         var dic: [[String: Any]] = []
         if let expressData = expressData {
             for expressItem in expressData where expressItem.newCard == nil {
-                
-                var itemForTracking : [String: Any]
-                
+                var itemForTracking: [String: Any]
+
                 if expressItem.oneTapCard != nil {
                     itemForTracking = expressItem.getCardForTracking(amountHelper: amountHelper)
                 } else if expressItem.accountMoney != nil {
@@ -15,21 +14,20 @@ extension PXOneTapViewModel {
                 } else {
                     itemForTracking = expressItem.getPaymentMethodForTracking()
                 }
-                
+
                 if let applicationsArray = expressItem.applications {
-                    var applications: [[String : Any]] = []
-                    
+                    var applications: [[String: Any]] = []
+
                     applicationsArray.forEach { application in
                         applications.append(getValidationProgramProperties(oneTapApplication: application))
                     }
-                    
+
                     if var extraInfo = itemForTracking["extra_info"] as? [String: Any] {
                         extraInfo["methods_applications"] = applications
                         itemForTracking["extra_info"] = extraInfo
                     }
-                    
                 }
-                
+
                 dic.append(itemForTracking)
             }
         }
@@ -50,7 +48,7 @@ extension PXOneTapViewModel {
         var properties: [String: Any] = [:]
         properties["payment_method_id"] = amountHelper.getPaymentData().paymentMethod?.id
         properties["payment_method_type"] = amountHelper.getPaymentData().paymentMethod?.paymentTypeId
-        properties["card_id"] =  selectedCard.cardId
+        properties["card_id"] = selectedCard.cardId
         if let issuerId = amountHelper.getPaymentData().issuer?.id {
             properties["issuer_id"] = Int64(issuerId)
         }
@@ -120,7 +118,7 @@ extension PXOneTapViewModel {
         properties["message"] = "review_and_confirm_toast_error".localized
         properties["attributable_to"] = Tracking.Error.Atrributable.mercadopago
         var extraDic: [String: Any] = [:]
-        extraDic["api_url"] =  error.requestOrigin
+        extraDic["api_url"] = error.requestOrigin
         properties["extra_info"] = extraDic
         return properties
     }
@@ -133,8 +131,8 @@ extension PXOneTapViewModel {
         properties["message"] = "No se pudo seleccionar la tarjeta ingresada"
         properties["attributable_to"] = Tracking.Error.Atrributable.mercadopago
         var extraDic: [String: Any] = [:]
-        extraDic["index"] =  index
-        extraDic["count"] =  count
+        extraDic["index"] = index
+        extraDic["count"] = count
         properties["extra_info"] = extraDic
         return properties
     }
@@ -165,8 +163,8 @@ extension PXOneTapViewModel {
     func getDialogDismissProperties(_ behaviour: PXBehaviour, _ modalConfig: PXModal) -> [String: Any] {
         return getDialogOpenProperties(behaviour, modalConfig)
     }
-    
-    func getValidationProgramProperties(oneTapApplication: PXOneTapApplication) -> [String : Any] {
+
+    func getValidationProgramProperties(oneTapApplication: PXOneTapApplication) -> [String: Any] {
         var properties: [String: Any] = [:]
         var subProperties: [[String: Any]] = []
         properties["enable"] = oneTapApplication.status.enabled

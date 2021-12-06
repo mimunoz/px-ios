@@ -4,7 +4,6 @@ import Foundation
  Implement this protocol to create your custom Payment Processor.
  */
 @objc public protocol PXPaymentProcessor: NSObjectProtocol {
-
     /**
       ViewController associated to your Payment Processor. This is optional VC. If you need a screen to make the payment, return your Payment processor viewController. If you return nil, we use our custom Animated progress Button.
      */

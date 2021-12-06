@@ -10,7 +10,6 @@ struct PXNewResultHeaderData {
 }
 
 class PXNewResultHeader: UIView {
-
     let data: PXNewResultHeaderData
 
     init(data: PXNewResultHeaderData) {
@@ -23,19 +22,19 @@ class PXNewResultHeader: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    //Image
+    // Image
     let IMAGE_WIDTH: CGFloat = 48.0
     let IMAGE_HEIGHT: CGFloat = 48.0
 
-    //Badge Image
+    // Badge Image
     let BADGE_IMAGE_SIZE: CGFloat = 16
     let BADGE_HORIZONTAL_OFFSET: CGFloat = -2.0
     let BADGE_VERTICAL_OFFSET: CGFloat = 0.0
 
-    //Close Button
+    // Close Button
     let CLOSE_BUTTON_SIZE: CGFloat = 44
 
-    //Text
+    // Text
     static let TITLE_FONT_SIZE: CGFloat = PXLayout.L_FONT
 
     var iconImageView: PXUIImageView?
@@ -47,7 +46,7 @@ class PXNewResultHeader: UIView {
         removeAllSubviews()
         backgroundColor = data.color
 
-        //Close button
+        // Close button
         if let closeAction = data.closeAction {
             let closeButton = buildCloseButton(touchUpInsideClosure: closeAction)
             self.closeButton = closeButton
@@ -56,7 +55,7 @@ class PXNewResultHeader: UIView {
             PXLayout.pinLeft(view: closeButton, withMargin: PXLayout.S_MARGIN).isActive = true
         }
 
-        //Title Label
+        // Title Label
         let titleLabel = buildTitleLabel(with: data.title)
         self.titleLabel = titleLabel
         addSubview(titleLabel)
@@ -70,7 +69,7 @@ class PXNewResultHeader: UIView {
         PXLayout.pinBottom(view: titleLabel, withMargin: PXLayout.SM_MARGIN).isActive = true
         PXLayout.pinLeft(view: titleLabel, withMargin: PXLayout.L_MARGIN).isActive = true
 
-        //Icon ImageView
+        // Icon ImageView
         if let imageURL = data.iconURL, imageURL.isNotEmpty {
             let pximage = PXUIImage(url: imageURL)
             iconImageView = buildCircleImage(with: pximage)
@@ -82,10 +81,10 @@ class PXNewResultHeader: UIView {
             PXLayout.centerVertically(view: circleImage, to: titleLabel).isActive = true
             PXLayout.pinRight(view: circleImage, withMargin: PXLayout.L_MARGIN).isActive = true
 
-            //Title label layout
+            // Title label layout
             PXLayout.put(view: titleLabel, leftOf: circleImage, withMargin: PXLayout.S_MARGIN).isActive = true
 
-            //Badge Image
+            // Badge Image
             let badgeImageView = UIImageView()
             self.badgeImageView = badgeImageView
             badgeImageView.image = data.badgeImage
@@ -96,7 +95,7 @@ class PXNewResultHeader: UIView {
             PXLayout.pinRight(view: badgeImageView, to: circleImage, withMargin: BADGE_HORIZONTAL_OFFSET).isActive = true
             PXLayout.pinBottom(view: badgeImageView, to: circleImage, withMargin: BADGE_VERTICAL_OFFSET).isActive = true
         } else {
-            //Title label layout
+            // Title label layout
             PXLayout.pinRight(view: titleLabel, withMargin: PXLayout.L_MARGIN).isActive = true
         }
 

@@ -2,7 +2,6 @@ import Foundation
 import MLBusinessComponents
 
 class PXExpenseSplitData: NSObject {
-
     let expenseSplitData: PXExpenseSplit
 
     init(expenseSplitData: PXExpenseSplit) {

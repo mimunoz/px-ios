@@ -2,7 +2,6 @@ import UIKit
 import MLBusinessComponents
 
 class PXRingViewData: NSObject, MLBusinessLoyaltyRingData {
-
     let points: PXPoints
 
     init(points: PXPoints) {

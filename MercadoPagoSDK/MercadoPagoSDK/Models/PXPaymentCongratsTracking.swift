@@ -13,9 +13,7 @@ public class PXPaymentCongratsTracking: NSObject {
     let flowName: String?
     let flowDetails: [String: Any]?
     let sessionId: String?
-    
 
-    
     public init(campaingId: String?, currencyId: String?, paymentStatusDetail: String, totalAmount: NSDecimalNumber, paymentId: Int64, paymentMethodId: String?, paymentMethodType: String?, trackListener: PXTrackerListener, flowName: String?, flowDetails: [String: Any]?, sessionId: String?) {
         self.campaingId = campaingId
         self.currencyId = currencyId

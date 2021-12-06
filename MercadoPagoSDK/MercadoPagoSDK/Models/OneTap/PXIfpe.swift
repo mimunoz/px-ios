@@ -1,7 +1,6 @@
 import Foundation
 
 public struct PXIfpe: Codable {
-
     let isCompliant: Bool
     let hasBackoffice: Bool
 

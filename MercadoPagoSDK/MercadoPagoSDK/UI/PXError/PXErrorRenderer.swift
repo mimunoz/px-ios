@@ -1,7 +1,6 @@
 import UIKit
 
 class PXErrorRenderer: NSObject {
-
     let CONTENT_WIDTH_PERCENT: CGFloat = 84.0
     let TITLE_FONT_SIZE: CGFloat = PXLayout.M_FONT
     let DESCRIPTION_FONT_SIZE: CGFloat = PXLayout.XS_FONT
@@ -13,22 +12,22 @@ class PXErrorRenderer: NSObject {
         errorBodyView.backgroundColor = .white
         errorBodyView.translatesAutoresizingMaskIntoConstraints = false
 
-        //Title Label
+        // Title Label
         if let title = component.props.title, title.string.isNotEmpty {
             errorBodyView.titleLabel = buildTitleLabel(with: title, in: errorBodyView)
         }
 
-        //Message Label
+        // Message Label
         if let message = component.props.message, message.string.isNotEmpty {
             errorBodyView.descriptionLabel = buildDescriptionLabel(with: message, in: errorBodyView, onBottomOf: errorBodyView.titleLabel)
         }
 
-        //Action Button
+        // Action Button
         if let action = component.props.action {
             errorBodyView.actionButton = buildActionButton(with: action, in: errorBodyView, onBottomOf: errorBodyView.descriptionLabel)
         }
 
-        //Secondary Title
+        // Secondary Title
         if let secondaryTitle = component.props.secondaryTitle {
             errorBodyView.middleDivider = buildMiddleDivider(in: errorBodyView, onBottomOf: errorBodyView.actionButton)
             errorBodyView.secondaryTitleLabel = buildSecondaryTitleLabel(with: secondaryTitle, in: errorBodyView, onBottomOf: errorBodyView.middleDivider)

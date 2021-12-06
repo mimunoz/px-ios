@@ -1,7 +1,6 @@
 import UIKit
 
 class PXBodyRenderer: NSObject {
-
     func render(_ body: PXBodyComponent) -> UIView {
         if body.hasBodyError() {
             return body.getBodyErrorComponent().render()

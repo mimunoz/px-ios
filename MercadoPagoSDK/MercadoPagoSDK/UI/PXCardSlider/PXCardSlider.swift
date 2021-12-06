@@ -10,7 +10,7 @@ typealias AccessibilityCardData = (paymentMethodId: String, paymentTypeId: Strin
 final class PXCardSlider: NSObject {
     private var pagerView = FSPagerView(frame: .zero)
     private var pageControl = ISPageControl(frame: .zero, numberOfPages: 0)
-    
+
     private var model: [PXCardSliderViewModel] = [] {
         didSet {
             self.pagerView.reloadData()
@@ -18,12 +18,12 @@ final class PXCardSlider: NSObject {
             self.pageControl.numberOfPages = self.model.count
         }
     }
-    
+
     private weak var delegate: PXCardSliderProtocol?
     private var selectedIndex: Int = 0
     private let cardSliderCornerRadius: CGFloat = 11
     weak var termsAndCondDelegate: PXTermsAndConditionViewDelegate?
-    var cardType : MLCardDrawerTypeV3 = .large
+    var cardType: MLCardDrawerTypeV3 = .large
 
     override init() {
         super.init()
@@ -41,11 +41,11 @@ extension PXCardSlider: FSPagerViewDataSource {
         if model.indices.contains(index) {
             let targetModel = model[index]
             var accessibilityData = AccessibilityCardData(paymentMethodId: "", paymentTypeId: "", issuerName: "", description: "", cardName: "", index: 0, numberOfPages: 1)
-            
+
             guard let selectedApplication = targetModel.selectedApplication else { return FSPagerViewCell() }
 
             if let payerPaymentMethod = selectedApplication.payerPaymentMethod {
-                accessibilityData = AccessibilityCardData(paymentMethodId: selectedApplication.paymentMethodId, paymentTypeId: selectedApplication.paymentTypeId ?? "", issuerName: payerPaymentMethod.issuer?.name ?? "", description: payerPaymentMethod._description ?? "", cardName: selectedApplication.cardData?.name ?? "", index: index,  numberOfPages: pageControl.numberOfPages)
+                accessibilityData = AccessibilityCardData(paymentMethodId: selectedApplication.paymentMethodId, paymentTypeId: selectedApplication.paymentTypeId ?? "", issuerName: payerPaymentMethod.issuer?.name ?? "", description: payerPaymentMethod._description ?? "", cardName: selectedApplication.cardData?.name ?? "", index: index, numberOfPages: pageControl.numberOfPages)
             }
 
             if selectedApplication.cardData != nil,
@@ -68,7 +68,6 @@ extension PXCardSlider: FSPagerViewDataSource {
             } else {
                 // Add new card scenario.
                 if let cell = pagerView.dequeueReusableCell(withReuseIdentifier: PXCardSliderPagerCell.identifier, at: index) as? PXCardSliderPagerCell {
-
                     var newCardData: PXAddNewMethodData?
                     var newOfflineData: PXAddNewMethodData?
                     if let emptyCard = targetModel.cardUI as? EmptyCard {
@@ -190,23 +189,23 @@ extension PXCardSlider {
     func getSelectedIndex() -> Int {
         return selectedIndex
     }
-    
+
     func newCardDidSelected(_ index: Int) {
         if model.indices.contains(pageControl.currentPage) {
             let modelData = model[pageControl.currentPage]
             delegate?.newCardDidSelected(targetModel: modelData, forced: false)
         }
     }
-    
+
     enum PXCardSliderError: Error {
         case outOfBounds
     }
-    
+
     func canScrollTo(index: Int) -> Bool {
         guard let dataSource = pagerView.dataSource else {
             return false
         }
-        
+
         return (0 ..< dataSource.numberOfItems(in: pagerView)).contains(index)
     }
 
@@ -225,17 +224,17 @@ extension PXCardSlider {
 extension PXCardSlider {
     private func setupSlider(_ containerView: UIStackView) {
         let spacer = UIView()
-        
+
         PXLayout.setHeight(owner: spacer, height: 4)
         PXLayout.matchWidth(ofView: spacer)
-        
+
         containerView.addArrangedSubview(spacer)
-        
+
         containerView.addArrangedSubview(pagerView)
         pagerView.accessibilityIdentifier = "card_carrousel"
-        
+
         let pagerViewHeight = getItemSize(containerView).height
-        
+
         PXLayout.setHeight(owner: pagerView, height: pagerViewHeight).isActive = true
         PXLayout.matchWidth(ofView: pagerView).isActive = true
         pagerView.dataSource = self
@@ -277,8 +276,7 @@ extension PXCardSlider: ChangeCardAccessibilityProtocol {
     func scrollTo(direction: UIAccessibilityScrollDirection) {
         if direction == UIAccessibilityScrollDirection.left, pageControl.currentPage < pageControl.numberOfPages - 1 {
             try? goToItemAt(index: pageControl.currentPage + 1, animated: true)
-        }
-        else if direction == UIAccessibilityScrollDirection.right, pageControl.currentPage > 0 {
+        } else if direction == UIAccessibilityScrollDirection.right, pageControl.currentPage > 0 {
             try? goToItemAt(index: pageControl.currentPage - 1, animated: true)
         }
         newCardDidSelected(pageControl.currentPage)

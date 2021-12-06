@@ -83,11 +83,11 @@ class ISPageControl: UIControl {
         }
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
 
-    required public init(frame: CGRect, numberOfPages: Int) {
+    public required init(frame: CGRect, numberOfPages: Int) {
         super.init(frame: frame)
         self.numberOfPages = numberOfPages
         setupDotLayers()
@@ -102,7 +102,7 @@ class ISPageControl: UIControl {
         return CGSize(width: CGFloat(minValue) * diameter + CGFloat(minValue - 1) * padding, height: diameter)
     }
 
-    open override func layoutSubviews() {
+    override open func layoutSubviews() {
         super.layoutSubviews()
 
         dotLayers.forEach {
@@ -117,7 +117,6 @@ class ISPageControl: UIControl {
 }
 
 private extension ISPageControl {
-
     func setupDotLayers() {
         dotLayers.forEach { $0.removeFromSuperlayer() }
         dotLayers.removeAll()

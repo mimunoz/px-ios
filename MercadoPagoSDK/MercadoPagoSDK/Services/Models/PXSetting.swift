@@ -1,7 +1,6 @@
 import Foundation
 /// :nodoc:
 open class PXSetting: NSObject, Codable {
-
     open var bin: PXBin?
     open var cardNumber: PXCardNumber?
     open var securityCode: PXSecurityCode?
@@ -18,7 +17,7 @@ open class PXSetting: NSObject, Codable {
         case securityCode = "security_code"
     }
 
-    required public convenience init(from decoder: Decoder) throws {
+    public required convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXSettingKeys.self)
         let bin: PXBin? = try container.decodeIfPresent(PXBin.self, forKey: .bin)
         let cardNumber: PXCardNumber? = try container.decodeIfPresent(PXCardNumber.self, forKey: .cardNumber)

@@ -20,7 +20,7 @@ open class PXPicture: NSObject, Codable {
         case secureUrl = "secure_url"
     }
 
-    required public convenience init(from decoder: Decoder) throws {
+    public required convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXPictureKeys.self)
         let id: String = try container.decode(String.self, forKey: .id)
         let size: String? = try container.decodeIfPresent(String.self, forKey: .size)

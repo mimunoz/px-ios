@@ -14,7 +14,7 @@ open class PXCause: NSObject, Codable {
         case description = "description"
     }
 
-    required public convenience init(from decoder: Decoder) throws {
+    public required convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXCauseKeys.self)
         var code = ""
         do {

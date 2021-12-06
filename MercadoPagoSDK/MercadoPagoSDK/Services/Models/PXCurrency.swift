@@ -1,7 +1,6 @@
 import Foundation
 /// :nodoc:
 open class PXCurrency: NSObject, Codable {
-
     open var id: String!
     open var _description: String?
     open var symbol: String?

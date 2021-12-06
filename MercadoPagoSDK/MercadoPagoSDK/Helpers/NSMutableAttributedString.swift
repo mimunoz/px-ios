@@ -1,12 +1,10 @@
 extension NSMutableAttributedString {
     func with(font: UIFont) -> NSMutableAttributedString {
-        self.enumerateAttribute(.font, in: NSMakeRange(0, self.length), options: .longestEffectiveRangeNotRequired) { (value, range, stop) in
-            
+        self.enumerateAttribute(.font, in: NSRange(location: 0, length: self.length), options: .longestEffectiveRangeNotRequired) { value, range, _ in
             if let oldFont = value as? UIFont,
               let newFontDescriptor = oldFont.fontDescriptor
                 .withFamily(font.familyName)
                 .withSymbolicTraits(oldFont.fontDescriptor.symbolicTraits) {
-
                 let newFont = UIFont(
                     descriptor: newFontDescriptor,
                     size: font.pointSize
@@ -17,7 +15,7 @@ extension NSMutableAttributedString {
         }
         return self
     }
-    
+
     func applyTraitsFromFont(_ f1: UIFont, to f2: UIFont) -> UIFont? {
         let originalTrait = f1.fontDescriptor.symbolicTraits
         if originalTrait.contains(.traitBold) {

@@ -1,7 +1,6 @@
 import Foundation
 /// :nodoc:
 open class PXCardHolder: NSObject, Codable {
-
     open var name: String?
     open var identification: PXIdentification?
 
@@ -28,5 +27,4 @@ open class PXCardHolder: NSObject, Codable {
     open class func fromJSON(data: Data) throws -> [PXCardHolder] {
         return try JSONDecoder().decode([PXCardHolder].self, from: data)
     }
-
 }

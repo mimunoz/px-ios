@@ -40,7 +40,7 @@ final class PXOneTapInstallmentsSelectorViewModel {
         if let selectedRowHeight = selectedRowHeight {
             return selectedRowHeight
         }
-        let filteredPayerCosts = installmentData.payerCosts.filter { (payerCost) -> Bool in
+        let filteredPayerCosts = installmentData.payerCosts.filter { payerCost -> Bool in
             let hasReimbursementText = getReimbursementText(payerCost: payerCost) != nil
             return hasReimbursementText
         }
@@ -74,7 +74,7 @@ final class PXOneTapInstallmentsSelectorViewModel {
         let fontColor = UIColor.Andes.gray900
         let attributes: [NSAttributedString.Key: AnyObject] = [
             NSAttributedString.Key.font: Utils.getSemiBoldFont(size: fontSize),
-            NSAttributedString.Key.foregroundColor: fontColor,
+            NSAttributedString.Key.foregroundColor: fontColor
         ]
 
         let formattedTotalAmount = Utils.getAttributedAmount(payerCost.installmentAmount, thousandSeparator: currency.getThousandsSeparatorOrDefault(), decimalSeparator: currency.getDecimalSeparatorOrDefault(), currencySymbol: currency.getCurrencySymbolOrDefault(), color: fontColor, fontSize: fontSize, centsFontSize: fontSize, baselineOffset: 0)
@@ -89,7 +89,7 @@ final class PXOneTapInstallmentsSelectorViewModel {
         let title = getRowTitle(payerCost: payerCost, currency: currency)
         let totalAmount = getTotalAmountFormetted(payerCost: payerCost, currency: currency, showDescription: MercadoPagoCheckout.showPayerCostDescription())
 
-        //Top & Bottom value
+        // Top & Bottom value
         let topValue = getInterestText(payerCost: payerCost)?.getAttributedString(fontSize: PXLayout.XS_FONT, backgroundColor: .clear) ?? totalAmount
         let bottomValue = getReimbursementText(payerCost: payerCost)?.getAttributedString(fontSize: PXLayout.XXS_FONT, backgroundColor: .clear)
 

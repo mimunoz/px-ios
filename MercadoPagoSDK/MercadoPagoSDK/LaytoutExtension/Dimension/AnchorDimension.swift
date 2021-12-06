@@ -4,7 +4,7 @@ final class AnchorDimension: AnchorDimensionComposing {
     let anchor: NSLayoutDimension
     let type: AnchorType
     let root: AnchoringRoot
-    
+
     init(
         anchor: NSLayoutDimension,
         root: AnchoringRoot,
@@ -15,7 +15,7 @@ final class AnchorDimension: AnchorDimensionComposing {
         self.root = root
         self.root.translatesAutoresizingMaskIntoConstraints = false
     }
-    
+
     @discardableResult
     func equalTo(
         _ otherConstraint: AnchorDimension,
@@ -30,7 +30,7 @@ final class AnchorDimension: AnchorDimensionComposing {
         )
         return prepare(constraint, with: priority)
     }
-    
+
     @discardableResult
     func lessThanOrEqualTo(
         _ otherConstraint: AnchorDimension,
@@ -45,7 +45,7 @@ final class AnchorDimension: AnchorDimensionComposing {
         )
         return prepare(constraint, with: priority)
     }
-    
+
     @discardableResult
     func greaterThanOrEqualTo(
         _ otherConstraint: AnchorDimension,
@@ -60,16 +60,16 @@ final class AnchorDimension: AnchorDimensionComposing {
         )
         return prepare(constraint, with: priority)
     }
-    
+
     @discardableResult
     func equalTo(
         constant: CGFloat,
         priority: UILayoutPriority = .required
-    )  -> NSLayoutConstraint {
+    ) -> NSLayoutConstraint {
         let constraint = anchor.constraint(equalToConstant: constant)
         return prepare(constraint, with: priority)
     }
-    
+
     @discardableResult
     func lessThanOrEqualTo(
         constant: CGFloat,
@@ -78,7 +78,7 @@ final class AnchorDimension: AnchorDimensionComposing {
         let constraint = anchor.constraint(lessThanOrEqualToConstant: constant)
         return prepare(constraint, with: priority)
     }
-    
+
     @discardableResult
     func greaterThanOrEqualTo(
         constant: CGFloat,
@@ -87,7 +87,7 @@ final class AnchorDimension: AnchorDimensionComposing {
         let constraint = anchor.constraint(greaterThanOrEqualToConstant: constant)
         return prepare(constraint, with: priority)
     }
-    
+
     @discardableResult
     func equalTo(
         _ root: AnchoringRoot,
@@ -102,7 +102,7 @@ final class AnchorDimension: AnchorDimensionComposing {
             priority: priority
         )
     }
-    
+
     @discardableResult
     func lessThanOrEqualTo(
         _ root: AnchoringRoot,
@@ -117,7 +117,7 @@ final class AnchorDimension: AnchorDimensionComposing {
             priority: priority
         )
     }
-    
+
     @discardableResult
     func greaterThanOrEqualTo(
         _ root: AnchoringRoot,
@@ -145,7 +145,7 @@ private extension AnchorDimension {
             preconditionFailure("Could not resolve \(type) anchor for this root \(root)")
         }
     }
-    
+
     func prepare(
         _ constraint: NSLayoutConstraint,
         with priority: UILayoutPriority

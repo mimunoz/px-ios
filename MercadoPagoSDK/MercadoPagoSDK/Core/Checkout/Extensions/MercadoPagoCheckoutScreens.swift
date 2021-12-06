@@ -1,7 +1,6 @@
 import Foundation
 
 extension MercadoPagoCheckout {
-
     func showSecurityCodeScreen() {
         guard !viewModel.isPXSecurityCodeViewControllerLastVC() else { return }
         let securityCodeViewModel = viewModel.getPXSecurityCodeViewModel(isCallForAuth: true)
@@ -140,7 +139,7 @@ extension MercadoPagoCheckout {
         viewModel.pxNavigationHandler.showErrorScreen(error: MercadoPagoCheckoutViewModel.error, callbackCancel: finish, errorCallback: viewModel.errorCallback)
         MercadoPagoCheckoutViewModel.error = nil
     }
-    
+
     func asyncRefreshInitFlow(cardId: String) {
         DispatchQueue.main.asyncAfter(deadline: .now() + InitFlowRefresh.retryDelay) { [weak self] in
             self?.refreshInitFlow(cardId: cardId)
@@ -151,7 +150,7 @@ extension MercadoPagoCheckout {
         guard let search = viewModel.search else { return }
 
         let paymentFlow = viewModel.createPaymentFlow(paymentErrorHandler: self)
-        
+
         if viewModel.onetapFlow == nil {
             viewModel.onetapFlow = OneTapFlow(checkoutViewModel: viewModel, search: search, paymentOptionSelected: viewModel.paymentOptionSelected, oneTapResultHandler: self)
         } else {

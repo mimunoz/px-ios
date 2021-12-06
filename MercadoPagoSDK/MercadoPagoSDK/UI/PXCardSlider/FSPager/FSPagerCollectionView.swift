@@ -1,7 +1,6 @@
 import UIKit
 
 class FSPagerViewCollectionView: UICollectionView {
-
     fileprivate var pagerView: FSPagerView? {
         return self.superview?.superview as? FSPagerView
     }
@@ -20,7 +19,7 @@ class FSPagerViewCollectionView: UICollectionView {
     override var contentInset: UIEdgeInsets {
         set {
             super.contentInset = .zero
-            if (newValue.top > 0) {
+            if newValue.top > 0 {
                 let contentOffset = CGPoint(x: self.contentOffset.x, y: self.contentOffset.y + newValue.top)
                 self.contentOffset = contentOffset
             }
@@ -42,7 +41,7 @@ class FSPagerViewCollectionView: UICollectionView {
 
     fileprivate func commonInit() {
         self.contentInset = .zero
-        self.decelerationRate = UIScrollView.DecelerationRate(rawValue: 0.3) //TODO
+        self.decelerationRate = UIScrollView.DecelerationRate(rawValue: 0.3) // TODO
         self.showsVerticalScrollIndicator = false
         self.showsHorizontalScrollIndicator = false
         self.isPrefetchingEnabled = false
@@ -54,5 +53,4 @@ class FSPagerViewCollectionView: UICollectionView {
             self.isPagingEnabled = false
         #endif
     }
-
 }

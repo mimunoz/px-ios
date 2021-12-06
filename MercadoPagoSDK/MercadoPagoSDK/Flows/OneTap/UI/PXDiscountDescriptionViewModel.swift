@@ -1,7 +1,6 @@
 import Foundation
 
 final class PXDiscountDescriptionViewModel {
-
     let title: PXText
     let subtitle: PXText?
     let badge: PXDiscountInfo?

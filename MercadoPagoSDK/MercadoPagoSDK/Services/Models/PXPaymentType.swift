@@ -21,5 +21,4 @@ open class PXPaymentType: NSObject, Codable {
     open class func fromJSON(data: Data) throws -> [PXPaymentType] {
         return try JSONDecoder().decode([PXPaymentType].self, from: data)
     }
-
 }

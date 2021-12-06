@@ -1,7 +1,6 @@
 import Foundation
 // MARK: Tracking
 extension MercadoPagoUIViewController {
-
     func trackScreen(event: TrackingEvents, treatBackAsAbort: Bool = false, treatAsViewController: Bool = true) {
         if treatAsViewController {
             self.treatBackAsAbort = treatBackAsAbort

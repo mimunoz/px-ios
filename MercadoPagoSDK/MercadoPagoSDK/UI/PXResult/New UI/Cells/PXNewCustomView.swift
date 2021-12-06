@@ -21,11 +21,10 @@ open class PXNewCustomViewData {
 }
 
 class PXNewCustomView: UIView {
-
-    //Row Settings
+    // Row Settings
     let ROW_HEIGHT: CGFloat = 80
 
-    //Icon
+    // Icon
     let IMAGE_WIDTH: CGFloat = 48.0
     let IMAGE_HEIGHT: CGFloat = 48.0
 
@@ -47,7 +46,7 @@ class PXNewCustomView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    //Attributes
+    // Attributes
     static let titleAttributes: [NSAttributedString.Key: Any] = [
         NSAttributedString.Key.font: UIFont.ml_semiboldSystemFont(ofSize: PXLayout.XS_FONT),
         NSAttributedString.Key.foregroundColor: UIColor.black.withAlphaComponent(0.8)
@@ -66,7 +65,7 @@ class PXNewCustomView: UIView {
         PXLayout.pinAllEdges(view: pxContentView, withMargin: PXLayout.ZERO_MARGIN)
         PXLayout.setHeight(owner: pxContentView, height: ROW_HEIGHT, relation: .greaterThanOrEqual).isActive = true
 
-        //Background Color
+        // Background Color
         if let color = data.color {
             self.backgroundColor = color
         }
@@ -200,7 +199,6 @@ private extension PXNewCustomView {
     }
 
     func setTopConstraints(targetView: UIView, labelsView: UIView, firstLabel: UILabel? = nil, secondLabel: UILabel? = nil, thirdLabel: UILabel?, actionButton: UIButton? = nil) {
-
         var topConstraint: NSLayoutConstraint
         if let actionButton = actionButton {
             topConstraint = targetView.topAnchor.constraint(equalTo: actionButton.topAnchor, constant: PXLayout.XXXS_MARGIN)

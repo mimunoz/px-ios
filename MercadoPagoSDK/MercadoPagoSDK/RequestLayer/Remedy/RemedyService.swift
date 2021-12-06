@@ -27,12 +27,12 @@ final class RemedyServiceImpl: RemedyService {
             case .success(let data):
                 self?.buildRemedy(data: data, error: nil, completion: { remedy, error in
                     if let remedy = remedy { completion(.success(remedy)) }
-                    if let error = error{ completion(.failure(error)) }
+                    if let error = error { completion(.failure(error)) }
                 })
             case .failure(let error):
                 self?.buildRemedy(data: nil, error: error, completion: { remedy, error in
                     if let remedy = remedy { completion(.success(remedy)) }
-                    if let error = error{ completion(.failure(error)) }
+                    if let error = error { completion(.failure(error)) }
                 })
             }
         }

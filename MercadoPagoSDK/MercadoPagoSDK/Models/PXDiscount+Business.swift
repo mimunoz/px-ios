@@ -27,7 +27,6 @@ extension PXDiscount {
     }
 
     func toJSONDictionary() -> [String: Any] {
-
         var obj: [String: Any] = [
             "id": self.id,
             "percent_off": self.percentOff ,

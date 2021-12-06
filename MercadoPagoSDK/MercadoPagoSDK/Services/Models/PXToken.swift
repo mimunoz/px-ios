@@ -21,7 +21,6 @@ open class PXToken: NSObject, Codable {
     open var esc: String?
 
     public init(id: String, publicKey: String?, cardId: String, luhnValidation: Bool?, status: String?, usedDate: Date?, cardNumberLength: Int, dateCreated: Date?, securityCodeLength: Int, expirationMonth: Int, expirationYear: Int, dateLastUpdated: Date?, dueDate: Date?, firstSixDigits: String, lastFourDigits: String, cardholder: PXCardHolder?, esc: String?) {
-
         self.id = id
         self.publicKey = publicKey
         self.cardId = cardId
@@ -61,7 +60,7 @@ open class PXToken: NSObject, Codable {
         case esc
     }
 
-    required public convenience init(from decoder: Decoder) throws {
+    public required convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXTokenKeys.self)
         let id: String = try container.decode(String.self, forKey: .id)
         let publicKey: String? = try container.decodeIfPresent(String.self, forKey: .publicKey)

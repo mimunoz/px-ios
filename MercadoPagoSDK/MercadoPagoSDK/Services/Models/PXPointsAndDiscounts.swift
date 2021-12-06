@@ -1,7 +1,6 @@
 import Foundation
 
 struct PXPointsAndDiscounts: Codable {
-
     let points: PXPoints?
     let discounts: PXDiscounts?
     let crossSelling: [PXCrossSellingItem]?

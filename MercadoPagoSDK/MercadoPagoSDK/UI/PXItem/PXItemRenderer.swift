@@ -2,7 +2,7 @@ import Foundation
 
 struct PXItemRenderer {
     let CONTENT_WIDTH_PERCENT: CGFloat = 86.0
-    //Image
+    // Image
     static let IMAGE_WIDTH: CGFloat = 48.0
     static let IMAGE_HEIGHT: CGFloat = 48.0
 
@@ -23,7 +23,6 @@ struct PXItemRenderer {
 
         // Item icon
         if let itemImage = itemView.itemImage {
-
             if let url = imageUrl {
                 buildCircle(targetImageView: itemImage)
                 itemImage.backgroundColor = ThemeManager.shared.placeHolderColor()
@@ -86,7 +85,6 @@ struct PXItemRenderer {
 }
 
 extension PXItemRenderer {
-
     fileprivate func buildItemImageUrl(imageURL: String?, collectorImage: UIImage? = nil) -> (String?, UIImage?) {
         if imageURL != nil {
             return (imageURL, collectorImage ?? ResourceManager.shared.getImage("MPSDK_review_iconoCarrito"))

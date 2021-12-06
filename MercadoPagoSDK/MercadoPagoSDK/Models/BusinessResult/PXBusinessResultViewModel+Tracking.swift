@@ -86,7 +86,6 @@ extension PXBusinessResultViewModel: PXCongratsTrackingDataProtocol {
 }
 
 extension PXBusinessResultViewModel: PXViewModelTrackingDataProtocol {
-    
     func getTrackingPath() -> PXResultTrackingEvents? {
         let paymentStatus = businessResult.paymentStatus
         var screenPath: PXResultTrackingEvents?
@@ -132,8 +131,8 @@ extension PXBusinessResultViewModel: PXViewModelTrackingDataProtocol {
 
        return properties
     }
-    
-    func getTrackingRemediesProperties(isFromModal: Bool) -> [String : Any] {
+
+    func getTrackingRemediesProperties(isFromModal: Bool) -> [String: Any] {
         var properties: [String: Any] = [:]
         properties["index"] = 0
         properties["type"] = businessResult.getPaymentMethodTypeId()
@@ -142,7 +141,7 @@ extension PXBusinessResultViewModel: PXViewModelTrackingDataProtocol {
         properties["from"] = isFromModal == true ? "modal" : "view"
         return properties
     }
-    
+
     func getViewErrorPaymentResult() -> [String: Any] {
         var properties: [String: Any] = [:]
         properties["index"] = 0
@@ -151,7 +150,7 @@ extension PXBusinessResultViewModel: PXViewModelTrackingDataProtocol {
         properties["payment_status_detail"] = businessResult.getStatusDetail()
         return properties
     }
-    
+
     func getDidShowRemedyErrorModal() -> [String: Any] {
         var properties: [String: Any] = [:]
         properties["index"] = 0

@@ -6,7 +6,6 @@ protocol ProgressViewDelegate: AnyObject {
 }
 
 final class ProgressView: UIView {
-
     private var timer: Timer?
 
     private let progressAlpha: CGFloat = 0.35
@@ -65,7 +64,6 @@ final class ProgressView: UIView {
 
 // MARK: Timer.
 extension ProgressView {
-
     fileprivate func initTimer(everySecond: TimeInterval = 0.5, customSelector: Selector) {
         timer = Timer.scheduledTimer(timeInterval: everySecond, target: self, selector: customSelector, userInfo: nil, repeats: true)
     }
@@ -78,7 +76,6 @@ extension ProgressView {
 
 // MARK: Public methods.
 extension ProgressView {
-
     func doReset() {
         let newFrame = CGRect(x: 0, y: 0, width: 0, height: self.frame.height)
         self.frame = newFrame

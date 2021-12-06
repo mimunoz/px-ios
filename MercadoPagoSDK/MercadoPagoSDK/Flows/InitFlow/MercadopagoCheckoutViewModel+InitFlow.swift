@@ -19,7 +19,7 @@ extension MercadoPagoCheckoutViewModel {
         configureBiometricModule()
 
         // Create init flow.
-        initFlow = InitFlow(flowProperties: initFlowProperties, finishInitCallback: { [weak self] (checkoutPreference, initSearch)  in
+        initFlow = InitFlow(flowProperties: initFlowProperties, finishInitCallback: { [weak self] checkoutPreference, initSearch  in
             guard let self = self else { return }
             self.checkoutPreference = checkoutPreference
             self.updateCustomTexts()

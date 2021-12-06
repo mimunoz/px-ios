@@ -120,11 +120,11 @@ extension PXOneTapInstallmentInfoView: FSPagerViewDelegate {
         if let mModel = model, mModel.count > 0 {
             let scrollOffset = pagerView.scrollOffset
             let floorOffset = floor(scrollOffset)
-            
+
             guard !(floorOffset.isNaN || floorOffset.isInfinite) else {
                 return nil
             }
-            
+
             return Int(floorOffset)
         } else {
             return nil

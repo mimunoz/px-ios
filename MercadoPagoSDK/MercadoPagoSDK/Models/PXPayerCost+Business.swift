@@ -1,7 +1,6 @@
 import Foundation
 
 extension PXPayerCost {
-
     func hasInstallmentsRate() -> Bool {
         return installmentRate > 0.0 && installments > 1
     }

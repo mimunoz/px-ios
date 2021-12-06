@@ -17,7 +17,6 @@ extension PXOneTapViewModel {
         var props = [PXSummaryRowProps]()
         for itemComponent in itemComponentsModel {
             if let title = itemComponent.getTitle(), let amountPrice = itemComponent.getUnitAmountPrice() {
-
                 var totalAmount: Double = amountPrice
                 var titleWithQty = title
                 if let qty = itemComponent.props.quantity {

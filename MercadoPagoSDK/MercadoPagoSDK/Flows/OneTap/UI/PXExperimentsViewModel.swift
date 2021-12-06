@@ -1,7 +1,6 @@
 import Foundation
 
 struct PXExperimentsViewModel {
-
     static let HIGHLIGHT_INSTALLMENTS = "px_nativo/highlight_installments"
     var experiments: [PXExperiment]?
 

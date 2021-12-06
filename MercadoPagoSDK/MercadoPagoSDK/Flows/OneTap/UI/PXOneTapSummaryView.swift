@@ -8,7 +8,7 @@ class PXOneTapSummaryView: PXComponentView {
             } else if data.count < newValue.count {
                 addSummaryRows(oldValue: data, newValue: newValue, animated: true)
             } else if animationIsNeeded(newData: newValue) {
-                let rowsToMove = rows.filter{ !$0.data.isTotal }
+                let rowsToMove = rows.filter { !$0.data.isTotal }
                 let distanceArray = getDistanceArray(rowsToMove)
                 animateRows([PXOneTapSummaryRow](), rowsToMove: rowsToMove, newData: newValue, animateIn: true, distance: 0, distanceArray: distanceArray) {}
             } else {
@@ -30,7 +30,7 @@ class PXOneTapSummaryView: PXComponentView {
         render()
     }
 
-    required public init?(coder aDecoder: NSCoder) {
+    public required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
@@ -40,7 +40,7 @@ class PXOneTapSummaryView: PXComponentView {
         self.backgroundColor = UIColor.Andes.white
 
         var offset: CGFloat = 0
-        
+
         for row in self.data {
             row.splitMoney = splitMoney
             let rowView = self.getSummaryRowView(with: row)
@@ -74,10 +74,10 @@ class PXOneTapSummaryView: PXComponentView {
             PXLayout.pinLeft(view: rowView, withMargin: 0).isActive = true
             PXLayout.pinRight(view: rowView, withMargin: 0).isActive = true
         }
-        
+
         // Set contentView height constraint
         self.contentViewHeight = self.getContentView().heightAnchor.constraint(equalToConstant: offset)
-        
+
         contentViewHeight?.isActive = true
     }
 
@@ -139,25 +139,24 @@ class PXOneTapSummaryView: PXComponentView {
                 self.layoutIfNeeded()
             }
         }
-        
+
         if let contentViewHeight = self.contentViewHeight {
             // Update content view height constraint
             let contentView = self.getContentView()
             contentView.removeConstraint(contentViewHeight)
-            
+
             // Calculate SummaryHeight including 1px of separator view
-            let calculatedHeight = self.rows.reduce(1.0) { (partialResult, row) -> CGFloat in
+            let calculatedHeight = self.rows.reduce(1.0) { partialResult, row -> CGFloat in
                 let rowHeight = row.rowHeight
                 let rowMargin = row.view.getRowMargin()
                 return partialResult + rowHeight + rowMargin
             }
-            
+
             self.contentViewHeight = contentView.heightAnchor.constraint(equalToConstant: calculatedHeight)
             self.contentViewHeight?.isActive = true
         }
 
-        animator.addCompletion { (_) in
-            
+        animator.addCompletion { _ in
             completion()
         }
 
@@ -242,7 +241,7 @@ class PXOneTapSummaryView: PXComponentView {
             let constraintConstant: CGFloat = -totalRowHeight - multiplier
             distanceDelta = rowHeight
 
-            //View Constraints
+            // View Constraints
             self.addSubview(rowView)
             let constraint = PXLayout.pinBottom(view: rowView, withMargin: -(constraintConstant + 10))
 
@@ -260,7 +259,7 @@ class PXOneTapSummaryView: PXComponentView {
 
             let newRow = PXOneTapSummaryRow(data: rowData, view: rowView, constraint: constraint, rowHeight: rowHeight)
             rowsToAdd.append(newRow)
-            rows.insert(newRow, at: index+1)
+            rows.insert(newRow, at: index + 1)
         }
 
         for row in rows where !row.data.isTotal && !newRowsData.contains(row.data) {
@@ -268,7 +267,7 @@ class PXOneTapSummaryView: PXComponentView {
         }
 
         // Add row to move when passing from 2 rows with charges to 3 rows
-        let rowsToUpdate = rows.filter{ $0.data.type == PXOneTapSummaryRowView.RowType.charges }
+        let rowsToUpdate = rows.filter { $0.data.type == PXOneTapSummaryRowView.RowType.charges }
         if rowsToUpdate.count == 2, rowsToMove.count == 1, let rowToUpdate = rowsToUpdate.last {
             rowsToMove.insert(rowToUpdate, at: 0)
         }
@@ -296,7 +295,7 @@ class PXOneTapSummaryView: PXComponentView {
 
     func getSummaryRowView(with data: PXOneTapSummaryRowData) -> PXOneTapSummaryRowView {
         let rowView = PXOneTapSummaryRowView(data: data)
-        //Tap Gesture
+        // Tap Gesture
         let tap = UITapGestureRecognizer(target: self, action: #selector(self.tapRow(_:)))
         rowView.addGestureRecognizer(tap)
         rowView.isUserInteractionEnabled = true

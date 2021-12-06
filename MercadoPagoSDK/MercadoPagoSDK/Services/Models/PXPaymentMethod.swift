@@ -61,7 +61,7 @@ open class PXPaymentMethod: NSObject, Codable {
         case creditsDisplayInfo = "display_info"
     }
 
-    required public convenience init(from decoder: Decoder) throws {
+    public required convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let additionalInfoNeeded: [String]? = try container.decodeIfPresent([String].self, forKey: .additionalInfoNeeded)
         let id: String = try container.decode(String.self, forKey: .id)

@@ -49,7 +49,7 @@ open class PXCustomOptionSearchItem: NSObject, Codable {
         case escStatus = "esc_status"
     }
 
-    required public convenience init(from decoder: Decoder) throws {
+    public required convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXCustomOptionSearchItemKeys.self)
         let id: String = try container.decode(String.self, forKey: .id)
         let description: String? = try container.decodeIfPresent(String.self, forKey: .description)

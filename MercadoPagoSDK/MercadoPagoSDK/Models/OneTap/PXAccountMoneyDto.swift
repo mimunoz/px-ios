@@ -10,7 +10,7 @@ open class PXAccountMoneyDto: NSObject, Codable {
     open var color: String?
     open var paymentMethodImageURL: String?
     open var gradientColors: [String]?
-    
+
     public enum PXAccountMoneyTypes: String {
         case defaultType = "default"
         case hybrid = "hybrid"
@@ -21,13 +21,13 @@ open class PXAccountMoneyDto: NSObject, Codable {
         self.invested = invested
         self.cardTitle = cardTitle
         self.sliderTitle = sliderTitle
-        
+
         if let cardType = cardType {
             self.cardType = PXAccountMoneyTypes(rawValue: cardType) ?? .defaultType
         } else {
             self.cardType = .defaultType
         }
-        
+
         self.color = color
         self.paymentMethodImageURL = paymentMethodImageURL
         self.gradientColors = gradientColors
@@ -45,7 +45,7 @@ open class PXAccountMoneyDto: NSObject, Codable {
         case gradientColors = "gradient_colors"
     }
 
-    required public convenience init(from decoder: Decoder) throws {
+    public required convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXAccountMoneyKeys.self)
         let invested: Bool = try container.decode(Bool.self, forKey: .invested)
         let availableBalance: Double = try container.decode(Double.self, forKey: .availableBalance)

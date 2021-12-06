@@ -1,7 +1,6 @@
 import UIKit
 
 final class PXLoadingComponent {
-
     static let shared = PXLoadingComponent()
 
     private lazy var loadingContainer = UIView()
@@ -9,7 +8,6 @@ final class PXLoadingComponent {
     private lazy var tintColor = ThemeManager.shared.loadingComponent().tintColor
 
     func showInView(_ view: UIView) -> UIView {
-
         let spinner = PXComponentFactory.Spinner.new(color1: tintColor, color2: tintColor)
 
         loadingContainer = UIView()

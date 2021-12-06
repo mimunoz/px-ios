@@ -1,7 +1,6 @@
 import Foundation
 
 final class PXPulseView: UIView {
-
     init() {
         super.init(frame: .zero)
         translatesAutoresizingMaskIntoConstraints = false

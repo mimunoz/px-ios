@@ -2,7 +2,6 @@ import Foundation
 /// :nodoc:
 @objcMembers
 open class PXPayerCost: NSObject, Codable {
-
     open var installmentRate: Double = 0
     open var labels: [String] = []
     open var minAllowedAmount: Double = 0
@@ -46,7 +45,7 @@ open class PXPayerCost: NSObject, Codable {
         case interestRate = "interest_rate"
     }
 
-    required public convenience init(from decoder: Decoder) throws {
+    public required convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXPayerCostKeys.self)
         let installmentRate: Double = try container.decodeIfPresent(Double.self, forKey: .installmentRate) ?? 0
         let labels: [String] = try container.decodeIfPresent([String].self, forKey: .labels) ?? []
@@ -61,7 +60,7 @@ open class PXPayerCost: NSObject, Codable {
         let paymentMethodOptionId: String? = try container.decodeIfPresent(String.self, forKey: .paymentMethodOptionId)
         let agreements: [PXAgreement] = try container.decodeIfPresent([PXAgreement].self, forKey: .agreements) ?? []
 
-        self.init(installmentRate: installmentRate, labels: labels, minAllowedAmount: minAllowedAmount, maxAllowedAmount: maxAllowedAmount, recommendedMessage: recommendedMessage, installmentAmount: installmentAmount, totalAmount: totalAmount, installments: installments,processingMode: processingMode, paymentMethodOptionId: paymentMethodOptionId, agreements: agreements, interestRate: interestRate)
+        self.init(installmentRate: installmentRate, labels: labels, minAllowedAmount: minAllowedAmount, maxAllowedAmount: maxAllowedAmount, recommendedMessage: recommendedMessage, installmentAmount: installmentAmount, totalAmount: totalAmount, installments: installments, processingMode: processingMode, paymentMethodOptionId: paymentMethodOptionId, agreements: agreements, interestRate: interestRate)
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -98,5 +97,4 @@ open class PXPayerCost: NSObject, Codable {
     open class func fromJSON(data: Data) throws -> [PXPayerCost] {
         return try JSONDecoder().decode([PXPayerCost].self, from: data)
     }
-
 }

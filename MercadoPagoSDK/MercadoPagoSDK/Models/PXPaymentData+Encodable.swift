@@ -1,10 +1,8 @@
 import Foundation
 
 extension PXPaymentData: Encodable {
-
     /// :nodoc:
     public func encode(to encoder: Encoder) throws {
-
         var container = encoder.container(keyedBy: PXPaymentDataCodingKeys.self)
         try container.encodeIfPresent(self.paymentMethod, forKey: .paymentMethod)
         try container.encodeIfPresent(self.issuer, forKey: .issuer)
@@ -19,7 +17,6 @@ extension PXPaymentData: Encodable {
     }
 
     enum PXPaymentDataCodingKeys: String, CodingKey {
-
         case paymentMethod = "payment_method"
         case issuer
         case payerCost = "payer_cost"

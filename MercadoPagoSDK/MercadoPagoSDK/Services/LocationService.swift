@@ -3,9 +3,8 @@ import CoreLocation
 
 class LocationService {
   static func isLocationEnabled() -> Bool {
-    
     var locationEnabled = false
-    
+
     if CLLocationManager.locationServicesEnabled() {
       switch CLLocationManager.authorizationStatus() {
         case .notDetermined, .restricted, .denied:
@@ -16,9 +15,8 @@ class LocationService {
     } else {
         print("Location services are not enabled")
     }
-    
+
     return locationEnabled
   }
 }
 
-  

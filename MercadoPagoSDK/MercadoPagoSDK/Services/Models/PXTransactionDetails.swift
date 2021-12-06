@@ -30,7 +30,7 @@ open class PXTransactionDetails: NSObject, Codable {
         case paymentMethodReferenceId = "payment_method_reference_id"
     }
 
-    required public convenience init(from decoder: Decoder) throws {
+    public required convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXTransactionDetailsKeys.self)
         let externalResourceUrl: String? = try container.decodeIfPresent(String.self, forKey: .externalResourceUrl)
         let financialInstitution: String? = try container.decodeIfPresent(String.self, forKey: .financialInstitution)

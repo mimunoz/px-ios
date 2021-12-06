@@ -27,5 +27,4 @@ open class PXCardNumber: NSObject, Codable {
     open class func fromJSON(data: Data) throws -> [PXCardNumber] {
         return try JSONDecoder().decode([PXCardNumber].self, from: data)
     }
-
 }

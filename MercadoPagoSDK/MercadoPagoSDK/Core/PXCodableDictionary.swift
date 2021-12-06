@@ -72,7 +72,7 @@ public class PXCodableDictionary: Codable, CustomStringConvertible {
         }
     }
 
-    required public init(from decoder: Decoder) throws {
+    public required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: DynamicCodingKeys.self)
 
         var dict: [String: Any] = [:]

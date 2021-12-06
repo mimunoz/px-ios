@@ -2,7 +2,6 @@ import UIKit
 import MLBusinessComponents
 
 class PXOfflineMethodsSheetViewController: SheetViewController {
-
     private let sizes: [SheetSize]
     private let viewModel: PXOfflineMethodsViewModel
 
@@ -114,7 +113,7 @@ extension PXOfflineMethodsSheetViewController: SheetViewControllerDelegate {
         let highest = view.bounds.height - PXOfflineMethodsSheetViewController.topBarHeight()
         let difference = highest - height
 
-        if (difference < 100) {
+        if difference < 100 {
             totalView?.alpha = 1 - min(max(difference / 100, 0.0), 1.0)
         } else {
             totalView?.alpha = 0.0

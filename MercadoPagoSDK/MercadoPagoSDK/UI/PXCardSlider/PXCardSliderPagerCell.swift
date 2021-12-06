@@ -17,7 +17,7 @@ class PXCardSliderPagerCell: FSPagerViewCell {
 
     weak var delegate: PXTermsAndConditionViewDelegate?
     weak var cardSliderPagerCellDelegate: PXCardSliderPagerCellDelegate?
-    @IBOutlet weak var containerView: UIView!
+    @IBOutlet var containerView: UIView!
 
     private var bottomMessageFixed: Bool = false
 
@@ -42,17 +42,17 @@ extension PXCardSliderPagerCell {
         containerView.backgroundColor = .clear
         containerView.layer.cornerRadius = cornerRadius
     }
-    
+
     private func setupCardHeader(cardDrawerController: MLCardDrawerController?, cardSize: CGSize) {
         cardHeader = cardDrawerController
         cardHeader?.view.frame = CGRect(origin: CGPoint.zero, size: cardSize)
         cardHeader?.animated(false)
         cardHeader?.show()
     }
-    
+
     private func setupSwitchInfoView(model: PXCardSliderViewModel) {
         if let comboSwitch = model.comboSwitch {
-            comboSwitch.setSwitchDidChangeCallback() { [weak self] selectedOption in
+            comboSwitch.setSwitchDidChangeCallback { [weak self] selectedOption in
                 model.trackCard(state: selectedOption)
                 model.selectedApplicationId = selectedOption
                 self?.cardSliderPagerCellDelegate?.switchDidChange(selectedOption)
@@ -60,18 +60,17 @@ extension PXCardSliderPagerCell {
             cardHeader?.setCustomView(comboSwitch)
         }
     }
-    
+
     func render(model: PXCardSliderViewModel, cardSize: CGSize, accessibilityData: AccessibilityCardData, clearCardData: Bool = false, cardType: MLCardDrawerTypeV3 = .large, delegate: PXCardSliderPagerCellDelegate?) {
-        
         self.prepareForReuse()
-        
+
         guard let selectedApplication = model.selectedApplication, let cardUI = model.cardUI else { return }
-        
+
         cardSliderPagerCellDelegate = delegate
         let cardData = clearCardData ? PXCardDataFactory() : selectedApplication.cardData ?? PXCardDataFactory()
         let isDisabled = selectedApplication.status.isDisabled()
         let bottomMessage = selectedApplication.bottomMessage
-        
+
         setupContainerView(cardSize)
         setupCardHeader(cardDrawerController: MLCardDrawerController(cardUI: cardUI, cardType, cardData, isDisabled), cardSize: cardSize)
 
@@ -85,12 +84,12 @@ extension PXCardSliderPagerCell {
             PXLayout.centerHorizontally(view: headerView).isActive = true
             PXLayout.centerVertically(view: headerView).isActive = true
         }
-        
+
         self.bottomMessageViewHeight = cardType == .small ? 12 : 24
-                    
+
         addBottomMessageView(message: bottomMessage)
         accessibilityLabel = getAccessibilityMessage(accessibilityData)
-        
+
         setupSwitchInfoView(model: model)
     }
 
@@ -156,7 +155,7 @@ extension PXCardSliderPagerCell {
         PXFeedbackGenerator.selectionFeedback()
         cardSliderPagerCellDelegate?.addNewOfflineMethod()
     }
-    
+
     func renderConsumerCreditsCard(model: PXCardSliderViewModel, cardSize: CGSize, accessibilityData: AccessibilityCardData, cardType: MLCardDrawerTypeV3?) {
         guard let selectedApplication = model.selectedApplication else { return }
         guard let creditsViewModel = model.creditsViewModel else { return }
@@ -199,7 +198,7 @@ extension PXCardSliderPagerCell {
 
         NSLayoutConstraint.activate([
             label.leadingAnchor.constraint(equalTo: messageView.leadingAnchor),
-            label.trailingAnchor.constraint(equalTo: messageView.trailingAnchor),
+            label.trailingAnchor.constraint(equalTo: messageView.trailingAnchor)
         ])
 
         self.bottomMessageFixed = message.fixed
@@ -210,15 +209,15 @@ extension PXCardSliderPagerCell {
         messageLabelCenterConstraint?.isActive = true
 
         containerView.clipsToBounds = true
-        
+
         containerView.layoutIfNeeded()
-        
+
         containerView.addSubview(messageView)
 
         NSLayoutConstraint.activate([
             messageView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
             messageView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
-            messageView.heightAnchor.constraint(equalToConstant: bottomMessageViewHeight),
+            messageView.heightAnchor.constraint(equalToConstant: bottomMessageViewHeight)
         ])
 
         messageViewBottomConstraint = messageView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: constraintsConstant)
@@ -264,4 +263,3 @@ extension PXCardSliderPagerCell: PXTermsAndConditionViewDelegate {
         delegate?.shouldOpenTermsCondition(title, url: url)
     }
 }
-

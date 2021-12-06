@@ -14,7 +14,6 @@ public enum FSPagerViewTransformerType: Int {
 }
 
 open class FSPagerViewTransformer: NSObject {
-
     open internal(set) weak var pagerView: FSPagerView?
     open internal(set) var type: FSPagerViewTransformerType
 
@@ -53,7 +52,7 @@ open class FSPagerViewTransformer: NSObject {
             case .vertical:
                 transform.ty = -itemSpacing * position
             }
-            if (abs(position) < 1) { // [-1,1]
+            if abs(position) < 1 { // [-1,1]
                 // Use the default slide transition when moving to the left page
                 alpha = 1 - abs(position)
                 zIndex = 1
@@ -260,5 +259,4 @@ open class FSPagerViewTransformer: NSObject {
         }
         return pagerView.interitemSpacing
     }
-
 }

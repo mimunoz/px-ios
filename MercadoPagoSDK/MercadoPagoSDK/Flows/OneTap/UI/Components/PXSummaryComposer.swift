@@ -1,8 +1,7 @@
 import UIKit
 
 struct PXSummaryComposer {
-
-    //returns the composed summary items
+    // returns the composed summary items
     var summaryItems: [PXOneTapSummaryRowData] {
         return getSummaryItems()
     }

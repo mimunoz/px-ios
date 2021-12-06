@@ -32,7 +32,7 @@ open class PXSavedESCCardToken: PXSavedCardToken {
         case device
     }
 
-    public override func encode(to encoder: Encoder) throws {
+    override public func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: PXSavedESCCardTokenKeys.self)
         try container.encodeIfPresent(self.cardId, forKey: .cardId)
         try container.encodeIfPresent(self.securityCode, forKey: .securityCode)
@@ -41,13 +41,13 @@ open class PXSavedESCCardToken: PXSavedCardToken {
         try container.encodeIfPresent(self.requireESC, forKey: .requireEsc)
     }
 
-    open override func toJSONString() throws -> String? {
+    override open func toJSONString() throws -> String? {
         let encoder = JSONEncoder()
         let data = try encoder.encode(self)
         return String(data: data, encoding: .utf8)
     }
 
-    open override func toJSON() throws -> Data {
+    override open func toJSON() throws -> Data {
         let encoder = JSONEncoder()
         return try encoder.encode(self)
     }

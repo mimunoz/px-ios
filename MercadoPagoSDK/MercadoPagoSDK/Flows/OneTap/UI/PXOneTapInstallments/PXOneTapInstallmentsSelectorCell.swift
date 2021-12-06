@@ -1,7 +1,6 @@
 import UIKit
 
 final class PXOneTapInstallmentsSelectorCell: UITableViewCell {
-
     var data: PXOneTapInstallmentsSelectorData?
 
     func updateData(_ data: PXOneTapInstallmentsSelectorData) {
@@ -10,12 +9,12 @@ final class PXOneTapInstallmentsSelectorCell: UITableViewCell {
         let selectedView = UIView()
         selectedView.backgroundColor = UIColor.Andes.graySolid070
         self.selectedBackgroundView = selectedView
-        
+
         let selectedIndicatorView = PXCheckbox(selected: data.isSelected)
         selectedIndicatorView.translatesAutoresizingMaskIntoConstraints = false
-        
+
         contentView.addSubview(selectedIndicatorView)
-        
+
         PXLayout.setWidth(owner: selectedIndicatorView, width: 20).isActive = true
         PXLayout.setHeight(owner: selectedIndicatorView, height: 20).isActive = true
         PXLayout.pinLeft(view: selectedIndicatorView, withMargin: PXLayout.SM_MARGIN).isActive = true
@@ -47,7 +46,7 @@ final class PXOneTapInstallmentsSelectorCell: UITableViewCell {
         bottomValueLabel.textAlignment = .right
         valueLabelsContainer.addArrangedSubview(bottomValueLabel)
 
-        //Value labels content view layout
+        // Value labels content view layout
         contentView.addSubview(valueLabelsContainer)
         PXLayout.pinRight(view: valueLabelsContainer, withMargin: PXLayout.M_MARGIN).isActive = true
         PXLayout.centerVertically(view: valueLabelsContainer).isActive = true

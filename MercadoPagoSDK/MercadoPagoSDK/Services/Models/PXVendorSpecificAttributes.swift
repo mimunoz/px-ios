@@ -1,7 +1,6 @@
 import Foundation
 /// :nodoc:
 open class PXVendorSpecificAttributes: NSObject, Codable {
-
     open var deviceIdiom: String?
     open var canSendSMS = 1
     open var canMakePhoneCalls = 1
@@ -10,7 +9,7 @@ open class PXVendorSpecificAttributes: NSObject, Codable {
     open var deviceName: String?
     open var simulator = 0
 
-    public override init() {
+    override public init() {
         let device: UIDevice = UIDevice.current
 
         if device.userInterfaceIdiom == UIUserInterfaceIdiom.pad {

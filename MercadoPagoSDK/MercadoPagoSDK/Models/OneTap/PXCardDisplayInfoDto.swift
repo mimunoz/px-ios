@@ -65,7 +65,7 @@ open class PXCardDisplayInfoDto: NSObject, Codable {
         case subtitle
     }
 
-    required public convenience init(from decoder: Decoder) throws {
+    public required convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXCardDisplayInfoKeys.self)
         let expiration: String? = try container.decodeIfPresent(String.self, forKey: .expiration)
         let firstSixDigits: String? = try container.decodeIfPresent(String.self, forKey: .first_six_digits)

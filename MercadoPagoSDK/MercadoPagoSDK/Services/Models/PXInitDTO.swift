@@ -12,7 +12,6 @@ public struct PXModal: Codable {
         case secondaryButton = "secondary_button"
         case imageUrl = "image_url"
     }
-
 }
 
 import Foundation
@@ -87,7 +86,7 @@ final class PXInitDTO: NSObject, Codable {
             guard let paymentMethodId = expressNode.paymentMethodId else {
                 return nil
             }
-            
+
             var cardCaseCondition = false
             if let oneTapCard = expressNode.oneTapCard,
                oneTapCard.cardId == customerPaymentMethod.getId(),
@@ -95,14 +94,14 @@ final class PXInitDTO: NSObject, Codable {
                expressNode.paymentTypeId == customerPaymentMethod.getPaymentTypeId() {
                 cardCaseCondition = true
             }
-            let creditsCaseCondition = PXPaymentTypes(rawValue:paymentMethodId) == PXPaymentTypes.CONSUMER_CREDITS
+            let creditsCaseCondition = PXPaymentTypes(rawValue: paymentMethodId) == PXPaymentTypes.CONSUMER_CREDITS
             if cardCaseCondition || creditsCaseCondition {
                 return expressNode
             }
         }
         return nil
     }
-    
+
     func getPayerPaymentMethod(id: String?, paymentMethodId: String?, paymentTypeId: String?) -> PXCustomOptionSearchItem? {
         return payerPaymentMethods.first(where: { $0.id == id && $0.paymentMethodId == paymentMethodId && $0.paymentTypeId == paymentTypeId })
     }

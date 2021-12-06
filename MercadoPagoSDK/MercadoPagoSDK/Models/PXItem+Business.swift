@@ -1,6 +1,5 @@
 import Foundation
 extension PXItem {
-
     // MARK: Validation.
     func validate() -> String? {
         if quantity <= 0 {

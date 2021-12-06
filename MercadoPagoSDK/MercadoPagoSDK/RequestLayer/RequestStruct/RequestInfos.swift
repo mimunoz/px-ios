@@ -14,7 +14,6 @@ enum BackendEnvironment: String, CaseIterable {
     case gamma = "gamma/"
 }
 
-
 protocol RequestInfos {
     var baseURL: URL { get }
 

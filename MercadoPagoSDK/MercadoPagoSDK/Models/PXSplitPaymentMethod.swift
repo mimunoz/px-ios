@@ -33,7 +33,7 @@ open class PXSplitPaymentMethod: NSObject, Codable {
         case payerCosts = "payer_costs"
     }
 
-    required public convenience init(from decoder: Decoder) throws {
+    public required convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: PXPayerCostConfiguration.self)
         let amount: Double = try container.decodeIfPresent(Double.self, forKey: .amount) ?? 0
         let id: String = try container.decodeIfPresent(String.self, forKey: .id) ?? ""

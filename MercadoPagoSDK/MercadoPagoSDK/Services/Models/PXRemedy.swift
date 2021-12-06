@@ -21,16 +21,16 @@ extension PXRemedy {
     init() {
         self.init(cvv: nil, highRisk: nil, callForAuth: nil, suggestedPaymentMethod: nil, trackingData: nil)
     }
-    
+
     var isEmpty: Bool {
         return cvv == nil && highRisk == nil && callForAuth == nil && suggestedPaymentMethod == nil
     }
-    
+
     var shouldShowAnimatedButton: Bool {
         // These remedy types have its own animated button
         return cvv != nil || suggestedPaymentMethod != nil
     }
-    
+
     var title: String? {
         // Get title for remedy
         if let title = suggestedPaymentMethod?.title {

@@ -5,7 +5,7 @@ protocol ParameterEncode {
 }
 
 final class ParameterEncodingImpl: ParameterEncode {
-    func encode(request: URLRequest?, parameters: [String : Any]?) throws -> URLRequest {
+    func encode(request: URLRequest?, parameters: [String: Any]?) throws -> URLRequest {
         guard var urlRequest = request, let url = urlRequest.url else {
             throw NSError()
         }

@@ -11,4 +11,3 @@ public struct PXCustomCharge: Codable {
         case label
     }
 }
-
