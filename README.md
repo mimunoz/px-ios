@@ -122,6 +122,35 @@ We provide `PXTrackerListener` protocol to notify each tracking event. You can s
 PXTracker.setListener(self)
 ```
 
+### PXPaymentProcessor
+/**
+ Any configuration related to the Payment. You can set you own `PXPaymentProcessor`. Configuration of discounts, charges and custom Payment Method Plugin.
+ */
+open class PXPaymentConfiguration: NSObject {
+    private let splitPaymentProcessor: PXSplitPaymentProcessor
+    private var chargeRules: [PXPaymentTypeChargeRule] = [PXPaymentTypeChargeRule]()
+    private var paymentMethodPlugins: [PXPaymentMethodPlugin] = [PXPaymentMethodPlugin]()
+    private var choiceProcessorType: PXCheckoutType = .DEFAULT_REGULAR
+
+     Builder for `PXPaymentConfiguration` construction.
+     - parameter paymentProcessor: Your custom implementation of `PXPaymentProcessor`.
+     */
+    public init(paymentProcessor: PXPaymentProcessor) {
+        self.splitPaymentProcessor = PXPaymentProcessorAdapter(paymentProcessor: paymentProcessor)
+    }
+
+    public init(splitPaymentProcessor: PXSplitPaymentProcessor) {
+        self.splitPaymentProcessor = splitPaymentProcessor
+        self.choiceProcessorType = .CUSTOM_REGULAR
+    }
+
+    public init(scheduledPaymentProcessor: PXPaymentProcessor) {
+        self.splitPaymentProcessor = PXScheduledPaymentProcessorAdapter(paymentProcessor: scheduledPaymentProcessor)
+        self.choiceProcessorType = .CUSTOM_SCHEDULED
+    }
+}
+
+
 ### 📋 Supported OS & SDK Versions
 * iOS 10.0+
 * Swift 4.2
