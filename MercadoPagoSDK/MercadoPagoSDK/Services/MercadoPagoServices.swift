@@ -12,7 +12,7 @@ class MercadoPagoServices: NSObject {
     private let customService: CustomService
     private let remedyService: RemedyService
     private let gatewayService: TokenService
-    private let paymentService: PaymentService
+    private let checkoutService: CheckoutService
 
     // MARK: - Internal properties
     var reachability: Reachability?
@@ -30,7 +30,7 @@ class MercadoPagoServices: NSObject {
         customService: CustomService = CustomServiceImpl(),
         remedyService: RemedyService = RemedyServiceImpl(),
         gatewayService: TokenService = TokenServiceImpl(),
-        paymentService: PaymentService = PaymentServiceImpl(),
+        checkoutService: CheckoutService = CheckoutServiceImpl(),
         checkoutType: String? = nil
     ) {
         self.publicKey = publicKey
@@ -38,7 +38,7 @@ class MercadoPagoServices: NSObject {
         self.customService = customService
         self.remedyService = remedyService
         self.gatewayService = gatewayService
-        self.paymentService = paymentService
+        self.checkoutService = checkoutService
         self.checkoutType = checkoutType
         super.init()
         addReachabilityObserver()
@@ -69,7 +69,7 @@ class MercadoPagoServices: NSObject {
 
         let bodyJSON = try? body.toJSON()
 
-        paymentService.getInit(preferenceId: nil, privateKey: privateKey, body: bodyJSON, headers: headers) { apiResponse in
+        checkoutService.getInit(preferenceId: nil, privateKey: privateKey, body: bodyJSON, headers: headers) { apiResponse in
             switch apiResponse {
             case .success(let dto): callback(dto)
             case .failure(let error): failure(error)
@@ -83,7 +83,7 @@ class MercadoPagoServices: NSObject {
 
         let bodyJSON = try? body.toJSON()
 
-        paymentService.getInit(preferenceId: preferenceId, privateKey: privateKey, body: bodyJSON, headers: headers) { apiResponse in
+        checkoutService.getInit(preferenceId: preferenceId, privateKey: privateKey, body: bodyJSON, headers: headers) { apiResponse in
             switch apiResponse {
             case .success(let dto): callback(dto)
             case .failure(let error): failure(error)

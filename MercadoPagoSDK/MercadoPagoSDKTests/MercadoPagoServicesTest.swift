@@ -1,12 +1,12 @@
 import XCTest
 @testable import MercadoPagoSDKV4
 
-class CustomServiceMock: CustomService {
+final class CustomServiceMock: CustomService {
     var successResponse = true
     var calledGetPointsAndDiscounts = false
     var calledResetESCCap = false
     var calledCreatePayment = false
-    
+
     func getPointsAndDiscounts(data: Data?, parameters: CustomParametersModel, response: @escaping (Swift.Result<PXPointsAndDiscounts, Error>) -> Void) {
         calledGetPointsAndDiscounts = true
         successResponse ? response(.success(PXPointsAndDiscounts(points: nil,
@@ -25,84 +25,83 @@ class CustomServiceMock: CustomService {
                                                                  instruction: nil,
                                                                  infoOperation: nil))) : response(.failure(NSError()))
     }
-    
+
     func resetESCCap(cardId: String, privateKey: String?, response: @escaping (Swift.Result<Void, PXError>) -> Void) {
         calledResetESCCap = true
         successResponse ? response(.success(())) : response(.failure(PXError(domain: "", code: 0)))
     }
-    
-    func createPayment(privateKey: String?, publicKey: String, data: Data?, header: [String : String]?, response: @escaping (Swift.Result<PXPayment, PXError>) -> Void) {
+
+    func createPayment(privateKey: String?, publicKey: String, data: Data?, header: [String: String]?, response: @escaping (Swift.Result<PXPayment, PXError>) -> Void) {
         calledCreatePayment = true
         successResponse ? response(.success(PXPayment(id: 0, status: ""))) : response(.failure(PXError(domain: "", code: 0)))
     }
 }
 
-class RemedyServicesMock: RemedyService {
+final class RemedyServicesMock: RemedyService {
     var successResponse = true
     var calledGetRemedy = false
-    
+
     func getRemedy(paymentMethodId: String, privateKey: String?, oneTap: Bool, remedy: PXRemedyBody, completion: @escaping (Swift.Result<PXRemedy, PXError>) -> Void) {
         calledGetRemedy = true
         successResponse ? completion(.success(PXRemedy())) : completion(.failure( PXError(domain: "", code: 0)))
     }
 }
 
-class GatewayServicesMock: TokenService {
+final class GatewayServicesMock: TokenService {
     var successResponse = true
     var calledGetToken = false
     var calledCloneToken = false
     var calledValidateToken = false
-    
+
     func getToken(accessToken: String?, publicKey: String, cardTokenJSON: Data?, completion: @escaping (Swift.Result<PXToken, PXError>) -> Void) {
         calledGetToken = true
         successResponse ? completion(.success(PXToken(id: "", publicKey: nil, cardId: "", luhnValidation: nil, status: nil, usedDate: nil, cardNumberLength: 0, dateCreated: nil, securityCodeLength: 0, expirationMonth: 0, expirationYear: 0, dateLastUpdated: nil, dueDate: nil, firstSixDigits: "", lastFourDigits: "", cardholder: nil, esc: nil))) : completion(.failure(PXError(domain: "", code: 0)))
     }
-    
+
     func cloneToken(tokenId: String, publicKey: String, securityCode: String, completion: @escaping (Swift.Result<PXToken, PXError>) -> Void) {
         calledCloneToken = true
         successResponse ? completion(.success(PXToken(id: "", publicKey: nil, cardId: "", luhnValidation: nil, status: nil, usedDate: nil, cardNumberLength: 0, dateCreated: nil, securityCodeLength: 0, expirationMonth: 0, expirationYear: 0, dateLastUpdated: nil, dueDate: nil, firstSixDigits: "", lastFourDigits: "", cardholder: nil, esc: nil))) : completion(.failure(PXError(domain: "", code: 0)))
     }
-    
+
     func validateToken(tokenId: String, publicKey: String, body: Data, completion: @escaping (Swift.Result<PXToken, PXError>) -> Void) {
         calledValidateToken = true
         successResponse ? completion(.success(PXToken(id: "", publicKey: nil, cardId: "", luhnValidation: nil, status: nil, usedDate: nil, cardNumberLength: 0, dateCreated: nil, securityCodeLength: 0, expirationMonth: 0, expirationYear: 0, dateLastUpdated: nil, dueDate: nil, firstSixDigits: "", lastFourDigits: "", cardholder: nil, esc: nil))) : completion(.failure(PXError(domain: "", code: 0)))
     }
 }
 
-class PaymentServicesMock: PaymentService {
+final class CheckoutServicesMock: CheckoutService {
     var successResponse = true
     var calledGetInit = false
-    
-    func getInit(preferenceId: String?, privateKey: String?, body: Data?, headers: [String : String]?, completion: @escaping (Swift.Result<PXInitDTO, PXError>) -> Void) {
+
+    func getInit(preferenceId: String?, privateKey: String?, body: Data?, headers: [String: String]?, completion: @escaping (Swift.Result<PXInitDTO, PXError>) -> Void) {
         calledGetInit = true
         successResponse ? completion(.success(PXInitDTO(preference: nil, oneTap: nil, currency: PXCurrency(id: "", description: nil, symbol: nil, decimalPlaces: nil, decimalSeparator: nil, thousandSeparator: nil), site: PXSite(id: "", currencyId: nil, termsAndConditionsUrl: "", shouldWarnAboutBankInterests: nil), generalCoupon: "", coupons: [:], payerPaymentMethods: [], availablePaymentMethods: [], experiments: nil, payerCompliance: nil, configurations: nil, modals: [:], customCharges: nil))) : completion(.failure(PXError(domain: "", code: 0)))
     }
 }
 
-class MercadoPagoServicesTest: XCTestCase {
+final class MercadoPagoServicesTest: XCTestCase {
     var sut: MercadoPagoServices!
 
     var customService: CustomServiceMock!
     var remedyService: RemedyServicesMock!
     var gatewayService: GatewayServicesMock!
-    var paymentService: PaymentServicesMock!
-
+    var checkoutService: CheckoutServicesMock!
 
     override func setUp() {
         super.setUp()
         customService = CustomServiceMock()
         remedyService = RemedyServicesMock()
         gatewayService = GatewayServicesMock()
-        paymentService = PaymentServicesMock()
+        checkoutService = CheckoutServicesMock()
         sut = MercadoPagoServices(publicKey: "Test",
                                   privateKey: "Tests",
                                   customService: customService,
                                   remedyService: remedyService,
                                   gatewayService: gatewayService,
-                                  paymentService: paymentService)
+                                  checkoutService: checkoutService)
     }
 
-    //Has same behavior on success and failure
+    // Has same behavior on success and failure
     func testResetESCCap() {
         var hadCallback = false
         XCTAssertTrue(customService.calledResetESCCap == false)
@@ -251,55 +250,54 @@ class MercadoPagoServicesTest: XCTestCase {
 
     func testGetOpenPrefInitSearchSuccess() {
         var hasError = true
-        XCTAssertTrue(paymentService.calledGetInit == false)
+        XCTAssertTrue(checkoutService.calledGetInit == false)
         sut.getOpenPrefInitSearch(pref: PXCheckoutPreference(preferenceId: ""), cardsWithEsc: [], oneTapEnabled: true, splitEnabled: true, discountParamsConfiguration: nil, flow: nil, charges: [], headers: nil, newCardId: nil) { _ in
             hasError = false
         } failure: { _ in
             hasError = true
         }
 
-
-        XCTAssertTrue(paymentService.calledGetInit == true)
+        XCTAssertTrue(checkoutService.calledGetInit == true)
         XCTAssertTrue(hasError == false)
     }
 
-    func testGetOpenPrefInitSearchFailure() {paymentService.successResponse = false
+    func testGetOpenPrefInitSearchFailure() {checkoutService.successResponse = false
         var hasError = true
-        XCTAssertTrue(paymentService.calledGetInit == false)
+        XCTAssertTrue(checkoutService.calledGetInit == false)
         sut.getOpenPrefInitSearch(pref: PXCheckoutPreference(preferenceId: ""), cardsWithEsc: [], oneTapEnabled: true, splitEnabled: true, discountParamsConfiguration: nil, flow: nil, charges: [], headers: nil, newCardId: nil) { _ in
             hasError = false
         } failure: { _ in
             hasError = true
         }
 
-        XCTAssertTrue(paymentService.calledGetInit == true)
+        XCTAssertTrue(checkoutService.calledGetInit == true)
         XCTAssertTrue(hasError == true)
     }
 
     func testGetClosedPrefInitSearchSuccess() {
         var hasError = true
-        XCTAssertTrue(paymentService.calledGetInit == false)
+        XCTAssertTrue(checkoutService.calledGetInit == false)
         sut.getClosedPrefInitSearch(preferenceId: "", cardsWithEsc: [], oneTapEnabled: true, splitEnabled: true, discountParamsConfiguration: nil, flow: nil, charges: [], headers: nil, newCardId: nil) { _ in
             hasError = false
         } failure: { _ in
             hasError = true
         }
 
-        XCTAssertTrue(paymentService.calledGetInit == true)
+        XCTAssertTrue(checkoutService.calledGetInit == true)
         XCTAssertTrue(hasError == false)
     }
 
     func testGetClosedPrefInitSearchFailure() {
-        paymentService.successResponse = false
+        checkoutService.successResponse = false
         var hasError = true
-        XCTAssertTrue(paymentService.calledGetInit == false)
+        XCTAssertTrue(checkoutService.calledGetInit == false)
         sut.getClosedPrefInitSearch(preferenceId: "", cardsWithEsc: [], oneTapEnabled: true, splitEnabled: true, discountParamsConfiguration: nil, flow: nil, charges: [], headers: nil, newCardId: nil) { _ in
             hasError = false
         } failure: { _ in
             hasError = true
         }
 
-        XCTAssertTrue(paymentService.calledGetInit == true)
+        XCTAssertTrue(checkoutService.calledGetInit == true)
         XCTAssertTrue(hasError == true)
     }
 }

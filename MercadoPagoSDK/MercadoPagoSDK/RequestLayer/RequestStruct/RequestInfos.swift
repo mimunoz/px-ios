@@ -7,12 +7,13 @@ enum HTTPMethodType: String {
     case delete  = "DELETE"
 }
 
-enum BackendEnvironment: String {
+enum BackendEnvironment: String, CaseIterable {
     case alpha = "alpha/"
     case beta = "beta/"
     case prod = "production/"
     case gamma = "gamma/"
 }
+
 
 protocol RequestInfos {
     var baseURL: URL { get }
@@ -48,6 +49,16 @@ extension RequestInfos {
     }
 
     var environment: BackendEnvironment {
+        // Try to match PX_ENVIRONMENT with BackendEnvironment options
+        if let path = Bundle.main.path(forResource: "Info", ofType: "plist"),
+           let infoPlist = NSDictionary(contentsOfFile: path),
+           let pxEnvironment = infoPlist["PX_ENVIRONMENT"] as? String,
+           let environment = BackendEnvironment.init(rawValue: "\(pxEnvironment)/") {
+            // If some option match it's returned
+            return environment
+        }
+
+        // In case there is no match it returns .prod
         return .prod
     }
 

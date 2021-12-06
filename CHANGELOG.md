@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Changed
+- Renamed PaymentService and connected PX_ENVIRONMENT
+
 ### Removed
 - Removed every internal keyword occurrence
 - Removed unused Schemas and Configs

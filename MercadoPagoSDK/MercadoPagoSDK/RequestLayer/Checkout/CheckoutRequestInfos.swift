@@ -1,10 +1,10 @@
 import Foundation
 
-enum PaymentRequestInfos {
+enum CheckoutRequestInfos {
     case getInit(preferenceId: String?, privateKey: String?, body: Data?, headers: [String: String]?)
 }
 
-extension PaymentRequestInfos: RequestInfos {
+extension CheckoutRequestInfos: RequestInfos {
     var endpoint: String {
         switch self {
         case .getInit(let preferenceId, _, _, _):
@@ -13,7 +13,6 @@ extension PaymentRequestInfos: RequestInfos {
             } else {
                 return "px_mobile/v2/checkout"
             }
-
         }
     }
 
@@ -27,25 +26,25 @@ extension PaymentRequestInfos: RequestInfos {
         }
     }
 
-    var headers: [String : String]? {
+    var headers: [String: String]? {
         switch self {
         case .getInit(_, _, _, let header): return header
         }
     }
 
-    var parameters: [String : Any]? {
+    var parameters: [String: Any]? {
         switch self {
-        case .getInit(_, _, _, _): return nil
+        case .getInit: return nil
         }
     }
-    
+
     var accessToken: String? {
         switch self {
         case .getInit(_, let accessToken, _, _):
         if let token = accessToken { return token } else { return nil }
         }
     }
-    
+
     var mockURL: URL? {
         return nil
     }
