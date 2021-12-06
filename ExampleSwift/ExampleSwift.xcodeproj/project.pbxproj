@@ -14,9 +14,7 @@
 		23EDA13E2147DFC90085CA7A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 23EDA13D2147DFC90085CA7A /* Assets.xcassets */; };
 		23EDA1412147DFC90085CA7A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 23EDA13F2147DFC90085CA7A /* LaunchScreen.storyboard */; };
 		3BF796944AEC371EF5E3193D /* Pods_ExampleSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F5AD59E71D4EA2B06CFEEF1 /* Pods_ExampleSwift.framework */; };
-		5A8250B825FBFE6900B64357 /* AlphaConfig.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5A8250B525FBFE6900B64357 /* AlphaConfig.xcconfig */; };
 		5A8250B925FBFE6900B64357 /* DebugConfig.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5A8250B625FBFE6900B64357 /* DebugConfig.xcconfig */; };
-		5A8250BA25FBFE6900B64357 /* ReleaseConfig.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5A8250B725FBFE6900B64357 /* ReleaseConfig.xcconfig */; };
 		5AACB1102641B1CA00A20ED5 /* CustomSplitPaymentProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AACB10F2641B1CA00A20ED5 /* CustomSplitPaymentProcessor.swift */; };
 		5AE825FD2590C8D1002C7F74 /* CustomPaymentProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AE825FC2590C8D1002C7F74 /* CustomPaymentProcessor.swift */; };
 		5AE826012590C8FB002C7F74 /* CustomPXDynamicComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AE826002590C8FB002C7F74 /* CustomPXDynamicComponent.swift */; };
@@ -35,14 +33,11 @@
 		23EDA1402147DFC90085CA7A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		23EDA1422147DFC90085CA7A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3F5AD59E71D4EA2B06CFEEF1 /* Pods_ExampleSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ExampleSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		5A8250B525FBFE6900B64357 /* AlphaConfig.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = AlphaConfig.xcconfig; sourceTree = "<group>"; };
 		5A8250B625FBFE6900B64357 /* DebugConfig.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = DebugConfig.xcconfig; sourceTree = "<group>"; };
-		5A8250B725FBFE6900B64357 /* ReleaseConfig.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = ReleaseConfig.xcconfig; sourceTree = "<group>"; };
 		5AACB10F2641B1CA00A20ED5 /* CustomSplitPaymentProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSplitPaymentProcessor.swift; sourceTree = "<group>"; };
 		5AE825FC2590C8D1002C7F74 /* CustomPaymentProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPaymentProcessor.swift; sourceTree = "<group>"; };
 		5AE826002590C8FB002C7F74 /* CustomPXDynamicComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPXDynamicComponent.swift; sourceTree = "<group>"; };
 		5AE826222590D100002C7F74 /* CustomPXDynamicComponentView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CustomPXDynamicComponentView.xib; sourceTree = "<group>"; };
-		5AE9791B259B89BF00D32A84 /* Config.example.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.example.xcconfig; sourceTree = "<group>"; };
 		99370F01A1046BF2A7CF23EC /* Pods-ExampleSwift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ExampleSwift.release.xcconfig"; path = "Pods/Target Support Files/Pods-ExampleSwift/Pods-ExampleSwift.release.xcconfig"; sourceTree = "<group>"; };
 		A36F0F1A24DC3E7D00F3457D /* CongratsSelectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CongratsSelectorViewController.swift; sourceTree = "<group>"; };
 		D6B5A38D3B18B42D3F014D32 /* Pods-ExampleSwift.alpha.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ExampleSwift.alpha.xcconfig"; path = "Pods/Target Support Files/Pods-ExampleSwift/Pods-ExampleSwift.alpha.xcconfig"; sourceTree = "<group>"; };
@@ -105,12 +100,9 @@
 		23EDA1492147DFF30085CA7A /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				5A8250B525FBFE6900B64357 /* AlphaConfig.xcconfig */,
 				5A8250B625FBFE6900B64357 /* DebugConfig.xcconfig */,
-				5A8250B725FBFE6900B64357 /* ReleaseConfig.xcconfig */,
 				23EDA13D2147DFC90085CA7A /* Assets.xcassets */,
 				23EDA1422147DFC90085CA7A /* Info.plist */,
-				5AE9791B259B89BF00D32A84 /* Config.example.xcconfig */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -220,10 +212,8 @@
 				23EDA1412147DFC90085CA7A /* LaunchScreen.storyboard in Resources */,
 				23EDA13E2147DFC90085CA7A /* Assets.xcassets in Resources */,
 				5A8250B925FBFE6900B64357 /* DebugConfig.xcconfig in Resources */,
-				5A8250B825FBFE6900B64357 /* AlphaConfig.xcconfig in Resources */,
 				5AE826232590D100002C7F74 /* CustomPXDynamicComponentView.xib in Resources */,
 				23EDA13C2147DFC90085CA7A /* Main.storyboard in Resources */,
-				5A8250BA25FBFE6900B64357 /* ReleaseConfig.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -407,6 +397,7 @@
 		};
 		23EDA1442147DFC90085CA7A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5A8250B625FBFE6900B64357 /* DebugConfig.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -492,76 +483,6 @@
 			};
 			name = Release;
 		};
-		5AE8259D258B80AD002C7F74 /* Alpha */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				SDKROOT = iphoneos;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = PX_PRIVATE_POD;
-				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Alpha;
-		};
-		5AE8259E258B80AD002C7F74 /* Alpha */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = D6B5A38D3B18B42D3F014D32 /* Pods-ExampleSwift.alpha.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = G3C6XQTJW2;
-				INFOPLIST_FILE = "$(SRCROOT)/ExampleSwift/Resources/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MP_ENVIRONMENT = alpha;
-				PRODUCT_BUNDLE_IDENTIFIER = JS.ExampleSwift;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Alpha;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -570,7 +491,6 @@
 			buildConfigurations = (
 				23EDA1432147DFC90085CA7A /* Debug */,
 				23EDA1442147DFC90085CA7A /* Release */,
-				5AE8259D258B80AD002C7F74 /* Alpha */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -580,7 +500,6 @@
 			buildConfigurations = (
 				23EDA1462147DFC90085CA7A /* Debug */,
 				23EDA1472147DFC90085CA7A /* Release */,
-				5AE8259E258B80AD002C7F74 /* Alpha */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
