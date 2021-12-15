@@ -5,6 +5,12 @@ import AndesUI
 import MLCardDrawer
 
 final class PXOneTapViewController: MercadoPagoUIViewController {
+    // MARK: Constants
+
+    private struct OneTapUI {
+        static let headerViewAlpha: CGFloat = 1
+    }
+
     // MARK: Definitions
     lazy var itemViews = [UIView]()
     fileprivate var viewModel: PXOneTapViewModel
@@ -35,6 +41,7 @@ final class PXOneTapViewController: MercadoPagoUIViewController {
     var shouldTrackModal: Bool = false
     var currentModalDismissTrackingProperties: [String: Any]?
     let timeOutPayButton: TimeInterval
+    var shouldHideOneTapNavBar: Bool = false
 
     var shouldPromptForOfflineMethods = true
     private var navigationBarTapGesture: UITapGestureRecognizer?
@@ -69,6 +76,7 @@ final class PXOneTapViewController: MercadoPagoUIViewController {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         super.shouldHideNavigationBar = true
@@ -87,6 +95,9 @@ final class PXOneTapViewController: MercadoPagoUIViewController {
         unsubscribeFromNotifications()
         removePulseViewNotifications()
         removeNavigationTapGesture()
+        navigationController?.setNavigationBarHidden(shouldHideOneTapNavBar, animated: animated)
+        cardSliderContentView?.layer.masksToBounds = true
+        shouldHideOneTapNavBar = false
     }
 
     override func viewDidDisappear(_ animated: Bool) {
@@ -160,7 +171,8 @@ extension PXOneTapViewController {
     }
 
     private func setupUI() {
-        view.backgroundColor = .clear
+        headerView?.alpha = OneTapUI.headerViewAlpha
+        view.backgroundColor = ThemeManager.shared.navigationBar().backgroundColor
         if view.subviews.isEmpty {
             viewModel.createCardSliderViewModel(cardType: cardType)
             if let preSelectedCard = viewModel.getCardSliderViewModel().first {
@@ -186,6 +198,7 @@ extension PXOneTapViewController {
         contentView.addBackground(color: UIColor.Andes.white)
         view.addSubview(contentView)
 
+        PXLayout.matchWidth(ofView: contentView)
         PXLayout.setHeight(owner: contentView, height: contentViewHeight)
         PXLayout.pinBottom(view: contentView)
 
@@ -255,7 +268,8 @@ extension PXOneTapViewController {
         view.layoutIfNeeded()
 
         NSLayoutConstraint.activate([
-            cardSliderContentView.heightAnchor.constraint(equalTo: cardSliderContentView.widthAnchor, multiplier: PXCardSliderSizeManager.aspectRatio(forType: cardType))
+            cardSliderContentView.heightAnchor.constraint(equalTo: cardSliderContentView.widthAnchor, multiplier: PXCardSliderSizeManager.aspectRatio(forType: cardType)),
+            cardSliderContentView.leadingAnchor.constraint(equalTo: whiteView.leadingAnchor)
         ])
 
         // Render installmentInfoRow based on cardSlider known width
@@ -795,6 +809,7 @@ extension PXOneTapViewController: PXCardSliderProtocol {
     }
 
     func addNewOfflineDidTap() {
+        shouldHideOneTapNavBar = true
         shouldAddNewOfflineMethod()
     }
 

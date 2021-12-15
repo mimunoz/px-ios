@@ -35,11 +35,7 @@ class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDelegate
         navigationController?.interactivePopGestureRecognizer?.isEnabled = false
         self.loadMPStyles()
 
-        if shouldHideNavigationBar {
-            navigationController?.setNavigationBarHidden(true, animated: false)
-        } else {
-            navigationController?.setNavigationBarHidden(false, animated: false)
-        }
+        navigationController?.setNavigationBarHidden(shouldHideNavigationBar, animated: false)
 
         /**
          The following line is to temporarily fix the MLHeaderBehaviour issue in Mercado Libre. ML places a view in the navigation

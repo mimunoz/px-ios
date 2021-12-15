@@ -169,7 +169,7 @@ class PXOneTapSummaryRowView: UIView {
             titleLabel.font = titleFont
             addSubview(titleLabel)
             PXLayout.pinLeft(view: titleLabel, withMargin: PXLayout.L_MARGIN).isActive = true
-            titleLabel.trailingAnchor.constraint(lessThanOrEqualTo: valueLabel.leadingAnchor).isActive = true
+            titleLabel.trailingAnchor.constraint(lessThanOrEqualTo: valueLabel.leadingAnchor, constant: -PXLayout.M_MARGIN).isActive = true
             PXLayout.centerVertically(view: titleLabel).isActive = true
 
             buildAndAddIconImageView()
@@ -280,7 +280,7 @@ private extension PXOneTapSummaryRowView {
 
         NSLayoutConstraint.activate([
             brief.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
-            brief.widthAnchor.constraint(equalToConstant: Constants.briefWidth),
+            brief.trailingAnchor.constraint(equalTo: valueLabel.leadingAnchor, constant: -PXLayout.XXXS_MARGIN),
             brief.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 5)
         ])
     }

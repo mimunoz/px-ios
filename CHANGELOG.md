@@ -13,6 +13,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Removed every internal keyword occurrence
 - Removed unused Schemas and Configs
 
+### Fixed
+- Fixes restyling
+
 ## v4.51.0
 🚀 Private Release - 4.51.0 date: 02/12/2021 🚀
 - Add the checkout_type field to the checkout request

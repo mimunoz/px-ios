@@ -65,6 +65,7 @@ class PXNewResultViewController: MercadoPagoUIViewController {
         unsubscribeFromKeyboardNotifications()
         // Cancel the work item so it doesn't run
         autoReturnWorkItem?.cancel()
+        navigationController?.setNavigationBarHidden(false, animated: animated)
     }
 
     override func viewDidDisappear(_ animated: Bool) {
