@@ -10,7 +10,7 @@ open class PXPaymentConfiguration: NSObject {
     private let splitPaymentProcessor: PXSplitPaymentProcessor
     private var chargeRules: [PXPaymentTypeChargeRule] = [PXPaymentTypeChargeRule]()
     private var paymentMethodPlugins: [PXPaymentMethodPlugin] = [PXPaymentMethodPlugin]()
-    private var choiceProcessorType: PXCheckoutType = .DEFAULT_REGULAR
+    private var choiceProcessorType: PXCheckoutType?
 
     // MARK: Init.
     /**
@@ -19,16 +19,17 @@ open class PXPaymentConfiguration: NSObject {
      */
     public init(paymentProcessor: PXPaymentProcessor) {
         self.splitPaymentProcessor = PXPaymentProcessorAdapter(paymentProcessor: paymentProcessor)
+        self.choiceProcessorType = splitPaymentProcessor.getProcessorType?()
     }
 
     public init(splitPaymentProcessor: PXSplitPaymentProcessor) {
+        self.choiceProcessorType = splitPaymentProcessor.getProcessorType?()
         self.splitPaymentProcessor = splitPaymentProcessor
-        self.choiceProcessorType = .CUSTOM_REGULAR
     }
 
     public init(scheduledPaymentProcessor: PXPaymentProcessor) {
         self.splitPaymentProcessor = PXScheduledPaymentProcessorAdapter(paymentProcessor: scheduledPaymentProcessor)
-        self.choiceProcessorType = .CUSTOM_SCHEDULED
+        self.choiceProcessorType = splitPaymentProcessor.getProcessorType?()
     }
 }
 
@@ -71,14 +72,14 @@ extension PXPaymentConfiguration {
 }
 
 extension PXPaymentConfiguration {
-    func getProcessorType() -> String {
-        switch choiceProcessorType {
+    internal func getProcessorType() -> String? {
+        switch choiceProcessorType ?? .CUSTOM_REGULAR {
         case .CUSTOM_SCHEDULED:
-            return PXCheckoutType.CUSTOM_SCHEDULED.rawValue
+            return PXCheckoutType.CUSTOM_SCHEDULED.getString()
         case .CUSTOM_REGULAR:
-            return PXCheckoutType.CUSTOM_REGULAR.rawValue
+            return PXCheckoutType.CUSTOM_REGULAR.getString()
         case .DEFAULT_REGULAR:
-            return PXCheckoutType.DEFAULT_REGULAR.rawValue
+            return PXCheckoutType.DEFAULT_REGULAR.getString()
         }
     }
 }

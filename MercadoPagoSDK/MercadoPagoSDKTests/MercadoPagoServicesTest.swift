@@ -98,7 +98,8 @@ final class MercadoPagoServicesTest: XCTestCase {
                                   customService: customService,
                                   remedyService: remedyService,
                                   gatewayService: gatewayService,
-                                  checkoutService: checkoutService)
+                                  checkoutService: checkoutService,
+                                  checkoutType: nil)
     }
 
     // Has same behavior on success and failure

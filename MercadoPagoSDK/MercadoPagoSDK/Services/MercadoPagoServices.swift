@@ -31,7 +31,7 @@ class MercadoPagoServices: NSObject {
         remedyService: RemedyService = RemedyServiceImpl(),
         gatewayService: TokenService = TokenServiceImpl(),
         checkoutService: CheckoutService = CheckoutServiceImpl(),
-        checkoutType: String? = nil
+        checkoutType: String?
     ) {
         self.publicKey = publicKey
         self.privateKey = privateKey
@@ -39,7 +39,7 @@ class MercadoPagoServices: NSObject {
         self.remedyService = remedyService
         self.gatewayService = gatewayService
         self.checkoutService = checkoutService
-        self.checkoutType = checkoutType
+        self.checkoutType = checkoutType ?? PXCheckoutType.DEFAULT_REGULAR.getString()
         super.init()
         addReachabilityObserver()
     }

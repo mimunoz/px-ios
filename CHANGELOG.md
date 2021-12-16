@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Unreleased
 
 ### Changed
+- New way to process payment scheduled
 - Renamed PaymentService and connected PX_ENVIRONMENT
 
 ### Removed

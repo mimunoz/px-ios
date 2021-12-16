@@ -43,4 +43,6 @@ import Foundation
      Optional method to skip Review and Confirm screen/step in checkout flow.
      */
     @objc optional func shouldSkipUserConfirmation() -> Bool
+
+    @objc optional func getProcessorType() -> PXCheckoutType
 }

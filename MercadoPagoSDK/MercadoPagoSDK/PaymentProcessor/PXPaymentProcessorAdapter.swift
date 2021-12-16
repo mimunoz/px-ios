@@ -1,7 +1,7 @@
 import Foundation
 
 public class PXPaymentProcessorAdapter: NSObject, PXSplitPaymentProcessor {
-    let paymentProcessor: PXPaymentProcessor
+    public let paymentProcessor: PXPaymentProcessor
 
     init(paymentProcessor: PXPaymentProcessor) {
         self.paymentProcessor = paymentProcessor
@@ -19,7 +19,7 @@ public class PXPaymentProcessorAdapter: NSObject, PXSplitPaymentProcessor {
         return false
     }
 
-    func startPayment(checkoutStore: PXCheckoutStore, errorHandler: PXPaymentProcessorErrorHandler, successWithBasePayment: @escaping ((PXBasePayment) -> Void)) {
+    public func startPayment(checkoutStore: PXCheckoutStore, errorHandler: PXPaymentProcessorErrorHandler, successWithBasePayment: @escaping ((PXBasePayment) -> Void)) {
         paymentProcessor.startPayment?(checkoutStore: checkoutStore, errorHandler: errorHandler, successWithBusinessResult: { businessResult in
             successWithBasePayment(businessResult)
         }, successWithPaymentResult: { genericPayment in
@@ -27,15 +27,19 @@ public class PXPaymentProcessorAdapter: NSObject, PXSplitPaymentProcessor {
         })
     }
 
-    func didReceive(checkoutStore: PXCheckoutStore) {
+    public func didReceive(checkoutStore: PXCheckoutStore) {
         paymentProcessor.didReceive?(checkoutStore: checkoutStore)
     }
 
-    func didReceive(navigationHandler: PXPaymentProcessorNavigationHandler) {
+    public func didReceive(navigationHandler: PXPaymentProcessorNavigationHandler) {
         paymentProcessor.didReceive?(navigationHandler: navigationHandler)
     }
 
-    func paymentTimeOut() -> Double {
+    public func paymentTimeOut() -> Double {
         return paymentProcessor.paymentTimeOut?() ?? 0
+    }
+
+    public func getProcessorType() -> PXCheckoutType {
+        return .CUSTOM_REGULAR
     }
 }

@@ -14,6 +14,7 @@
 		23EDA13E2147DFC90085CA7A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 23EDA13D2147DFC90085CA7A /* Assets.xcassets */; };
 		23EDA1412147DFC90085CA7A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 23EDA13F2147DFC90085CA7A /* LaunchScreen.storyboard */; };
 		3BF796944AEC371EF5E3193D /* Pods_ExampleSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F5AD59E71D4EA2B06CFEEF1 /* Pods_ExampleSwift.framework */; };
+		5A712D6B2768C8B5006A8604 /* ScheduledPaymentProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5A712D6A2768C8B5006A8604 /* ScheduledPaymentProcessor.swift */; };
 		5A8250B925FBFE6900B64357 /* DebugConfig.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 5A8250B625FBFE6900B64357 /* DebugConfig.xcconfig */; };
 		5AACB1102641B1CA00A20ED5 /* CustomSplitPaymentProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AACB10F2641B1CA00A20ED5 /* CustomSplitPaymentProcessor.swift */; };
 		5AE825FD2590C8D1002C7F74 /* CustomPaymentProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AE825FC2590C8D1002C7F74 /* CustomPaymentProcessor.swift */; };
@@ -33,6 +34,7 @@
 		23EDA1402147DFC90085CA7A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		23EDA1422147DFC90085CA7A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3F5AD59E71D4EA2B06CFEEF1 /* Pods_ExampleSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ExampleSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5A712D6A2768C8B5006A8604 /* ScheduledPaymentProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduledPaymentProcessor.swift; sourceTree = "<group>"; };
 		5A8250B625FBFE6900B64357 /* DebugConfig.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = DebugConfig.xcconfig; sourceTree = "<group>"; };
 		5AACB10F2641B1CA00A20ED5 /* CustomSplitPaymentProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSplitPaymentProcessor.swift; sourceTree = "<group>"; };
 		5AE825FC2590C8D1002C7F74 /* CustomPaymentProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPaymentProcessor.swift; sourceTree = "<group>"; };
@@ -132,6 +134,7 @@
 				5AE826002590C8FB002C7F74 /* CustomPXDynamicComponent.swift */,
 				129B9D452615195E00127DC6 /* DataExtensions.swift */,
 				5AACB10F2641B1CA00A20ED5 /* CustomSplitPaymentProcessor.swift */,
+				5A712D6A2768C8B5006A8604 /* ScheduledPaymentProcessor.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -282,6 +285,7 @@
 				"${BUILT_PRODUCTS_DIR}/FXBlurView/FXBlurView.framework",
 				"${BUILT_PRODUCTS_DIR}/JRSwizzle/JRSwizzle.framework",
 				"${BUILT_PRODUCTS_DIR}/MLUI/MLUI.framework",
+				"${BUILT_PRODUCTS_DIR}/PureLayout/PureLayout.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -289,6 +293,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/FXBlurView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JRSwizzle.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MLUI.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PureLayout.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -306,6 +311,7 @@
 				A36F0F1B24DC3E7D00F3457D /* CongratsSelectorViewController.swift in Sources */,
 				23EDA1392147DFC90085CA7A /* ViewController.swift in Sources */,
 				5AACB1102641B1CA00A20ED5 /* CustomSplitPaymentProcessor.swift in Sources */,
+				5A712D6B2768C8B5006A8604 /* ScheduledPaymentProcessor.swift in Sources */,
 				23EDA1372147DFC90085CA7A /* AppDelegate.swift in Sources */,
 				129B9D462615195E00127DC6 /* DataExtensions.swift in Sources */,
 				5AE826012590C8FB002C7F74 /* CustomPXDynamicComponent.swift in Sources */,

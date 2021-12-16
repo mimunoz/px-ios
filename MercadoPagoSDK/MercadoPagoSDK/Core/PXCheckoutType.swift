@@ -1,7 +1,15 @@
 import Foundation
 
-public enum PXCheckoutType: String {
-    case CUSTOM_SCHEDULED = "scheduled"
-    case DEFAULT_REGULAR = "default_regular"
-    case CUSTOM_REGULAR = "regular"
+@objc public enum PXCheckoutType: Int {
+    case CUSTOM_SCHEDULED
+    case DEFAULT_REGULAR
+    case CUSTOM_REGULAR
+
+    func getString() -> String {
+        switch self {
+        case .CUSTOM_SCHEDULED: return "scheduled"
+        case .DEFAULT_REGULAR: return "default_regular"
+        case .CUSTOM_REGULAR: return "regular"
+        }
+    }
 }
