@@ -325,9 +325,9 @@ DEPENDENCIES
   danger (~> 8.4.1)
   danger-swiftlint
   danger-xcov
-  fastlane (~> 2.55)
+  fastlane (~> 2.199.0)
   git_diff_parser
   json
 
 BUNDLED WITH
-   2.0.2
+   2.2.31

@@ -342,16 +342,9 @@ final class PXRemedyView: UIView {
                 }
             }
         } else {
-            // Caso account money
-            if let splitAccountMoneyAmount = paymentData.getTransactionAmountWithDiscount() {
-                let string = Utils.getAmountFormated(amount: splitAccountMoneyAmount, forCurrency: currency)
-                let attributed = NSAttributedString(string: string, attributes: PXNewCustomView.titleAttributes)
-                firstString.append(attributed)
-            } else {
-                let string = Utils.getAmountFormated(amount: amountHelper.amountToPay, forCurrency: currency)
-                let attributed = NSAttributedString(string: string, attributes: PXNewCustomView.titleAttributes)
-                firstString.append(attributed)
-            }
+            let string = Utils.getAmountFormated(amount: amountHelper.amountToPay, forCurrency: currency)
+            let attributed = NSAttributedString(string: string, attributes: PXNewCustomView.titleAttributes)
+            firstString.append(attributed)
         }
 
         // Discount

@@ -1,6 +1,6 @@
 # This is the minimum version number required.
 # Update this, if you use features of a newer version
-fastlane_version "2.55.0"
+fastlane_version "2.199.0"
 
 # Disable Fastlane crash reporting because we're using UI.* methods for our custom errors and those aren't Fastlane bugs.
 opt_out_usage
@@ -112,20 +112,19 @@ lane :deploy_private do
 end
 
 lane :pr_check do
-  UI.success 'Bypass'
-  # cocoapods(
-  #   clean_install: true,
-  #   podfile: "./ExampleSwift/Podfile"
-  # )
-  # run_tests(
-  #   workspace: "ExampleSwift/ExampleSwift.xcworkspace",
-  #   scheme: "ExampleSwift"
-  # )
-  # danger(
-  #   danger_id: "danger_pr",
-  #   verbose: true,
-  #   github_api_token: ENV["GITHUB_API_TOKEN"]
-  # )
+  cocoapods(
+    clean_install: true,
+    podfile: "./ExampleSwift/Podfile"
+  )
+  run_tests(
+    workspace: "ExampleSwift/ExampleSwift.xcworkspace",
+    scheme: "ExampleSwift"
+  )
+  danger(
+    danger_id: "danger_pr",
+    verbose: true,
+    github_api_token: ENV["GITHUB_API_TOKEN"]
+  )
 end
 
 lane :communicate_build_to_slack do |options|
