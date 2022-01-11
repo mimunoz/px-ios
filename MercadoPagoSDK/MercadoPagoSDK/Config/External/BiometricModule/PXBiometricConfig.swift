@@ -29,7 +29,7 @@ extension PXBiometricConfig {
     }
 
     static func createConfig(withFlowIdentifier: String? = nil, andAmount: NSDecimalNumber? = nil) -> PXBiometricConfig {
-        let pxProductId: String = "BJEO9TFBF6RG01IIIOU0"
+        let pxProductId: String = "BJEO9NVBF6RG01IIIOTG"
         var defaultConfig = PXBiometricConfig(pxProductId)
 
         if let flowIdentifier = withFlowIdentifier {

@@ -39,7 +39,7 @@ if !tile_is_well_formated
   fail "The PR title should follow the title convetion: (Added,Changed,Deprecated,Removed,Fixed,Security)[JIRA-XXX] - (brief description here)"
 else 
   has_app_changes = !git.modified_files.grep(/MercadoPagoSDK\/MercadoPagoSDK\//).empty?
-  has_title_in_changelog = title_description.match?(File.read("CHANGELOG.md"))
+  has_title_in_changelog = File.read(“CHANGELOG.md”).include?(title_description)
   if has_app_changes && !has_title_in_changelog
     fail("Please include a [CHANGELOG.md](https://github.com/mercadopago/px-ios/blob/develop/CHANGELOG.md) entry. The changelog entry should be equal to the PR title in the correct section: " + title_description)
   end

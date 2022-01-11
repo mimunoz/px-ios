@@ -27,7 +27,7 @@ enum HeaderFields: String {
 
 final class Request<Target: RequestInfos>: RequestProtocol {
     // MARK: - Perivate properties
-    private let defaultProductId = "BJEO9TFBF6RG01IIIOU0"
+    private let defaultProductId = "BJEO9NVBF6RG01IIIOTG"
     // MARK: - Public methods
     func requestObject<Model>(model: Model.Type, _ target: Target, completionHandler: @escaping (Swift.Result<Model, Error>) -> Void) where Model: Codable {
         guard let targetURL = URL(string: "\(target.baseURL)\(target.shouldSetEnvironment ?  target.environment.rawValue : "")\(target.endpoint.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")") else {

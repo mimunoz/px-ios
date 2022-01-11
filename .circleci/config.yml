@@ -34,6 +34,7 @@ jobs:
             name: Build and run tests
             command: |
               cd ExampleSwift
+              bundle install
               bundle exec pod update && pod install
               bundle update fastlane
               bundle exec fastlane scan

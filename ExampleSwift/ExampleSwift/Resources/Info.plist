@@ -20,6 +20,12 @@
 	<string>1</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>PX_COLLECTOR_PUBLIC_KEY</key>
+	<string>${PX_COLLECTOR_PUBLIC_KEY}</string>
+	<key>PX_ENVIRONMENT</key>
+	<string>${PX_ENVIRONMENT}</string>
+	<key>PX_PAYER_PRIVATE_KEY</key>
+	<string>${PX_PAYER_PRIVATE_KEY}</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
@@ -41,11 +47,5 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>PX_ENVIRONMENT</key>
-	<string>${PX_ENVIRONMENT}</string>
-	<key>PX_COLLECTOR_PUBLIC_KEY</key>
-	<string>${PX_COLLECTOR_PUBLIC_KEY}</string>
-	<key>PX_PAYER_PRIVATE_KEY</key>
-	<string>${PX_PAYER_PRIVATE_KEY}</string>
 </dict>
 </plist>

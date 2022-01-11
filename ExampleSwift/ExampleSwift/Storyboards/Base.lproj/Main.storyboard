@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="nVh-4Y-Mjr">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="nVh-4Y-Mjr">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -21,6 +21,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Ik-LC-Wqd">
                                 <rect key="frame" x="16" y="71" width="343" height="44"/>
                                 <color key="backgroundColor" name="andes-blue-ml-500"/>
+                                <accessibility key="accessibilityConfiguration" identifier="btnInitDefault"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="XgU-4A-gaf"/>
                                 </constraints>
@@ -34,6 +35,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Yu-7c-2ky">
                                 <rect key="frame" x="16" y="123" width="343" height="44"/>
                                 <color key="backgroundColor" name="andes-blue-ml-400"/>
+                                <accessibility key="accessibilityConfiguration" identifier="btnInitCustom"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="Oys-cD-Cxo"/>
                                 </constraints>
@@ -47,6 +49,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0VE-v2-udc">
                                 <rect key="frame" x="16" y="175" width="343" height="44"/>
                                 <color key="backgroundColor" name="andes-blue-ml-500"/>
+                                <accessibility key="accessibilityConfiguration" identifier="btnInitCongrats"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="wZH-Sm-Ltq"/>
                                 </constraints>
@@ -92,7 +95,7 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="congratsRow" rowHeight="46" id="oRc-db-ieJ">
-                                <rect key="frame" x="0.0" y="28" width="375" height="46"/>
+                                <rect key="frame" x="0.0" y="44.5" width="375" height="46"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="oRc-db-ieJ" id="GXh-gg-CKB">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="46"/>
@@ -123,7 +126,7 @@
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Locale" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="09F-Rj-EZo">
                                 <rect key="frame" x="16" y="61" width="343" height="34"/>
-                                <accessibility key="accessibilityConfiguration" label="localeInput"/>
+                                <accessibility key="accessibilityConfiguration" identifier="txtLocale" label="localeInput"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="34" id="fE9-L9-KFC"/>
                                 </constraints>
@@ -135,7 +138,7 @@
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Public Key" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dPD-W0-adk">
                                 <rect key="frame" x="16" y="103" width="343" height="34"/>
-                                <accessibility key="accessibilityConfiguration" label="publicKeyInput"/>
+                                <accessibility key="accessibilityConfiguration" identifier="txtPublicKey" label="publicKeyInput"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="34" id="84K-lx-OOd"/>
                                 </constraints>
@@ -147,7 +150,7 @@
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Preference Id" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Exj-zd-9jV">
                                 <rect key="frame" x="16" y="145" width="343" height="34"/>
-                                <accessibility key="accessibilityConfiguration" label="preferenceIdInput"/>
+                                <accessibility key="accessibilityConfiguration" identifier="txtPreferenceId" label="preferenceIdInput"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="34" id="m97-VY-d0M"/>
                                 </constraints>
@@ -159,7 +162,7 @@
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Access token" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="LKu-HW-2LE">
                                 <rect key="frame" x="16" y="187" width="343" height="34"/>
-                                <accessibility key="accessibilityConfiguration" label="accessTokenInput"/>
+                                <accessibility key="accessibilityConfiguration" identifier="txtAccessToken" label="accessTokenInput"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="34" id="S2Q-9n-hhr"/>
                                 </constraints>
@@ -180,7 +183,7 @@
                             </label>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xWW-3B-9f3">
                                 <rect key="frame" x="310" y="229" width="51" height="31"/>
-                                <accessibility key="accessibilityConfiguration" label="one_tap"/>
+                                <accessibility key="accessibilityConfiguration" identifier="optOneTap" label="one_tap"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="31" id="6kE-rI-o7e"/>
                                 </constraints>
@@ -188,7 +191,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mSv-5z-ciZ">
                                 <rect key="frame" x="16" y="268" width="343" height="44"/>
                                 <color key="backgroundColor" name="andes-blue-ml-500"/>
-                                <accessibility key="accessibilityConfiguration" label="startButton"/>
+                                <accessibility key="accessibilityConfiguration" identifier="btnInitCheckOut" label="startButton"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="dl8-nM-ZiB"/>
                                 </constraints>
@@ -202,6 +205,7 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k0A-l3-JH8">
                                 <rect key="frame" x="16" y="320" width="343" height="44"/>
                                 <color key="backgroundColor" name="andes-orange-500"/>
+                                <accessibility key="accessibilityConfiguration" identifier="btnReset"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="NGs-Uv-rW1"/>
                                 </constraints>

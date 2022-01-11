@@ -263,6 +263,7 @@ private extension PXSecurityCodeViewController {
         andesTextFieldCode = AndesTextFieldCode(label: viewModel.getAndesTextFieldCodeLabel(), helpLabel: nil, style: viewModel.getAndesTextFieldCodeStyle(), state: .IDLE)
         andesTextFieldCode.delegate = self
         andesTextFieldCode.alpha = 0
+        andesTextFieldCode.accessibilityIdentifier = "securityCode"
         view.addSubview(andesTextFieldCode)
     }
 
