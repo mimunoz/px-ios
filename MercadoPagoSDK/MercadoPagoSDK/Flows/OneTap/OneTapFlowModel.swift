@@ -12,6 +12,7 @@ final class OneTapFlowModel: PXFlowModel {
         case service3DS
         case payment
     }
+    var hasPostPaymentFlow = false
     var publicKey: String = ""
     var privateKey: String?
     var siteId: String = ""
@@ -54,6 +55,7 @@ final class OneTapFlowModel: PXFlowModel {
     let paymentConfigurationService: PXPaymentConfigurationServices
 
     init(checkoutViewModel: MercadoPagoCheckoutViewModel, search: PXInitDTO, paymentOptionSelected: PaymentMethodOption?) {
+        hasPostPaymentFlow = checkoutViewModel.postPaymentNotificationName != nil
         publicKey = checkoutViewModel.publicKey
         privateKey = checkoutViewModel.privateKey
         siteId = checkoutViewModel.search?.site.id ?? ""

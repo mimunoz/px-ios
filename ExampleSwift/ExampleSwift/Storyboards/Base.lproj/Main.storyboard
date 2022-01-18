@@ -10,6 +10,16 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--CustomPXPostPayment-->
+        <scene sceneID="DGu-f6-gDA">
+            <objects>
+                <viewControllerPlaceholder storyboardName="CustomPXPostPayment" id="2eu-ki-d8V" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="EHb-Wj-a2f"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1Ua-TB-6QT" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1802" y="326"/>
+        </scene>
         <!--MercadoPagoSDK-->
         <scene sceneID="tne-QT-ifu">
             <objects>
@@ -60,16 +70,32 @@
                                     <segue destination="j0W-b8-ecM" kind="show" id="Di0-iN-rcK"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1I4-w7-6xK">
+                                <rect key="frame" x="16" y="227" width="343" height="44"/>
+                                <color key="backgroundColor" name="andes-blue-ml-500"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="FbS-3T-feI"/>
+                                </constraints>
+                                <state key="normal" title="Iniciar con flujo post pago">
+                                    <color key="titleColor" name="andes-text-color-white"/>
+                                </state>
+                                <connections>
+                                    <segue destination="2eu-ki-d8V" kind="show" id="n9b-Xe-2ys"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="0Yu-7c-2ky" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="46G-Ha-gHW"/>
+                            <constraint firstItem="1I4-w7-6xK" firstAttribute="top" secondItem="0VE-v2-udc" secondAttribute="bottom" constant="8" id="5aY-IM-zpd"/>
                             <constraint firstItem="1Ik-LC-Wqd" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="27" id="J0L-cY-VoC"/>
                             <constraint firstItem="1Ik-LC-Wqd" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="Mrf-xv-I3Q"/>
+                            <constraint firstItem="1I4-w7-6xK" firstAttribute="trailing" secondItem="0VE-v2-udc" secondAttribute="trailing" id="SE0-my-uaL"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="0Yu-7c-2ky" secondAttribute="trailing" constant="16" id="duv-UE-5n1"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="1Ik-LC-Wqd" secondAttribute="trailing" constant="16" id="j0g-1M-3Yj"/>
                             <constraint firstItem="0VE-v2-udc" firstAttribute="width" secondItem="0Yu-7c-2ky" secondAttribute="width" id="nJf-qw-Wlr"/>
+                            <constraint firstItem="1I4-w7-6xK" firstAttribute="leading" secondItem="0VE-v2-udc" secondAttribute="leading" id="oZU-3s-eoC"/>
                             <constraint firstItem="0VE-v2-udc" firstAttribute="trailing" secondItem="0Yu-7c-2ky" secondAttribute="trailing" id="s6b-NA-rld"/>
                             <constraint firstItem="0VE-v2-udc" firstAttribute="height" secondItem="0Yu-7c-2ky" secondAttribute="height" id="sT8-c7-rYH"/>
                             <constraint firstItem="0VE-v2-udc" firstAttribute="top" secondItem="0Yu-7c-2ky" secondAttribute="bottom" constant="8" id="yYU-k2-X6b"/>

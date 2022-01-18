@@ -21,6 +21,10 @@
 		5AE826012590C8FB002C7F74 /* CustomPXDynamicComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AE826002590C8FB002C7F74 /* CustomPXDynamicComponent.swift */; };
 		5AE826232590D100002C7F74 /* CustomPXDynamicComponentView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5AE826222590D100002C7F74 /* CustomPXDynamicComponentView.xib */; };
 		A36F0F1B24DC3E7D00F3457D /* CongratsSelectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A36F0F1A24DC3E7D00F3457D /* CongratsSelectorViewController.swift */; };
+		F507E41827678DAD000FA306 /* CustomPXPostPayment.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F507E41727678DAD000FA306 /* CustomPXPostPayment.storyboard */; };
+		F507E41A27678F65000FA306 /* CustomCheckoutWithPostPaymentController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F507E41927678F65000FA306 /* CustomCheckoutWithPostPaymentController.swift */; };
+		F58D1D072772DF7200D5A36E /* CustomPostPaymentProcessor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F58D1D062772DF7200D5A36E /* CustomPostPaymentProcessor.swift */; };
+		F58D1D0D277A393600D5A36E /* PostPaymentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F58D1D0C277A393600D5A36E /* PostPaymentViewController.swift */; };
 		F9DF596424803FFD00B1FDBF /* CustomCheckoutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9DF596324803FFD00B1FDBF /* CustomCheckoutViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -44,6 +48,10 @@
 		A36F0F1A24DC3E7D00F3457D /* CongratsSelectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CongratsSelectorViewController.swift; sourceTree = "<group>"; };
 		D6B5A38D3B18B42D3F014D32 /* Pods-ExampleSwift.alpha.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ExampleSwift.alpha.xcconfig"; path = "Pods/Target Support Files/Pods-ExampleSwift/Pods-ExampleSwift.alpha.xcconfig"; sourceTree = "<group>"; };
 		DFDCC3FA5A49D0CD1D1BD714 /* Pods-ExampleSwift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ExampleSwift.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ExampleSwift/Pods-ExampleSwift.debug.xcconfig"; sourceTree = "<group>"; };
+		F507E41727678DAD000FA306 /* CustomPXPostPayment.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CustomPXPostPayment.storyboard; sourceTree = "<group>"; };
+		F507E41927678F65000FA306 /* CustomCheckoutWithPostPaymentController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCheckoutWithPostPaymentController.swift; sourceTree = "<group>"; };
+		F58D1D062772DF7200D5A36E /* CustomPostPaymentProcessor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPostPaymentProcessor.swift; sourceTree = "<group>"; };
+		F58D1D0C277A393600D5A36E /* PostPaymentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostPaymentViewController.swift; sourceTree = "<group>"; };
 		F9DF596324803FFD00B1FDBF /* CustomCheckoutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCheckoutViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -95,6 +103,7 @@
 				23EDA13A2147DFC90085CA7A /* Main.storyboard */,
 				23EDA13F2147DFC90085CA7A /* LaunchScreen.storyboard */,
 				5AE826222590D100002C7F74 /* CustomPXDynamicComponentView.xib */,
+				F507E41727678DAD000FA306 /* CustomPXPostPayment.storyboard */,
 			);
 			path = Storyboards;
 			sourceTree = "<group>";
@@ -112,9 +121,11 @@
 		23EDA14A2147E0050085CA7A /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				23EDA1382147DFC90085CA7A /* ViewController.swift */,
-				F9DF596324803FFD00B1FDBF /* CustomCheckoutViewController.swift */,
 				A36F0F1A24DC3E7D00F3457D /* CongratsSelectorViewController.swift */,
+				F9DF596324803FFD00B1FDBF /* CustomCheckoutViewController.swift */,
+				F507E41927678F65000FA306 /* CustomCheckoutWithPostPaymentController.swift */,
+				23EDA1382147DFC90085CA7A /* ViewController.swift */,
+				F58D1D0C277A393600D5A36E /* PostPaymentViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -135,6 +146,7 @@
 				129B9D452615195E00127DC6 /* DataExtensions.swift */,
 				5AACB10F2641B1CA00A20ED5 /* CustomSplitPaymentProcessor.swift */,
 				5A712D6A2768C8B5006A8604 /* ScheduledPaymentProcessor.swift */,
+				F58D1D062772DF7200D5A36E /* CustomPostPaymentProcessor.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -214,6 +226,7 @@
 			files = (
 				23EDA1412147DFC90085CA7A /* LaunchScreen.storyboard in Resources */,
 				23EDA13E2147DFC90085CA7A /* Assets.xcassets in Resources */,
+				F507E41827678DAD000FA306 /* CustomPXPostPayment.storyboard in Resources */,
 				5A8250B925FBFE6900B64357 /* DebugConfig.xcconfig in Resources */,
 				5AE826232590D100002C7F74 /* CustomPXDynamicComponentView.xib in Resources */,
 				23EDA13C2147DFC90085CA7A /* Main.storyboard in Resources */,
@@ -308,12 +321,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				5AE825FD2590C8D1002C7F74 /* CustomPaymentProcessor.swift in Sources */,
+				F58D1D0D277A393600D5A36E /* PostPaymentViewController.swift in Sources */,
 				A36F0F1B24DC3E7D00F3457D /* CongratsSelectorViewController.swift in Sources */,
+				F507E41A27678F65000FA306 /* CustomCheckoutWithPostPaymentController.swift in Sources */,
 				23EDA1392147DFC90085CA7A /* ViewController.swift in Sources */,
 				5AACB1102641B1CA00A20ED5 /* CustomSplitPaymentProcessor.swift in Sources */,
 				5A712D6B2768C8B5006A8604 /* ScheduledPaymentProcessor.swift in Sources */,
 				23EDA1372147DFC90085CA7A /* AppDelegate.swift in Sources */,
 				129B9D462615195E00127DC6 /* DataExtensions.swift in Sources */,
+				F58D1D072772DF7200D5A36E /* CustomPostPaymentProcessor.swift in Sources */,
 				5AE826012590C8FB002C7F74 /* CustomPXDynamicComponent.swift in Sources */,
 				F9DF596424803FFD00B1FDBF /* CustomCheckoutViewController.swift in Sources */,
 			);

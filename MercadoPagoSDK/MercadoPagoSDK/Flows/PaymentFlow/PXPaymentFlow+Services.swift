@@ -102,16 +102,29 @@ extension PXPaymentFlow {
 
         model.shouldSearchPointsAndDiscounts = false
         let platform = MLBusinessAppDataService().getAppIdentifier().rawValue
-        model.mercadoPagoServices.getPointsAndDiscounts(url: PXServicesURLConfigs.MP_API_BASE_URL, uri: PXServicesURLConfigs.shared().MP_POINTS_URI, paymentIds: paymentIds, paymentMethodsIds: paymentMethodsIds, campaignId: campaignId, prefId: model.checkoutPreference?.id, platform: platform, ifpe: ifpe, merchantOrderId: model.checkoutPreference?.merchantOrderId, headers: headers, paymentTypeId: model.businessResult?.getPaymentMethodTypeId(), callback: { [weak self] pointsAndBenef in
+        model.mercadoPagoServices.getPointsAndDiscounts(
+            url: PXServicesURLConfigs.MP_API_BASE_URL,
+            uri: PXServicesURLConfigs.shared().MP_POINTS_URI,
+            paymentIds: paymentIds,
+            paymentMethodsIds: paymentMethodsIds,
+            campaignId: campaignId,
+            prefId: model.checkoutPreference?.id,
+            platform: platform,
+            ifpe: ifpe,
+            merchantOrderId: model.checkoutPreference?.merchantOrderId,
+            headers: headers,
+            paymentTypeId: model.businessResult?.getPaymentMethodTypeId(),
+            callback: { [weak self] pointsAndBenef in
                 guard let self = self else { return }
                 self.model.pointsAndDiscounts = pointsAndBenef
                 self.model.instructionsInfo = pointsAndBenef.instruction
                 self.executeNextStep()
-            }, failure: { [weak self] () in
-                print("Fallo el endpoint de puntos y beneficios")
+            },
+            failure: { [weak self] () in
                 guard let self = self else { return }
                 self.executeNextStep()
-        })
+            }
+        )
     }
 }
 

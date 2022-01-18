@@ -14,6 +14,7 @@
 //PX Environment - [alpha | beta | prod]
 PX_ENVIRONMENT=beta
 
+
 // Collector public key
 PX_COLLECTOR_PUBLIC_KEY=TEST-XXXXXX-XXXXXX-XXXXXX-XXXXXX-XXXXXX
 

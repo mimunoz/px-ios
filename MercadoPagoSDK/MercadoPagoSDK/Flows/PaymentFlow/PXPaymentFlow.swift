@@ -57,12 +57,60 @@ final class PXPaymentFlow: NSObject, PXFlow {
                 self.createPaymentWithPlugin(plugin: self.model.paymentPlugin, programId: self.validationProgramId)
             case .createPaymentPluginScreen:
                 self.showPaymentProcessor(paymentProcessor: self.model.paymentPlugin, programId: self.validationProgramId)
+            case .goToPostPayment:
+                self.goToPostPayment()
             case .getPointsAndDiscounts:
                 self.getPointsAndDiscounts()
             case .finish:
                 self.finishFlow()
             }
         }
+    }
+
+    func goToPostPayment() {
+        PXNotificationManager.SuscribeTo.didFinishButtonAnimation(self, selector: #selector(showPostPayment))
+        PXNotificationManager.Post.animateButton(with: PXAnimatedButtonNotificationObject(status: "", interrupt: true))
+    }
+
+    @objc
+    func showPostPayment() {
+        guard let notification = model.postPaymentNotificationName,
+              let basePayment = getBasePayment() else {
+            model.postPaymentNotificationName = nil
+            executeNextStep()
+            return
+        }
+        MercadoPagoCheckout.NotificationCenter.PublishTo.postPaymentAction(
+            withName: notification,
+            payment: basePayment
+        ) { [unowned self] basePayment in
+            model.postPaymentNotificationName = nil
+            if let basePayment = basePayment {
+                self.cleanPayment()
+                self.handlePayment(basePayment: basePayment)
+            } else {
+                executeNextStep()
+            }
+        }
+    }
+
+    private func getBasePayment() -> PXBasePayment? {
+        var basePayment: PXBasePayment
+        if let business = model.businessResult {
+            basePayment = business
+        } else if let paymentResult = model.paymentResult,
+                  let id = Int64(paymentResult.paymentId ?? "") {
+            let payment = PXPayment(id: id, status: paymentResult.status)
+            payment.paymentMethodId = model.amountHelper?.getPaymentData().paymentMethod?.id
+            payment.paymentTypeId = model.amountHelper?.getPaymentData().paymentMethod?.paymentTypeId
+            basePayment = payment
+        } else {
+            model.postPaymentNotificationName = nil
+            executeNextStep()
+            return nil
+        }
+
+        return basePayment
     }
 
     func getPaymentTimeOut() -> TimeInterval {

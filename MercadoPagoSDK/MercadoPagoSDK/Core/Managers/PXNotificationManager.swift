@@ -3,6 +3,7 @@ import Foundation
 struct PXAnimatedButtonNotificationObject {
     var status: String
     var statusDetail: String?
+    var interrupt: Bool = false
 }
 
 struct PXNotificationManager {
@@ -24,6 +25,11 @@ extension PXNotificationManager {
             let notificationCenter = NotificationCenter.default
             notificationCenter.addObserver(observer, selector: selector, name: .cardFormReset, object: nil)
         }
+
+        static func didFinishButtonAnimation(_ observer: Any, selector: Selector) {
+            let notificationCenter = NotificationCenter.default
+            notificationCenter.addObserver(observer, selector: selector, name: .didFinishButtonAnimation, object: nil)
+        }
     }
 }
 
@@ -40,6 +46,14 @@ extension PXNotificationManager {
             }
             let notificationCenter = NotificationCenter.default
             notificationCenter.removeObserver(observer, name: .animateButton, object: nil)
+        }
+
+        static func didFinishButtonAnimation(_ observer: Any?) {
+            guard let observer = observer else {
+                return
+            }
+            let notificationCenter = NotificationCenter.default
+            notificationCenter.removeObserver(observer, name: .didFinishButtonAnimation, object: nil)
         }
     }
 }
@@ -60,6 +74,11 @@ extension PXNotificationManager {
             let notificationCenter = NotificationCenter.default
             notificationCenter.post(name: .cardFormReset, object: nil)
         }
+
+        static func didFinishButtonAnimation() {
+            let notificationCenter = NotificationCenter.default
+            notificationCenter.post(name: .didFinishButtonAnimation, object: nil)
+        }
     }
 }
 
@@ -67,4 +86,5 @@ extension NSNotification.Name {
     static let attemptToClose = Notification.Name(rawValue: "PXAttemptToClose")
     static let animateButton = Notification.Name(rawValue: "PXAnimateButton")
     static let cardFormReset = Notification.Name(rawValue: "PXCardFormReset")
+    static let didFinishButtonAnimation = Notification.Name(rawValue: "PXDidFinishButtonAnimation")
 }

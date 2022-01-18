@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+- Adding post payment flow support for SEMOVI
+
 ### Fixed
 - Fixed bug with wrong suggested value for account money remedie
 - Fix show horizontally logic in summary

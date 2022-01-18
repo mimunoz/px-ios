@@ -14,6 +14,7 @@ final class PXPaymentFlowModel: NSObject {
 
     var productId: String?
     var shouldSearchPointsAndDiscounts: Bool = true
+    var postPaymentNotificationName: Notification.Name?
     let ESCBlacklistedStatus: [String]?
 
     init(paymentPlugin: PXSplitPaymentProcessor?, mercadoPagoServices: MercadoPagoServices, ESCBlacklistedStatus: [String]?) {
@@ -25,6 +26,7 @@ final class PXPaymentFlowModel: NSObject {
     enum Steps: String {
         case createPaymentPlugin
         case createDefaultPayment
+        case goToPostPayment
         case getPointsAndDiscounts
         case createPaymentPluginScreen
         case finish
@@ -37,6 +39,8 @@ final class PXPaymentFlowModel: NSObject {
             return .createPaymentPluginScreen
         } else if needToCreatePayment() {
             return .createDefaultPayment
+        } else if needToGoToPostPayment() {
+            return .goToPostPayment
         } else if needToGetPointsAndDiscounts() {
             return .getPointsAndDiscounts
         } else {
@@ -71,10 +75,25 @@ final class PXPaymentFlowModel: NSObject {
         return paymentResult == nil && businessResult == nil
     }
 
+    func needToGoToPostPayment() -> Bool {
+        let hasPostPaymentFlow = postPaymentNotificationName != nil
+        let paymentResultIsApproved = paymentResult?.isApproved() == true
+        let isBusinessApproved = businessResult?.isApproved() == true
+        let isBusinessAccepted = businessResult?.isAccepted() == true
+        let businessResultIsApprovedAndAccepted = isBusinessApproved && isBusinessAccepted
+
+        return hasPostPaymentFlow && (paymentResultIsApproved || businessResultIsApprovedAndAccepted)
+    }
+
     func needToGetPointsAndDiscounts() -> Bool {
-        if let paymentResult = paymentResult, shouldSearchPointsAndDiscounts, (paymentResult.isApproved() || needToGetInstructions()) {
+        if let paymentResult = paymentResult,
+           shouldSearchPointsAndDiscounts,
+           (paymentResult.isApproved() || needToGetInstructions()) {
             return true
-        } else if let businessResult = businessResult, shouldSearchPointsAndDiscounts, businessResult.isApproved(), businessResult.isAccepted() {
+        } else if let businessResult = businessResult,
+                  shouldSearchPointsAndDiscounts,
+                  businessResult.isApproved(),
+                  businessResult.isAccepted() {
             return true
         }
         return false

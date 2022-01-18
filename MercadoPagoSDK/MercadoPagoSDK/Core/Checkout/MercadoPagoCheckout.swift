@@ -47,6 +47,10 @@ open class MercadoPagoCheckout: NSObject {
         let checkoutType = builder.paymentConfig?.getProcessorType()
         viewModel = MercadoPagoCheckoutViewModel(checkoutPreference: choPref, publicKey: builder.publicKey, privateKey: builder.privateKey, advancedConfig: builder.advancedConfig, trackingConfig: builder.trackingConfig, checkoutType: checkoutType)
 
+        if let notificationName = builder.postPaymentConfig?.postPaymentNotificationName {
+            viewModel.setPostPaymentNotification(postPaymentNotificationName: notificationName)
+        }
+
         // Set Theme.
         if let customTheme = builder.advancedConfig?.theme {
             ThemeManager.shared.setTheme(theme: customTheme)
