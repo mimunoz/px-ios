@@ -31,7 +31,7 @@ final class CustomServiceImpl: CustomService {
         service.requestData(target: .resetESCCap(cardId: cardId, privateKey: privateKey)) { apiResponse in
             switch apiResponse {
             case .success: response(.success(()))
-            case .failure(let error): response(.failure(PXError(domain: ApiDomain.RESET_ESC_CAP, code: ErrorTypes.NO_INTERNET_ERROR, userInfo: ["message": error.localizedDescription])))
+            case .failure: response(.failure(PXError(domain: ApiDomain.RESET_ESC_CAP, code: ErrorTypes.NO_INTERNET_ERROR, userInfo: ["message": "INTERNET_ERROR"])))
             }
         }
     }
