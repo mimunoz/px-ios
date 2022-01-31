@@ -77,6 +77,7 @@ final class PXPaymentFlow: NSObject, PXFlow {
                 postPaymentStatus: model.postPaymentStatus
             )
         )
+        trackPostPaymentEvent()
     }
 
     @objc
@@ -162,5 +163,14 @@ extension PXPaymentFlow: PXPaymentProcessorErrorHandler {
 
     func showError(error: MPSDKError) {
         resultHandler?.finishPaymentFlow(error: error)
+    }
+}
+
+private extension PXPaymentFlow {
+    func trackPostPaymentEvent() {
+        guard case let .pending(notification) = model.postPaymentStatus else { return }
+        var properties: [String: Any] = [:]
+        properties["destination"] = notification.rawValue
+        MPXTracker.sharedInstance.trackEvent(event: PostPaymentTrackingEvents.willNavigateToPostPayment(properties))
     }
 }
