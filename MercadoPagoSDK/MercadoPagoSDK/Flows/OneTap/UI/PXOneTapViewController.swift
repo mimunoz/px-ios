@@ -92,7 +92,6 @@ final class PXOneTapViewController: MercadoPagoUIViewController {
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        unsubscribeFromNotifications()
         removePulseViewNotifications()
         removeNavigationTapGesture()
         navigationController?.setNavigationBarHidden(shouldHideOneTapNavBar, animated: animated)
@@ -112,6 +111,10 @@ final class PXOneTapViewController: MercadoPagoUIViewController {
         setupAutoDisplayOfflinePaymentMethods()
         UIAccessibility.post(notification: .layoutChanged, argument: headerView?.getMerchantView()?.getMerchantTitleLabel())
         trackScreen(event: MercadoPagoUITrackingEvents.reviewOneTap(viewModel.getOneTapScreenProperties(oneTapApplication: viewModel.applications)))
+    }
+
+    deinit {
+        unsubscribeFromNotifications()
     }
 
     override func viewDidLayoutSubviews() {

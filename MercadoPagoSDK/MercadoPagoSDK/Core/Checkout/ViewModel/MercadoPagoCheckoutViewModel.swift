@@ -764,7 +764,7 @@ extension MercadoPagoCheckoutViewModel {
         if let productId = advancedConfig.productId {
             paymentFlow.setProductIdForPayment(productId)
         }
-        paymentFlow.model.postPaymentNotificationName = postPaymentNotificationName
+        paymentFlow.model.postPaymentStatus = postPaymentNotificationName.flatMap(PostPaymentStatus.pending)
         self.paymentFlow = paymentFlow
         return paymentFlow
     }

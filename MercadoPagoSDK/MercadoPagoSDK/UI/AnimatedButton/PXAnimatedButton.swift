@@ -61,14 +61,13 @@ extension PXAnimatedButton: ProgressViewDelegate, CAAnimationDelegate {
         status = .loading
     }
 
-    func finishAnimatingButton(color: UIColor, image: UIImage?, interrupt: Bool) {
+    func finishAnimatingButton(color: UIColor, image: UIImage?, postPaymentStatus: PostPaymentStatus?) {
         status = .expanding
-
         progressView?.doComplete(completion: { [weak self] _ in
             guard let self = self,
                 let anchorView = self.anchorView() else { return }
 
-            if interrupt {
+            if postPaymentStatus?.isPending == true {
                 self.setTitle("", for: .normal)
                 PXNotificationManager.Post.didFinishButtonAnimation()
                 return
@@ -272,7 +271,7 @@ extension PXAnimatedButton {
         if let notificationObject = sender.object as? PXAnimatedButtonNotificationObject {
             let image = ResourceManager.shared.getBadgeImageWith(status: notificationObject.status, statusDetail: notificationObject.statusDetail, clearBackground: true)
             let color = ResourceManager.shared.getResultColorWith(status: notificationObject.status, statusDetail: notificationObject.statusDetail)
-            finishAnimatingButton(color: color, image: image, interrupt: notificationObject.interrupt)
+            finishAnimatingButton(color: color, image: image, postPaymentStatus: notificationObject.postPaymentStatus)
         }
     }
 }

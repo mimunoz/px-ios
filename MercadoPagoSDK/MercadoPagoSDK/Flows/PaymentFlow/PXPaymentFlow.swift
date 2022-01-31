@@ -60,8 +60,10 @@ final class PXPaymentFlow: NSObject, PXFlow {
             case .goToPostPayment:
                 self.goToPostPayment()
             case .getPointsAndDiscounts:
+                self.showLoaderIfNeeded()
                 self.getPointsAndDiscounts()
             case .finish:
+                self.hideLoaderIfNeeded()
                 self.finishFlow()
             }
         }
@@ -69,14 +71,20 @@ final class PXPaymentFlow: NSObject, PXFlow {
 
     func goToPostPayment() {
         PXNotificationManager.SuscribeTo.didFinishButtonAnimation(self, selector: #selector(showPostPayment))
-        PXNotificationManager.Post.animateButton(with: PXAnimatedButtonNotificationObject(status: "", interrupt: true))
+        PXNotificationManager.Post.animateButton(
+            with: PXAnimatedButtonNotificationObject(
+                status: "",
+                postPaymentStatus: model.postPaymentStatus
+            )
+        )
     }
 
     @objc
     func showPostPayment() {
-        guard let notification = model.postPaymentNotificationName,
-              let basePayment = getBasePayment() else {
-            model.postPaymentNotificationName = nil
+        guard case let .pending(notification) = model.postPaymentStatus,
+              let basePayment = getBasePayment()
+        else {
+            model.postPaymentStatus = nil
             executeNextStep()
             return
         }
@@ -84,7 +92,7 @@ final class PXPaymentFlow: NSObject, PXFlow {
             withName: notification,
             payment: basePayment
         ) { [unowned self] basePayment in
-            model.postPaymentNotificationName = nil
+            model.postPaymentStatus = .continuing
             if let basePayment = basePayment {
                 self.cleanPayment()
                 self.handlePayment(basePayment: basePayment)
@@ -95,7 +103,8 @@ final class PXPaymentFlow: NSObject, PXFlow {
     }
 
     private func getBasePayment() -> PXBasePayment? {
-        var basePayment: PXBasePayment
+        var basePayment: PXBasePayment?
+
         if let business = model.businessResult {
             basePayment = business
         } else if let paymentResult = model.paymentResult,
@@ -104,10 +113,6 @@ final class PXPaymentFlow: NSObject, PXFlow {
             payment.paymentMethodId = model.amountHelper?.getPaymentData().paymentMethod?.id
             payment.paymentTypeId = model.amountHelper?.getPaymentData().paymentMethod?.paymentTypeId
             basePayment = payment
-        } else {
-            model.postPaymentNotificationName = nil
-            executeNextStep()
-            return nil
         }
 
         return basePayment

@@ -14,7 +14,7 @@ final class PXPaymentFlowModel: NSObject {
 
     var productId: String?
     var shouldSearchPointsAndDiscounts: Bool = true
-    var postPaymentNotificationName: Notification.Name?
+    var postPaymentStatus: PostPaymentStatus?
     let ESCBlacklistedStatus: [String]?
 
     init(paymentPlugin: PXSplitPaymentProcessor?, mercadoPagoServices: MercadoPagoServices, ESCBlacklistedStatus: [String]?) {
@@ -76,7 +76,7 @@ final class PXPaymentFlowModel: NSObject {
     }
 
     func needToGoToPostPayment() -> Bool {
-        let hasPostPaymentFlow = postPaymentNotificationName != nil
+        let hasPostPaymentFlow = postPaymentStatus?.isPending ?? false
         let paymentResultIsApproved = paymentResult?.isApproved() == true
         let isBusinessApproved = businessResult?.isApproved() == true
         let isBusinessAccepted = businessResult?.isAccepted() == true
@@ -86,6 +86,10 @@ final class PXPaymentFlowModel: NSObject {
     }
 
     func needToGetPointsAndDiscounts() -> Bool {
+        if postPaymentStatus == .continuing && shouldSearchPointsAndDiscounts {
+            return true
+        }
+
         if let paymentResult = paymentResult,
            shouldSearchPointsAndDiscounts,
            (paymentResult.isApproved() || needToGetInstructions()) {

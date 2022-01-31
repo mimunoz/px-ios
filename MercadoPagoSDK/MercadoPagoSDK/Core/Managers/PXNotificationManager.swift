@@ -3,7 +3,7 @@ import Foundation
 struct PXAnimatedButtonNotificationObject {
     var status: String
     var statusDetail: String?
-    var interrupt: Bool = false
+    var postPaymentStatus: PostPaymentStatus?
 }
 
 struct PXNotificationManager {
