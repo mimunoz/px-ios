@@ -43,6 +43,7 @@ class PXOneTapSummaryRowView: UIView {
 
     private struct Constants {
         static let briefWidth: CGFloat = 250
+        static let helperIcon: UIImage? = ResourceManager.shared.getImage("helper_ico_light")?.mask(color: UIColor.Andes.blueMP500)
     }
 
     @available(*, unavailable)
@@ -110,9 +111,9 @@ class PXOneTapSummaryRowView: UIView {
                 if data.rowHasBrief(), let overviewBrief = overviewBrief {
                     overviewBrief.attributedText = data.getBriefText()
                 } else {
-                    if let url = data.getIconUrl(), discountIcon?.image == nil {
+                    if discountIcon?.image == nil {
                         let icon = buildDiscountIcon()
-                        discountIcon?.setRemoteImage(imageUrl: url)
+                        discountIcon?.image = Constants.helperIcon
                         let horStackview = verStackView.subviews.first as? UIStackView
                         let iconContainer = horStackview?.subviews.last
                         iconContainer?.addSubview(icon)
@@ -134,9 +135,7 @@ class PXOneTapSummaryRowView: UIView {
                 }
             }
 
-            if let url = data.getIconUrl() {
-                discountIcon?.setRemoteImage(imageUrl: url)
-            }
+            discountIcon?.image = Constants.helperIcon
 
             valueLabel.attributedText = data.getAmountText()
             valueLabelCenterYConstraint.isActive = false
@@ -237,18 +236,16 @@ private extension PXOneTapSummaryRowView {
         horStackview.addArrangedSubview(titleLabel)
 
         // Overview Info icon
-        if data.rowHasInfoIcon() {
-            let icon = buildDiscountIcon()
-            let iconContainer = UIView()
-            iconContainer.addSubview(icon)
-            NSLayoutConstraint.activate([
-                icon.leadingAnchor.constraint(equalTo: iconContainer.leadingAnchor, constant: 7),
-                icon.bottomAnchor.constraint(equalTo: iconContainer.bottomAnchor, constant: 1),
-                icon.heightAnchor.constraint(equalToConstant: 16),
-                icon.widthAnchor.constraint(equalToConstant: 16)
-            ])
-            horStackview.addArrangedSubview(iconContainer)
-        }
+        let icon = buildDiscountIcon()
+        let iconContainer = UIView()
+        iconContainer.addSubview(icon)
+        NSLayoutConstraint.activate([
+            icon.leadingAnchor.constraint(equalTo: iconContainer.leadingAnchor, constant: 7),
+            icon.bottomAnchor.constraint(equalTo: iconContainer.bottomAnchor, constant: 1),
+            icon.heightAnchor.constraint(equalToConstant: 16),
+            icon.widthAnchor.constraint(equalToConstant: 16)
+        ])
+        horStackview.addArrangedSubview(iconContainer)
         verStackView.addArrangedSubview(horStackview)
 
         // Overview brief
