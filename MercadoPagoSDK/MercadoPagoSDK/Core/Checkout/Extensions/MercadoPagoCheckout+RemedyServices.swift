@@ -81,7 +81,9 @@ extension MercadoPagoCheckout {
                                                                       securityCodeLength: securityCode?.length,
                                                                       totalAmount: paymentData.payerCost?.totalAmount,
                                                                       installments: paymentData.payerCost?.installments,
-                                                                      escStatus: customOptionSearchItem.escStatus)
+                                                                      escStatus: customOptionSearchItem.escStatus,
+                                                                      paymentMethodName: customOptionSearchItem.paymentMethodName,
+                                                                      bankInfo: customOptionSearchItem.bankInfo)
 
         let remainingPayerPaymentMethods = viewModel.search?.payerPaymentMethods.filter { $0.id != cardId }
         let alternativePayerPaymentMethods = getAlternativePayerPaymentMethods(from: remainingPayerPaymentMethods)

@@ -14,6 +14,7 @@ open class PXOneTapDto: NSObject, Codable {
     open var behaviours: [String: PXBehaviour]?
     open var displayInfo: PXOneTapDisplayInfo?
     open var applications: [PXOneTapApplication]?
+    open var bankTransfer: BankTransferDto?
 
     public init(
         paymentMethodId: String?,
@@ -27,7 +28,8 @@ open class PXOneTapDto: NSObject, Codable {
         offlineMethods: PXOfflineMethods?,
         behaviours: [String: PXBehaviour]?,
         displayInfo: PXOneTapDisplayInfo?,
-        applications: [PXOneTapApplication]?
+        applications: [PXOneTapApplication]?,
+        bankTransfer: BankTransferDto?
     ) {
         self.paymentMethodId = paymentMethodId
         self.paymentTypeId = paymentTypeId
@@ -41,6 +43,7 @@ open class PXOneTapDto: NSObject, Codable {
         self.behaviours = behaviours
         self.displayInfo = displayInfo
         self.applications = applications
+        self.bankTransfer = bankTransfer
     }
 
     public enum CodingKeys: String, CodingKey {
@@ -57,5 +60,6 @@ open class PXOneTapDto: NSObject, Codable {
         case behaviours
         case displayInfo = "display_info"
         case applications = "applications"
+        case bankTransfer = "bank_transfer"
     }
 }

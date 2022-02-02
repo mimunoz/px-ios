@@ -44,13 +44,16 @@ public class PXCongratsPaymentInfo: NSObject {
     /// Some friendly message to be shown when a discount is applied
     let discountName: String?
 
+    /// Necessary payment method info to display in congrats
+    let displayInfo: PXPayerPaymentMethodDisplayInfo?
+
     /// Objc version
-    public convenience init(paidAmount: String, rawAmount: String?, paymentMethodName: String?, paymentMethodLastFourDigits: String? = nil, paymentMethodDescription: String?, paymentMethodIconURL: String?, paymentMethodType: PXPaymentOBJC, installmentsRate: Double, installmentsCount: Int, installmentsAmount: String?, installmentsTotalAmount: String?, discountName: String?) {
-        self.init(paidAmount: paidAmount, rawAmount: rawAmount, paymentMethodName: paymentMethodName, paymentMethodLastFourDigits: paymentMethodLastFourDigits, paymentMethodDescription: paymentMethodDescription, paymentMethodIconURL: paymentMethodIconURL, paymentMethodType: paymentMethodType.getRealCase(), installmentsRate: installmentsRate, installmentsCount: installmentsCount, installmentsAmount: installmentsAmount, installmentsTotalAmount: installmentsTotalAmount, discountName: discountName)
+    public convenience init(paidAmount: String, rawAmount: String?, paymentMethodName: String?, paymentMethodLastFourDigits: String? = nil, paymentMethodDescription: String?, paymentMethodIconURL: String?, paymentMethodType: PXPaymentOBJC, installmentsRate: Double, installmentsCount: Int, installmentsAmount: String?, installmentsTotalAmount: String?, discountName: String?, displayInfo: PXPayerPaymentMethodDisplayInfo? = nil) {
+        self.init(paidAmount: paidAmount, rawAmount: rawAmount, paymentMethodName: paymentMethodName, paymentMethodLastFourDigits: paymentMethodLastFourDigits, paymentMethodDescription: paymentMethodDescription, paymentMethodIconURL: paymentMethodIconURL, paymentMethodType: paymentMethodType.getRealCase(), installmentsRate: installmentsRate, installmentsCount: installmentsCount, installmentsAmount: installmentsAmount, installmentsTotalAmount: installmentsTotalAmount, discountName: discountName, displayInfo: displayInfo)
     }
 
     /// Swift version
-    @nonobjc public init(paidAmount: String, rawAmount: String?, paymentMethodName: String?, paymentMethodLastFourDigits: String? = nil, paymentMethodDescription: String?, paymentMethodIconURL: String?, paymentMethodType: PXPaymentTypes, installmentsRate: Double? = nil, installmentsCount: Int, installmentsAmount: String?, installmentsTotalAmount: String?, discountName: String?) {
+    @nonobjc public init(paidAmount: String, rawAmount: String?, paymentMethodName: String?, paymentMethodLastFourDigits: String? = nil, paymentMethodDescription: String?, paymentMethodIconURL: String?, paymentMethodType: PXPaymentTypes, installmentsRate: Double? = nil, installmentsCount: Int, installmentsAmount: String?, installmentsTotalAmount: String?, discountName: String?, displayInfo: PXPayerPaymentMethodDisplayInfo? = nil) {
         self.paidAmount = paidAmount
         self.rawAmount = rawAmount
 
@@ -70,6 +73,7 @@ public class PXCongratsPaymentInfo: NSObject {
         self.installmentsTotalAmount = installmentsTotalAmount
 
         self.discountName = discountName
+        self.displayInfo = displayInfo
         super.init()
     }
 }

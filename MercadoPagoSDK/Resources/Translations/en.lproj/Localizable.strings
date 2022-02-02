@@ -167,3 +167,12 @@
 "px_snackbar_error_action" = "Go back";
 "px_security_code_subtitle_front" = "The {0} digits are on the front of your card.";
 "px_security_code_subtitle_back" = "The {0} digits are on the back of your card.";
+"px_congrats_rejected_default_title" = "It was not possible to make the transaction";
+"px_congrats_rejected_default_message" = "We are sorry, something went wrong. Please try again with another payment method.";
+"px_congrats_rejected_primary_button_label" = "Choose another payment method";
+"px_congrats_rejected_secondary_button_label" = "Go to Home";
+"px_congrats_rejected_insufficient_amount_title" = "There is not enough money in your account";
+"px_congrats_rejected_insufficient_amount_message" = "Please try to use another payment method.";
+"px_congrats_rejected_high_risk_message" = "We are sorry, the transaction did not pass our security validation.";
+"px_congrats_rejected_cap_exceeded_title" = "You exceeded the daily limit use of the chosen payment method ";
+"px_congrats_rejected_cap_exceeded_message" = "You can perform the transaction with another payment method. ";

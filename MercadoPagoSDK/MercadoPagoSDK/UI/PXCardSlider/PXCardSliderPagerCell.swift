@@ -36,6 +36,11 @@ protocol PXCardSliderPagerCellDelegate: NSObjectProtocol {
 
 // MARK: Publics.
 extension PXCardSliderPagerCell {
+    private struct BottomMessageHeights {
+        static let small: CGFloat = 17
+        static let large: CGFloat = 20
+    }
+
     private func setupContainerView(_ cardSize: CGSize) {
         containerView.layer.frame = CGRect(origin: CGPoint.zero, size: cardSize)
         containerView.removeAllSubviews()
@@ -85,7 +90,7 @@ extension PXCardSliderPagerCell {
             PXLayout.centerVertically(view: headerView).isActive = true
         }
 
-        self.bottomMessageViewHeight = cardType == .small ? 12 : 24
+        self.bottomMessageViewHeight = cardType == .small ? BottomMessageHeights.small : BottomMessageHeights.large
 
         addBottomMessageView(message: bottomMessage)
         accessibilityLabel = getAccessibilityMessage(accessibilityData)

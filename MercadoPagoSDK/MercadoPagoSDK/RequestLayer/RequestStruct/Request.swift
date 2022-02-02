@@ -88,17 +88,24 @@ final class Request<Target: RequestInfos>: RequestProtocol {
             do {
                 let modelList = try JSONDecoder().decode(Model.self, from: data)
                 completionHandler(.success(modelList))
-            } catch {
+            } catch let decodingError {
+                print(decodingError)
                 completionHandler(.failure(NSError()))
             }
         }.resume()
     }
 
     func requestData(target: Target, completionHandler: @escaping (Swift.Result<Data, Error>) -> Void) {
-        guard let url = URL(string: "\(target.baseURL)\(target.environment.rawValue)\(target.endpoint.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")") else {
+        guard let targetURL = URL(string: "\(target.baseURL)\(target.environment.rawValue)\(target.endpoint.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")") else {
             completionHandler(.failure(NSError()))
             return
         }
+
+        #if DEBUG
+        let url = target.mockURL ?? targetURL
+        #else
+        let url = targetURL
+        #endif
 
         var request = URLRequest(url: url)
 

@@ -13,6 +13,8 @@ extension PXResultViewModel {
             } else {
                 return preference.getHeaderImageFor(paymentResult.paymentData?.paymentMethod)
             }
+        } else if let iconUrl = remedy?.displayInfo?.header?.iconUrl, paymentResult.isRejectedWithRemedy() {
+            return ViewUtils.loadImageFromUrl(iconUrl)
         } else {
             return preference.getHeaderRejectedIcon(paymentResult.paymentData?.paymentMethod)
         }
@@ -21,6 +23,8 @@ extension PXResultViewModel {
     func badgeImage() -> UIImage? {
         if !preference.showBadgeImage {
             return nil
+        } else if let badgeUrl = remedy?.displayInfo?.header?.badgeUrl, paymentResult.isRejectedWithRemedy() {
+            return ViewUtils.loadImageFromUrl(badgeUrl)
         }
         return ResourceManager.shared.getBadgeImageWith(status: paymentResult.status, statusDetail: paymentResult.statusDetail)
     }
@@ -31,6 +35,7 @@ extension PXResultViewModel {
         if self.instructionsInfo != nil {
             return titleForInstructions()
         }
+
         if paymentResult.isAccepted() {
             if self.paymentResult.isApproved() {
                 return getHeaderAttributedString(string: preference.getApprovedTitle(), size: fontSize)
@@ -38,9 +43,15 @@ extension PXResultViewModel {
                 return getHeaderAttributedString(string: "Estamos procesando el pago".localized, size: fontSize)
             }
         }
+
         if preference.rejectedTitleSetted {
             return getHeaderAttributedString(string: preference.getRejectedTitle(), size: fontSize)
         }
+
+        if let title = remedy?.displayInfo?.header?.title, paymentResult.isRejectedWithRemedy() {
+            return getHeaderAttributedString(string: title, size: fontSize)
+        }
+
         return titleForStatusDetail(statusDetail: self.paymentResult.statusDetail, paymentMethod: self.paymentResult.paymentData?.paymentMethod)
     }
 
@@ -53,11 +64,19 @@ extension PXResultViewModel {
         guard let paymentMethod = paymentMethod else {
             return "".toAttributedString()
         }
+
         // Set title for paymentMethod
         var statusDetail = statusDetail
         let badFilledKey = "cc_rejected_bad_filled"
         if statusDetail.contains(badFilledKey) {
             statusDetail = badFilledKey
+        }
+
+        // Handle rejected title for custom rejected congrats
+        if statusDetail == PXPayment.StatusDetails.REJECTED_RAW_INSUFFICIENT_AMOUNT {
+            return getHeaderAttributedString(string: "px_congrats_rejected_insufficient_amount_title".localized)
+        } else if statusDetail == PXPayment.StatusDetails.REJECTED_CAP_EXCEEDED {
+            return getHeaderAttributedString(string: "px_congrats_rejected_cap_exceeded_title".localized)
         }
 
         let title = PXResourceProvider.getErrorTitleKey(statusDetail: statusDetail).localized

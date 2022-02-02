@@ -572,7 +572,8 @@ extension PXResultViewModel {
                                      installmentsCount: paymentData.payerCost?.installments ?? 0,
                                      installmentsAmount: installmentAmount,
                                      installmentsTotalAmount: installmentsTotalAmount,
-                                     discountName: paymentData.discount?.name)
+                                     discountName: paymentData.discount?.name,
+                                     displayInfo: paymentData.paymentMethod?.bankTransferDisplayInfo)
     }
 
     private func congratsType(fromResultStatus stringStatus: String) -> PXCongratsType {

@@ -373,6 +373,7 @@ extension PXPayment {
         public static let PENDING_CONTINGENCY = "pending_contingency"
         public static let PENDING_REVIEW_MANUAL = "pending_review_manual"
         public static let PENDING_WAITING_PAYMENT = "pending_waiting_payment"
+        public static let PENDING_WAITING_TRANSFER = "pending_waiting_transfer"
         public static let REJECTED_OTHER_REASON = "cc_rejected_other_reason"
         public static let REJECTED_BAD_FILLED_OTHER = "cc_rejected_bad_filled_other"
         public static let REJECTED_BAD_FILLED_CARD_NUMBER = "cc_rejected_bad_filled_card_number"
@@ -390,5 +391,8 @@ extension PXPayment {
         public static let REJECTED_INVALID_INSTALLMENTS = "cc_rejected_invalid_installments"
         public static let REJECTED_BLACKLIST = "cc_rejected_blacklist"
         public static let REJECTED_FRAUD = "cc_rejected_fraud"
+        public static let REJECTED_PLUGIN_PM = "cc_rejected_plugin_pm"
+        public static let REJECTED_RAW_INSUFFICIENT_AMOUNT = "insufficient_amount"
+        public static let REJECTED_CAP_EXCEEDED = "rejected_cap_exceeded"
     }
 }

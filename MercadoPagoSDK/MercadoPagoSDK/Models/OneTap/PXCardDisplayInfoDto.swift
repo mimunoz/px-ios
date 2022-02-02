@@ -24,8 +24,9 @@ open class PXCardDisplayInfoDto: NSObject, Codable {
     open var displayType: PXCardDisplayTypes?
     open var title: PXText?
     open var subtitle: PXText?
+    open var gradientColor: [String]?
 
-    public init(expiration: String?, firstSixDigits: String?, lastFourDigits: String?, issuerId: String?, name: String?, cardPattern: [Int]?, color: String?, fontColor: String?, issuerImage: String?, pmImage: String?, fontType: String?, securityCode: PXSecurityCode?, paymentMethodImageUrl: String?, issuerImageUrl: String?, title: PXText?, subtitle: PXText?, displayType: PXCardDisplayTypes?) {
+    public init(expiration: String?, firstSixDigits: String?, lastFourDigits: String?, issuerId: String?, name: String?, cardPattern: [Int]?, color: String?, fontColor: String?, issuerImage: String?, pmImage: String?, fontType: String?, securityCode: PXSecurityCode?, paymentMethodImageUrl: String?, issuerImageUrl: String?, title: PXText?, subtitle: PXText?, displayType: PXCardDisplayTypes?, gradientColor: [String]? = nil) {
         self.expiration = expiration
         self.firstSixDigits = firstSixDigits
         self.lastFourDigits = lastFourDigits
@@ -43,6 +44,7 @@ open class PXCardDisplayInfoDto: NSObject, Codable {
         self.displayType = displayType
         self.title = title
         self.subtitle = subtitle
+        self.gradientColor = gradientColor
     }
 
     public enum PXCardDisplayInfoKeys: String, CodingKey {
@@ -63,6 +65,7 @@ open class PXCardDisplayInfoDto: NSObject, Codable {
         case displayType = "type"
         case title
         case subtitle
+        case gradientColor = "gradient_color"
     }
 
     public required convenience init(from decoder: Decoder) throws {
@@ -84,7 +87,9 @@ open class PXCardDisplayInfoDto: NSObject, Codable {
         let displayType: PXCardDisplayTypes? = try container.decodeIfPresent(PXCardDisplayTypes.self, forKey: .displayType)
         let title: PXText? = try container.decodeIfPresent(PXText.self, forKey: .title)
         let subtitle: PXText? = try container.decodeIfPresent(PXText.self, forKey: .subtitle)
-        self.init(expiration: expiration, firstSixDigits: firstSixDigits, lastFourDigits: lastFourDigits, issuerId: issuerId, name: name, cardPattern: cardPattern, color: color, fontColor: fontColor, issuerImage: issuerImage, pmImage: paymentMethodImage, fontType: fontType, securityCode: securityCode, paymentMethodImageUrl: paymentMethodImageUrl, issuerImageUrl: issuerImageUrl, title: title, subtitle: subtitle, displayType: displayType)
+        let gradientColor: [String]? = try container.decodeIfPresent([String].self, forKey: .gradientColor)
+
+        self.init(expiration: expiration, firstSixDigits: firstSixDigits, lastFourDigits: lastFourDigits, issuerId: issuerId, name: name, cardPattern: cardPattern, color: color, fontColor: fontColor, issuerImage: issuerImage, pmImage: paymentMethodImage, fontType: fontType, securityCode: securityCode, paymentMethodImageUrl: paymentMethodImageUrl, issuerImageUrl: issuerImageUrl, title: title, subtitle: subtitle, displayType: displayType, gradientColor: gradientColor)
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -102,6 +107,7 @@ open class PXCardDisplayInfoDto: NSObject, Codable {
         try container.encodeIfPresent(self.fontType, forKey: .font_type)
         try container.encodeIfPresent(self.securityCode, forKey: .securityCode)
         try container.encodeIfPresent(self.displayType, forKey: .displayType)
+        try container.encodeIfPresent(self.gradientColor, forKey: .gradientColor)
     }
 
     open func toJSONString() throws -> String? {

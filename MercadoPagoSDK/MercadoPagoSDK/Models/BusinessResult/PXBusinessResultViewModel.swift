@@ -291,6 +291,7 @@ extension PXBusinessResultViewModel {
                                      installmentsCount: installmentsCount,
                                      installmentsAmount: installmentAmount,
                                      installmentsTotalAmount: installmentsTotalAmount,
-                                     discountName: discountName)
+                                     discountName: discountName,
+                                     displayInfo: paymentData.paymentMethod?.bankTransferDisplayInfo)
     }
 }

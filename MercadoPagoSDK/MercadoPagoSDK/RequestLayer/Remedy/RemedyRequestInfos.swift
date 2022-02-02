@@ -39,4 +39,8 @@ extension RemedyRequestInfos: RequestInfos {
         case .getRemedy(_, let privateKey, _, _): return privateKey
         }
     }
+
+    var mockURL: URL? {
+        return nil
+    }
 }

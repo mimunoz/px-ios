@@ -52,7 +52,6 @@ extension MercadoPagoCheckout {
 
         resultViewModel.setCallback(callback: { [weak self] congratsState, remedyText in
             guard let self = self else { return }
-            self.viewModel.pxNavigationHandler.navigationController.setNavigationBarHidden(false, animated: false)
             switch congratsState {
             case .CALL_FOR_AUTH:
                 if self.viewModel.remedy != nil {

@@ -82,6 +82,7 @@ import Foundation
     lazy var rejectedIconSubtext = PXHeaderResutlConstants.REJECTED_ICON_SUBTEXT.localized
     var rejectedBolbradescoIconName = "MPSDK_payment_result_bolbradesco_error"
     var rejectedPaymentMethodPluginIconName = "MPSDK_payment_result_plugin_error"
+    var rejectedPaymentMethodGenericIconName = "MPSDK_payment_result_generic_error"
     var rejectedIconBundle = MercadoPagoBundle.bundle()
     var rejectedDefaultIconName: String?
     var rejectedURLImage: String?
@@ -517,7 +518,8 @@ extension PXPaymentResultConfiguration {
         if paymentMethod.paymentTypeId == PXPaymentTypes.PAYMENT_METHOD_PLUGIN.rawValue {
             return ResourceManager.shared.getImage(rejectedPaymentMethodPluginIconName)
         }
-        return ResourceManager.shared.getImage(pmDefaultIconName)
+
+        return ResourceManager.shared.getImage(rejectedPaymentMethodGenericIconName)
     }
 
     @available(*, deprecated)

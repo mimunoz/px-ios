@@ -27,7 +27,7 @@ class PXNewResultUtil {
 
         let icon = ResourceManager.shared.getImage("receipt_icon")
 
-        let data = PXNewCustomViewData(firstString: attributedTitle, secondString: attributedSubtitle, thirdString: nil, icon: icon, iconURL: nil, action: nil, color: nil)
+        let data = PXNewCustomViewData(firstString: attributedTitle, secondString: attributedSubtitle, thirdString: nil, fourthString: nil, icon: icon, iconURL: nil, action: nil, color: nil)
         return data
     }
 
@@ -210,7 +210,12 @@ extension PXNewResultUtil {
     // PM Second String
     class func formatPaymentMethodSecondString(paymentMethodName: String?, paymentMethodLastFourDigits lastFourDigits: String?, paymentType: PXPaymentTypes) -> NSAttributedString? {
         guard let description = assembleSecondString(paymentMethodName: paymentMethodName ?? "", paymentMethodLastFourDigits: lastFourDigits, paymentType: paymentType) else { return nil }
-        return secondStringAttributed(description)
+        return secondaryStringAttributed(description)
+    }
+
+    class func formatBankTransferSecondaryString(_ message: String?) -> NSAttributedString? {
+        guard let msg = message else { return nil }
+        return secondaryStringAttributed(msg)
     }
 
     class func assembleSecondString(paymentMethodName: String, paymentMethodLastFourDigits lastFourDigits: String?, paymentType: PXPaymentTypes) -> String? {
@@ -227,17 +232,7 @@ extension PXNewResultUtil {
         return pmDescription
     }
 
-    class func secondStringAttributed(_ string: String) -> NSAttributedString {
-        return NSMutableAttributedString(string: string, attributes: PXNewCustomView.subtitleAttributes)
-    }
-
-    // PM Third String
-    class func formatPaymentMethodThirdString(_ string: String?) -> NSAttributedString? {
-        guard let paymentMethodDisplayDescription = string else { return nil }
-        return thirdStringAttributed(paymentMethodDisplayDescription)
-    }
-
-    class func thirdStringAttributed(_ string: String) -> NSAttributedString {
+    class func secondaryStringAttributed(_ string: String) -> NSAttributedString {
         return NSMutableAttributedString(string: string, attributes: PXNewCustomView.subtitleAttributes)
     }
 }

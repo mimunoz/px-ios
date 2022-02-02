@@ -171,7 +171,7 @@ final class MercadoPagoServicesTest: XCTestCase {
     func testGetRemedySuccess() {
         var hasError = true
         XCTAssertTrue(remedyService.calledGetRemedy == false)
-        sut.getRemedy(for: "", payerPaymentMethodRejected: PXPayerPaymentMethodRejected(bin: nil, customOptionId: nil, paymentMethodId: nil, paymentTypeId: nil, issuerName: nil, lastFourDigit: nil, securityCodeLocation: nil, securityCodeLength: nil, totalAmount: nil, installments: nil, escStatus: nil), alternativePayerPaymentMethods: nil, customStringConfiguration: nil, oneTap: true) { _ in
+        sut.getRemedy(for: "", payerPaymentMethodRejected: PXPayerPaymentMethodRejected(bin: nil, customOptionId: nil, paymentMethodId: nil, paymentTypeId: nil, issuerName: nil, lastFourDigit: nil, securityCodeLocation: nil, securityCodeLength: nil, totalAmount: nil, installments: nil, escStatus: nil, paymentMethodName: nil, bankInfo: nil), alternativePayerPaymentMethods: nil, customStringConfiguration: nil, oneTap: true) { _ in
             hasError = false
         } failure: { _ in
             hasError = true
@@ -185,7 +185,7 @@ final class MercadoPagoServicesTest: XCTestCase {
         remedyService.successResponse = false
         var hasError = false
         XCTAssertTrue(remedyService.calledGetRemedy == false)
-        sut.getRemedy(for: "", payerPaymentMethodRejected: PXPayerPaymentMethodRejected(bin: nil, customOptionId: nil, paymentMethodId: nil, paymentTypeId: nil, issuerName: nil, lastFourDigit: nil, securityCodeLocation: nil, securityCodeLength: nil, totalAmount: nil, installments: nil, escStatus: nil), alternativePayerPaymentMethods: nil, customStringConfiguration: nil, oneTap: true) { _ in
+        sut.getRemedy(for: "", payerPaymentMethodRejected: PXPayerPaymentMethodRejected(bin: nil, customOptionId: nil, paymentMethodId: nil, paymentTypeId: nil, issuerName: nil, lastFourDigit: nil, securityCodeLocation: nil, securityCodeLength: nil, totalAmount: nil, installments: nil, escStatus: nil, paymentMethodName: nil, bankInfo: nil), alternativePayerPaymentMethods: nil, customStringConfiguration: nil, oneTap: true) { _ in
             hasError = false
         } failure: { _ in
             hasError = true

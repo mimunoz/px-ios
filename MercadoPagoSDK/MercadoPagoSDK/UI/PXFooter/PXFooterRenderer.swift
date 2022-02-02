@@ -88,8 +88,9 @@ final class PXFooterRenderer: NSObject {
         if props.useAndesButtonForLinkAction {
             linkButton = AndesButton(text: linkAction.label, hierarchy: props.andesButtonConfig.hierarchy, size: props.andesButtonConfig.size, icon: nil)
         } else {
-            let secondaryButton = PXSecondaryButton()
-            secondaryButton.buttonTitle = linkAction.label
+            let secondaryButton = UIButton()
+            secondaryButton.setTitle(linkAction.label, for: .normal)
+            secondaryButton.setTitleColor(UIColor.Andes.blueMP500, for: .normal)
             linkButton = secondaryButton
         }
         linkButton.add(for: .touchUpInside, linkAction.action)

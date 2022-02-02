@@ -54,6 +54,7 @@ struct PXInitFeatures: Codable {
     let cardsCustomTaxesCharges: Bool
     let taxableCharges: Bool
     let styleVersion: String
+    let debin: String
 
     init(
         oneTap: Bool = true,
@@ -66,7 +67,8 @@ struct PXInitFeatures: Codable {
         customTaxesCharges: Bool = true,
         cardsCustomTaxesCharges: Bool = true,
         taxableCharges: Bool = true,
-        styleVersion: String = "v1") {
+        styleVersion: String = "v1",
+        debin: String = "v1") {
         self.oneTap = oneTap
         self.split = split
         self.odr = odr
@@ -78,6 +80,7 @@ struct PXInitFeatures: Codable {
         self.cardsCustomTaxesCharges = cardsCustomTaxesCharges
         self.taxableCharges = taxableCharges
         self.styleVersion = styleVersion
+        self.debin = debin
     }
 
     enum CodingKeys: String, CodingKey {
@@ -92,5 +95,6 @@ struct PXInitFeatures: Codable {
         case cardsCustomTaxesCharges = "cards_custom_taxes_charges"
         case taxableCharges = "taxable_charges"
         case styleVersion = "style_version"
+        case debin
     }
 }

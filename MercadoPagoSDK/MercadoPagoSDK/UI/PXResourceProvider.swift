@@ -1,7 +1,8 @@
 import Foundation
 
 class PXResourceProvider {
-    static var error_title_default = "rejected_default_title"
+    static var error_title_default = "px_congrats_rejected_default_title"
+    static var error_body_message_default = "px_congrats_rejected_default_message"
     static var error_body_title_base = "¿Qué puedo hacer?"
     static var error_body_title_c4a = "error_body_title_call_for_authorize"
     static var error_body_description_base = "error_body_description_"
@@ -55,8 +56,7 @@ class PXResourceProvider {
     }
 
     static func getDescriptionForErrorBodyForREJECTED_OTHER_REASON() -> String {
-        let key = error_body_description_base + PXPayment.StatusDetails.REJECTED_OTHER_REASON
-        return key.localized
+        return error_body_message_default.localized
     }
 
     static func getDescriptionForErrorBodyForREJECTED_BY_BANK() -> String {
@@ -80,8 +80,7 @@ class PXResourceProvider {
     }
 
     static func getDescriptionForErrorBodyForREJECTED_HIGH_RISK() -> String {
-        let key = error_body_description_base + PXPayment.StatusDetails.REJECTED_HIGH_RISK
-        return key.localized
+        return "px_congrats_rejected_high_risk_message".localized
     }
 
     static func getDescriptionForErrorBodyForREJECTED_CARD_HIGH_RISK() -> String {
@@ -97,6 +96,18 @@ class PXResourceProvider {
     static func getDescriptionForErrorBodyForREJECTED_INVALID_INSTALLMENTS() -> String {
         let key = error_body_description_base + PXPayment.StatusDetails.REJECTED_INVALID_INSTALLMENTS
         return key.localized
+    }
+
+    static func getDescriptionForErrorBodyForREJECTED_RAW_INSUFFICIENT_AMOUNT() -> String {
+        return "px_congrats_rejected_insufficient_amount_message".localized
+    }
+
+    static func getDescriptionForErrorBodyForREJECTED_CAP_EXCEEDED() -> String {
+        return "px_congrats_rejected_cap_exceeded_message".localized
+    }
+
+    static func getDescriptionForErrorBodyForGenericRejected() -> String {
+        return error_body_message_default.localized
     }
 
     static func getActionTextForErrorBodyForREJECTED_CALL_FOR_AUTHORIZE(_ paymentMethodName: String?) -> String {

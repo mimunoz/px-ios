@@ -20,6 +20,7 @@ open class PXPaymentMethod: NSObject, Codable {
     open var paymentMethodDescription: String?
     open var processingModes: [String]?
     open var creditsDisplayInfo: PXPaymentMethodDisplayInfo?
+    open var bankTransferDisplayInfo: PXPayerPaymentMethodDisplayInfo?
 
     public init(additionalInfoNeeded: [String]?, id: String, name: String?, paymentTypeId: String, status: String?, secureThumbnail: String?, thumbnail: String?, deferredCapture: String?, settings: [PXSetting], minAllowedAmount: Double?, maxAllowedAmount: Double?, accreditationTime: Int?, merchantAccountId: String?, financialInstitutions: [PXFinancialInstitution]?, description: String?, processingModes: [String]?, creditsDisplayInfo: PXPaymentMethodDisplayInfo? = nil) {
         self.additionalInfoNeeded = additionalInfoNeeded

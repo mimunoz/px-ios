@@ -167,3 +167,12 @@
 "px_snackbar_error_action" = "Volver";
 "px_security_code_subtitle_front" = "Los {0} dígitos están al frente de tu tarjeta.";
 "px_security_code_subtitle_back" = "Los {0} dígitos están al dorso de tu tarjeta.";
+"px_congrats_rejected_default_title" = "No pudimos realizar la operación";
+"px_congrats_rejected_default_message" = "Lo sentimos, algo salió mal. Por favor, intentá de nuevo con otro medio de pago.";
+"px_congrats_rejected_primary_button_label" = "Elegir otro medio de pago";
+"px_congrats_rejected_secondary_button_label" = "Ir al inicio";
+"px_congrats_rejected_insufficient_amount_title" = "No tenés dinero suficiente en tu cuenta";
+"px_congrats_rejected_insufficient_amount_message" = "Intentá con otro medio de pago.";
+"px_congrats_rejected_high_risk_message" = "Lo sentimos, la operación no pasó nuestra validación de seguridad.";
+"px_congrats_rejected_cap_exceeded_title" = "Superaste el límite diario para usar con el medio de pago elegido";
+"px_congrats_rejected_cap_exceeded_message" = "Podés realizar la operación con un medio de pago distinto.";

@@ -14,8 +14,14 @@ open class PXCustomOptionSearchItem: NSObject, Codable {
     open var firstSixDigits: String
     open var lastFourDigits: String
     open var escStatus: String?
+    open var displayInfo: PXPayerPaymentMethodDisplayInfo?
+    open var paymentMethodName: String?
+    open var bankInfo: PXPayerPaymentMethodBankInfo?
 
-    public init(id: String, description: String?, paymentMethodId: String?, paymentTypeId: String?, discountInfo: String?, defaultAmountConfiguration: String?, amountConfigurations: [String: PXAmountConfiguration]?, comment: String?, issuer: PXIssuer?, firstSixDigits: String, lastFourDigits: String, escStatus: String?) {
+    public init(id: String, description: String?, paymentMethodId: String?, paymentTypeId: String?,
+                discountInfo: String?, defaultAmountConfiguration: String?, amountConfigurations: [String: PXAmountConfiguration]?, comment: String?,
+                issuer: PXIssuer?, firstSixDigits: String, lastFourDigits: String, escStatus: String?,
+                displayInfo: PXPayerPaymentMethodDisplayInfo?, paymentMethodName: String?, bankInfo: PXPayerPaymentMethodBankInfo?) {
         self.id = id
         self._description = description
         self.paymentMethodId = paymentMethodId
@@ -28,6 +34,9 @@ open class PXCustomOptionSearchItem: NSObject, Codable {
         self.firstSixDigits = firstSixDigits
         self.lastFourDigits = lastFourDigits
         self.escStatus = escStatus
+        self.displayInfo = displayInfo
+        self.paymentMethodName = paymentMethodName
+        self.bankInfo = bankInfo
 
         if let defaultAmountConfiguration = defaultAmountConfiguration, let selectedPayerCostConfiguration = amountConfigurations?[defaultAmountConfiguration] {
             self.selectedPaymentOption = selectedPayerCostConfiguration
@@ -47,6 +56,9 @@ open class PXCustomOptionSearchItem: NSObject, Codable {
         case lastFourDigits = "last_four_digits"
         case issuer
         case escStatus = "esc_status"
+        case displayInfo = "display_info"
+        case paymentMethodName = "payment_method_name"
+        case bankInfo = "bank_info"
     }
 
     public required convenience init(from decoder: Decoder) throws {
@@ -63,8 +75,14 @@ open class PXCustomOptionSearchItem: NSObject, Codable {
         let lastFourDigits: String = try container.decodeIfPresent(String.self, forKey: .lastFourDigits) ?? ""
         let firstSixDigits: String = try container.decodeIfPresent(String.self, forKey: .firstSixDigits) ?? ""
         let escStatus: String? = try container.decodeIfPresent(String.self, forKey: .escStatus) ?? PXESCStatus.APPROVED.rawValue
+        let displayInfo: PXPayerPaymentMethodDisplayInfo? = try container.decodeIfPresent(PXPayerPaymentMethodDisplayInfo.self, forKey: .displayInfo)
+        let paymentMethodName: String? = try container.decodeIfPresent(String.self, forKey: .paymentMethodName)
+        let bankInfo: PXPayerPaymentMethodBankInfo? = try container.decodeIfPresent(PXPayerPaymentMethodBankInfo.self, forKey: .bankInfo)
 
-        self.init(id: id, description: description, paymentMethodId: paymentMethodId, paymentTypeId: paymentTypeId, discountInfo: discountInfo, defaultAmountConfiguration: defaultAmountConfiguration, amountConfigurations: amountConfigurations, comment: comment, issuer: issuer, firstSixDigits: firstSixDigits, lastFourDigits: lastFourDigits, escStatus: escStatus)
+        self.init(id: id, description: description, paymentMethodId: paymentMethodId, paymentTypeId: paymentTypeId,
+                  discountInfo: discountInfo, defaultAmountConfiguration: defaultAmountConfiguration, amountConfigurations: amountConfigurations, comment: comment,
+                  issuer: issuer, firstSixDigits: firstSixDigits, lastFourDigits: lastFourDigits, escStatus: escStatus,
+                  displayInfo: displayInfo, paymentMethodName: paymentMethodName, bankInfo: bankInfo)
     }
 
     public func encode(to encoder: Encoder) throws {
@@ -81,6 +99,9 @@ open class PXCustomOptionSearchItem: NSObject, Codable {
         try container.encodeIfPresent(self.firstSixDigits, forKey: .firstSixDigits)
         try container.encodeIfPresent(self.lastFourDigits, forKey: .lastFourDigits)
         try container.encodeIfPresent(self.escStatus, forKey: .escStatus)
+        try container.encodeIfPresent(self.displayInfo, forKey: .displayInfo)
+        try container.encodeIfPresent(self.paymentMethodName, forKey: .paymentMethodName)
+        try container.encodeIfPresent(self.bankInfo, forKey: .bankInfo)
     }
 
     open func toJSON() throws -> Data {

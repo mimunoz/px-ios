@@ -129,6 +129,6 @@ class CongratsTests: XCTestCase {
         let viewModel = PXPaymentCongratsViewModel(paymentCongrats: congrats)
 
         XCTAssertEqual(viewModel.getPaymentViewData()?.firstString?.string, " $ 10.000 90% OFF")
-        XCTAssertEqual(viewModel.getPaymentViewData()?.secondString?.string, "Dasdasd completed in 9876")
+        XCTAssertEqual(viewModel.getPaymentViewData()?.secondString?.string, "Dasdasd terminada en 9876")
     }
 }

@@ -4,15 +4,17 @@ open class PXNewCustomViewData {
     let firstString: NSAttributedString?
     let secondString: NSAttributedString?
     let thirdString: NSAttributedString?
+    let fourthString: NSAttributedString?
     let icon: UIImage?
     let iconURL: String?
     let action: PXAction?
     let color: UIColor?
 
-    init(firstString: NSAttributedString?, secondString: NSAttributedString?, thirdString: NSAttributedString?, icon: UIImage?, iconURL: String?, action: PXAction?, color: UIColor?) {
+    init(firstString: NSAttributedString?, secondString: NSAttributedString?, thirdString: NSAttributedString?, fourthString: NSAttributedString?, icon: UIImage?, iconURL: String?, action: PXAction?, color: UIColor?) {
         self.firstString = firstString
         self.secondString = secondString
         self.thirdString = thirdString
+        self.fourthString = fourthString
         self.icon = icon
         self.iconURL = iconURL
         self.action = action
@@ -33,7 +35,7 @@ class PXNewCustomView: UIView {
     let data: PXNewCustomViewData
 
     class func getData() -> PXNewCustomViewData {
-        return PXNewCustomViewData(firstString: nil, secondString: nil, thirdString: nil, icon: nil, iconURL: nil, action: nil, color: nil)
+        return PXNewCustomViewData(firstString: nil, secondString: nil, thirdString: nil, fourthString: nil, icon: nil, iconURL: nil, action: nil, color: nil)
     }
 
     init(data: PXNewCustomViewData, bottomView: UIView? = nil) {
@@ -77,6 +79,7 @@ class PXNewCustomView: UIView {
         } else {
             image = data.icon
         }
+
         iconView = PXUIImageView(image: image, size: IMAGE_HEIGHT, borderColor: UIColor.black.withAlphaComponent(0.08).cgColor, shouldAddInsets: true)
 
         let labelsView = PXComponentView()
@@ -135,6 +138,21 @@ class PXNewCustomView: UIView {
                     label.trailingAnchor.constraint(equalTo: labelsView.trailingAnchor)
                 ])
                 setTopConstraints(targetView: label, labelsView: labelsView, firstLabel: firstLabel, secondLabel: secondLabel, thirdLabel: nil, actionButton: nil)
+            }
+        }
+
+        var fourthLabel: UILabel?
+        if let fourthString = data.fourthString {
+            fourthLabel = buildLabel(fourthString)
+            if let fourthLabel = fourthLabel {
+                pxContentView.addSubview(fourthLabel)
+
+                NSLayoutConstraint.activate([
+                    fourthLabel.leadingAnchor.constraint(equalTo: labelsView.leadingAnchor),
+                    fourthLabel.trailingAnchor.constraint(equalTo: labelsView.trailingAnchor)
+                ])
+
+                setTopConstraints(targetView: fourthLabel, labelsView: labelsView, firstLabel: firstLabel, secondLabel: secondLabel, thirdLabel: thirdLabel, actionButton: nil)
             }
         }
 

@@ -18,6 +18,8 @@ struct PXPayerPaymentMethodRejected: Codable {
     let totalAmount: Double?
     let installments: Int?
     let escStatus: String?
+    let paymentMethodName: String?
+    let bankInfo: PXPayerPaymentMethodBankInfo?
 }
 
 struct PXCustomStringConfiguration: Codable {

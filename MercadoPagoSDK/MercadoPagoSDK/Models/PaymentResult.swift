@@ -11,23 +11,24 @@ class PaymentResult {
         case DEEPLINK
     }
 
-    private let warningStatusDetails = [PXRejectedStatusDetail.INVALID_ESC.rawValue,
-                                PXRejectedStatusDetail.CALL_FOR_AUTH.rawValue,
-                                PXRejectedStatusDetail.BAD_FILLED_CARD_NUMBER.rawValue,
-                                PXRejectedStatusDetail.CARD_DISABLE.rawValue,
-                                PXRejectedStatusDetail.INSUFFICIENT_AMOUNT.rawValue,
-                                PXRejectedStatusDetail.REJECTED_INVALID_INSTALLMENTS.rawValue,
-                                PXRejectedStatusDetail.BAD_FILLED_DATE.rawValue,
-                                PXRejectedStatusDetail.BAD_FILLED_SECURITY_CODE.rawValue,
-                                PXRejectedStatusDetail.BAD_FILLED_OTHER.rawValue,
-                                PXPendingStatusDetail.CONTINGENCY.rawValue,
-                                PXPendingStatusDetail.REVIEW_MANUAL.rawValue]
+    private let warningStatusDetails = [PXPayment.StatusDetails.INVALID_ESC,
+                                PXPayment.StatusDetails.REJECTED_CALL_FOR_AUTHORIZE,
+                                PXPayment.StatusDetails.REJECTED_BAD_FILLED_CARD_NUMBER,
+                                PXPayment.StatusDetails.REJECTED_CARD_DISABLED,
+                                PXPayment.StatusDetails.REJECTED_INSUFFICIENT_AMOUNT,
+                                PXPayment.StatusDetails.REJECTED_INVALID_INSTALLMENTS,
+                                PXPayment.StatusDetails.REJECTED_BAD_FILLED_DATE,
+                                PXPayment.StatusDetails.REJECTED_BAD_FILLED_SECURITY_CODE,
+                                PXPayment.StatusDetails.REJECTED_BAD_FILLED_OTHER,
+                                PXPayment.StatusDetails.PENDING_CONTINGENCY,
+                                PXPayment.StatusDetails.PENDING_REVIEW_MANUAL]
 
-    private let badFilledStatusDetails = [PXRejectedStatusDetail.BAD_FILLED_CARD_NUMBER.rawValue,
-                                  PXRejectedStatusDetail.BAD_FILLED_DATE.rawValue,
-                                  PXRejectedStatusDetail.BAD_FILLED_SECURITY_CODE.rawValue,
-                                  PXRejectedStatusDetail.BAD_FILLED_OTHER.rawValue]
+    private let badFilledStatusDetails = [PXPayment.StatusDetails.REJECTED_BAD_FILLED_CARD_NUMBER,
+                                  PXPayment.StatusDetails.REJECTED_BAD_FILLED_DATE,
+                                  PXPayment.StatusDetails.REJECTED_BAD_FILLED_SECURITY_CODE,
+                                  PXPayment.StatusDetails.REJECTED_BAD_FILLED_OTHER]
 
+    // Rejected with remedies will be shown as warning
     private let rejectedWithRemedyStatusDetails = [PXPayment.StatusDetails.REJECTED_BAD_FILLED_SECURITY_CODE,
                                                   PXPayment.StatusDetails.REJECTED_HIGH_RISK,
                                                   PXPayment.StatusDetails.REJECTED_CARD_HIGH_RISK,
@@ -38,7 +39,8 @@ class PaymentResult {
                                                   PXPayment.StatusDetails.REJECTED_INVALID_INSTALLMENTS,
                                                   PXPayment.StatusDetails.REJECTED_BAD_FILLED_CARD_NUMBER,
                                                   PXPayment.StatusDetails.REJECTED_BAD_FILLED_OTHER,
-                                                  PXPayment.StatusDetails.REJECTED_CALL_FOR_AUTHORIZE]
+                                                  PXPayment.StatusDetails.REJECTED_CALL_FOR_AUTHORIZE,
+                                                   PXPayment.StatusDetails.REJECTED_CAP_EXCEEDED]
 
     var paymentData: PXPaymentData?
     var splitAccountMoney: PXPaymentData?
@@ -75,7 +77,7 @@ class PaymentResult {
     }
 
     func isCallForAuth() -> Bool {
-        return self.statusDetail == PXRejectedStatusDetail.CALL_FOR_AUTH.rawValue
+        return self.statusDetail == PXPayment.StatusDetails.REJECTED_CALL_FOR_AUTHORIZE
     }
 
     func isHighRisk() -> Bool {
@@ -84,19 +86,19 @@ class PaymentResult {
     }
 
     func isInvalidInstallments() -> Bool {
-        return self.statusDetail == PXRejectedStatusDetail.REJECTED_INVALID_INSTALLMENTS.rawValue
+        return self.statusDetail == PXPayment.StatusDetails.REJECTED_INVALID_INSTALLMENTS
     }
 
     func isDuplicatedPayment() -> Bool {
-        return self.statusDetail == PXRejectedStatusDetail.DUPLICATED_PAYMENT.rawValue
+        return self.statusDetail == PXPayment.StatusDetails.REJECTED_DUPLICATED_PAYMENT
     }
 
     func isFraudPayment() -> Bool {
-        return self.statusDetail == PXRejectedStatusDetail.REJECTED_FRAUD.rawValue
+        return self.statusDetail == PXPayment.StatusDetails.REJECTED_FRAUD
     }
 
     func isCardDisabled() -> Bool {
-        return self.statusDetail == PXRejectedStatusDetail.CARD_DISABLE.rawValue
+        return self.statusDetail == PXPayment.StatusDetails.REJECTED_CARD_DISABLED
     }
 
     func isBadFilled() -> Bool {
@@ -131,24 +133,24 @@ class PaymentResult {
     }
 
     func isInvalidESC() -> Bool {
-        return self.statusDetail == PXRejectedStatusDetail.INVALID_ESC.rawValue
+        return self.statusDetail == PXPayment.StatusDetails.INVALID_ESC
     }
 
     func isPixOrOfflinePayment() -> Bool {
-        return self.statusDetail == PXRejectedStatusDetail.PENDING_WAITING_TRANSFER.rawValue &&
+        return self.statusDetail == PXPayment.StatusDetails.PENDING_WAITING_TRANSFER &&
             self.status == PXPaymentStatus.PENDING.rawValue
     }
 
     func isReviewManual() -> Bool {
-        return self.statusDetail == PXPendingStatusDetail.REVIEW_MANUAL.rawValue
+        return self.statusDetail == PXPayment.StatusDetails.PENDING_REVIEW_MANUAL
     }
 
     func isWaitingForPayment() -> Bool {
-        return self.statusDetail == PXPendingStatusDetail.WAITING_PAYMENT.rawValue
+        return self.statusDetail == PXPayment.StatusDetails.PENDING_WAITING_PAYMENT
     }
 
     func isContingency() -> Bool {
-        return self.statusDetail == PXPendingStatusDetail.CONTINGENCY.rawValue
+        return self.statusDetail == PXPayment.StatusDetails.PENDING_CONTINGENCY
     }
 
     func isAccountMoney() -> Bool {

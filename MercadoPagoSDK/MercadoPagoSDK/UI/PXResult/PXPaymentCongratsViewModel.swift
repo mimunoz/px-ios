@@ -16,16 +16,48 @@ class PXPaymentCongratsViewModel {
     private func createPaymentMethodReceiptData(from paymentInfo: PXCongratsPaymentInfo) -> PXNewCustomViewData {
         let firstString = PXNewResultUtil.formatPaymentMethodFirstString(paymentInfo: paymentInfo)
 
-        let secondString = PXNewResultUtil.formatPaymentMethodSecondString(paymentMethodName: paymentInfo.paymentMethodName,
+        var subtitles: (secondString: NSAttributedString?,
+                        thirdString: NSAttributedString?,
+                        fourthString: NSAttributedString?)
+
+        var iconURL: String?
+
+        if let displayInfo = paymentInfo.displayInfo {
+            subtitles = getSubtitles(from: displayInfo.result?.paymentMethod?.detail)
+
+            iconURL = displayInfo.result?.paymentMethod?.iconUrl
+        } else {
+            subtitles.secondString = PXNewResultUtil.formatPaymentMethodSecondString(paymentMethodName: paymentInfo.paymentMethodName,
                                                                            paymentMethodLastFourDigits: paymentInfo.paymentMethodLastFourDigits,
                                                                            paymentType: paymentInfo.paymentMethodType)
-
-        let thirdString = PXNewResultUtil.formatPaymentMethodThirdString(paymentInfo.paymentMethodDescription)
+            subtitles.thirdString = PXNewResultUtil.formatBankTransferSecondaryString(paymentInfo.paymentMethodDescription)
+            iconURL = paymentInfo.paymentMethodIconURL
+        }
 
         let defaultIcon = ResourceManager.shared.getImage("PaymentGeneric")
-        let iconURL = paymentInfo.paymentMethodIconURL
 
-        return PXNewCustomViewData(firstString: firstString, secondString: secondString, thirdString: thirdString, icon: defaultIcon, iconURL: iconURL, action: nil, color: .white)
+        return PXNewCustomViewData(firstString: firstString,
+                                   secondString: subtitles.secondString,
+                                   thirdString: subtitles.thirdString,
+                                   fourthString: subtitles.fourthString,
+                                   icon: defaultIcon,
+                                   iconURL: iconURL,
+                                   action: nil,
+                                   color: .white)
+    }
+
+    private func getSubtitles(from array: [PXText]?) -> (NSAttributedString?, NSAttributedString?, NSAttributedString?) {
+        var secondaryTexts = [NSAttributedString?](repeating: nil, count: 3)
+        var index = 0
+
+        array?.forEach({ text in
+            secondaryTexts[index] = PXNewResultUtil.formatBankTransferSecondaryString(text.message)
+            index += 1
+        })
+
+        return (secondString: secondaryTexts[0],
+                thirdString: secondaryTexts[1],
+                fourthString: secondaryTexts[2])
     }
 }
 
@@ -55,10 +87,7 @@ extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
     }
 
     func getHeaderBadgeImage() -> UIImage? {
-        guard let image = paymentCongrats.headerBadgeImage else {
-            return ResourceManager.shared.getBadgeImageWith(status: paymentCongrats.type.getDescription())
-        }
-        return image
+        return paymentCongrats.headerBadgeImage
     }
 
     func getHeaderCloseAction() -> (() -> Void)? {

@@ -22,7 +22,7 @@ open class PXPaymentProcessorNavigationHandler: NSObject {
 
     /// :nodoc:
     open func didFinishPayment(paymentStatus: PXGenericPayment.RemotePaymentStatus, statusDetails: String = "", paymentId: String? = nil) {
-        if statusDetails == PXRejectedStatusDetail.INVALID_ESC.rawValue {
+        if statusDetails == PXPayment.StatusDetails.INVALID_ESC {
             flow?.paymentErrorHandler?.escError(reason: .ESC_CAP)
             return
         }
@@ -41,7 +41,7 @@ open class PXPaymentProcessorNavigationHandler: NSObject {
             if paymentStatus == .APPROVED {
                 statusDetailsStr = ""
             } else {
-                statusDetailsStr = PXRejectedStatusDetail.REJECTED_PLUGIN_PM.rawValue
+                statusDetailsStr = PXPayment.StatusDetails.REJECTED_PLUGIN_PM
             }
         }
 
@@ -57,7 +57,7 @@ open class PXPaymentProcessorNavigationHandler: NSObject {
      - parameter paymentId: Id of your payment.
      */
     open func didFinishPayment(status: String, statusDetail: String, paymentId: String? = nil) {
-        if statusDetail == PXRejectedStatusDetail.INVALID_ESC.rawValue {
+        if statusDetail == PXPayment.StatusDetails.INVALID_ESC {
             flow?.paymentErrorHandler?.escError(reason: .ESC_CAP)
             return
         }

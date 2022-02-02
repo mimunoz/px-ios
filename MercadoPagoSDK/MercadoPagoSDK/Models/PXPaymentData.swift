@@ -24,6 +24,7 @@ import UIKit
     var amount: Double?
     var taxFreeAmount: Double?
     var noDiscountAmount: Double?
+    var transactionInfo: PXTransactionInfo?
 
     /// :nodoc:
     public func copy(with zone: NSZone? = nil) -> Any {
@@ -43,6 +44,7 @@ import UIKit
         copyObj.amount = amount
         copyObj.taxFreeAmount = taxFreeAmount
         copyObj.noDiscountAmount = noDiscountAmount
+        copyObj.transactionInfo = transactionInfo
         return copyObj
     }
 
@@ -201,6 +203,10 @@ extension PXPaymentData {
             }
         }
         return nil
+    }
+
+    public func getTransactionInfo() -> PXTransactionInfo? {
+        return transactionInfo
     }
 }
 

@@ -38,4 +38,32 @@ class TemplatePIX: NSObject, GenericCardUI {
     var cardFontColor: UIColor = .white
     var defaultUI = true
     var securityCodePattern = 3
+    var gradientColors = [""]
+}
+
+class TemplateDebin: NSObject, GenericCardUI {
+    var gradientColors: [String] = [""]
+    var descriptionName = ""
+    var descriptionTextColor = ""
+    var descriptionWeight = ""
+    var bla: String = ""
+    var labelName: String = ""
+    var labelTextColor: String = ""
+    var labelBackgroundColor: String = ""
+    var labelWeight: String = ""
+    var titleName: String = ""
+    var titleTextColor: String = ""
+    var titleWeight: String = ""
+    var subtitleName: String = ""
+    var subtitleTextColor: String = ""
+    var subtitleWeight: String = ""
+    var logoImageURL: String = ""
+    var cardPattern: [Int] = []
+    var cardBackgroundColor: UIColor = .red
+    var securityCodeLocation: MLCardSecurityCodeLocation = .none
+    var placeholderName: String = ""
+    var placeholderExpiration: String = ""
+    var cardFontColor: UIColor = .white
+    var defaultUI: Bool = true
+    var securityCodePattern: Int = 0            // averiguar
 }

@@ -106,8 +106,14 @@ public enum PXRejectedStatusDetail: String, CustomStringConvertible {
      REJECTED_BY_REGULATIONS - The MLB user needs to complete some information to proceed.
      */
     case REJECTED_BY_REGULATIONS = "rejected_by_regulations"
-
-    case PENDING_WAITING_TRANSFER = "pending_waiting_transfer"
+    /**
+     REJECTED_RAW_INSUFFICIENT_AMOUNT - Like cc_insufficient_amount for credit cards but for bank accounts.
+     */
+    case REJECTED_RAW_INSUFFICIENT_AMOUNT = "insufficient_amount"
+    /**
+     REJECTED_CAP_EXCEEDED - The user has exceeded the cap for amount of money used on payments for the day.
+     */
+    case REJECTED_CAP_EXCEEDED = "rejected_cap_exceeded"
 
     public var description: String {
         return self.rawValue
@@ -130,4 +136,8 @@ public enum PXPendingStatusDetail: String {
      WAITING_PAYMENT - PXPendingStatusDetail.
      */
     case WAITING_PAYMENT = "pending_waiting_payment"
+    /**
+     WAITING_TRANSFER - PXPendingStatusDetail. (For PIX use)
+     */
+    case PENDING_WAITING_TRANSFER = "pending_waiting_transfer"
 }
