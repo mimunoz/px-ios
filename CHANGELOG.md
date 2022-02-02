@@ -4,9 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## Unreleased
+## v4.54.0
 ### Changed
 - Changed discounts icon in Summary to match charges icon
+- Changed loader animation for post payment flow for SEMOVI
+
+### Fixed
+- Fixed post payment notification for SEMOVI
 
 ## v4.53.0
 🚀 Private Release - 4.53.0 date: 20/01/2022 🚀
