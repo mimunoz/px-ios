@@ -7,6 +7,7 @@ final class PXResourceProviderTest: XCTestCase {
         super.setUp()
 
         // Set up SiteManager
+        Localizator.sharedInstance.setLanguage(language: .SPANISH)
         SiteManager.shared.setSite(site: PXSite(id: "MLA", currencyId: "ARS", termsAndConditionsUrl: "", shouldWarnAboutBankInterests: false))
         SiteManager.shared.setCurrency(currency: PXCurrency(id: "ARS", description: "", symbol: "$", decimalPlaces: 2, decimalSeparator: ".", thousandSeparator: ","))
     }
