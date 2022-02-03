@@ -1,6 +1,6 @@
 import Foundation
 
-public class PXPaymentTypeChargeRuleBuilder {
+@objc public class PXPaymentTypeChargeRuleBuilder: NSObject {
     private var paymentTypeId: String
     private var amount: Double
 
