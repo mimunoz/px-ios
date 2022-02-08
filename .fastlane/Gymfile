@@ -15,6 +15,7 @@ scheme("ExampleSwift")
 export_method("development")
 configuration("Debug")
 scheme("ExampleSwift")
+workspace("./ExampleSwift/ExampleSwift.xcworkspace")
 
 export_options({
     compileBitcode: false,
@@ -24,3 +25,4 @@ export_options({
         }
 })
 output_directory("./build")
+derived_data_path("./build")
