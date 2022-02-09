@@ -1018,4 +1018,10 @@ extension PXOneTapViewController: UINavigationControllerDelegate {
         }
         return nil
     }
+
+    func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
+        if viewController is PXSecurityCodeViewController {
+            unsubscribeFromNotifications()
+        }
+    }
 }

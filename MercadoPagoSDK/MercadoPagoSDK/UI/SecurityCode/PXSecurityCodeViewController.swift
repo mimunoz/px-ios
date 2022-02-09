@@ -37,6 +37,10 @@ final class PXSecurityCodeViewController: MercadoPagoUIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
+    deinit {
+        unsubscribeFromNotifications()
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         trackScreenView()
