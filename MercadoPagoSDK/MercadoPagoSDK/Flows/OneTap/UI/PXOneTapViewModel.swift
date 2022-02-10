@@ -526,7 +526,7 @@ extension PXOneTapViewModel {
         template.titleWeight = oneTap.bankTransfer?.displayInfo?.title?.weight ?? ""
         template.titleTextColor = oneTap.bankTransfer?.displayInfo?.title?.textColor ?? ""
         template.subtitleName = oneTap.bankTransfer?.displayInfo?.subtitle?.message ?? ""
-        template.subtitleWeight = oneTap.bankTransfer?.displayInfo?.title?.weight ?? ""
+        template.subtitleWeight = oneTap.bankTransfer?.displayInfo?.subtitle?.weight ?? ""
         template.subtitleTextColor = oneTap.bankTransfer?.displayInfo?.subtitle?.textColor ?? ""
         template.descriptionName = oneTap.bankTransfer?.displayInfo?.description?.message ?? ""
         template.descriptionWeight = oneTap.bankTransfer?.displayInfo?.description?.weight ?? ""

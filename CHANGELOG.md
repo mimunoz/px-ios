@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Fixed Congrats Animation
+- UI debin card fixes
 
 ## v4.54.0
 ###Added
