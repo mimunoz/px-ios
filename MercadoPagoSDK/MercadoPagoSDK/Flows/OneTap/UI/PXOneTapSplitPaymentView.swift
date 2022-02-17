@@ -32,6 +32,7 @@ class PXOneTapSplitPaymentView: UIView {
     }
 
     func update(splitConfiguration: PXSplitConfiguration?) {
+        if splitConfiguration == self.splitConfiguration { return }
         self.splitConfiguration = splitConfiguration
         show()
 
