@@ -21,9 +21,7 @@ extension PXResultViewModel {
     }
 
     func badgeImage() -> UIImage? {
-        if !preference.showBadgeImage {
-            return nil
-        } else if let badgeUrl = remedy?.displayInfo?.header?.badgeUrl, paymentResult.isRejectedWithRemedy() {
+        if let badgeUrl = remedy?.displayInfo?.header?.badgeUrl, paymentResult.isRejectedWithRemedy() {
             return ViewUtils.loadImageFromUrl(badgeUrl)
         }
         return ResourceManager.shared.getBadgeImageWith(status: paymentResult.status, statusDetail: paymentResult.statusDetail)

@@ -266,7 +266,7 @@ extension OneTapFlowModel {
         }
 
         let hasInstallmentsIfNeeded = paymentData.hasPayerCost() || !paymentMethod.isCreditCard
-        let paymentOptionSelectedId = paymentOptionSelected.getId()
+        let paymentOptionSelectedId = paymentData.paymentMethod?.id == PXPaymentMethodId.DEBIN.rawValue ? paymentData.transactionInfo?.bankInfo?.accountId : paymentOptionSelected.getId()
         let isCustomerCard = paymentOptionSelected.isCustomerPaymentMethod() && paymentOptionSelectedId != PXPaymentTypes.ACCOUNT_MONEY.rawValue && paymentOptionSelectedId != PXPaymentTypes.CONSUMER_CREDITS.rawValue
         // Debit cards in Chile created by webpay return 0 security code length and shouldn't ask for CVV
 

@@ -153,7 +153,7 @@ extension PXOneTapViewModel {
                 let cardData = PXCardDataFactory().create(cardName: "", cardNumber: "", cardCode: "", cardExpiration: "")
                 var cardSliderApplications: [PXApplicationId: PXCardSliderApplicationData] = [:]
                 let applicationName = targetNode.paymentTypeId ?? PXPaymentTypes.BANK_TRANSFER.rawValue
-                let bottomMessage = paymentMethodId == "debin_transfer" ? chargeRuleMessage : nil
+                let bottomMessage = paymentMethodId == PXPaymentMethodId.DEBIN.rawValue ? chargeRuleMessage : nil
 
                 let attributes: [NSAttributedString.Key: AnyObject] = [NSAttributedString.Key.font: UIFont.ml_regularSystemFont(ofSize: installmentsRowMessageFontSize), NSAttributedString.Key.foregroundColor: ThemeManager.shared.greyColor()]
                 let displayMessage = NSAttributedString(string: targetNode.bankTransfer?.displayInfo?.sliderTitle ?? "", attributes: attributes)

@@ -146,19 +146,18 @@ public enum PXPaymentTypes: String {
         return paymentTypeIdEnum.isCard()
     }
 
-    static func isOnlineType(paymentTypeId: String) -> Bool {
+    static func isOnlineType(paymentTypeId: String, paymentMethodId: String? = nil) -> Bool {
         guard let paymentTypeIdEnum = PXPaymentTypes(rawValue: paymentTypeId)
             else {
                 return false
         }
-        return paymentTypeIdEnum.isOnlinePaymentType()
-    }
 
-    static func isOfflineType(paymentTypeId: String) -> Bool {
-        guard let paymentTypeIdEnum = PXPaymentTypes(rawValue: paymentTypeId)
-            else {
-                return false
+        if let paymentMethodId = paymentMethodId {
+            if paymentTypeIdEnum == .BANK_TRANSFER && paymentMethodId == PXPaymentMethodId.DEBIN.rawValue {
+                return true
+            }
         }
-        return paymentTypeIdEnum.isOfflinePaymentType()
+
+        return paymentTypeIdEnum.isOnlinePaymentType()
     }
 }

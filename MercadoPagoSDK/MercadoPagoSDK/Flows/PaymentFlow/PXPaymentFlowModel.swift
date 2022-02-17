@@ -126,7 +126,10 @@ final class PXPaymentFlowModel: NSObject {
         guard let paymentTypeId = amountHelper?.getPaymentData().paymentMethod?.paymentTypeId else {
             return false
         }
-        return !PXPaymentTypes.isOnlineType(paymentTypeId: paymentTypeId)
+
+        let id = amountHelper?.getPaymentData().paymentMethod?.id
+
+        return !PXPaymentTypes.isOnlineType(paymentTypeId: paymentTypeId, paymentMethodId: id)
     }
 
     func assignToCheckoutStore(programId: String? = nil) {

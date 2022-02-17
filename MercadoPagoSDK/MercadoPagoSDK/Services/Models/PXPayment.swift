@@ -394,5 +394,7 @@ extension PXPayment {
         public static let REJECTED_PLUGIN_PM = "cc_rejected_plugin_pm"
         public static let REJECTED_RAW_INSUFFICIENT_AMOUNT = "insufficient_amount"
         public static let REJECTED_CAP_EXCEEDED = "rejected_cap_exceeded"
+        public static let REJECTED_BANK_ERROR = "bank_error"
+        public static let REJECTED_INVALID_ACCOUNT = "invalid_account"
     }
 }

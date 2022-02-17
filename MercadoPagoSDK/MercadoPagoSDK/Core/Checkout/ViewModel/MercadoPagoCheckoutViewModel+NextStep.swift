@@ -80,7 +80,7 @@ extension MercadoPagoCheckoutViewModel {
         }
 
         let hasInstallmentsIfNeeded = paymentData.hasPayerCost() || !(paymentMethod.isCreditCard || paymentMethod.isDebitCard)
-        let paymentOptionSelectedId = paymentOptionSelected.getId()
+        let paymentOptionSelectedId = paymentData.paymentMethod?.id == PXPaymentMethodId.DEBIN.rawValue ? paymentData.transactionInfo?.bankInfo?.accountId : paymentOptionSelected.getId()
         let isCustomerCard = paymentOptionSelected.isCustomerPaymentMethod() &&
             paymentOptionSelectedId != PXPaymentTypes.ACCOUNT_MONEY.rawValue &&
             paymentOptionSelectedId != PXPaymentTypes.CONSUMER_CREDITS.rawValue
@@ -90,6 +90,7 @@ extension MercadoPagoCheckoutViewModel {
             if let cardInformation = paymentOptionSelected as? PXCardInformation {
                 paymentMethodId = cardInformation.getPaymentMethodId()
             }
+
             if let customOptionSearchItem = search?.getPayerPaymentMethod(id: paymentOptionSelectedId, paymentMethodId: paymentMethodId, paymentTypeId: paymentOptionSelected.getPaymentType()) {
                 if hasSavedESC() {
                     if customOptionSearchItem.escStatus == PXESCStatus.REJECTED.rawValue {

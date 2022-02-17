@@ -30,17 +30,20 @@ class PaymentResult {
 
     // Rejected with remedies will be shown as warning
     private let rejectedWithRemedyStatusDetails = [PXPayment.StatusDetails.REJECTED_BAD_FILLED_SECURITY_CODE,
-                                                  PXPayment.StatusDetails.REJECTED_HIGH_RISK,
-                                                  PXPayment.StatusDetails.REJECTED_CARD_HIGH_RISK,
-                                                  PXPayment.StatusDetails.REJECTED_INSUFFICIENT_AMOUNT,
-                                                  PXPayment.StatusDetails.REJECTED_OTHER_REASON,
-                                                  PXPayment.StatusDetails.REJECTED_MAX_ATTEMPTS,
-                                                  PXPayment.StatusDetails.REJECTED_BLACKLIST,
-                                                  PXPayment.StatusDetails.REJECTED_INVALID_INSTALLMENTS,
-                                                  PXPayment.StatusDetails.REJECTED_BAD_FILLED_CARD_NUMBER,
-                                                  PXPayment.StatusDetails.REJECTED_BAD_FILLED_OTHER,
-                                                  PXPayment.StatusDetails.REJECTED_CALL_FOR_AUTHORIZE,
-                                                   PXPayment.StatusDetails.REJECTED_CAP_EXCEEDED]
+                                                   PXPayment.StatusDetails.REJECTED_HIGH_RISK,
+                                                   PXPayment.StatusDetails.REJECTED_CARD_HIGH_RISK,
+                                                   PXPayment.StatusDetails.REJECTED_INSUFFICIENT_AMOUNT,
+                                                   PXPayment.StatusDetails.REJECTED_OTHER_REASON,
+                                                   PXPayment.StatusDetails.REJECTED_MAX_ATTEMPTS,
+                                                   PXPayment.StatusDetails.REJECTED_BLACKLIST,
+                                                   PXPayment.StatusDetails.REJECTED_INVALID_INSTALLMENTS,
+                                                   PXPayment.StatusDetails.REJECTED_BAD_FILLED_CARD_NUMBER,
+                                                   PXPayment.StatusDetails.REJECTED_BAD_FILLED_OTHER,
+                                                   PXPayment.StatusDetails.REJECTED_CALL_FOR_AUTHORIZE,
+                                                   PXPayment.StatusDetails.REJECTED_CAP_EXCEEDED,
+                                                   PXPayment.StatusDetails.REJECTED_RAW_INSUFFICIENT_AMOUNT,
+                                                   PXPayment.StatusDetails.REJECTED_BANK_ERROR,
+                                                   PXPayment.StatusDetails.REJECTED_INVALID_ACCOUNT]
 
     var paymentData: PXPaymentData?
     var splitAccountMoney: PXPaymentData?

@@ -64,6 +64,10 @@ extension MercadoPagoCheckout {
             cardId = paymentMethodId
         }
 
+        if paymentMethodId == PXPaymentMethodId.DEBIN.rawValue {
+            cardId = paymentData.transactionInfo?.bankInfo?.accountId
+        }
+
         guard let customOptionSearchItem = viewModel.search?.getPayerPaymentMethod(id: cardId, paymentMethodId: paymentMethodId, paymentTypeId: paymentData.paymentMethod?.paymentTypeId),
               customOptionSearchItem.isCustomerPaymentMethod() else {
             viewModel.updateCheckoutModel(remedy: PXRemedy())

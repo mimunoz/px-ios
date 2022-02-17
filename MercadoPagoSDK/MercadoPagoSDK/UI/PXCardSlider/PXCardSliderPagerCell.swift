@@ -197,7 +197,7 @@ extension PXCardSliderPagerCell {
         label.attributedText = message.text.getAttributedString(backgroundColor: .clear)
         label.numberOfLines = 1
         label.textAlignment = .center
-        label.font = Utils.getFont(size: PXLayout.XXXS_FONT)
+        label.font = Utils.getSemiBoldFont(size: PXLayout.XXXS_FONT)
 
         messageView.addSubview(label)
 
