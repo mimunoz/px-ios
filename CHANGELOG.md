@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Corrige o loop infinito que acontece ao se selecionar e/ou adicionar uma tarjeta com uma transação com payment split
 
 ### Fixed
+- Set undefined number of lines in label
 - Congrats with discounts
 
 ## v4.55.0

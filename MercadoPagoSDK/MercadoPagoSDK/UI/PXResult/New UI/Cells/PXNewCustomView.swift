@@ -132,6 +132,7 @@ class PXNewCustomView: UIView {
         if let thirdString = data.thirdString {
             thirdLabel = buildLabel(thirdString)
             if let label = thirdLabel {
+                label.numberOfLines = 0
                 pxContentView.addSubview(label)
                 NSLayoutConstraint.activate([
                     label.leadingAnchor.constraint(equalTo: labelsView.leadingAnchor),
