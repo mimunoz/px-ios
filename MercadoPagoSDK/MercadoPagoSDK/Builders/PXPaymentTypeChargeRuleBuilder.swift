@@ -1,12 +1,17 @@
 import Foundation
 
-@objc public class PXPaymentTypeChargeRuleBuilder: NSObject {
+public enum PXPaymentTypeChargeRuleBuilderError: Error {
+    case invalidAmount
+}
+
+@objcMembers
+public class PXPaymentTypeChargeRuleBuilder: NSObject {
+    @nonobjc public private(set) var taxable: Bool = true
+    @nonobjc public private(set) var label: String?
+    @nonobjc public private(set) var detailModal: UIViewController?
+
     private var paymentTypeId: String
     private var amount: Double
-
-    public private(set) var taxable: Bool = true
-    public private(set) var label: String?
-    public private(set) var detailModal: UIViewController?
 
     public init(paymentTypeId: String, amount: Double) throws {
         if amount == 0.0 {
@@ -43,10 +48,6 @@ import Foundation
 
         return chargeRule
     }
-}
-
-public enum PXPaymentTypeChargeRuleBuilderError: Error {
-    case invalidAmount
 }
 
 extension PXPaymentTypeChargeRuleBuilderError: LocalizedError {
