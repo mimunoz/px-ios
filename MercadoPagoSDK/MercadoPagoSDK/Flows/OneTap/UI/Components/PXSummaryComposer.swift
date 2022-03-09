@@ -3,7 +3,7 @@ import UIKit
 struct PXSummaryComposer {
     // returns the composed summary items
     var summaryItems: [PXOneTapSummaryRowData] {
-        return getSummaryItems()
+        return generateSummaryItems()
     }
 
     // MARK: constants
@@ -27,20 +27,15 @@ struct PXSummaryComposer {
         self.shouldDisplayChargesHelp = shouldDisplayChargesHelp
     }
 
-    private func getSummaryItems() -> [PXOneTapSummaryRowData] {
-        let summaryItems = generateSummaryItems()
-        return summaryItems
-    }
-
     private func generateSummaryItems() -> [PXOneTapSummaryRowData] {
         if selectedCard == nil {
-            return getMinimalSummary()
+            return [purchaseRow(haveDiscount: true)]
         }
 
         var internalSummary = [PXOneTapSummaryRowData]()
 
         if shouldDisplayCharges() || shouldDisplayDiscount() {
-            internalSummary.append(purchaseRow())
+            internalSummary.append(purchaseRow(haveDiscount: false))
         }
 
         if shouldDisplayDiscount(), let discRow = discountRow() {
@@ -53,9 +48,5 @@ struct PXSummaryComposer {
 
         internalSummary.append(totalToPayRow())
         return internalSummary
-    }
-
-    private func getMinimalSummary() -> [PXOneTapSummaryRowData] {
-        return [totalToPayRow()]
     }
 }

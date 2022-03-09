@@ -20,39 +20,45 @@ extension PXSummaryComposer {
 
         let discountToShow = Utils.getAmountFormated(amount: discount.couponAmount, forCurrency: currency)
         let helperImage = helpIcon(color: discountColor())
-        let row = PXOneTapSummaryRowData(title: discount.getDiscountDescription(),
-                                          value: "- \(discountToShow)",
+        let row = PXOneTapSummaryRowData(
+            title: discount.getDiscountDescription(),
+            value: "- \(discountToShow)",
             highlightedColor: discountColor(),
             alpha: textTransparency,
             isTotal: false,
             image: helperImage,
             type: .discount,
             discountOverview: getDiscountOverview(),
-            briefColor: discountBriefColor())
+            briefColor: discountBriefColor()
+        )
         return row
     }
 
-    func purchaseRow() -> PXOneTapSummaryRowData {
-        let row = PXOneTapSummaryRowData( title: yourPurchaseSummaryTitle(),
-                                           value: yourPurchaseToShow(),
-                                           highlightedColor: summaryColor(),
-                                           alpha: textTransparency,
-                                           isTotal: false,
-                                           image: nil,
-                                           type: .generic)
+    func purchaseRow(haveDiscount: Bool) -> PXOneTapSummaryRowData {
+        let title = "total_row_title_default".localized
+        let row = PXOneTapSummaryRowData(
+            title: haveDiscount ? title : yourPurchaseSummaryTitle(),
+            value: yourPurchaseToShow(),
+            highlightedColor: summaryColor(),
+            alpha: textTransparency,
+            isTotal: haveDiscount,
+            image: nil,
+            type: .generic
+        )
         return row
     }
 
     func totalToPayRow() -> PXOneTapSummaryRowData {
         let totalAmountToShow = Utils.getAmountFormated(amount: amountHelper.getAmountToPayWithoutPayerCost(paymentOptionID: selectedCard?.cardId, paymentMethodId: selectedCard?.selectedApplication?.paymentMethodId, paymentTypeId: selectedCard?.selectedApplication?.paymentTypeId), forCurrency: currency)
-        let text = "total_row_title_default".localized
-        let row = PXOneTapSummaryRowData(title: text,
-                                          value: totalAmountToShow,
-                                          highlightedColor: summaryColor(),
-                                          alpha: textTransparency,
-                                          isTotal: true,
-                                          image: nil,
-                                          type: .generic)
+        let row = PXOneTapSummaryRowData(
+            title: "total_row_title_default".localized,
+            value: totalAmountToShow,
+            highlightedColor: summaryColor(),
+            alpha: textTransparency,
+            isTotal: true,
+            image: nil,
+            type: .generic
+        )
         return row
     }
 }
