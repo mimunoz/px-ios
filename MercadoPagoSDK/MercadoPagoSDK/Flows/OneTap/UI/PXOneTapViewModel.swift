@@ -392,7 +392,7 @@ extension PXOneTapViewModel {
         }
 
         if let chargeRuleMessage = getChargeRuleBottomMessage(paymentTypeId), (status?.isUsable() ?? true) {
-            let text = PXText(message: chargeRuleMessage, backgroundColor: nil, textColor: nil, weight: nil)
+            let text = PXText(message: chargeRuleMessage, backgroundColor: nil, textColor: nil, weight: nil, alignment: nil)
             text.defaultTextColor = defaultTextColor
             text.defaultBackgroundColor = defaultBackgroundColor
             return PXCardBottomMessage(text: text, fixed: false)
@@ -407,7 +407,7 @@ extension PXOneTapViewModel {
         }
 
         if reimbursementAppliedInstallments.contains(selectedInstallments), (status?.isUsable() ?? true) {
-            let text = PXText(message: benefits?.reimbursement?.card?.message, backgroundColor: nil, textColor: nil, weight: nil)
+            let text = PXText(message: benefits?.reimbursement?.card?.message, backgroundColor: nil, textColor: nil, weight: nil, alignment: nil)
             text.defaultTextColor = defaultTextColor
             text.defaultBackgroundColor = defaultBackgroundColor
             return PXCardBottomMessage(text: text, fixed: false)

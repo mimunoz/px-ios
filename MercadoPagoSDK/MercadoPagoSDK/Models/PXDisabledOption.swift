@@ -25,7 +25,7 @@ struct PXDisabledOption {
     }
 
     func getStatusFor(statusDetail: String) -> PXStatus? {
-        let mainText = PXText(message: "px_payment_method_disable_title".localized, backgroundColor: nil, textColor: nil, weight: nil)
+        let mainText = PXText(message: "px_payment_method_disable_title".localized, backgroundColor: nil, textColor: nil, weight: nil, alignment: nil)
 
         var secondaryString = ""
 
@@ -45,7 +45,7 @@ struct PXDisabledOption {
         let secondaryMessage = secondaryString.replacingOccurrences(of: "\\n", with: "\n")
         let thirdMessage = "error_body_description_rejected_high_risk".localized
         let message = secondaryMessage + "\n\n" + thirdMessage
-        let secondaryText = PXText(message: message, backgroundColor: nil, textColor: nil, weight: nil)
+        let secondaryText = PXText(message: message, backgroundColor: nil, textColor: nil, weight: nil, alignment: nil)
         return PXStatus(mainMessage: mainText, secondaryMessage: secondaryText, enabled: false, detail: nil)
     }
 }

@@ -21,7 +21,7 @@ final class PXOfflineMethodsViewModel: PXReviewViewModel {
         let amountString = Utils.getAmountFormated(amount: amountHelper.amountToPay, forCurrency: SiteManager.shared.getCurrency())
         let totalString = "Total".localized + " \(amountString)"
 
-        return PXText(message: totalString, backgroundColor: nil, textColor: nil, weight: "semi_bold")
+        return PXText(message: totalString, backgroundColor: nil, textColor: nil, weight: "semi_bold", alignment: nil)
     }
 
     func numberOfSections() -> Int {

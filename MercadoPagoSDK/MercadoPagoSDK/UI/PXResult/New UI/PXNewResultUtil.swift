@@ -27,7 +27,7 @@ class PXNewResultUtil {
 
         let icon = ResourceManager.shared.getImage("receipt_icon")
 
-        let data = PXNewCustomViewData(firstString: attributedTitle, secondString: attributedSubtitle, thirdString: nil, fourthString: nil, icon: icon, iconURL: nil, action: nil, color: nil)
+        let data = PXNewCustomViewData(firstString: attributedTitle, secondString: attributedSubtitle, thirdString: nil, fourthString: nil, bottomString: nil, icon: icon, iconURL: nil, action: nil, color: nil)
         return data
     }
 
