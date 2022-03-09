@@ -10,6 +10,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - New payment method model support
 - Added Congrats Extra Info (IFPE regulations)
 
+### Fixed
+- Fixed discountToken in discounts for payment methods
+
 ### Changed
 - Hide duplicate value when payment method is debit card and splitConfiguration is null
 
