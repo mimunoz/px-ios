@@ -12,10 +12,12 @@ enum PXResultTrackingEvents: TrackingEvents {
     case checkoutPaymentApproved([String: Any])
     case checkoutPaymentInProcess([String: Any])
     case checkoutPaymentRejected([String: Any])
+    case checkoutPaymentUnknown([String: Any])
 
     case congratsPaymentApproved([String: Any])
     case congratsPaymentInProcess([String: Any])
     case congratsPaymentRejected([String: Any])
+    case congratsPaymentUnknown([String: Any])
 
     var name: String {
         switch self {
@@ -29,19 +31,29 @@ enum PXResultTrackingEvents: TrackingEvents {
         case .checkoutPaymentApproved: return "/px_checkout/result/success"
         case .checkoutPaymentInProcess: return "/px_checkout/result/further_action_needed"
         case .checkoutPaymentRejected: return "/px_checkout/result/error"
+        case .checkoutPaymentUnknown: return "/px_checkout/result/unknown"
         case .congratsPaymentApproved: return "/payment_congrats/result/success"
         case .congratsPaymentInProcess: return "/payment_congrats/result/further_action_needed"
         case .congratsPaymentRejected: return "/payment_congrats/result/error"
+        case .congratsPaymentUnknown: return "/payment_congrats/result/unknown"
         }
     }
 
     var properties: [String: Any] {
         switch self {
-        case .didTapOnAllDiscounts, .didtapOnDownload, .didTapOnReceipt, .didTapOnScore, .didTapOnCrossSelling: return [:]
-        case .didTapOnDeeplink(let properties), .didShowRemedyError(let properties), .checkoutPaymentApproved(let properties),
-             .checkoutPaymentInProcess(let properties), .checkoutPaymentRejected(let properties),
-             .congratsPaymentApproved(let properties), .congratsPaymentInProcess(let properties),
-             .congratsPaymentRejected(let properties): return properties
+        case .didTapOnAllDiscounts, .didtapOnDownload, .didTapOnReceipt, .didTapOnScore, .didTapOnCrossSelling:
+            return [:]
+        case .didTapOnDeeplink(let properties),
+                .didShowRemedyError(let properties),
+                .checkoutPaymentApproved(let properties),
+                .checkoutPaymentInProcess(let properties),
+                .checkoutPaymentRejected(let properties),
+                .congratsPaymentApproved(let properties),
+                .congratsPaymentInProcess(let properties),
+                .congratsPaymentRejected(let properties),
+                .checkoutPaymentUnknown(let properties),
+                .congratsPaymentUnknown(let properties):
+            return properties
         }
     }
 
@@ -50,7 +62,7 @@ enum PXResultTrackingEvents: TrackingEvents {
         case .didTapOnAllDiscounts, .didtapOnDownload, .didTapOnReceipt, .didTapOnScore, .didTapOnDeeplink,
              .didTapOnCrossSelling, .didShowRemedyError, .checkoutPaymentApproved:
             return true
-        case .checkoutPaymentInProcess, .checkoutPaymentRejected, .congratsPaymentApproved, .congratsPaymentInProcess, .congratsPaymentRejected:
+        case .checkoutPaymentInProcess, .checkoutPaymentRejected, .congratsPaymentApproved, .congratsPaymentInProcess, .congratsPaymentRejected, .checkoutPaymentUnknown, .congratsPaymentUnknown:
             return false
         }
     }

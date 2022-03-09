@@ -9,10 +9,17 @@ extension PXOneTapDto {
         return properties
     }
 
-    private func getBenefitsInfoForTracking() -> [String: Any] {
+    private func getBenefitsInfoForTracking(payerPaymentMethods: [PXCustomOptionSearchItem]? = nil) -> [String: Any] {
         var properties: [String: Any] = [:]
         properties["has_interest_free"] = benefits?.interestFree != nil ? true : false
         properties["has_reimbursement"] = benefits?.reimbursement != nil ? true : false
+        if paymentMethodId == PXPaymentMethodId.DEBIN.rawValue {
+            properties["bank_name"] = payerPaymentMethods?.first(where: {
+                $0.paymentMethodId == PXPaymentMethodId.DEBIN.rawValue && $0.id == bankTransfer?.id
+            })?.bankInfo?.name
+            properties["external_account_id"] = bankTransfer?.id
+        }
+
         return properties
     }
 
@@ -26,9 +33,9 @@ extension PXOneTapDto {
         return accountMoneyDic
     }
 
-    func getPaymentMethodForTracking() -> [String: Any] {
+    func getPaymentMethodForTracking(payerPaymentMethods: [PXCustomOptionSearchItem]? = nil, amountHelper: PXAmountHelper? = nil) -> [String: Any] {
         var paymentMethodDic = getPaymentInfoForTracking()
-        paymentMethodDic["extra_info"] = getBenefitsInfoForTracking()
+        paymentMethodDic["extra_info"] = getBenefitsInfoForTracking(payerPaymentMethods: payerPaymentMethods)
         return paymentMethodDic
     }
 

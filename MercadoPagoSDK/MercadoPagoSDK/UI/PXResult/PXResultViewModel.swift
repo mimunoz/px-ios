@@ -10,8 +10,9 @@ class PXResultViewModel: NSObject {
     let remedy: PXRemedy?
     let oneTapDto: PXOneTapDto?
     var callback: ((PaymentResult.CongratsState, String?) -> Void)?
+    var debinBankName: String?
 
-    init(amountHelper: PXAmountHelper, paymentResult: PaymentResult, instructionsInfo: PXInstruction? = nil, pointsAndDiscounts: PXPointsAndDiscounts?, resultConfiguration: PXPaymentResultConfiguration = PXPaymentResultConfiguration(), remedy: PXRemedy? = nil, oneTapDto: PXOneTapDto? = nil) {
+    init(amountHelper: PXAmountHelper, paymentResult: PaymentResult, instructionsInfo: PXInstruction? = nil, pointsAndDiscounts: PXPointsAndDiscounts?, resultConfiguration: PXPaymentResultConfiguration = PXPaymentResultConfiguration(), remedy: PXRemedy? = nil, oneTapDto: PXOneTapDto? = nil, debinBankName: String? = nil) {
         self.paymentResult = paymentResult
         self.instructionsInfo = instructionsInfo
         self.pointsAndDiscounts = pointsAndDiscounts
@@ -19,6 +20,7 @@ class PXResultViewModel: NSObject {
         self.amountHelper = amountHelper
         self.remedy = remedy
         self.oneTapDto = oneTapDto
+        self.debinBankName = debinBankName
     }
 
     func getPaymentData() -> PXPaymentData {
@@ -329,12 +331,19 @@ extension PXResultViewModel: PXViewModelTrackingDataProtocol {
         let paymentStatus = paymentResult.status
         var screenPath: PXResultTrackingEvents?
 
-        if paymentStatus == PXPaymentStatus.APPROVED.rawValue || paymentStatus == PXPaymentStatus.PENDING.rawValue {
-            screenPath = .checkoutPaymentApproved(getTrackingProperties())
-        } else if paymentStatus == PXPaymentStatus.IN_PROCESS.rawValue {
-            screenPath = .checkoutPaymentInProcess(getTrackingProperties())
+        var properties = getTrackingProperties()
+        if let debinProperties = getDebinProperties() {
+            properties.merge(debinProperties) { current, _ in current }
+        }
+
+        if paymentStatus == PXPaymentStatus.APPROVED.rawValue {
+            screenPath = .checkoutPaymentApproved(properties)
+        } else if paymentStatus == PXPaymentStatus.IN_PROCESS.rawValue || paymentStatus == PXPaymentStatus.PENDING.rawValue {
+            screenPath = .checkoutPaymentInProcess(properties)
         } else if paymentStatus == PXPaymentStatus.REJECTED.rawValue {
-            screenPath = .checkoutPaymentRejected(getTrackingProperties())
+            screenPath = .checkoutPaymentRejected(properties)
+        } else {
+            screenPath = .checkoutPaymentUnknown(properties)
         }
         return screenPath
     }
@@ -464,6 +473,18 @@ extension PXResultViewModel: PXViewModelTrackingDataProtocol {
         properties["payment_status_detail"] = paymentResult.statusDetail
         return properties
     }
+
+    func getDebinProperties() -> [String: Any]? {
+        guard let paymentTypeId = amountHelper.getPaymentData().paymentMethod?.paymentTypeId, let paymentTypeIdEnum = PXPaymentTypes(rawValue: paymentTypeId), paymentTypeIdEnum == .BANK_TRANSFER else {
+            return nil
+        }
+
+        var debinProperties: [String: Any] = [:]
+        debinProperties["bank_name"] = debinBankName
+        debinProperties["external_account_id"] = amountHelper.getPaymentData().transactionInfo?.bankInfo?.accountId
+
+        return debinProperties
+    }
 }
 
 extension PXResultViewModel {
@@ -506,6 +527,10 @@ extension PXResultViewModel {
 
         if let infoOperation = pointsAndDiscounts?.infoOperation {
             paymentcongrats.withInfoOperation(infoOperation)
+        }
+
+        if let debinProperties = getDebinProperties() {
+            paymentcongrats.withBankTransferTrackingProperties(properties: debinProperties)
         }
 
         paymentcongrats.withStatementDescription(paymentResult.statementDescription)

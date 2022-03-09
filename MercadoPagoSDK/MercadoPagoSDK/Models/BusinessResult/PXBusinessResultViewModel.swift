@@ -6,16 +6,22 @@ class PXBusinessResultViewModel: NSObject {
     let pointsAndDiscounts: PXPointsAndDiscounts?
     let paymentData: PXPaymentData
     let amountHelper: PXAmountHelper
+    let debinBankName: String?
     var callback: ((PaymentResult.CongratsState, String?) -> Void)?
 
     // Default Image
     private lazy var approvedIconName = "default_item_icon"
 
-    init(businessResult: PXBusinessResult, paymentData: PXPaymentData, amountHelper: PXAmountHelper, pointsAndDiscounts: PXPointsAndDiscounts?) {
+    init(businessResult: PXBusinessResult,
+         paymentData: PXPaymentData,
+         amountHelper: PXAmountHelper,
+         pointsAndDiscounts: PXPointsAndDiscounts?,
+         debinBankName: String? = nil) {
         self.businessResult = businessResult
         self.paymentData = paymentData
         self.amountHelper = amountHelper
         self.pointsAndDiscounts = pointsAndDiscounts
+        self.debinBankName = debinBankName
         super.init()
     }
 
@@ -246,6 +252,10 @@ extension PXBusinessResultViewModel {
         paymentCongratsData.withTrackingProperties(getTrackingProperties())
             .withFlowBehaviorResult(getFlowBehaviourResult())
             .withTrackingPath(getTrackingPath())
+
+        if let debinProperties = getDebinProperties() {
+            paymentCongratsData.withBankTransferTrackingProperties(properties: debinProperties)
+        }
 
         // URL Managment
         paymentCongratsData.withRedirectURLs(getRedirectUrl())

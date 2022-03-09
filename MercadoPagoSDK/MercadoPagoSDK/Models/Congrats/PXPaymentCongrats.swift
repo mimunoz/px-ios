@@ -65,6 +65,7 @@ public final class PXPaymentCongrats: NSObject {
     private(set) var externalTrackingValues: PXPaymentCongratsTracking?
     private(set) var internalTrackingPath: TrackingEvents?
     private(set) var internalFlowBehaviourResult: PXResultKey?
+    private(set) var bankTransferProperties: [String: Any]?
 
     // Error
     private(set) var errorBodyView: UIView?
@@ -108,6 +109,12 @@ extension PXPaymentCongrats {
     @discardableResult
     func withHeaderImage(_ image: UIImage?) -> PXPaymentCongrats {
         self.headerImage = image
+        return self
+    }
+
+    @discardableResult
+    func withBankTransferTrackingProperties(properties: [String: Any]) -> PXPaymentCongrats {
+        self.bankTransferProperties = properties
         return self
     }
 

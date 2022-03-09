@@ -86,15 +86,37 @@ extension PXBusinessResultViewModel: PXCongratsTrackingDataProtocol {
 }
 
 extension PXBusinessResultViewModel: PXViewModelTrackingDataProtocol {
+    func getDebinProperties() -> [String: Any]? {
+        guard let paymentTypeId = amountHelper.getPaymentData().paymentMethod?.paymentTypeId,
+                let paymentTypeIdEnum = PXPaymentTypes(rawValue: paymentTypeId),
+                paymentTypeIdEnum == .BANK_TRANSFER else {
+            return nil
+        }
+
+        var debinProperties: [String: Any] = [:]
+        debinProperties["bank_name"] = debinBankName
+        debinProperties["external_account_id"] = amountHelper.getPaymentData().transactionInfo?.bankInfo?.accountId
+
+        return debinProperties
+    }
+
     func getTrackingPath() -> PXResultTrackingEvents? {
         let paymentStatus = businessResult.paymentStatus
         var screenPath: PXResultTrackingEvents?
-        if paymentStatus == PXPaymentStatus.APPROVED.rawValue || paymentStatus == PXPaymentStatus.PENDING.rawValue {
-            screenPath = .checkoutPaymentApproved(getTrackingProperties())
-        } else if paymentStatus == PXPaymentStatus.IN_PROCESS.rawValue {
-            screenPath = .checkoutPaymentInProcess(getTrackingProperties())
+        var properties = getTrackingProperties()
+
+        if let debinProperties = getDebinProperties() {
+            properties.merge(debinProperties) { current, _ in current }
+        }
+
+        if paymentStatus == PXPaymentStatus.APPROVED.rawValue {
+            screenPath = .checkoutPaymentApproved(properties)
+        } else if paymentStatus == PXPaymentStatus.IN_PROCESS.rawValue || paymentStatus == PXPaymentStatus.PENDING.rawValue {
+            screenPath = .checkoutPaymentInProcess(properties)
         } else if paymentStatus == PXPaymentStatus.REJECTED.rawValue {
-            screenPath = .checkoutPaymentRejected(getTrackingProperties())
+            screenPath = .checkoutPaymentRejected(properties)
+        } else {
+            screenPath = .checkoutPaymentUnknown(properties)
         }
         return screenPath
     }
