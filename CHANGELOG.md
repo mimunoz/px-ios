@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - New payment method model support
 
+### Changed
+- Hide duplicate value when payment method is debit card and splitConfiguration is null
+
 ## v4.55.1
 
 ### Fixed

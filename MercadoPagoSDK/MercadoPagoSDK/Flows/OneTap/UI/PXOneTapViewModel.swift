@@ -219,8 +219,20 @@ extension PXOneTapViewModel {
             } else if selectedApplication.paymentTypeId == PXPaymentTypes.DEBIT_CARD.rawValue {
                 // If it's debit and has split, update split message
                 if let amountToPay = selectedApplication.selectedPayerCost?.totalAmount {
-                    let displayMessage = getSplitMessageForDebit(amountToPay: amountToPay)
-                    let installmentInfoModel = PXOneTapInstallmentInfoViewModel(text: displayMessage, installmentData: installment, selectedPayerCost: selectedPayerCost, shouldShowArrow: selectedApplication.shouldShowArrow, status: selectedApplication.status, benefits: selectedApplication.benefits, shouldShowInstallmentsHeader: shouldShowInstallmentsHeader)
+                    // Hide value if splitEnabled equals null or false
+                    let splitConfiguration = selectedApplication.amountConfiguration?.splitConfiguration
+                    let splitEnabled = splitConfiguration?.splitEnabled ?? false
+                    let amountMessage = getSplitMessageForDebit(amountToPay: amountToPay)
+                    let displayMessage = splitEnabled ? amountMessage : emptyMessage
+                    let installmentInfoModel = PXOneTapInstallmentInfoViewModel(
+                        text: displayMessage,
+                        installmentData: installment,
+                        selectedPayerCost: selectedPayerCost,
+                        shouldShowArrow: selectedApplication.shouldShowArrow,
+                        status: selectedApplication.status,
+                        benefits: selectedApplication.benefits,
+                        shouldShowInstallmentsHeader: shouldShowInstallmentsHeader
+                    )
                     model.append(installmentInfoModel)
                 }
             } else {
