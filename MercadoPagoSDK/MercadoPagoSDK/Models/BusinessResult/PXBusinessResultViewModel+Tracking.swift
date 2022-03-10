@@ -118,6 +118,7 @@ extension PXBusinessResultViewModel: PXViewModelTrackingDataProtocol {
         } else {
             screenPath = .checkoutPaymentUnknown(properties)
         }
+
         return screenPath
     }
 

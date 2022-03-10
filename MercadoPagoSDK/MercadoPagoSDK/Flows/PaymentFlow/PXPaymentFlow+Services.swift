@@ -11,6 +11,8 @@ extension PXPaymentFlow {
             PXCheckoutStore.sharedInstance.validationProgramId = programId
         }
 
+        strategyTracking.getPropertieFlow(flow: "createPaymentWithPlugin")
+
         plugin.didReceive?(checkoutStore: PXCheckoutStore.sharedInstance)
 
         plugin.startPayment?(checkoutStore: PXCheckoutStore.sharedInstance, errorHandler: self as PXPaymentProcessorErrorHandler, successWithBasePayment: { [weak self] basePayment in
@@ -29,6 +31,8 @@ extension PXPaymentFlow {
         guard let paymentBody = (try? JSONEncoder().encode(PXCheckoutStore.sharedInstance)) else {
             fatalError("Cannot make payment json body")
         }
+
+        strategyTracking.getPropertieFlow(flow: "createPayment")
 
         var headers: [String: String] = [:]
         if let productId = model.productId {
@@ -64,6 +68,8 @@ extension PXPaymentFlow {
     }
 
     func getPointsAndDiscounts() {
+        strategyTracking.getPropertieFlow(flow: "getPointsAndDiscounts")
+
         var paymentIds = [String]()
         var paymentMethodsIds = [String]()
         if let split = splitAccountMoney, let paymentMethod = split.paymentMethod?.id {

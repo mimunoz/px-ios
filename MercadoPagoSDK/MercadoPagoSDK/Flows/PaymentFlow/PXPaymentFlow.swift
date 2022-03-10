@@ -8,6 +8,7 @@ final class PXPaymentFlow: NSObject, PXFlow {
     var splitAccountMoney: PXPaymentData?
 
     var pxNavigationHandler: PXNavigationHandler
+    var strategyTracking: StrategyTrackings = ImpletationStrategy()
 
     init(paymentPlugin: PXSplitPaymentProcessor?, mercadoPagoServices: MercadoPagoServices, paymentErrorHandler: PXPaymentErrorHandlerProtocol, navigationHandler: PXNavigationHandler, amountHelper: PXAmountHelper, checkoutPreference: PXCheckoutPreference?, ESCBlacklistedStatus: [String]?) {
         model = PXPaymentFlowModel(paymentPlugin: paymentPlugin, mercadoPagoServices: mercadoPagoServices, ESCBlacklistedStatus: ESCBlacklistedStatus)
@@ -142,6 +143,8 @@ final class PXPaymentFlow: NSObject, PXFlow {
     }
 
     func finishFlow() {
+        strategyTracking.getPropertieFlow(flow: "finishFlow")
+
         if let paymentResult = model.paymentResult {
             self.resultHandler?.finishPaymentFlow(paymentResult: paymentResult, instructionsInfo: model.instructionsInfo, pointsAndDiscounts: model.pointsAndDiscounts)
         } else if let businessResult = model.businessResult {
@@ -177,5 +180,7 @@ private extension PXPaymentFlow {
         var properties: [String: Any] = [:]
         properties["destination"] = notification.rawValue
         MPXTracker.sharedInstance.trackEvent(event: PostPaymentTrackingEvents.willNavigateToPostPayment(properties))
+
+        strategyTracking.getPropertieFlow(flow: "goToPostPayment - destination \(notification.rawValue)")
     }
 }

@@ -12,6 +12,7 @@ final class PXOfflineMethodsViewController: MercadoPagoUIViewController {
     var finishButtonAnimation: (() -> Void)
     var callbackUpdatePaymentOption: ((PaymentMethodOption) -> Void)
     let timeOutPayButton: TimeInterval
+    var amountOfButtonPress: Int = 0
 
     let tableView = UITableView(frame: .zero, style: .grouped)
     var loadingButtonComponent: PXWindowedAnimatedButton?
@@ -21,6 +22,8 @@ final class PXOfflineMethodsViewController: MercadoPagoUIViewController {
     weak var delegate: PXOfflineMethodsViewControllerDelegate?
 
     var userDidScroll = false
+
+    var strategyTracking: StrategyTrackings = ImpletationStrategy()
 
     private struct Constants {
         static let viewBorderWidth: CGFloat = 1.5
@@ -55,6 +58,7 @@ final class PXOfflineMethodsViewController: MercadoPagoUIViewController {
         super.viewDidAppear(animated)
         sheetViewController?.scrollView = tableView
         trackScreen(event: MercadoPagoUITrackingEvents.offlineMethodds(viewModel.getScreenTrackingProperties()))
+        strategyTracking.getPropertieFlow(flow: "PXOfflineMethodsViewController")
     }
 
     override func viewDidDisappear(_ animated: Bool) {
@@ -447,7 +451,12 @@ extension PXOfflineMethodsViewController: PXAnimatedButtonDelegate {
             currentPaymentData.payerCost = nil
             currentPaymentData.paymentMethod = newPaymentMethod
             currentPaymentData.issuer = nil
+            amountOfButtonPress += 1
             trackEvent(event: PXOfflineMethodsTrackingEvents.didConfirm(viewModel.getEventTrackingProperties(selectedOfflineMethod)))
+
+            let resultTracking = strategyTracking.getPropertiesTrackings(versionLib: "", counter: amountOfButtonPress, paymentMethod: nil, offlinePaymentMethod: selectedOfflineMethod, businessResult: nil)
+            trackEvent(event: PXPaymentsInfoGeneralEvents.infoGeneral_Follow_Confirm_Payments(resultTracking))
+
             if let payerCompliance = viewModel.getPayerCompliance(), payerCompliance.offlineMethods.isCompliant {
                 currentPaymentData.payer?.firstName = viewModel.getPayerFirstName()
                 currentPaymentData.payer?.lastName = viewModel.getPayerLastName()

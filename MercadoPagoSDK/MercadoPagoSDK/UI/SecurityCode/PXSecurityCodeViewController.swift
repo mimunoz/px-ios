@@ -13,6 +13,7 @@ final class PXSecurityCodeViewController: MercadoPagoUIViewController {
     var attemptsWithInternetError: Int = 0
     var andesTextFieldCode = AndesTextFieldCode()
     var andesTextFieldCodeIsComplete = false
+    var amountOfButtonPress: Int = 0
 
     // MARK: Constraints
     var loadingButtonBottomConstraint = NSLayoutConstraint()
@@ -25,6 +26,8 @@ final class PXSecurityCodeViewController: MercadoPagoUIViewController {
     // MARK: Callbacks
     let finishButtonAnimationCallback: () -> Void
     let collectSecurityCodeCallback: (PXCardInformationForm, String?) -> Void
+
+    var strategyTracking: StrategyTrackings = ImpletationStrategy()
 
     init(viewModel: PXSecurityCodeViewModel, finishButtonAnimationCallback: @escaping () -> Void, collectSecurityCodeCallback: @escaping (PXCardInformationForm, String?) -> Void) {
         self.viewModel = viewModel
@@ -71,7 +74,10 @@ final class PXSecurityCodeViewController: MercadoPagoUIViewController {
 // MARK: Privates
 private extension PXSecurityCodeViewController {
     func confirmPayment() {
+        amountOfButtonPress += 1
         trackEvent(event: PXSecurityCodeTrackingEvents.didConfirmCode(viewModel.getScreenProperties()))
+        strategyTracking.getPropertiesSecurityCode(flow: "PXSecurityCodeViewController-confirmPayment", buttonPressed: amountOfButtonPress)
+
         doPayment()
     }
 
@@ -376,5 +382,7 @@ extension PXSecurityCodeViewController: AndesTextFieldCodeDelegate {
 private extension PXSecurityCodeViewController {
     func trackScreenView() {
         trackScreen(event: MercadoPagoUITrackingEvents.secureCode(viewModel.getScreenProperties()), treatBackAsAbort: true)
+
+        strategyTracking.getPropertieFlow(flow: "PXSecurityCodeViewController")
     }
 }

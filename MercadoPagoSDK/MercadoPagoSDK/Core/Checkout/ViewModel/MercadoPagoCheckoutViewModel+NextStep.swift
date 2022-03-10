@@ -91,22 +91,31 @@ extension MercadoPagoCheckoutViewModel {
                 paymentMethodId = cardInformation.getPaymentMethodId()
             }
 
+            trackCurrentStep(flow: "MercaodPagoCheckoutViewModel - isCustomerCard == true \(isCustomerCard && !paymentData.hasToken() && hasInstallmentsIfNeeded)")
+
             if let customOptionSearchItem = search?.getPayerPaymentMethod(id: paymentOptionSelectedId, paymentMethodId: paymentMethodId, paymentTypeId: paymentOptionSelected.getPaymentType()) {
+                trackCurrentStep(flow: "MercaodPagoCheckoutViewModel - ifcustomOptionSearchItem \(customOptionSearchItem)")
+
                 if hasSavedESC() {
+                    trackCurrentStep(flow: "MercaodPagoCheckoutViewModel - needSecurityCode - ifhaveSaveESC \(hasSavedESC())")
+
                     if customOptionSearchItem.escStatus == PXESCStatus.REJECTED.rawValue {
                         invalidESCReason = .ESC_CAP
                         return true
                     } else {
                         return false
                     }
+                    trackCurrentStep(flow: "MercaodPagoCheckoutViewModel - needSecurityCode \(customOptionSearchItem.escStatus == PXESCStatus.REJECTED.rawValue)")
                 } else {
+                    trackCurrentStep(flow: "MercaodPagoCheckoutViewModel - elsehasSaveESC \(hasSavedESC())")
                     return true
                 }
             } else {
+                trackCurrentStep(flow: "MercaodPagoCheckoutViewModel - elsecustomOptionSearchItem)")
                 return true
             }
         }
-
+        trackCurrentStep(flow: "MercaodPagoCheckoutViewModel - isCustomerCard == false \(isCustomerCard && !paymentData.hasToken() && hasInstallmentsIfNeeded )")
         return false
     }
 
@@ -234,5 +243,14 @@ extension MercadoPagoCheckoutViewModel {
             }
         }
         return false
+    }
+}
+
+extension MercadoPagoCheckoutViewModel {
+    func trackCurrentStep(flow: String) {
+        var properties: [String: Any] = [:]
+        let flowIdentifier = MPXTracker.sharedInstance.getFlowName() ?? "PX_Follow"
+        properties["flow"] = "/\(flowIdentifier + flow)"
+        MPXTracker.sharedInstance.trackScreen(event: PXPaymentsInfoGeneralEvents.infoGeneral_Follow_One_Tap(properties))
     }
 }

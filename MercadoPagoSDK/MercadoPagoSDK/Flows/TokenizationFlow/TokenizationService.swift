@@ -7,6 +7,7 @@ class TokenizationService {
     var needToShowLoading: Bool
     var mercadoPagoServices: MercadoPagoServices
     weak var resultHandler: TokenizationServiceResultHandler?
+    var strategyTracking: StrategyTrackings = ImpletationStrategy()
 
     init(paymentOptionSelected: PaymentMethodOption?, cardToken: PXCardToken?, pxNavigationHandler: PXNavigationHandler, needToShowLoading: Bool, mercadoPagoServices: MercadoPagoServices, gatewayFlowResultHandler: TokenizationServiceResultHandler) {
         self.paymentOptionSelected = paymentOptionSelected
@@ -42,8 +43,10 @@ class TokenizationService {
 
             if !String.isNullOrEmpty(esc) {
                 savedESCCardToken = PXSavedESCCardToken(cardId: cardInfo.getCardId(), esc: esc, requireESC: requireESC)
+                trackCurrentStep("TokenizationService - createCardToken \(esc)")
             } else {
                 savedESCCardToken = PXSavedESCCardToken(cardId: cardInfo.getCardId(), securityCode: securityCode, requireESC: requireESC)
+                trackCurrentStep("TokenizationService - createCardToken")
             }
             createSavedESCCardToken(savedESCCardToken: savedESCCardToken)
 
@@ -53,6 +56,7 @@ class TokenizationService {
                 return
             }
             createSavedCardToken(cardInformation: cardInfo, securityCode: securityCode)
+            trackCurrentStep("TokenizationService - createCardToken - requireESC \(requireESC)")
         }
     }
 
@@ -158,5 +162,11 @@ private extension TokenizationService {
                 securityCodeVC.viewModel.getFrictionProperties(path: TrackingPaths.Events.SecurityCode.getTokenFrictionPath(), id: "token_api_error"))
             )
         }
+    }
+}
+
+extension TokenizationService {
+    func trackCurrentStep(_ flow: String) {
+        strategyTracking.getPropertieFlow(flow: flow)
     }
 }

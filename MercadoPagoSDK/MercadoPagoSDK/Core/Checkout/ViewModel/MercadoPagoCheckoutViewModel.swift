@@ -100,6 +100,8 @@ class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
     lazy var pxNavigationHandler: PXNavigationHandler = PXNavigationHandler.getDefault()
 
+    var strategyTracking: StrategyTrackings = ImpletationStrategy()
+
     init(checkoutPreference: PXCheckoutPreference, publicKey: String, privateKey: String?, advancedConfig: PXAdvancedConfiguration? = nil, trackingConfig: PXTrackingConfiguration? = nil, checkoutType: String?) {
         self.publicKey = publicKey
         self.privateKey = privateKey

@@ -27,8 +27,10 @@ extension PXPaymentFlow: PaymentHandlerProtocol {
 
     func handlePayment(basePayment: PXBasePayment) {
         if let business = basePayment as? PXBusinessResult {
+            trackCurrentStep(flow: "PXPaymentFlow+PaymentHandlerProtocol - handlePayment - business \(business)")
             handlePayment(business: business)
         } else if let payment = basePayment as? PXPayment {
+            trackCurrentStep(flow: "PXPaymentFlow+PaymentHandlerProtocol - handlePayment - payment \(payment)")
             handlePayment(basePayment: payment)
         } else {
             guard let paymentData = self.model.amountHelper?.getPaymentData() else {
@@ -44,7 +46,14 @@ extension PXPaymentFlow: PaymentHandlerProtocol {
 
             let paymentResult = PaymentResult(status: basePayment.getStatus(), statusDetail: basePayment.getStatusDetail(), paymentData: paymentData, splitAccountMoney: self.model.amountHelper?.splitAccountMoney, payerEmail: nil, paymentId: basePayment.getPaymentId(), statementDescription: nil, paymentMethodId: basePayment.getPaymentMethodId(), paymentMethodTypeId: basePayment.getPaymentMethodTypeId())
             self.model.paymentResult = paymentResult
+            trackCurrentStep(flow: "PXPaymentFlow+PaymentHandlerProtocol - handlePayment \(paymentResult)")
             self.executeNextStep()
         }
+    }
+}
+
+extension PXPaymentFlow {
+    func trackCurrentStep(flow: String) {
+        strategyTracking.getPropertieFlow(flow: flow)
     }
 }

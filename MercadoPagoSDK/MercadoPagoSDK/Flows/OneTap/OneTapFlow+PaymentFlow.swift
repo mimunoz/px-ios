@@ -65,6 +65,16 @@ extension OneTapFlow: PXPaymentResultHandlerProtocol {
     }
 
     func finishPaymentFlow(paymentResult: PaymentResult, instructionsInfo: PXInstruction?, pointsAndDiscounts: PXPointsAndDiscounts?) {
+        if paymentResult.isApproved() {
+            MPXTracker.sharedInstance.trackScreen(event: PXPaymentsInfoGeneralEvents.infoGeneral_Follow_Success)
+        }
+        if paymentResult.isRejected() {
+            MPXTracker.sharedInstance.trackScreen(event: PXPaymentsInfoGeneralEvents.infoGeneral_Follow_Reject)
+        }
+        if paymentResult.isPending() {
+            MPXTracker.sharedInstance.trackScreen(event: PXPaymentsInfoGeneralEvents.infoGeneral_Follow_Pending)
+        }
+
         model.paymentResult = paymentResult
         model.instructionsInfo = instructionsInfo
         model.pointsAndDiscounts = pointsAndDiscounts

@@ -12,6 +12,8 @@ class PXResultViewModel: NSObject {
     var callback: ((PaymentResult.CongratsState, String?) -> Void)?
     var debinBankName: String?
 
+    var strategyTracking: StrategyTrackings = ImpletationStrategy()
+
     init(amountHelper: PXAmountHelper, paymentResult: PaymentResult, instructionsInfo: PXInstruction? = nil, pointsAndDiscounts: PXPointsAndDiscounts?, resultConfiguration: PXPaymentResultConfiguration = PXPaymentResultConfiguration(), remedy: PXRemedy? = nil, oneTapDto: PXOneTapDto? = nil, debinBankName: String? = nil) {
         self.paymentResult = paymentResult
         self.instructionsInfo = instructionsInfo
@@ -400,7 +402,13 @@ extension PXResultViewModel: PXViewModelTrackingDataProtocol {
             properties["remedies"] = remedies
         }
 
+        trackingInfoGeneral(flow: "Result - getTrackingProperties() \(paymentResult)")
+
         return properties
+    }
+
+    func trackingInfoGeneral(flow: String) {
+        strategyTracking.getPropertieFlow(flow: flow)
     }
 
     func getTrackingRemediesProperties(isFromModal: Bool) -> [String: Any] {

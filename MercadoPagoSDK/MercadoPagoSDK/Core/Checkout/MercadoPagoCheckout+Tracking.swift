@@ -21,7 +21,13 @@ extension MercadoPagoCheckout {
         properties["split_enabled"] = viewModel.paymentPlugin?.supportSplitPaymentMethodPayment(checkoutStore: PXCheckoutStore.sharedInstance) ?? false
 
         MPXTracker.sharedInstance.trackEvent(event: MercadoPagoCheckoutTrackingEvents.didInitFlow(properties))
+        trackingInfoGeneral(flow: "StartTrancking")
+
         then()
+    }
+
+    func trackingInfoGeneral(flow: String) {
+        strategyTracking.getPropertieFlow(flow: flow)
     }
 
     func trackInitFlowFriction(flowError: InitFlowError) {

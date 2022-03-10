@@ -262,4 +262,8 @@ class MercadoPagoServices: NSObject {
     func setLanguage(language: String) {
         self.language = language
     }
+
+    func getLanguage() -> String {
+        return self.language
+    }
 }

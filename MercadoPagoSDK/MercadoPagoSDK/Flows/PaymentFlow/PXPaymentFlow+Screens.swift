@@ -18,6 +18,8 @@ extension PXPaymentFlow {
             }
             pxNavigationHandler.navigationController.pushViewController(paymentProcessorVC, animated: false)
         }
+
+        strategyTracking.getPropertieFlow(flow: "showPaymentProcessor")
     }
 
     // MARK: - Post Payment Loader Screen

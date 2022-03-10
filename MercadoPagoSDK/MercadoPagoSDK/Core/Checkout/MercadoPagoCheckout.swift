@@ -29,6 +29,7 @@ open class MercadoPagoCheckout: NSObject {
 
     var businessResultVM: PXBusinessResultViewModel?
     var genericResultVM: PXResultViewModel?
+    var strategyTracking: StrategyTrackings = ImpletationStrategy()
 
     // MARK: Initialization
     /**
@@ -160,6 +161,7 @@ extension MercadoPagoCheckout {
                 self.startOneTapFlow()
             }
         }
+        trackFlow(viewModel.nextStep().rawValue)
     }
 
     func finish() {
@@ -250,5 +252,11 @@ extension MercadoPagoCheckout {
 
     private func defaultExitAction() {
         viewModel.pxNavigationHandler.goToRootViewController()
+    }
+}
+
+extension MercadoPagoCheckout {
+    private func trackFlow(_ flow: String) {
+        strategyTracking.getPropertieFlow(flow: flow)
     }
 }
