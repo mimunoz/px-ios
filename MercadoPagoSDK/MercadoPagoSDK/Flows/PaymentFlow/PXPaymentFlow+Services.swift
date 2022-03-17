@@ -21,6 +21,8 @@ extension PXPaymentFlow {
     }
 
     func createPayment(programId: String?) {
+        strategyTracking.getPropertieFlow(flow: "createPayment, isPaymenttoggle \(isPaymentToggle)")
+
         guard model.amountHelper?.getPaymentData() != nil, model.checkoutPreference != nil else {
             showError()
             return
@@ -31,8 +33,6 @@ extension PXPaymentFlow {
         guard let paymentBody = (try? JSONEncoder().encode(PXCheckoutStore.sharedInstance)) else {
             fatalError("Cannot make payment json body")
         }
-
-        strategyTracking.getPropertieFlow(flow: "createPayment")
 
         var headers: [String: String] = [:]
         if let productId = model.productId {

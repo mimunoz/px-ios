@@ -6,6 +6,7 @@ extension PXPaymentFlow: PaymentHandlerProtocol {
         guard let paymentData = self.model.amountHelper?.getPaymentData() else {
             return
         }
+        trackCurrentStep(flow: "\(paymentFlow) \(payment.getStatus())")
 
         self.model.handleESCForPayment(status: payment.status, statusDetails: payment.statusDetail, errorPaymentType: paymentData.getPaymentMethod()?.paymentTypeId)
 
@@ -20,6 +21,8 @@ extension PXPaymentFlow: PaymentHandlerProtocol {
     }
 
     func handlePayment(business: PXBusinessResult) {
+        trackCurrentStep(flow: "\(businessFlow) \(business.getStatus())")
+
         self.model.businessResult = business
         self.model.handleESCForPayment(status: business.paymentStatus, statusDetails: business.paymentStatusDetail, errorPaymentType: self.model.amountHelper?.getPaymentData().getPaymentMethod()?.paymentTypeId)
         self.executeNextStep()
@@ -27,10 +30,10 @@ extension PXPaymentFlow: PaymentHandlerProtocol {
 
     func handlePayment(basePayment: PXBasePayment) {
         if let business = basePayment as? PXBusinessResult {
-            trackCurrentStep(flow: "PXPaymentFlow+PaymentHandlerProtocol - handlePayment - business \(business)")
+            trackCurrentStep(flow: "\(basePaymentBusiness) \(business.getStatus())")
             handlePayment(business: business)
         } else if let payment = basePayment as? PXPayment {
-            trackCurrentStep(flow: "PXPaymentFlow+PaymentHandlerProtocol - handlePayment - payment \(payment)")
+            trackCurrentStep(flow: "\(basePaymentPayment) \(payment.getStatus())")
             handlePayment(basePayment: payment)
         } else {
             guard let paymentData = self.model.amountHelper?.getPaymentData() else {
@@ -46,7 +49,7 @@ extension PXPaymentFlow: PaymentHandlerProtocol {
 
             let paymentResult = PaymentResult(status: basePayment.getStatus(), statusDetail: basePayment.getStatusDetail(), paymentData: paymentData, splitAccountMoney: self.model.amountHelper?.splitAccountMoney, payerEmail: nil, paymentId: basePayment.getPaymentId(), statementDescription: nil, paymentMethodId: basePayment.getPaymentMethodId(), paymentMethodTypeId: basePayment.getPaymentMethodTypeId())
             self.model.paymentResult = paymentResult
-            trackCurrentStep(flow: "PXPaymentFlow+PaymentHandlerProtocol - handlePayment \(paymentResult)")
+            trackCurrentStep(flow: "\(handlePayment) \(basePayment.getStatus())")
             self.executeNextStep()
         }
     }

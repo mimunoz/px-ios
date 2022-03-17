@@ -15,6 +15,13 @@ class ImpletationStrategy: StrategyTrackings {
         MPXTracker.sharedInstance.trackScreen(event: PXPaymentsInfoGeneralEvents.infoGeneral_Follow_One_Tap(properties))
     }
 
+    func getPropertieFlowSuccess(flow: String) {
+        var properties: [String: Any] = [:]
+        let flowIdentifier = MPXTracker.sharedInstance.getFlowName() ?? "PX_Follow"
+        properties["flow"] = "/\(flowIdentifier + " " + flow)"
+        MPXTracker.sharedInstance.trackScreen(event: PXPaymentsInfoGeneralEvents.infoGeneral_Follow_Success)
+    }
+
     func getPropertiesSecurityCode(flow: String, buttonPressed: Int) {
         var properties: [String: Any] = [:]
         let flowIdentifier = MPXTracker.sharedInstance.getFlowName() ?? "PX_Follow"

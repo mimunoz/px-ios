@@ -52,6 +52,7 @@ final class PXOneTapViewController: MercadoPagoUIViewController {
     var cardType: MLCardDrawerTypeV3
 
     var strategyTracking: StrategyTrackings = ImpletationStrategy()
+    var isPaymentToggle = IsPaymentToggle.noPaying
 
     // MARK: Lifecycle/Publics
     init(viewModel: PXOneTapViewModel, pxOneTapContext: PXOneTapContext, timeOutPayButton: TimeInterval = 15, callbackPaymentData : @escaping ((PXPaymentData) -> Void), callbackConfirm: @escaping ((PXPaymentData, Bool) -> Void), callbackUpdatePaymentOption: @escaping ((PaymentMethodOption) -> Void), callbackRefreshInit: @escaping ((String) -> Void), callbackExit: @escaping (() -> Void), finishButtonAnimation: @escaping (() -> Void)) {
@@ -486,13 +487,15 @@ extension PXOneTapViewController {
 
     private func handlePayButton() {
         amountOfButtonPress += 1
-        strategyTracking.getPropertieFlow(flow: "handlePayButton, buttonPressed \(amountOfButtonPress)")
+        strategyTracking.getPropertieFlow(flow: "handlePayButton, buttonPressed \(amountOfButtonPress), isPaymenttoggle \(isPaymentToggle)")
         if let selectedCard = getSuspendedCardSliderViewModel(), let selectedApplication = selectedCard.selectedApplication {
             if let tapPayBehaviour = selectedApplication.behaviours?[PXBehaviour.Behaviours.tapPay.rawValue] {
                 handleBehaviour(tapPayBehaviour, isSplit: false)
             }
         } else {
-            confirmPayment()
+            if !(isPaymentToggle.isPayment() ?? false) {
+                confirmPayment()
+            }
         }
     }
 

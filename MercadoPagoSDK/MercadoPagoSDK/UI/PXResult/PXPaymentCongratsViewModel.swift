@@ -85,6 +85,10 @@ class PXPaymentCongratsViewModel {
 }
 
 extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
+    func getStatusPayment() -> String {
+        return paymentCongrats.type.getRawValue()
+    }
+
     func getAndesMessage() -> InfoOperation? {
         return paymentCongrats.infoOperation
     }

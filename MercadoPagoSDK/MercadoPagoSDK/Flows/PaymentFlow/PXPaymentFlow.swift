@@ -9,6 +9,13 @@ final class PXPaymentFlow: NSObject, PXFlow {
 
     var pxNavigationHandler: PXNavigationHandler
     var strategyTracking: StrategyTrackings = ImpletationStrategy()
+    var isPaymentToggle = IsPaymentToggle.noPaying
+
+    let paymentFlow = "PXPaymentFlow+PaymentHandlerProtocol - payment "
+    let businessFlow = "PXPaymentFlow+PaymentHandlerProtocol - handlePayment - business "
+    let basePaymentBusiness = "PXPaymentFlow+PaymentHandlerProtocol - basePayment - business "
+    let basePaymentPayment = "PXPaymentFlow+PaymentHandlerProtocol - basePayment - payment "
+    let handlePayment = "PXPaymentFlow+PaymentHandlerProtocol - handlePayment "
 
     init(paymentPlugin: PXSplitPaymentProcessor?, mercadoPagoServices: MercadoPagoServices, paymentErrorHandler: PXPaymentErrorHandlerProtocol, navigationHandler: PXNavigationHandler, amountHelper: PXAmountHelper, checkoutPreference: PXCheckoutPreference?, ESCBlacklistedStatus: [String]?) {
         model = PXPaymentFlowModel(paymentPlugin: paymentPlugin, mercadoPagoServices: mercadoPagoServices, ESCBlacklistedStatus: ESCBlacklistedStatus)
@@ -58,7 +65,9 @@ final class PXPaymentFlow: NSObject, PXFlow {
         DispatchQueue.main.async {
             switch self.model.nextStep() {
             case .createDefaultPayment:
-                self.createPayment(programId: self.validationProgramId)
+                if !(self.isPaymentToggle.isPayment() ?? false) {
+                    self.createPayment(programId: self.validationProgramId)
+                }
             case .createPaymentPlugin:
                 self.createPaymentWithPlugin(plugin: self.model.paymentPlugin, programId: self.validationProgramId)
             case .createPaymentPluginScreen:

@@ -15,6 +15,7 @@ struct ResultViewData {
 }
 
 protocol PXNewResultViewModelInterface: PXViewModelTrackingDataProtocol {
+    func getStatusPayment() -> String
     // HEADER
     func getHeaderColor() -> UIColor
     func getHeaderTitle() -> String

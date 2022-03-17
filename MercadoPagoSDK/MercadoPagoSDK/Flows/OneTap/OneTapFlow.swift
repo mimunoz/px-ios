@@ -9,6 +9,7 @@ final class OneTapFlow: NSObject, PXFlow {
     let advancedConfig: PXAdvancedConfiguration
 
     var strategyTrackings: StrategyTrackings = ImpletationStrategy()
+    var isPaymentToggle = IsPaymentToggle.noPaying
 
     init(checkoutViewModel: MercadoPagoCheckoutViewModel, search: PXInitDTO, paymentOptionSelected: PaymentMethodOption?, oneTapResultHandler: PXOneTapResultHandlerProtocol) {
         pxNavigationHandler = checkoutViewModel.pxNavigationHandler
