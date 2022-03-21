@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Fixed discountToken in discounts for payment methods
+- Fixed CFTNA label for installments for MLA
 
 ### Changed
 - Hide duplicate value when payment method is debit card and splitConfiguration is null

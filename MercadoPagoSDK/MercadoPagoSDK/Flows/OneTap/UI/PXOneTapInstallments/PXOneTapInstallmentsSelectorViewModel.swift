@@ -91,8 +91,7 @@ final class PXOneTapInstallmentsSelectorViewModel {
 
         // Top & Bottom value
         let topValue = getInterestText(payerCost: payerCost)?.getAttributedString(fontSize: PXLayout.XS_FONT, backgroundColor: .clear) ?? totalAmount
-        let bottomValue = getReimbursementText(payerCost: payerCost)?.getAttributedString(fontSize: PXLayout.XXS_FONT, backgroundColor: .clear)
-
+        let bottomValue = getInterestRateText(payerCost: payerCost)?.getAttributedString(fontSize: PXLayout.XXS_FONT, backgroundColor: .clear) ?? getReimbursementText(payerCost: payerCost)?.getAttributedString(fontSize: PXLayout.XXS_FONT, backgroundColor: .clear)
         return PXOneTapInstallmentsSelectorData(title, topValue, bottomValue, isSelected)
     }
 
@@ -120,5 +119,9 @@ final class PXOneTapInstallmentsSelectorViewModel {
             return interestConfiguration.installmentRow
         }
         return nil
+    }
+
+    func getInterestRateText(payerCost: PXPayerCost) -> PXText? {
+        return payerCost.interestRate
     }
 }
