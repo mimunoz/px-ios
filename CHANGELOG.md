@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## v4.56.0
+## Unreleased
 
 ### Added
 - Add bank_name and external_account_id for DEBIN tracks
@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Fixed discountToken in discounts for payment methods
+- Inclusão de flag para identificar se o pagamento já foi processado, evitando um possível pagamento duplicado.
 - Fixed CFTNA label for installments for MLA
 
 ### Changed
