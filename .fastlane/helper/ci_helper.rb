@@ -16,7 +16,7 @@ module CIHelper
 
     # Checks if commit has a deploy message in it
     def self.has_deploy_message?
-        CIHelper::cd_run('git log -n1 --oneline | grep -e \'\\[ci deploy\\]\' -e \'\\[deploy ci\\]\'| wc -l').to_s().strip! != "0"
+        CIHelper::cd_run('git log -n1 --oneline --no-merges | grep -e \'\\[ci deploy\\]\' -e \'\\[deploy ci\\]\'| wc -l').to_s().strip! != "0"
     end
 
     def self.spec_version
