@@ -6,6 +6,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## 4.56.0
+
 ### Added
 - Add bank_name and external_account_id for DEBIN tracks
 - New payment method model support
