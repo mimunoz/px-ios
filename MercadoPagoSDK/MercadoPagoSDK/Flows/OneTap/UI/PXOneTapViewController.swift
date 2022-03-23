@@ -450,8 +450,15 @@ extension PXOneTapViewController {
     }
 
     func trackDialogEvent(trackingPath: String?, properties: [String: Any]?) {
-        if shouldTrackModal, let trackingPath = trackingPath, let properties = properties {
+        if shouldTrackModal, let trackingPath = trackingPath, var properties = properties {
             shouldTrackModal = false
+
+            // Remove unnecessary tracks for path: /px_checkout/dialog/dismiss
+            if trackingPath == TrackingPaths.Events.OneTap.getDialogDismissPath() {
+                properties.removeValue(forKey: "type")
+                properties.removeValue(forKey: "deep_link")
+            }
+
             trackEvent(event: OneTapTrackingEvents.didDismissDialog(properties))
         }
     }

@@ -147,7 +147,7 @@ extension PXOneTapViewModel {
         var properties: [String: Any] = [:]
         if let target = behaviour.target {
             properties["behaviour"] = behaviour.modal ?? ""
-            properties["deepLink"] = target
+            properties["deep_link"] = target
         }
         return properties
     }
@@ -191,7 +191,7 @@ extension PXOneTapViewModel {
         guard let button = button else { return nil }
         var properties = getDialogOpenProperties(behaviour, modalConfig)
         properties["type"] = type
-        properties["deepLink"] = button.target ?? ""
+        properties["deep_link"] = button.target ?? ""
         return properties
     }
 }

@@ -15,9 +15,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed discountToken in discounts for payment methods
 - Inclusão de flag para identificar se o pagamento já foi processado, evitando um possível pagamento duplicado.
 - Fixed CFTNA label for installments for MLA
+- Fixed deep_link key (tracks)
 
 ### Changed
 - Hide duplicate value when payment method is debit card and splitConfiguration is null
+
+### Removed
+- Remove unnecessary tracks for path: /px checkout/dialog/dismiss
 
 ## v4.55.1
 
