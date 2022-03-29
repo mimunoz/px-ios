@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+
 ## 4.56.0
 
 ### Added
@@ -23,7 +24,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Hide duplicate value when payment method is debit card and splitConfiguration is null
 
 ### Removed
-- Remove unnecessary tracks for path: /px checkout/dialog/dismiss
+- Remove unnecessary tracks for path: /px_checkout/dialog/dismiss
+- Remove unnecessary parameters for path: /px_checkout/result/error/primary_action
 
 ## v4.55.1
 

@@ -105,7 +105,7 @@ class PXResultViewModel: NSObject {
 
     private func getRemedyButtonAction() -> ((String?) -> Void)? {
         let action = { (text: String?) in
-            MPXTracker.sharedInstance.trackEvent(event: PXResultTrackingEvents.didShowRemedyError(self.getRemedyProperties()))
+            MPXTracker.sharedInstance.trackEvent(event: PXResultTrackingEvents.didShowRemedyError)
 
             if let callback = self.callback {
                 if self.remedy?.cvv != nil {
@@ -167,30 +167,6 @@ extension PXResultViewModel: PXCongratsTrackingDataProtocol {
 
 // MARK: Tracking
 extension PXResultViewModel {
-    func getRemedyProperties() -> [String: Any] {
-        var properties: [String: Any] = [:]
-        properties["payment_status"] = paymentResult.status
-        properties["payment_status_detail"] = paymentResult.statusDetail
-        guard let remedy = remedy else { return properties }
-
-        properties["index"] = 0
-        var type: String?
-        if remedy.suggestedPaymentMethod != nil {
-            type = "payment_method_suggestion"
-        } else if remedy.cvv != nil {
-            type = "cvv_request"
-        } else if remedy.highRisk != nil {
-            type = "kyc_request"
-        }
-        if let type = type {
-            properties["type"] = type // [ payment_method_suggestion / cvv_request /  kyc_request ]
-        }
-        if let trackingData = remedy.trackingData {
-            properties["extra_info"] = trackingData
-        }
-        return properties
-    }
-
     func getFooterPrimaryActionTrackingPath() -> String {
         let paymentStatus = paymentResult.status
         var screenPath = ""

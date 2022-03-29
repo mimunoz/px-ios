@@ -6,7 +6,7 @@ enum PXResultTrackingEvents: TrackingEvents {
     case didTapOnScore
     case didTapOnDeeplink([String: Any])
     case didTapOnCrossSelling
-    case didShowRemedyError([String: Any])
+    case didShowRemedyError
 
     // MARK: - ScreenEvents
     case checkoutPaymentApproved([String: Any])
@@ -41,10 +41,14 @@ enum PXResultTrackingEvents: TrackingEvents {
 
     var properties: [String: Any] {
         switch self {
-        case .didTapOnAllDiscounts, .didtapOnDownload, .didTapOnReceipt, .didTapOnScore, .didTapOnCrossSelling:
+        case .didTapOnAllDiscounts,
+                .didtapOnDownload,
+                .didTapOnReceipt,
+                .didTapOnScore,
+                .didTapOnCrossSelling,
+                .didShowRemedyError:
             return [:]
         case .didTapOnDeeplink(let properties),
-                .didShowRemedyError(let properties),
                 .checkoutPaymentApproved(let properties),
                 .checkoutPaymentInProcess(let properties),
                 .checkoutPaymentRejected(let properties),
