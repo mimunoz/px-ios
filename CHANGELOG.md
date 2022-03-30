@@ -6,10 +6,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-## 4.57.0
-
-### Fixed
-- Fixing exception in Replace Characters In Range Function from CardForm library.
 
 ## 4.56.0
 
