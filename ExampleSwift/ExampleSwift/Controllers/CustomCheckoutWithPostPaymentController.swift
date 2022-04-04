@@ -211,7 +211,7 @@ final class CustomCheckoutWithPostPaymentController: UIViewController {
     }
 
     func suscribeToPostPaymentNotification(postPaymentConfig: PXPostPaymentConfiguration) {
-        _ = MercadoPagoCheckout.NotificationCenter.SubscribeTo.postPaymentAction(
+        MercadoPagoCheckout.NotificationCenter.SubscribeTo.postPaymentAction(
             forName: postPaymentConfig.postPaymentNotificationName ?? .init("")
         ) { [weak self] _, resultBlock  in
             let postPayment = PostPaymentViewController(with: resultBlock)

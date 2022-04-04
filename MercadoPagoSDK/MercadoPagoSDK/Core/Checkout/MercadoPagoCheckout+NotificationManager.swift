@@ -20,12 +20,19 @@ public extension MercadoPagoCheckout.NotificationCenter.SubscribeTo {
     (
         forName name: NSNotification.Name,
         using block: @escaping MercadoPagoCheckout.PostPayment.CompletionBlock
-    ) -> NSObjectProtocol {
-        NotificationCenter.default.addObserver(forName: name, object: nil, queue: .main) {
+    ) {
+        // swiftlint:disable implicitly_unwrapped_optional
+        var cancellable: NSObjectProtocol!
+        // swiftlint:enable implicitly_unwrapped_optional
+        cancellable = NotificationCenter.default.addObserver(forName: name, object: nil, queue: .main) {
             guard let result = $0.object as? (PXBasePayment, MercadoPagoCheckout.PostPayment.ResultBlock) else {
                 return
             }
-            block(result.0, result.1)
+            let resultBlock: MercadoPagoCheckout.PostPayment.ResultBlock = {
+                cancellable.flatMap(MercadoPagoCheckout.NotificationCenter.UnsubscribeTo.postPaymentAction)
+                result.1($0)
+            }
+            block(result.0, resultBlock)
         }
     }
 }
