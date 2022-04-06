@@ -176,3 +176,4 @@
 "px_congrats_rejected_high_risk_message" = "Lo sentimos, la operación no pasó nuestra validación de seguridad.";
 "px_congrats_rejected_cap_exceeded_title" = "Superaste el límite diario para usar con el medio de pago elegido";
 "px_congrats_rejected_cap_exceeded_message" = "Puedes realizar la operación con un medio de pago distinto.";
+"px_cc_terms_and_conditions" = "Términos y condiciones";

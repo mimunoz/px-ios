@@ -11,12 +11,18 @@ final class ConsumerCreditsCard: NSObject, CustomCardDrawerUI {
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
-        label.textAlignment = .center
-        label.font = label.font.withSize(PXLayout.XXXS_FONT)
+        label.textAlignment = .left
+        label.font = Utils.getSemiBoldFont(size: PXLayout.XS_FONT)
         label.numberOfLines = 2
         label.lineBreakMode = NSLineBreakMode.byWordWrapping
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
+    }()
+
+    private lazy var highlightLabel: HighlightLabel = {
+        let highlightLabel = HighlightLabel()
+        highlightLabel.translatesAutoresizingMaskIntoConstraints = false
+        return highlightLabel
     }()
 
     weak var delegate: PXTermsAndConditionViewDelegate?
@@ -35,12 +41,15 @@ final class ConsumerCreditsCard: NSObject, CustomCardDrawerUI {
     let fontType: String = "light"
     let ownOverlayImage: UIImage?
     var ownGradient: CAGradientLayer = CAGradientLayer()
+    private let highlightText: PXText?
 
-    init(_ creditsViewModel: PXCreditsViewModel, isDisabled: Bool) {
+    init(_ creditsViewModel: PXCreditsViewModel, isDisabled: Bool, highlightText: PXText? = nil) {
         ownOverlayImage = ResourceManager.shared.getImage(isDisabled ? "Overlay" : "creditsOverlayMask")
         ownGradient = ConsumerCreditsCard.getCustomGradient(creditsViewModel)
 
         cardLogoImage = creditsViewModel.needsTermsAndConditions ? nil : ResourceManager.shared.getImage("consumerCreditsOneTap")
+
+        self.highlightText = highlightText
     }
 
     static func getCustomGradient(_ creditsViewModel: PXCreditsViewModel) -> CAGradientLayer {
@@ -55,60 +64,93 @@ final class ConsumerCreditsCard: NSObject, CustomCardDrawerUI {
 // MARK: Render
 extension ConsumerCreditsCard {
     func render(containerView: UIView, creditsViewModel: PXCreditsViewModel, isDisabled: Bool, size: CGSize, selectedInstallments: Int?, cardType: MLCardDrawerTypeV3? = .large) {
-        let creditsImageHeight: CGFloat = size.height * 0.35
-        let creditsImageWidth: CGFloat = size.height * 0.60
-        let margins: CGFloat = 16
-        let termsAndConditionsTextHeight: CGFloat = 50
+        var creditsImageHeight: CGFloat = size.height * 0.20
+        var creditsImageWidth: CGFloat = size.height * 0.60
+        let sideMargins: CGFloat = 16
         var verticalMargin: CGFloat = 0
+        let verticalMarginMin: CGFloat = 12
+        let creditsImageSmallHeight: CGFloat = 20
+        let creditsImageSmallWidth: CGFloat = 71
+        let scrollBarCompensation: CGFloat = 4
 
         if !isDisabled {
+            ownGradient.frame = containerView.frame
             if creditsViewModel.needsTermsAndConditions {
-                let consumerCreditsImageRaw = ResourceManager.shared.getImage("consumerCreditsOneTap")
+                let consumerCreditsImageRaw = ResourceManager.shared.getImage("consumerCreditsCardOneTap")
                 consumerCreditsImage.image = isDisabled ? consumerCreditsImageRaw?.imageGreyScale() : consumerCreditsImageRaw
                 containerView.addSubview(consumerCreditsImage)
 
-                let termsAndConditionsText = PXTermsAndConditionsTextView(terms: creditsViewModel.displayInfo.bottomText, selectedInstallments: selectedInstallments, textColor: .white, linkColor: .white)
-                termsAndConditionsText.delegate = self
+                let termsAndConditionsText = createTermsAndConditionsText(terms: creditsViewModel.displayInfo.bottomText, selectedInstallments: selectedInstallments, textColor: .white, linkColor: .white)
                 containerView.addSubview(termsAndConditionsText)
 
                 if cardType != .small {
-                    verticalMargin = -creditsImageHeight / 2
-
+                    verticalMargin = sideMargins
                     titleLabel.text = creditsViewModel.displayInfo.topText.text
                     containerView.addSubview(titleLabel)
                     NSLayoutConstraint.activate([
-                        PXLayout.pinLeft(view: titleLabel, to: containerView, withMargin: margins),
-                        PXLayout.pinRight(view: titleLabel, to: containerView, withMargin: margins),
-                        PXLayout.put(view: titleLabel, onBottomOf: consumerCreditsImage)
+                        PXLayout.pinLeft(view: titleLabel, to: consumerCreditsImage),
+                        PXLayout.pinRight(view: titleLabel, to: containerView, withMargin: sideMargins),
+                        PXLayout.put(view: titleLabel, onBottomOf: consumerCreditsImage, withMargin: sideMargins, relation: .greaterThanOrEqual),
+                        PXLayout.centerVertically(view: titleLabel, to: containerView)
                     ])
                 } else {
-                    verticalMargin = -creditsImageHeight / 2 - 12
+                    creditsImageHeight = creditsImageSmallHeight
+                    creditsImageWidth = creditsImageSmallWidth
+                    verticalMargin = verticalMarginMin
                 }
 
                 NSLayoutConstraint.activate([
-                    PXLayout.pinBottom(view: termsAndConditionsText, to: containerView, withMargin: margins - PXLayout.XXXS_MARGIN),
-                    PXLayout.pinLeft(view: termsAndConditionsText, to: containerView, withMargin: margins),
-                    PXLayout.pinRight(view: termsAndConditionsText, to: containerView, withMargin: margins),
-                    PXLayout.setHeight(owner: termsAndConditionsText, height: termsAndConditionsTextHeight),
+                    PXLayout.pinBottom(view: termsAndConditionsText, to: containerView, withMargin: verticalMargin - scrollBarCompensation),
+                    PXLayout.pinLeft(view: termsAndConditionsText, to: consumerCreditsImage),
+                    PXLayout.pinRight(view: termsAndConditionsText, to: containerView, withMargin: sideMargins),
 
                     PXLayout.setWidth(owner: consumerCreditsImage, width: creditsImageWidth),
                     PXLayout.setHeight(owner: consumerCreditsImage, height: creditsImageHeight),
-                    PXLayout.centerHorizontally(view: consumerCreditsImage),
-                    PXLayout.centerVertically(view: consumerCreditsImage, to: containerView, withMargin: verticalMargin)
+                    PXLayout.pinLeft(view: consumerCreditsImage, to: containerView, withMargin: sideMargins),
+                    PXLayout.pinTop(view: consumerCreditsImage, to: containerView, withMargin: verticalMargin)
                 ])
+
+                if let highlightText = highlightText {
+                    setupHighlightLabel(in: containerView, text: highlightText)
+                }
             }
         }
+    }
+
+    fileprivate func createTermsAndConditionsText(terms: PXTermsDto, selectedInstallments: Int?, textColor: UIColor, linkColor: UIColor) -> UITextView {
+        let termsAndConditionsText = PXTermsAndConditionsTextView(terms: terms, selectedInstallments: selectedInstallments, textColor: textColor, linkColor: linkColor)
+
+        termsAndConditionsText.font = Utils.getFont(size: PXLayout.XXXS_FONT)
+        termsAndConditionsText.textAlignment = .left
+        termsAndConditionsText.textContainer.lineFragmentPadding = 0
+        termsAndConditionsText.isScrollEnabled = false
+        termsAndConditionsText.sizeToFit()
+        termsAndConditionsText.delegate = self
+
+        return termsAndConditionsText
     }
 }
 
 // MARK: UITextViewDelegate
 extension ConsumerCreditsCard: UITextViewDelegate {
     func textView(_ textView: UITextView, shouldInteractWith URL: URL, in characterRange: NSRange, interaction: UITextItemInteraction) -> Bool {
-            if let range = Range(characterRange, in: textView.text),
-                let text = textView.text?[range] {
-                let title = String(text).capitalized
-                delegate?.shouldOpenTermsCondition(title, url: URL)
-            }
+        let title = String("px_cc_terms_and_conditions".localized).capitalized
+        delegate?.shouldOpenTermsCondition(title, url: URL)
+
         return false
+    }
+}
+
+// MARK: private
+private extension ConsumerCreditsCard {
+    func setupHighlightLabel(in container: UIView, text: PXText) {
+        container.addSubview(highlightLabel)
+
+        NSLayoutConstraint.activate([
+            highlightLabel.topAnchor.constraint(equalTo: container.topAnchor),
+            highlightLabel.trailingAnchor.constraint(equalTo: container.trailingAnchor),
+            highlightLabel.heightAnchor.constraint(equalToConstant: HighlightLabel.Layout.componentHeight)
+        ])
+        highlightLabel.setText(text)
     }
 }

@@ -168,7 +168,11 @@ extension PXCardSliderPagerCell {
         let isDisabled = selectedApplication.status.isDisabled()
         let bottomMessage = selectedApplication.bottomMessage
         let creditsInstallmentSelected = selectedApplication.selectedPayerCost?.installments
-        consumerCreditCard = ConsumerCreditsCard(creditsViewModel, isDisabled: isDisabled)
+        consumerCreditCard = ConsumerCreditsCard(
+            creditsViewModel,
+            isDisabled: isDisabled,
+            highlightText: model.displayInfo?.tag
+        )
         guard let consumerCreditCard = consumerCreditCard else { return }
 
         setupContainerView(cardSize)

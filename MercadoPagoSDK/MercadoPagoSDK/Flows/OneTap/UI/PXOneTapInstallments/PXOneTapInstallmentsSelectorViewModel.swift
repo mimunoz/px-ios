@@ -60,13 +60,10 @@ final class PXOneTapInstallmentsSelectorViewModel {
             NSAttributedString.Key.foregroundColor: fontColor
         ]
 
-        if payerCost.installments != 1 {
-            let formattedAmount = Utils.getAttributedAmount(payerCost.totalAmount, currency: currency, color: fontColor, fontSize: fontSize, centsFontSize: fontSize, baselineOffset: 0)
+        let formattedAmount = Utils.getAttributedAmount(payerCost.totalAmount, currency: currency, color: fontColor, fontSize: fontSize, centsFontSize: fontSize, baselineOffset: 0)
 
-            let string = showDescription ? "(\(formattedAmount.string))" : ""
-            return NSAttributedString(string: string, attributes: attributes)
-        }
-        return nil
+        let string = showDescription ? "(\(formattedAmount.string))" : ""
+        return NSAttributedString(string: string, attributes: attributes)
     }
 
     func getRowTitle(payerCost: PXPayerCost, currency: PXCurrency) -> NSAttributedString {

@@ -7,7 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## 4.57.0 Unreleased
 
 ### Added
+
+- Show the component with the number of installments information on the CC card
+- Show the total payed by customer in each installment and interest-free if so
+- Redesign customer credits cards
+- Update terms and conditions in customer credits
 - Additional backend environments for testing
+
 
 ### Fixed
 - Post payment notification observer
