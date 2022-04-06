@@ -29,13 +29,13 @@ final class PXOneTapViewController: MercadoPagoUIViewController {
 
     var loadingButtonComponent: PXAnimatedButton?
     var installmentInfoRow: PXOneTapInstallmentInfoView?
-    var installmentsSelectorView: UIView?// PXOneTapInstallmentsSelectorView?
+    var installmentsSelectorView: UIView?
     var footerView: UIView?
     var headerView: PXOneTapHeaderView?
-    var whiteView: UIStackView?
+    var bodyView: UIStackView?
     var cardSliderContentView: UIStackView?
     var selectedCard: PXCardSliderViewModel?
-    var installmentsWrapperView: UIStackView?
+    var installmentsContainerView: UIStackView?
 
     var currentModal: MLModal?
     var shouldTrackModal: Bool = false
@@ -196,101 +196,26 @@ extension PXOneTapViewController {
     }
 
     private func renderViews() {
-        // Set contentView height and position
-        let contentViewHeight = PXLayout.getAvailabelScreenHeightWithStatusBarOnly(in: self)
         view.layer.masksToBounds = true
+        
+        let contentView = getContentView()
+        
+        setupHeaderView(to: contentView)
 
-        let contentView = UIStackView()
-        contentView.axis = .vertical
-        contentView.alignment = .center
-        contentView.distribution = .fill
-        contentView.addBackground(color: UIColor.Andes.white)
-        view.addSubview(contentView)
+        setupBodyView(to: contentView)
+        
+        setupInstallmentsContainer()
+        
+        setupInstallmentRow()
+        
+        setupSpacerView()
 
-        PXLayout.matchWidth(ofView: contentView)
-        PXLayout.setHeight(owner: contentView, height: contentViewHeight)
-        PXLayout.pinBottom(view: contentView)
+        setupCardSliderView()
 
-        // Add header view.
-        let headerView = getHeaderView(selectedCard: selectedCard, pxOneTapContext: self.pxOneTapContext)
-
-        self.headerView = headerView
-        contentView.addArrangedSubview(headerView)
-
-        PXLayout.centerHorizontally(view: headerView).isActive = true
-        PXLayout.matchWidth(ofView: headerView).isActive = true
-
-        // Add whiteView to contentView
-        let whiteView = getWhiteView()
-        self.whiteView = whiteView
-        contentView.addArrangedSubview(whiteView)
-
-        view.layoutIfNeeded()
-
-        PXLayout.matchWidth(ofView: whiteView, toView: view).isActive = true
-        PXLayout.centerHorizontally(view: whiteView).isActive = true
-
-        // Add installmentsWrapperView to whiteView
-        let installmentsWrapperView = UIStackView()
-        installmentsWrapperView.axis = .vertical
-
-        installmentsWrapperView.isHidden = true
-
-        self.installmentsWrapperView = installmentsWrapperView
-
-        PXLayout.matchWidth(ofView: installmentsWrapperView)
-
-        whiteView.addArrangedSubview(installmentsWrapperView)
-
-        // Add installment info row
-        installmentRow = getInstallmentInfoView()
-        installmentRow.isHidden = true
-        whiteView.addArrangedSubview(installmentRow)
-
-        if cardType == .small {
-            let spacerView = UIView()
-            spacerView.translatesAutoresizingMaskIntoConstraints = false
-            spacerView.backgroundColor = .white
-            whiteView.addArrangedSubview(spacerView)
-            NSLayoutConstraint.activate([
-                spacerView.heightAnchor.constraint(equalToConstant: 10),
-                spacerView.leadingAnchor.constraint(equalTo: whiteView.leadingAnchor),
-                spacerView.trailingAnchor.constraint(equalTo: whiteView.trailingAnchor)
-            ])
-        }
-
-        // Add cardSliderContentView to whiteView
-        let cardSliderContentView = UIStackView()
-
-        cardSliderContentView.axis = .vertical
-
-        self.cardSliderContentView = cardSliderContentView
-
-        whiteView.addArrangedSubview(cardSliderContentView)
-
-        slider.cardType = cardType
-
-        // CardSlider with aspect ratio multiplier
-        cardSliderContentView.translatesAutoresizingMaskIntoConstraints = false
-        PXLayout.matchWidth(ofView: cardSliderContentView)
-
-        view.layoutIfNeeded()
-
-        NSLayoutConstraint.activate([
-            cardSliderContentView.heightAnchor.constraint(equalTo: cardSliderContentView.widthAnchor, multiplier: PXCardSliderSizeManager.aspectRatio(forType: cardType)),
-            cardSliderContentView.leadingAnchor.constraint(equalTo: whiteView.leadingAnchor)
-        ])
-
-        // Render installmentInfoRow based on cardSlider known width
-        let installmentRowWidth: CGFloat = slider.getItemSize(cardSliderContentView).width
-        installmentRow.render(installmentRowWidth)
-
-        // Add footer payment button.
-        guard let footerView = getFooterView() else { return }
-        self.footerView = footerView
-
-        whiteView.addArrangedSubview(footerView)
-
+        setupInstallmentInfoRow()
+        
+        setupFooterView()
+        
         view.layoutIfNeeded()
 
         DispatchQueue.main.async {
@@ -298,6 +223,108 @@ extension PXOneTapViewController {
                 self.newCardDidSelected(targetModel: selectedCard, forced: true)
             }
         }
+    }
+    
+    private func getContentView() -> UIStackView {
+        let contentView = UIStackView()
+        
+        contentView.axis = .vertical
+        contentView.alignment = .center
+        contentView.distribution = .fill
+        contentView.addBackground(color: UIColor.Andes.white)
+        view.addSubview(contentView)
+        
+        let contentViewHeight = PXLayout.getAvailabelScreenHeightWithStatusBarOnly(in: self)
+
+        PXLayout.matchWidth(ofView: contentView)
+        PXLayout.setHeight(owner: contentView, height: contentViewHeight)
+        PXLayout.pinBottom(view: contentView)
+        
+        return contentView
+    }
+
+    private func setupHeaderView(to contentView: UIStackView) {
+        let headerView = getHeaderView(selectedCard: selectedCard, pxOneTapContext: self.pxOneTapContext)
+        self.headerView = headerView
+
+        contentView.addArrangedSubview(headerView)
+        PXLayout.centerHorizontally(view: headerView).isActive = true
+        PXLayout.matchWidth(ofView: headerView).isActive = true
+    }
+
+    private func setupBodyView(to contentView: UIStackView) {
+        let bodyView = getBodyView()
+        self.bodyView = bodyView
+
+        contentView.addArrangedSubview(bodyView)
+        view.layoutIfNeeded()
+        PXLayout.matchWidth(ofView: bodyView, toView: view).isActive = true
+        PXLayout.centerHorizontally(view: bodyView).isActive = true
+    }
+
+    private func setupInstallmentsContainer() {
+        let installmentsContainerView = UIStackView()
+        installmentsContainerView.axis = .vertical
+        installmentsContainerView.isHidden = true
+        self.installmentsContainerView = installmentsContainerView
+
+        PXLayout.matchWidth(ofView: installmentsContainerView)
+        bodyView?.addArrangedSubview(installmentsContainerView)
+    }
+
+    private func setupInstallmentRow() {
+        installmentRow = getInstallmentInfoView()
+        installmentRow.isHidden = true
+        bodyView?.addArrangedSubview(installmentRow)
+    }
+
+    private func setupSpacerView() {
+        if let bodyView = bodyView, cardType == .small  {
+            let spacerView = UIView()
+            spacerView.translatesAutoresizingMaskIntoConstraints = false
+            spacerView.backgroundColor = .white
+            bodyView.addArrangedSubview(spacerView)
+            NSLayoutConstraint.activate([
+                spacerView.heightAnchor.constraint(equalToConstant: 10),
+                spacerView.leadingAnchor.constraint(equalTo: bodyView.leadingAnchor),
+                spacerView.trailingAnchor.constraint(equalTo: bodyView.trailingAnchor)
+            ])
+        }
+    }
+    
+    private func setupInstallmentInfoRow() {
+        guard let cardSliderContentView = cardSliderContentView else { return }
+        let installmentRowWidth: CGFloat = slider.getItemSize(cardSliderContentView).width
+        installmentRow.render(installmentRowWidth)
+    }
+    
+    private func setupCardSliderView() {
+        guard let bodyView = bodyView else { return }
+        let cardSliderContentView = UIStackView()
+        
+        cardSliderContentView.axis = .vertical
+        
+        self.cardSliderContentView = cardSliderContentView
+        
+        bodyView.addArrangedSubview(cardSliderContentView)
+        
+        slider.cardType = cardType
+        
+        cardSliderContentView.translatesAutoresizingMaskIntoConstraints = false
+        PXLayout.matchWidth(ofView: cardSliderContentView)
+        
+        view.layoutIfNeeded()
+        
+        NSLayoutConstraint.activate([
+            cardSliderContentView.heightAnchor.constraint(equalTo: cardSliderContentView.widthAnchor, multiplier: PXCardSliderSizeManager.aspectRatio(forType: cardType)),
+            cardSliderContentView.leadingAnchor.constraint(equalTo: bodyView.leadingAnchor)
+        ])
+    }
+    
+    private func setupFooterView() {
+        guard let footerView = getFooterView() else { return }
+        self.footerView = footerView
+        bodyView?.addArrangedSubview(footerView)
     }
 
     private func getBottomPayButtonMargin() -> CGFloat {
@@ -361,23 +388,23 @@ extension PXOneTapViewController {
         return loadingWrapper
     }
 
-    private func getWhiteView() -> UIStackView {
-        let whiteView = UIStackView()// UIView()
-        whiteView.axis = .vertical
+    private func getBodyView() -> UIStackView {
+        let bodyView = UIStackView()// UIView()
+        bodyView.axis = .vertical
 
         if #available(iOS 14.0, *) {
-            whiteView.backgroundColor = .white
+            bodyView.backgroundColor = .white
         } else {
             // Fallback for coloring stackview background on iOS < 14
             let backgroundView = UIView()
             backgroundView.backgroundColor = .white
 
             backgroundView.translatesAutoresizingMaskIntoConstraints = false
-            whiteView.insertSubview(backgroundView, at: 0)
+            bodyView.insertSubview(backgroundView, at: 0)
             PXLayout.pinAllEdges(view: backgroundView)
         }
 
-        return whiteView
+        return bodyView
     }
 
     private func getInstallmentInfoView() -> PXOneTapInstallmentInfoView {

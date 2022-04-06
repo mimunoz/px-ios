@@ -14,11 +14,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update terms and conditions in customer credits
 - Additional backend environments for testing
 
-
 ### Fixed
 - Post payment notification observer
 
 ### Changed
+- Improved legibility on monolithic renderViews method in OneTapVC 
 - Removed deprecated tag on PXLayout.
 
 ## 4.56.0

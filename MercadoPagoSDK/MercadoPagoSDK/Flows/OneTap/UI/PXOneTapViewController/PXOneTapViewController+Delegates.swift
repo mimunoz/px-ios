@@ -343,10 +343,10 @@ extension PXOneTapViewController: PXOneTapInstallmentInfoViewProtocol, PXOneTapI
     }
 
     func hideInstallments() {
-        guard let installmentsWrapperView = self.installmentsWrapperView else { return }
+        guard let installmentsContainerView = self.installmentsContainerView else { return }
 
-        // Hide installmentsWrapperView
-        installmentsWrapperView.isHidden = true
+        // Hide installmentsContainerView
+        installmentsContainerView.isHidden = true
 
         // Show installmentRow
         installmentRow.isHidden = false
@@ -357,10 +357,10 @@ extension PXOneTapViewController: PXOneTapInstallmentInfoViewProtocol, PXOneTapI
     func showInstallments(installmentData: PXInstallment?, selectedPayerCost: PXPayerCost?, interest: PXInstallmentsConfiguration?, reimbursement: PXInstallmentsConfiguration?) {
         installmentRow.isHidden = true
 
-        guard let installmentsWrapperView = self.installmentsWrapperView else { return }
+        guard let installmentsContainerView = self.installmentsContainerView else { return }
 
-        // Clear installmentsWrapperView
-        installmentsWrapperView.removeAllSubviews()
+        // Clear installmentsContainerView
+        installmentsContainerView.removeAllSubviews()
 
         guard let installmentData = installmentData, let installmentInfoRow = installmentInfoRow else {
             return
@@ -377,25 +377,25 @@ extension PXOneTapViewController: PXOneTapInstallmentInfoViewProtocol, PXOneTapI
         installmentsSelectorView.delegate = self
         self.installmentsSelectorView = installmentsSelectorView
 
-        installmentsWrapperView.addArrangedSubview(installmentsSelectorView)
+        installmentsContainerView.addArrangedSubview(installmentsSelectorView)
 
         PXLayout.matchWidth(ofView: installmentsSelectorView).isActive = true
 
         PXLayout.setHeight(owner: installmentsSelectorView, height: 125).isActive = true
 
         let divider = UIView()
-        installmentsWrapperView.addArrangedSubview(divider)
+        installmentsContainerView.addArrangedSubview(divider)
         divider.translatesAutoresizingMaskIntoConstraints = false
         divider.backgroundColor = .pxMediumLightGray
         PXLayout.setHeight(owner: divider, height: 1).isActive = true
         PXLayout.matchWidth(ofView: divider).isActive = true
         PXLayout.centerHorizontally(view: divider).isActive = true
 
-        installmentsWrapperView.isHidden = false
+        installmentsContainerView.isHidden = false
 
         installmentsSelectorView.layoutIfNeeded()
 
-        installmentsWrapperView.layoutIfNeeded()
+        installmentsContainerView.layoutIfNeeded()
 
         self.view.layoutIfNeeded()
         installmentsSelectorView.tableView.reloadData()

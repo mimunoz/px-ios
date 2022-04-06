@@ -43,7 +43,7 @@ class PXOneTapViewControllerTransition: NSObject, UIViewControllerAnimatedTransi
         guard let oneTapVC = transitionContext.viewController(forKey: .from) as? PXOneTapViewController,
             let securityCodeVC = transitionContext.viewController(forKey: .to) as? PXSecurityCodeViewController,
             let headerSnapshot = oneTapVC.headerView?.snapshotView(afterScreenUpdates: false),
-            let footerSnapshot = oneTapVC.whiteView?.snapshotView(afterScreenUpdates: false),
+            let footerSnapshot = oneTapVC.bodyView?.snapshotView(afterScreenUpdates: false),
             let cell = oneTapVC.slider.getSelectedCell(),
             let cardSnapshot = cell.containerView.snapshotView(afterScreenUpdates: true) else {
                 transitionContext.completeTransition(false)
@@ -92,7 +92,7 @@ class PXOneTapViewControllerTransition: NSObject, UIViewControllerAnimatedTransi
         guard let oneTapVC = transitionContext.viewController(forKey: .from) as? PXOneTapViewController,
             let addCardVC = transitionContext.viewController(forKey: .to) as? MLCardFormViewController,
             let headerSnapshot = oneTapVC.headerView?.snapshotView(afterScreenUpdates: false),
-            let footerSnapshot = oneTapVC.whiteView?.snapshotView(afterScreenUpdates: false) else {
+            let footerSnapshot = oneTapVC.bodyView?.snapshotView(afterScreenUpdates: false) else {
                 transitionContext.completeTransition(false)
                 return
         }
@@ -137,7 +137,7 @@ class PXOneTapViewControllerTransition: NSObject, UIViewControllerAnimatedTransi
             let oneTapVC = transitionContext.viewController(forKey: .to) as? PXOneTapViewController,
             let toVCSnapshot = oneTapVC.view.snapshotView(afterScreenUpdates: true),
             let headerSnapshot = oneTapVC.headerView?.snapshotView(afterScreenUpdates: true),
-            let footerSnapshot = oneTapVC.whiteView?.snapshotView(afterScreenUpdates: true) else {
+            let footerSnapshot = oneTapVC.bodyView?.snapshotView(afterScreenUpdates: true) else {
                 transitionContext.completeTransition(false)
                 return
         }
@@ -205,7 +205,7 @@ class PXOneTapViewControllerTransition: NSObject, UIViewControllerAnimatedTransi
             let oneTapVC = transitionContext.viewController(forKey: .to) as? PXOneTapViewController,
             let toVCSnapshot = oneTapVC.view.snapshotView(afterScreenUpdates: true),
             let headerSnapshot = oneTapVC.headerView?.snapshotView(afterScreenUpdates: true),
-            let footerSnapshot = oneTapVC.whiteView?.snapshotView(afterScreenUpdates: true),
+            let footerSnapshot = oneTapVC.bodyView?.snapshotView(afterScreenUpdates: true),
             let cell = oneTapVC.slider.getSelectedCell(),
             let cardSnapshot = cell.containerView.snapshotView(afterScreenUpdates: true) else {
                 transitionContext.completeTransition(false)
@@ -235,14 +235,14 @@ class PXOneTapViewControllerTransition: NSObject, UIViewControllerAnimatedTransi
         if securityCodeVC.viewModel.shouldShowCard() {
             backgroundView.addSubview(cardSnapshot)
             let cardCellFrame = cell.containerView.frame
-            let cardCellOriginInWhiteView = cell.containerView.superview?.convert(cardCellFrame.origin, to: oneTapVC.whiteView) ?? CGPoint.zero
-            // hideCardView is an empty view to hide the card in the whiteView, while the animated card comes down
+            let cardCellOriginInWhiteView = cell.containerView.superview?.convert(cardCellFrame.origin, to: oneTapVC.bodyView) ?? CGPoint.zero
+            // hideCardView is an empty view to hide the card in the bodyView, while the animated card comes down
             let offset = CGFloat(4)
             let hideCardView = UIView(frame: CGRect(x: cardCellOriginInWhiteView.x - offset,
                                                     y: cardCellOriginInWhiteView.y - offset,
                                                     width: cardCellFrame.width + (offset * 2),
                                                     height: cardCellFrame.height + (offset * 2)))
-            hideCardView.backgroundColor = oneTapVC.whiteView?.backgroundColor
+            hideCardView.backgroundColor = oneTapVC.bodyView?.backgroundColor
             footerSnapshot.addSubview(hideCardView)
         }
 
@@ -323,7 +323,7 @@ extension PXOneTapViewControllerTransition {
     private func buildFrames(oneTapVC: PXOneTapViewController, containerView: UIView) -> (navigationFrame: CGRect, headerFrame: CGRect, footerFrame: CGRect) {
         // Fix frame sizes and position
         var headerFrame = oneTapVC.headerView?.frame ?? CGRect.zero
-        var footerFrame = oneTapVC.whiteView?.frame ?? CGRect.zero
+        var footerFrame = oneTapVC.bodyView?.frame ?? CGRect.zero
 
         var navigationFrame = containerView.frame
         navigationFrame.size.height -= (headerFrame.size.height + footerFrame.size.height)
