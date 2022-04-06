@@ -12,6 +12,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Post payment notification observer
 
+### Changed
+- Removed deprecated tag on PXLayout.
+
 ## 4.56.0
 
 ### Added
