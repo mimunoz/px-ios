@@ -10,8 +10,12 @@ enum HTTPMethodType: String {
 enum BackendEnvironment: String, CaseIterable {
     case alpha = "alpha/"
     case beta = "beta/"
-    case prod = "production/"
+    case delta = "delta/"
     case gamma = "gamma/"
+    case prod = "production/"
+    case sigma = "sigma/"
+    case staging = "staging/"
+    case zeta = "zeta/"
 }
 
 protocol RequestInfos {
