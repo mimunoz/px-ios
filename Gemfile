@@ -2,6 +2,7 @@ source "https://rubygems.org"
 
 gem 'json'
 gem 'cocoapods', '~> 1.8.4'
+gem "cocoapods-downloader", ">= 1.6.2"
 gem 'fastlane', '~>2.199.0'
 gem 'danger', '~> 8.4.1'
 gem 'danger-swiftlint'
