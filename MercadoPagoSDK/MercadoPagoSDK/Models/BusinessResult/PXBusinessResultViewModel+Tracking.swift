@@ -100,6 +100,10 @@ extension PXBusinessResultViewModel: PXViewModelTrackingDataProtocol {
         return debinProperties
     }
 
+    func getCloseButtonTrack() -> PXResultTrackingEvents {
+        return .didTapOnCloseButton(initiative: .checkout, status: businessResult.paymentStatus)
+    }
+
     func getTrackingPath() -> PXResultTrackingEvents? {
         let paymentStatus = businessResult.paymentStatus
         var screenPath: PXResultTrackingEvents?

@@ -59,6 +59,8 @@ class PXResultViewModel: NSObject {
     func headerCloseAction() -> () -> Void {
         return { [weak self] in
             guard let self = self else { return }
+            MPXTracker.sharedInstance.trackEvent(event: self.getCloseButtonTrack())
+
             if let callback = self.callback {
                 if let url = self.getBackUrl() {
                     PXNewResultUtil.openURL(url: url, success: { _ in
@@ -305,6 +307,10 @@ extension PXResultViewModel {
 }
 
 extension PXResultViewModel: PXViewModelTrackingDataProtocol {
+    func getCloseButtonTrack() -> PXResultTrackingEvents {
+        return .didTapOnCloseButton(initiative: .checkout, status: paymentResult.status)
+    }
+
     func getTrackingPath() -> PXResultTrackingEvents? {
         let paymentStatus = paymentResult.status
         var screenPath: PXResultTrackingEvents?

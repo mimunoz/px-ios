@@ -33,6 +33,8 @@ class PXBusinessResultViewModel: NSObject {
     func headerCloseAction() -> (() -> Void) {
         let action = {  [weak self] in
             guard let self = self else { return }
+            MPXTracker.sharedInstance.trackEvent(event: self.getCloseButtonTrack())
+
             if let callback = self.callback {
                 var autoReturnUrl: URL?
                 if let backUrl = self.pointsAndDiscounts?.backUrl, let url = URL(string: backUrl) {

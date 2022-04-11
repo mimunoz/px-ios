@@ -85,6 +85,10 @@ class PXPaymentCongratsViewModel {
 }
 
 extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
+    func getCloseButtonTrack() -> PXResultTrackingEvents {
+        return .didTapOnCloseButton(initiative: .paymentCongrats, status: paymentCongrats.type.getRawValue())
+    }
+
     func getStatusPayment() -> String {
         return paymentCongrats.type.getRawValue()
     }

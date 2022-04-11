@@ -1,4 +1,16 @@
 enum PXResultTrackingEvents: TrackingEvents {
+    enum Status: String {
+        case success = "success"
+        case error = "error"
+        case furtherActionNeeded = "further_action_needed"
+        case unknown = "unknown"
+    }
+
+    enum Initiative: String {
+        case paymentCongrats = "payment_congrats"
+        case checkout = "px_checkout"
+    }
+
     // MARK: - Events
     case didTapOnAllDiscounts
     case didtapOnDownload
@@ -7,6 +19,7 @@ enum PXResultTrackingEvents: TrackingEvents {
     case didTapOnDeeplink([String: Any])
     case didTapOnCrossSelling
     case didShowRemedyError
+    case didTapOnCloseButton(initiative: Initiative, status: String)
 
     // MARK: - ScreenEvents
     case checkoutPaymentApproved([String: Any])
@@ -28,6 +41,7 @@ enum PXResultTrackingEvents: TrackingEvents {
         case .didTapOnDeeplink: return "/px_checkout/result/success/deep_link"
         case .didTapOnCrossSelling: return "/px_checkout/result/success/tap_cross_selling"
         case .didShowRemedyError: return "/px_checkout/result/error/primary_action"
+        case .didTapOnCloseButton(let initiative, let status): return didTapOnCloseButton(initiative: initiative, paymentStatus: status)
         case .checkoutPaymentApproved: return "/px_checkout/result/success"
         case .checkoutPaymentInProcess: return "/px_checkout/result/further_action_needed"
         case .checkoutPaymentRejected: return "/px_checkout/result/error"
@@ -46,7 +60,8 @@ enum PXResultTrackingEvents: TrackingEvents {
                 .didTapOnReceipt,
                 .didTapOnScore,
                 .didTapOnCrossSelling,
-                .didShowRemedyError:
+                .didShowRemedyError,
+                .didTapOnCloseButton:
             return [:]
         case .didTapOnDeeplink(let properties),
                 .checkoutPaymentApproved(let properties),
@@ -64,10 +79,26 @@ enum PXResultTrackingEvents: TrackingEvents {
     var needsExternalData: Bool {
         switch self {
         case .didTapOnAllDiscounts, .didtapOnDownload, .didTapOnReceipt, .didTapOnScore, .didTapOnDeeplink,
-             .didTapOnCrossSelling, .didShowRemedyError, .checkoutPaymentApproved:
+                .didTapOnCrossSelling, .didShowRemedyError, .checkoutPaymentApproved, .didTapOnCloseButton:
             return true
         case .checkoutPaymentInProcess, .checkoutPaymentRejected, .congratsPaymentApproved, .congratsPaymentInProcess, .congratsPaymentRejected, .checkoutPaymentUnknown, .congratsPaymentUnknown:
             return false
         }
+    }
+
+    private func didTapOnCloseButton(initiative: Initiative, paymentStatus: String) -> String {
+        let status: PXResultTrackingEvents.Status
+
+        if paymentStatus == PXPaymentStatus.APPROVED.rawValue {
+            status = .success
+        } else if paymentStatus == PXPaymentStatus.IN_PROCESS.rawValue || paymentStatus == PXPaymentStatus.PENDING.rawValue {
+            status = .furtherActionNeeded
+        } else if paymentStatus == PXPaymentStatus.REJECTED.rawValue {
+            status = .error
+        } else {
+            status = .unknown
+        }
+
+        return "/\(initiative.rawValue)/result/\(status.rawValue)/abort"
     }
 }
