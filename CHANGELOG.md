@@ -8,10 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added operationType field in PXCheckoutPreference
 
-## 4.57.0 
+## 4.57.0
 
 ### Added
-
 - Show the component with the number of installments information on the CC card
 - Show the total payed by customer in each installment and interest-free if so
 - Redesign customer credits cards
@@ -24,6 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Improved legibility on monolithic renderViews method in OneTapVC 
 - Removed deprecated tag on PXLayout.
+- Moved Delegates out of PXOneTapViewController
 
 ## 4.56.0
 
