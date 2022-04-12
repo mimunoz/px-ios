@@ -12,10 +12,4 @@ enum PXCardSliderTrackingEvents: TrackingEvents {
         case .comboSwitch(let state): return ["option_selected": state]
         }
     }
-
-    var needsExternalData: Bool {
-        switch self {
-        case .comboSwitch: return false
-        }
-    }
 }

@@ -22,13 +22,4 @@ enum PXRemediesTrackEvents: TrackingEvents {
         case .didCloseRemedyModalAbort, .didShowRemedyErrorModal: return [:]
         }
     }
-
-    var needsExternalData: Bool {
-        switch self {
-        case .didResultRemedyError, .viewErrorPaymentResult:
-            return true
-        case .changePaymentMethod, .didShowRemedyErrorModal, .didCloseRemedyModalAbort:
-            return false
-        }
-    }
 }

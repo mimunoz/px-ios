@@ -12,8 +12,4 @@ enum PXDiscountTrackingEvents: TrackingEvents {
         case .discount(_, _, let properties): return properties
         }
     }
-
-    var needsExternalData: Bool {
-        return true
-    }
 }

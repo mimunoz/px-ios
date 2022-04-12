@@ -12,10 +12,4 @@ enum PXOfflineMethodsTrackingEvents: TrackingEvents {
         case .didConfirm(let properties): return properties
         }
     }
-
-    var needsExternalData: Bool {
-        switch self {
-        case .didConfirm: return true
-        }
-    }
 }

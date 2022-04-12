@@ -12,10 +12,4 @@ enum CongratsTrackingEvents: TrackingEvents {
         case .didTapDiscount(let properties): return properties
         }
     }
-
-    var needsExternalData: Bool {
-        switch self {
-        case .didTapDiscount: return true
-        }
-    }
 }

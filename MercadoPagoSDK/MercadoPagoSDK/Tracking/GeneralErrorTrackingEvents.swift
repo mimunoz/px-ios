@@ -12,8 +12,4 @@ enum GeneralErrorTrackingEvents: TrackingEvents {
         case .error(let properties): return properties
         }
     }
-
-    var needsExternalData: Bool {
-        return true
-    }
 }

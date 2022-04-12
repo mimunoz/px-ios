@@ -12,10 +12,4 @@ enum PXSecurityCodeTrackingEvents: TrackingEvents {
         case .didConfirmCode(let properties): return properties
         }
     }
-
-    var needsExternalData: Bool {
-        switch self {
-        case .didConfirmCode: return true
-        }
-    }
 }

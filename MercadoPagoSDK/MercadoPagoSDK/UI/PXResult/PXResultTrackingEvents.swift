@@ -76,16 +76,6 @@ enum PXResultTrackingEvents: TrackingEvents {
         }
     }
 
-    var needsExternalData: Bool {
-        switch self {
-        case .didTapOnAllDiscounts, .didtapOnDownload, .didTapOnReceipt, .didTapOnScore, .didTapOnDeeplink,
-                .didTapOnCrossSelling, .didShowRemedyError, .checkoutPaymentApproved, .didTapOnCloseButton:
-            return true
-        case .checkoutPaymentInProcess, .checkoutPaymentRejected, .congratsPaymentApproved, .congratsPaymentInProcess, .congratsPaymentRejected, .checkoutPaymentUnknown, .congratsPaymentUnknown:
-            return false
-        }
-    }
-
     private func didTapOnCloseButton(initiative: Initiative, paymentStatus: String) -> String {
         let status: PXResultTrackingEvents.Status
 

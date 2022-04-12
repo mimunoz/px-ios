@@ -34,15 +34,4 @@ enum MercadoPagoUITrackingEvents: TrackingEvents {
         case .didGoBack, .disabledPaymentMethods: return [:]
         }
     }
-
-    var needsExternalData: Bool {
-        switch self {
-        case .appliedDiscount, .termsAndConditions, .offlineMethodds, .installments, .disabledPaymentMethods:
-            return true
-        case .secureCode, .reviewOneTap:
-            return false
-        default:
-            return true
-        }
-    }
 }

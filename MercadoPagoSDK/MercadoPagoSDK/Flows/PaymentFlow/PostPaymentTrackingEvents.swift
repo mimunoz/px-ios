@@ -14,10 +14,4 @@ enum PostPaymentTrackingEvents: TrackingEvents {
         case .willNavigateToPostPayment(let properties): return properties
         }
     }
-
-    var needsExternalData: Bool {
-        switch self {
-        case .willNavigateToPostPayment: return false
-        }
-    }
 }

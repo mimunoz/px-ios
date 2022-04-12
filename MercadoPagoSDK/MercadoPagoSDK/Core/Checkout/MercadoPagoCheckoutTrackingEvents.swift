@@ -12,10 +12,4 @@ enum MercadoPagoCheckoutTrackingEvents: TrackingEvents {
         case .didInitFlow(let properties): return properties
         }
     }
-
-    var needsExternalData: Bool {
-        switch self {
-        case .didInitFlow: return false
-        }
-    }
 }

@@ -12,10 +12,4 @@ enum ThreeDSTrackingEvents: TrackingEvents {
         case .didGetProgramValidation(let properties): return properties
         }
     }
-
-    var needsExternalData: Bool {
-        switch self {
-        case .didGetProgramValidation: return false
-        }
-    }
 }

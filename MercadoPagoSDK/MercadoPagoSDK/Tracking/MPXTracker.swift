@@ -74,6 +74,7 @@ extension MPXTracker {
     private func appendFlow(to metadata: [String: Any]) -> [String: Any] {
         var metadata = metadata
 
+        // TODO: Validate default value for flow name
         metadata["flow"] = flowName ?? "PX"
 
         return metadata
@@ -107,10 +108,7 @@ extension MPXTracker {
     func trackScreen(event: TrackingEvents) {
         if let trackListenerInterfase = trackListener {
             var metadata = appendFlow(to: event.properties)
-
-            if event.needsExternalData {
-                metadata = appendExternalData(to: metadata)
-            }
+            metadata = appendExternalData(to: metadata)
 
             trackListenerInterfase.trackScreen(screenName: event.name, extraParams: metadata)
         }
@@ -134,10 +132,7 @@ extension MPXTracker {
                 metadata["security_enabled"] = PXConfiguratorManager.hasSecurityValidation()
                 metadata["session_time"] = PXTrackingStore.sharedInstance.getSecondsAfterInit()
             }
-
-            if event.needsExternalData {
-                metadata = appendExternalData(to: metadata)
-            }
+            metadata = appendExternalData(to: metadata)
 
             trackListenerInterfase.trackEvent(screenName: event.name, action: "", result: "", extraParams: metadata)
         }

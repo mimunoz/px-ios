@@ -30,13 +30,4 @@ enum PXPaymentsInfoGeneralEvents: TrackingEvents {
         case  .infoGeneral_Follow_Success, .infoGeneral_Follow_Reject, .infoGeneral_Follow_Pending: return [:]
         }
     }
-
-    var needsExternalData: Bool {
-        switch self {
-        case .infoGeneral_Follow_Confirm_Payments:
-            return true
-        case .infoGeneral_Follow_One_Tap, .infoGeneral_Follow_Success, .infoGeneral_Follow_Reject, .infoGeneral_Follow_Pending, .infoGeneral_Follow_Confirm_Security_Code:
-            return false
-        }
-    }
 }

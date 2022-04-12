@@ -23,13 +23,4 @@ enum OneTapTrackingEvents: TrackingEvents {
         case .didTapOnOfflineMethods, .didSwipe: return [:]
         }
     }
-
-    var needsExternalData: Bool {
-        switch self {
-        case .didTapOnOfflineMethods, .didGetTargetBehaviour, .didConfirmPayment, .didSwipe:
-            return true
-        case .didOpenDialog, .didDismissDialog:
-            return false
-        }
-    }
 }
