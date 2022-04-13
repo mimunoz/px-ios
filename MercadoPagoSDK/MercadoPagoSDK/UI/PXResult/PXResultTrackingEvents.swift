@@ -11,6 +11,12 @@ enum PXResultTrackingEvents: TrackingEvents {
         case checkout = "px_checkout"
     }
 
+    enum Action: String {
+        case primaryButton = "primary_action"
+        case secondaryButton = "secondary_action"
+        case `continue` = "continue"
+    }
+
     // MARK: - Events
     case didTapOnAllDiscounts
     case didtapOnDownload
@@ -20,6 +26,7 @@ enum PXResultTrackingEvents: TrackingEvents {
     case didTapOnCrossSelling
     case didShowRemedyError
     case didTapOnCloseButton(initiative: Initiative, status: String)
+    case didTapButton(initiative: Initiative, status: String, action: Action)
 
     // MARK: - ScreenEvents
     case checkoutPaymentApproved([String: Any])
@@ -50,6 +57,8 @@ enum PXResultTrackingEvents: TrackingEvents {
         case .congratsPaymentInProcess: return "/payment_congrats/result/further_action_needed"
         case .congratsPaymentRejected: return "/payment_congrats/result/error"
         case .congratsPaymentUnknown: return "/payment_congrats/result/unknown"
+        case .didTapButton(initiative: let initiative, status: let status, action: let action):
+            return didTapButton(initiative: initiative, paymentStatus: status, action: action)
         }
     }
 
@@ -61,7 +70,8 @@ enum PXResultTrackingEvents: TrackingEvents {
                 .didTapOnScore,
                 .didTapOnCrossSelling,
                 .didShowRemedyError,
-                .didTapOnCloseButton:
+                .didTapOnCloseButton,
+                .didTapButton:
             return [:]
         case .didTapOnDeeplink(let properties),
                 .checkoutPaymentApproved(let properties),
@@ -77,18 +87,28 @@ enum PXResultTrackingEvents: TrackingEvents {
     }
 
     private func didTapOnCloseButton(initiative: Initiative, paymentStatus: String) -> String {
+        let status = procces(checkoutStatus: paymentStatus)
+        return "/\(initiative.rawValue)/result/\(status)/abort"
+    }
+
+    private func didTapButton(initiative: Initiative, paymentStatus: String, action: Action) -> String {
+        let status = procces(checkoutStatus: paymentStatus)
+        return String(format: "/%@/%@/%@", initiative.rawValue, status, action.rawValue)
+    }
+
+    private func procces(checkoutStatus: String) -> String {
         let status: PXResultTrackingEvents.Status
 
-        if paymentStatus == PXPaymentStatus.APPROVED.rawValue {
+        if checkoutStatus == PXPaymentStatus.APPROVED.rawValue {
             status = .success
-        } else if paymentStatus == PXPaymentStatus.IN_PROCESS.rawValue || paymentStatus == PXPaymentStatus.PENDING.rawValue {
+        } else if checkoutStatus == PXPaymentStatus.IN_PROCESS.rawValue || checkoutStatus == PXPaymentStatus.PENDING.rawValue {
             status = .furtherActionNeeded
-        } else if paymentStatus == PXPaymentStatus.REJECTED.rawValue {
+        } else if checkoutStatus == PXPaymentStatus.REJECTED.rawValue {
             status = .error
         } else {
             status = .unknown
         }
 
-        return "/\(initiative.rawValue)/result/\(status.rawValue)/abort"
+        return status.rawValue
     }
 }

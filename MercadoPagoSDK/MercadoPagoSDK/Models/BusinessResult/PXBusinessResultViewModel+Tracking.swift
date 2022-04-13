@@ -86,6 +86,14 @@ extension PXBusinessResultViewModel: PXCongratsTrackingDataProtocol {
 }
 
 extension PXBusinessResultViewModel: PXViewModelTrackingDataProtocol {
+    func getPrimaryButtonTrack() -> PXResultTrackingEvents {
+        .didTapButton(initiative: .checkout, status: businessResult.paymentStatus, action: .primaryButton)
+    }
+
+    func getSecondaryButtonTrack() -> PXResultTrackingEvents {
+        .didTapButton(initiative: .checkout, status: businessResult.paymentStatus, action: .secondaryButton)
+    }
+
     func getDebinProperties() -> [String: Any]? {
         guard let paymentTypeId = amountHelper.getPaymentData().paymentMethod?.paymentTypeId,
                 let paymentTypeIdEnum = PXPaymentTypes(rawValue: paymentTypeId),

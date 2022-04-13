@@ -85,6 +85,15 @@ class PXPaymentCongratsViewModel {
 }
 
 extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
+    func getPrimaryButtonTrack() -> PXResultTrackingEvents {
+        let action = PXResultTrackingEvents.Action(rawValue: paymentCongrats.primaryButton?.action ?? "primary_action") ?? .primaryButton
+        return .didTapButton(initiative: .paymentCongrats, status: paymentCongrats.type.getRawValue(), action: action)
+    }
+
+    func getSecondaryButtonTrack() -> PXResultTrackingEvents {
+        return .didTapButton(initiative: .paymentCongrats, status: paymentCongrats.type.getRawValue(), action: .secondaryButton)
+    }
+
     func getCloseButtonTrack() -> PXResultTrackingEvents {
         return .didTapOnCloseButton(initiative: .paymentCongrats, status: paymentCongrats.type.getRawValue())
     }
@@ -272,11 +281,11 @@ extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
 
     // FOOTER
     func getFooterMainAction() -> PXAction? {
-        return paymentCongrats.mainAction
+        paymentCongrats.mainAction?.addTrackingEvent(getPrimaryButtonTrack())
     }
 
     func getFooterSecondaryAction() -> PXAction? {
-        return paymentCongrats.secondaryAction
+        paymentCongrats.secondaryAction?.addTrackingEvent(getSecondaryButtonTrack())
     }
 
     // CUSTOM VIEWS

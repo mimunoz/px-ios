@@ -19,6 +19,8 @@ protocol PXViewModelTrackingDataProtocol {
     func getTrackingRemediesProperties(isFromModal: Bool) -> [String: Any]
     func getViewErrorPaymentResult() -> [String: Any]
     func getDidShowRemedyErrorModal() -> [String: Any]
+    func getPrimaryButtonTrack() -> PXResultTrackingEvents
+    func getSecondaryButtonTrack() -> PXResultTrackingEvents
 }
 
 final class PXCongratsTracking {

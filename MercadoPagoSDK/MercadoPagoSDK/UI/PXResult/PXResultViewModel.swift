@@ -307,6 +307,14 @@ extension PXResultViewModel {
 }
 
 extension PXResultViewModel: PXViewModelTrackingDataProtocol {
+    func getPrimaryButtonTrack() -> PXResultTrackingEvents {
+        return .didTapButton(initiative: .checkout, status: paymentResult.status, action: .primaryButton)
+    }
+
+    func getSecondaryButtonTrack() -> PXResultTrackingEvents {
+        return .didTapButton(initiative: .checkout, status: paymentResult.status, action: .secondaryButton)
+    }
+
     func getCloseButtonTrack() -> PXResultTrackingEvents {
         return .didTapOnCloseButton(initiative: .checkout, status: paymentResult.status)
     }

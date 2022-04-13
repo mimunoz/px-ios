@@ -18,3 +18,12 @@ open class PXAction: NSObject {
         self.action = action
     }
 }
+
+extension PXAction {
+    func addTrackingEvent(_ trackingEvent: PXResultTrackingEvents) -> PXAction {
+        PXAction(label: self.label) { [action] in
+            MPXTracker.sharedInstance.trackEvent(event: trackingEvent)
+            action()
+        }
+    }
+}
