@@ -41,7 +41,10 @@ final class OneTapFlow: NSObject, PXFlow {
 
     func executeNextStep() {
         DispatchQueue.main.async {
-            switch self.model.nextStep() {
+            let result = self.model.nextStep()
+            self.strategyTrackings.getPropertieFlow(flow: result.rawValue)
+
+            switch result {
             case .screenOneTap:
                 self.showOneTapViewController()
             case .screenSecurityCode:
@@ -63,7 +66,6 @@ final class OneTapFlow: NSObject, PXFlow {
                 self.finishFlow()
             }
         }
-        strategyTrackings.getPropertieFlow(flow: model.nextStep().rawValue)
     }
 
     func refreshInitFlow(cardId: String) {

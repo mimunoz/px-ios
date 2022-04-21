@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Unreleased
 
 - Added operationType field in PXCheckoutPreference
+- Resolve problems with tracks
 
 ## 4.57.0
 
