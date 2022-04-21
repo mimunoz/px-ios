@@ -62,6 +62,14 @@ extension PXCheckoutPreference {
     }
 
     /**
+     Field that shows the type of operation to be processed in a preference. Example: 
+     - parameter operationType: operationType field
+     */
+    public func setOperationType(operationType: String) {
+        self.operationType = operationType
+    }
+
+    /**
      Add exclusion list by payment method id. If you exclude it, it's not going appear as a payment method available on checkout.
      - parameter paymentMethodIds: paymentMethodId exclusion id.
      */
@@ -219,6 +227,12 @@ extension PXCheckoutPreference {
      */
     open func getDefaultPaymentMethodId() -> String? {
         return paymentPreference.getDefaultPaymentMethodId()
+    }
+    /**
+     getOperationTypeMethod
+     */
+    open func getOperationType() -> String? {
+        return self.operationType
     }
 
     /**

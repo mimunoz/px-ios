@@ -52,6 +52,10 @@ import Foundation
      */
     open var branchId: String?
     /**
+     operationType
+     */
+    open var operationType: String?
+    /**
      processing mode
      */
     open var processingModes: [String] = PXServicesURLConfigs.MP_DEFAULT_PROCESSING_MODES
@@ -108,7 +112,7 @@ import Foundation
         self.payer = PXPayer(email: payerEmail)
     }
 
-    init(id: String, items: [PXItem], payer: PXPayer, paymentPreference: PXPaymentPreference?, siteId: String, expirationDateTo: Date?, expirationDateFrom: Date?, site: PXSite?, differentialPricing: PXDifferentialPricing?, marketplace: String?, branchId: String?, processingModes: [String] = PXServicesURLConfigs.MP_DEFAULT_PROCESSING_MODES, collectorId: String?, orderId: Int? = nil, merchantOrderId: Int? = nil) {
+    init(id: String, items: [PXItem], payer: PXPayer, paymentPreference: PXPaymentPreference?, siteId: String, expirationDateTo: Date?, expirationDateFrom: Date?, site: PXSite?, differentialPricing: PXDifferentialPricing?, marketplace: String?, branchId: String?, operationType: String?, processingModes: [String] = PXServicesURLConfigs.MP_DEFAULT_PROCESSING_MODES, collectorId: String?, orderId: Int? = nil, merchantOrderId: Int? = nil) {
         self.id = id
         self.items = items
         self.payer = payer
@@ -123,6 +127,7 @@ import Foundation
         let sanitizedProcessingModes = processingModes.isEmpty ? PXServicesURLConfigs.MP_DEFAULT_PROCESSING_MODES : processingModes
         self.processingModes = sanitizedProcessingModes
         self.branchId = branchId
+        self.operationType = operationType
         self.marketplace = marketplace
         self.collectorId = collectorId
         self.orderId = orderId
@@ -146,6 +151,7 @@ import Foundation
         case redirectUrls = "redirect_urls"
         case autoReturn = "auto_return"
         case branchId = "branch_id"
+        case operationType = "operation_type"
         case processingModes = "processing_modes"
         case collectorId = "collector_id"
         case orderId = "order_id"
@@ -156,6 +162,7 @@ import Foundation
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let id: String? = try container.decodeIfPresent(String.self, forKey: .id)
         let branchId: String? = try container.decodeIfPresent(String.self, forKey: .branchId)
+        let operationType: String? = try container.decodeIfPresent(String.self, forKey: .operationType)
         let processingModes: [String] = try container.decodeIfPresent([String].self, forKey: .processingModes) ?? PXServicesURLConfigs.MP_DEFAULT_PROCESSING_MODES
         let items: [PXItem] = try container.decodeIfPresent([PXItem].self, forKey: .items) ?? []
         let paymentPreference: PXPaymentPreference? = try container.decodeIfPresent(PXPaymentPreference.self, forKey: .paymentPreference)
@@ -171,7 +178,7 @@ import Foundation
         let orderId: Int? = try container.decodeIfPresent(Int.self, forKey: .orderId)
         let merchantOrderId: Int? = try container.decodeIfPresent(Int.self, forKey: .merchantOrderId)
 
-        self.init(id: PXCheckoutPreference.getIdOrDefaultValue(id), items: items, payer: payer, paymentPreference: paymentPreference, siteId: siteId, expirationDateTo: expirationDateTo, expirationDateFrom: expirationDateFrom, site: site, differentialPricing: differentialPricing, marketplace: marketplace, branchId: branchId, processingModes: processingModes, collectorId: collectorIdString, orderId: orderId, merchantOrderId: merchantOrderId)
+        self.init(id: PXCheckoutPreference.getIdOrDefaultValue(id), items: items, payer: payer, paymentPreference: paymentPreference, siteId: siteId, expirationDateTo: expirationDateTo, expirationDateFrom: expirationDateFrom, site: site, differentialPricing: differentialPricing, marketplace: marketplace, branchId: branchId, operationType: operationType, processingModes: processingModes, collectorId: collectorIdString, orderId: orderId, merchantOrderId: merchantOrderId)
 
         self.additionalInfo = try container.decodeIfPresent(String.self, forKey: .additionalInfo)
         populateAdditionalInfoModel()
