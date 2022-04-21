@@ -5,8 +5,8 @@ extension ThemeManager {
         self.navigationControllerMemento = NavigationControllerMemento(navigationController: navigationController)
     }
 
-    func applyAppNavBarStyle(navigationController: UINavigationController) {
-        guard let navControllerMemento = self.navigationControllerMemento else {
+    func applyAppNavBarStyle(navigationController: UINavigationController?) {
+        guard let navControllerMemento = self.navigationControllerMemento, let navigationController = navigationController else {
             return
         }
         navigationController.navigationBar.barTintColor = navControllerMemento.navBarTintColor

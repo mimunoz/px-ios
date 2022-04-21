@@ -8,6 +8,7 @@ final class OneTapFlow: NSObject, PXFlow {
 
     let advancedConfig: PXAdvancedConfiguration
 
+    // Init for checkout
     var strategyTrackings: StrategyTrackings = ImpletationStrategy()
     var isPaymentToggle = IsPaymentToggle.noPaying
 
@@ -22,6 +23,22 @@ final class OneTapFlow: NSObject, PXFlow {
 
     func update(checkoutViewModel: MercadoPagoCheckoutViewModel, search: PXInitDTO, paymentOptionSelected: PaymentMethodOption?) {
         model = OneTapFlowModel(checkoutViewModel: checkoutViewModel, search: search, paymentOptionSelected: paymentOptionSelected)
+        model.oneTapFlow = self
+    }
+
+    // Init for paymentMethodSelector
+
+    init(paymentMethodSelectorViewModel: PXPaymentMethodSelectorViewModel, search: PXInitDTO, paymentOptionSelected: PaymentMethodOption?, oneTapResultHandler: PXOneTapResultHandlerProtocol) {
+        pxNavigationHandler = paymentMethodSelectorViewModel.pxNavigationHandler
+        resultHandler = oneTapResultHandler
+        advancedConfig = paymentMethodSelectorViewModel.getAdvancedConfiguration()
+        model = OneTapFlowModel(paymentMethodSelectorViewModel: paymentMethodSelectorViewModel, search: search, paymentOptionSelected: paymentOptionSelected)
+        super.init()
+        model.oneTapFlow = self
+    }
+
+    func update(paymentMethodSelectorViewModel: PXPaymentMethodSelectorViewModel, search: PXInitDTO, paymentOptionSelected: PaymentMethodOption?) {
+        model = OneTapFlowModel(paymentMethodSelectorViewModel: paymentMethodSelectorViewModel, search: search, paymentOptionSelected: paymentOptionSelected)
         model.oneTapFlow = self
     }
 
@@ -62,6 +79,8 @@ final class OneTapFlow: NSObject, PXFlow {
                 self.getThreeDSService().authorize3DS(programUsed: program, cardHolderName: cardHolderName)
             case .payment:
                 self.startPaymentFlow()
+            case .returnSelectedPaymentMethod:
+                self.returnSelectedPaymentMethod()
             case .finish:
                 self.finishFlow()
             }

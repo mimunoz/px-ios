@@ -149,8 +149,8 @@ class TokenizationService {
         })
     }
 
-    func resetESCCap(cardId: String, onCompletion: @escaping () -> Void) {
-        mercadoPagoServices.resetESCCap(cardId: cardId, onCompletion: onCompletion)
+    func resetESCCap(cardId: String, headers: [String: String]?, onCompletion: @escaping () -> Void) {
+        mercadoPagoServices.resetESCCap(cardId: cardId, headers: headers, onCompletion: onCompletion)
     }
 }
 

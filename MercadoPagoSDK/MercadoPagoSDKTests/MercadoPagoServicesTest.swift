@@ -7,7 +7,7 @@ final class CustomServiceMock: CustomService {
     var calledResetESCCap = false
     var calledCreatePayment = false
 
-    func getPointsAndDiscounts(data: Data?, parameters: CustomParametersModel, response: @escaping (Swift.Result<PXPointsAndDiscounts, Error>) -> Void) {
+    func getPointsAndDiscounts(data: Data?, parameters: CustomParametersModel, headers: [String: String]?, response: @escaping (Swift.Result<PXPointsAndDiscounts, Error>) -> Void) {
         calledGetPointsAndDiscounts = true
         successResponse ? response(.success(PXPointsAndDiscounts(points: nil,
                                                                  discounts: nil,
@@ -26,12 +26,12 @@ final class CustomServiceMock: CustomService {
                                                                  infoOperation: nil))) : response(.failure(NSError()))
     }
 
-    func resetESCCap(cardId: String, privateKey: String?, response: @escaping (Swift.Result<Void, PXError>) -> Void) {
+    func resetESCCap(cardId: String, privateKey: String?, headers: [String: String]?, response: @escaping (Swift.Result<Void, PXError>) -> Void) {
         calledResetESCCap = true
         successResponse ? response(.success(())) : response(.failure(PXError(domain: "", code: 0)))
     }
 
-    func createPayment(privateKey: String?, publicKey: String, data: Data?, header: [String: String]?, response: @escaping (Swift.Result<PXPayment, PXError>) -> Void) {
+    func createPayment(privateKey: String?, publicKey: String, data: Data?, headers: [String: String]?, response: @escaping (Swift.Result<PXPayment, PXError>) -> Void) {
         calledCreatePayment = true
         successResponse ? response(.success(PXPayment(id: 0, status: ""))) : response(.failure(PXError(domain: "", code: 0)))
     }
@@ -106,7 +106,7 @@ final class MercadoPagoServicesTest: XCTestCase {
     func testResetESCCap() {
         var hadCallback = false
         XCTAssertTrue(customService.calledResetESCCap == false)
-        sut.resetESCCap(cardId: "") {
+        sut.resetESCCap(cardId: "", headers: [:]) {
             hadCallback = true
         }
 

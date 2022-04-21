@@ -11,6 +11,7 @@ final class OneTapFlowModel: PXFlowModel {
         case screenKyC
         case service3DS
         case payment
+        case returnSelectedPaymentMethod
     }
     var hasPostPaymentFlow = false
     var publicKey: String = ""
@@ -30,6 +31,8 @@ final class OneTapFlowModel: PXFlowModel {
     var splitAccountMoney: PXPaymentData?
     var disabledOption: PXDisabledOption?
     var pxOneTapViewModel: PXOneTapViewModel?
+
+    var justReturnSelectedPaymentMethod: Bool = false
 
     // MARK: - Private properties
     private var didCall3ds = false
@@ -133,6 +136,87 @@ final class OneTapFlowModel: PXFlowModel {
         }
     }
 
+    // MARK: Init with PXPaymentMethodSelectorViewModel
+    init(paymentMethodSelectorViewModel: PXPaymentMethodSelectorViewModel, search: PXInitDTO, paymentOptionSelected: PaymentMethodOption?) {
+        justReturnSelectedPaymentMethod = true
+        hasPostPaymentFlow = false
+        publicKey = paymentMethodSelectorViewModel.publicKey
+        privateKey = paymentMethodSelectorViewModel.accessToken
+        siteId = paymentMethodSelectorViewModel.search?.site.id ?? ""
+        paymentData = paymentMethodSelectorViewModel.paymentData.copy() as? PXPaymentData ?? paymentMethodSelectorViewModel.paymentData
+        checkoutPreference = paymentMethodSelectorViewModel.checkoutPreference
+        self.search = search
+        self.paymentOptionSelected = paymentOptionSelected
+        advancedConfiguration = paymentMethodSelectorViewModel.getAdvancedConfiguration()
+        mercadoPagoServices = paymentMethodSelectorViewModel.mercadoPagoServices
+        paymentConfigurationService = paymentMethodSelectorViewModel.paymentConfigurationService
+        disabledOption = paymentMethodSelectorViewModel.disabledOption
+
+        // Process custom charges and charge rules
+
+        var mergedChargeRules: [PXPaymentTypeChargeRule] = []
+
+        if let customCharges = search.customCharges {
+            // If there is custom charges iterate each one
+            customCharges.keys.forEach { customChargeKey in
+                if let customCharge = customCharges[customChargeKey] as? PXCustomCharge {
+                    if let chargeRule = paymentMethodSelectorViewModel.chargeRules?.first(where: { chargeRule -> Bool in
+                        return chargeRule.paymentTypeId == customChargeKey
+                    }) {
+                        var newChargeRule: PXPaymentTypeChargeRule
+                        // If a chargeRule for this custom charge already exists, then override its properties
+                        if let detailModal = chargeRule.detailModal {
+                            // If the chargeRule has detailModal, create the new one using the modal
+                            newChargeRule = PXPaymentTypeChargeRule(paymentTypeId: chargeRule.paymentTypeId, amountCharge: customCharge.charge, detailModal: detailModal)
+                        } else if let message = chargeRule.message, customCharge.charge == 0 {
+                            // If the chargeRule has message and the customCharge charge is still 0, use the message
+                            newChargeRule = PXPaymentTypeChargeRule(paymentTypeId: chargeRule.paymentTypeId, message: message)
+                        } else {
+                            // If the original chargeRule don't have detailModal nor message use the basic init
+                            newChargeRule = PXPaymentTypeChargeRule(paymentTypeId: chargeRule.paymentTypeId, amountCharge: customCharge.charge)
+                        }
+
+                        if let label = customCharge.label {
+                            newChargeRule.label = label
+                        }
+
+                        mergedChargeRules.append(newChargeRule)
+                    } else {
+                        // If there isn't a chargeRule for this customCharge then create one and add it to the mergedChargeRules array
+                        var newChargeRule = PXPaymentTypeChargeRule(paymentTypeId: customChargeKey, amountCharge: customCharge.charge)
+
+                        if let label = customCharge.label {
+                            newChargeRule.label = label
+                        }
+
+                        mergedChargeRules.append(newChargeRule)
+                    }
+                }
+            }
+            self.chargeRules = mergedChargeRules
+            paymentMethodSelectorViewModel.chargeRules = mergedChargeRules
+        } else {
+            // TODO: Remove when IDC is fully implemented
+            // If customCharges is nil then use the integrator provided chargeRules
+            self.chargeRules = paymentMethodSelectorViewModel.chargeRules
+        }
+
+        // Payer cost pre selection.
+        let firstOneTapItem = search.oneTap?.first
+        let paymentMethodId = firstOneTapItem?.paymentMethodId
+        let paymentTypeId = firstOneTapItem?.paymentTypeId
+        let firstCardID = firstOneTapItem?.oneTapCard?.cardId
+        let creditsCase = paymentMethodId == PXPaymentTypes.CONSUMER_CREDITS.rawValue
+        let cardCase = firstCardID != nil
+
+        if cardCase || creditsCase {
+            if let pmIdentifier = cardCase ? firstCardID : paymentMethodId,
+                let payerCost = amountHelper.paymentConfigurationService.getSelectedPayerCostsForPaymentMethod(paymentOptionID: pmIdentifier, paymentMethodId: paymentMethodId, paymentTypeId: paymentTypeId) {
+                updateCheckoutModel(payerCost: payerCost)
+            }
+        }
+    }
+
     public func nextStep() -> Steps {
         if needShowOneTap() { return .screenOneTap }
         if needSecurityCode() { return .screenSecurityCode }
@@ -142,6 +226,7 @@ final class OneTapFlowModel: PXFlowModel {
         if needKyC() { return .screenKyC }
         if need3DS() { return .service3DS }
         if needCreatePayment() { return .payment }
+        if needToReturnSelectedPaymentMethod() { return .returnSelectedPaymentMethod }
         return .finish
     }
 }
@@ -188,7 +273,6 @@ extension OneTapFlowModel {
 
         if splitAccountMoneyEnabled,
            let paymentOptionSelected = paymentOptionSelected {
-            // TODO: Revisar si paymentData.paymentMethod?.id esta bien
             let splitConfiguration = amountHelper.paymentConfigurationService.getSplitConfigurationForPaymentMethod(paymentOptionID: paymentOptionSelected.getId(), paymentMethodId: paymentData.paymentMethod?.id, paymentTypeId: paymentOptionSelected.getPaymentType())
 
             // Set total amount to pay with card without discount
@@ -203,7 +287,6 @@ extension OneTapFlowModel {
                 splitAccountMoney?.transactionAmount = PXAmountHelper.getRoundedAmountAsNsDecimalNumber(amount: splitConfiguration?.secondaryPaymentMethod?.amount)
                 splitAccountMoney?.updatePaymentDataWith(paymentMethod: accountMoneyPM)
 
-                // TODO: Revisar si paymentData.paymentMethod?.id esta bien
                 let discountConfiguration = amountHelper.paymentConfigurationService.getDiscountConfigurationForPaymentMethodOrDefault(paymentOptionID: paymentOptionSelected.getId(), paymentMethodId: paymentData.paymentMethod?.id, paymentTypeId: paymentOptionSelected.getPaymentType())
                 let campaign = discountConfiguration?.getDiscountConfiguration().campaign
                 let isDiscountAvailable = discountConfiguration?.getDiscountConfiguration().isAvailable
@@ -367,7 +450,20 @@ extension OneTapFlowModel {
         if !readyToPay {
             return false
         }
+
+        if justReturnSelectedPaymentMethod {
+            return false
+        }
+
         return paymentData.isComplete(shouldCheckForToken: false) && paymentFlow != nil && paymentResult == nil && businessResult == nil
+    }
+
+    func needToReturnSelectedPaymentMethod () -> Bool {
+        if !justReturnSelectedPaymentMethod {
+            return false
+        }
+
+        return paymentData.isComplete(shouldCheckForToken: false)
     }
 
     func hasSavedESC() -> Bool {
@@ -394,6 +490,9 @@ extension OneTapFlowModel {
             let tokenTimeOut: TimeInterval = mercadoPagoServices.getTimeOut()
             // Payment Flow timeout + tokenization TimeOut
             return paymentFlow.getPaymentTimeOut() + tokenTimeOut
+        } else {
+            // Just tokenization timeout
+            return mercadoPagoServices.getTimeOut()
         }
         return 0
     }

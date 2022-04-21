@@ -681,8 +681,7 @@ extension PXOneTapViewModel {
                 let cardLogoImageUrl = targetNode.oneTapCard?.cardUI?.issuerImageUrl
                 let paymentMethodImageUrl = targetNode.oneTapCard?.cardUI?.paymentMethodImageUrl
                 let color = targetNode.oneTapCard?.cardUI?.color
-                // TODO: Check gradient colors
-                let gradientColors: [String] = []// ["#101820"]
+                let gradientColors: [String] = []
 
                 if application.paymentMethod.id == PXPaymentTypes.ACCOUNT_MONEY.rawValue {
                     // If it's hybrid and account_money application

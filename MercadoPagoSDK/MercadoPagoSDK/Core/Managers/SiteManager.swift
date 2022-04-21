@@ -1,7 +1,6 @@
 import Foundation
 
 class SiteManager {
-    // TODO: REMOVE FORCE
     private var site: PXSite?
     private var currency: PXCurrency!
     static let shared = SiteManager()

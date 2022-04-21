@@ -7,7 +7,6 @@ class PXCardSliderPagerCell: FSPagerViewCell {
         return UINib(nibName: PXCardSliderPagerCell.identifier, bundle: ResourceManager.shared.getBundle())
     }
 
-    // TODO: Make it variable
     private lazy var bottomMessageViewHeight: CGFloat = 24
     private lazy var cornerRadius: CGFloat = 11
     private var cardHeader: MLCardDrawerController?

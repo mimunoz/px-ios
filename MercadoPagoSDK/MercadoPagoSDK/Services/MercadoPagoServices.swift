@@ -57,8 +57,8 @@ class MercadoPagoServices: NSObject {
         return 15.0
     }
 
-    func resetESCCap(cardId: String, onCompletion : @escaping () -> Void) {
-        customService.resetESCCap(cardId: cardId, privateKey: privateKey) { _ in
+    func resetESCCap(cardId: String, headers: [String: String]?, onCompletion : @escaping () -> Void) {
+        customService.resetESCCap(cardId: cardId, privateKey: privateKey, headers: headers) { _ in
             onCompletion()
         }
     }
@@ -92,7 +92,7 @@ class MercadoPagoServices: NSObject {
     }
 
     func createPayment(url: String, uri: String, transactionId: String? = nil, paymentDataJSON: Data, query: [String: String]? = nil, headers: [String: String]? = nil, callback : @escaping (PXPayment) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
-        customService.createPayment(privateKey: privateKey, publicKey: publicKey, data: paymentDataJSON, header: headers) { apiResponse in
+        customService.createPayment(privateKey: privateKey, publicKey: publicKey, data: paymentDataJSON, headers: headers) { apiResponse in
             switch apiResponse {
             case .success(let payment): callback(payment)
             case .failure(let error): failure(error)
@@ -111,7 +111,7 @@ class MercadoPagoServices: NSObject {
                                                flowName: MPXTracker.sharedInstance.getFlowName(),
                                                merchantOrderId: merchantOrderId != nil ? String(merchantOrderId!) : nil,
                                                paymentTypeId: paymentTypeId)
-        customService.getPointsAndDiscounts(data: nil, parameters: parameters) { apiResponse in
+        customService.getPointsAndDiscounts(data: nil, parameters: parameters, headers: headers) { apiResponse in
             switch apiResponse {
             case .success(let pointsAndDiscounts): callback(pointsAndDiscounts)
             case .failure: failure()

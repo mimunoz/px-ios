@@ -6,7 +6,11 @@ extension MercadoPagoCheckout: TokenizationServiceResultHandler {
 
     func finishFlow(token: PXToken, shouldResetESC: Bool) {
         if shouldResetESC {
-            getTokenizationService().resetESCCap(cardId: token.cardId) { [weak self] in
+            var headers: [String: String] = [:]
+
+            headers[HeaderFields.productId.rawValue] = viewModel.getAdvancedConfiguration().productId
+
+            getTokenizationService().resetESCCap(cardId: token.cardId, headers: headers) { [weak self] in
                 self?.flowCompletion(token: token)
             }
         } else {

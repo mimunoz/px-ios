@@ -1,13 +1,13 @@
 enum CustomRequestInfos {
-    case resetESCCap(cardId: String, privateKey: String?)
-    case getCongrats(data: Data?, congratsModel: CustomParametersModel)
-    case createPayment(privateKey: String?, publicKey: String, data: Data?, header: [String: String]?)
+    case resetESCCap(cardId: String, privateKey: String?, headers: [String: String]?)
+    case getCongrats(data: Data?, congratsModel: CustomParametersModel, headers: [String: String]?)
+    case createPayment(privateKey: String?, publicKey: String, data: Data?, headers: [String: String]?)
 }
 
 extension CustomRequestInfos: RequestInfos {
     var endpoint: String {
         switch self {
-        case .resetESCCap(let cardId, _): return "px_mobile/v1/esc_cap/\(cardId)"
+        case .resetESCCap(let cardId, _, _): return "px_mobile/v1/esc_cap/\(cardId)"
         case .getCongrats: return "v1/px_mobile/congrats"
         case .createPayment: return "v1/px_mobile/payments"
         }
@@ -31,7 +31,7 @@ extension CustomRequestInfos: RequestInfos {
     var parameters: [String: Any]? {
         switch self {
         case .resetESCCap: return nil
-        case .getCongrats(_, let parameters): return organizeParameters(parameters: parameters)
+        case .getCongrats(_, let parameters, _): return organizeParameters(parameters: parameters)
         case .createPayment(_, let publicKey, _, _):
             return [
                 "public_key": publicKey,
@@ -42,23 +42,23 @@ extension CustomRequestInfos: RequestInfos {
 
     var headers: [String: String]? {
         switch self {
-        case .resetESCCap, .getCongrats: return nil
-        case .createPayment(_, _, _, let header): return header
+        case .createPayment(_, _, _, let headers), .resetESCCap(_, _, let headers), .getCongrats(_, _, let headers):
+            return headers
         }
     }
 
     var body: Data? {
         switch self {
         case .resetESCCap: return nil
-        case .getCongrats(let data, _): return data
+        case .getCongrats(let data, _, _): return data
         case .createPayment(_, _, let data, _): return data
         }
     }
 
     var accessToken: String? {
         switch self {
-        case .resetESCCap(_, let privateKey): return privateKey
-        case .getCongrats(_, let parameters): return parameters.privateKey
+        case .resetESCCap(_, let privateKey, _): return privateKey
+        case .getCongrats(_, let parameters, _): return parameters.privateKey
         case .createPayment(let privateKey, _, _, _): return privateKey
         }
     }

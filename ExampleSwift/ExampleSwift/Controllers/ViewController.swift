@@ -21,12 +21,16 @@ class ViewController: UIViewController {
     private var privateKey: String = ""
 
     // Preference ID
-    private var preferenceId: String = "656525290-a9fa0bcb-da76-4d3f-bfc0-b19b161a8f7b"
+    private var preferenceId: String = "656525290-45bf0d17-c93c-4bee-828e-6bb71e796e35"
 
     @IBAction func initDefault(_ sender: Any) {
 //         runMercadoPagoCheckout()
-//         runMercadoPagoCheckoutWithLifecycle()
-        runMercadoPagoCheckoutWithLifecycleAndCustomProcessor()
+         runMercadoPagoCheckoutWithLifecycle()
+//        runMercadoPagoCheckoutWithLifecycleAndCustomProcessor()
+    }
+
+    @IBAction func initPaymentMethodSelector(_ sender: Any) {
+        runPXPaymentMethodSelector()
     }
 
     override func viewDidLoad() {
@@ -118,14 +122,14 @@ class ViewController: UIViewController {
 
         // PAYMENT CONFIGURATION SECTION
 
-//        // Custom configuration
-//        let paymentConfiguration = generateCustomConfiguration()
+        // Custom configuration
+        let paymentConfiguration = generateCustomConfiguration()
 
 //        // Scheduled configuration
 //        let paymentConfiguration = generateScheduledConfiguration()
 //
-        // Split configuration
-        let paymentConfiguration = generateSplitConfiguration()
+//        // Split configuration
+//        let paymentConfiguration = generateSplitConfiguration()
 
         // CHARGE RULES SECTION
 
@@ -137,9 +141,9 @@ class ViewController: UIViewController {
 //        // Create a Builder with your publicKey, preferenceId and paymentConfiguration
 //        let builder = MercadoPagoCheckoutBuilder(publicKey: publicKey, preferenceId: preferenceId, paymentConfiguration: paymentConfiguration).setLanguage("es")
 
-//        let checkoutPreference = PXCheckoutPreference.init(preferenceId: preferenceId)
+        let checkoutPreference = PXCheckoutPreference.init(preferenceId: preferenceId)
 
-        let checkoutPreference = PXCheckoutPreference(siteId: "MLA", payerEmail: "1234@gmail.com", items: [PXItem(title: "Taza de té", quantity: 1, unitPrice: 15.0)])
+//        let checkoutPreference = PXCheckoutPreference(siteId: "MLA", payerEmail: "1234@gmail.com", items: [PXItem(title: "Taza de té", quantity: 1, unitPrice: 15.0)])
 
         // Add excluded methods
 //        checkoutPreference.addExcludedPaymentType(PXPaymentTypes.TICKET.rawValue)
@@ -156,7 +160,7 @@ class ViewController: UIViewController {
         // Add custom PXDynamicViewController component
         configuration.dynamicViewControllersConfiguration = [CustomPXDynamicComponent()]
 
-        configuration.setProductId(id: "bh31umv10flg01nmhg60")
+        configuration.setProductId(id: "BJDCVRTMG2N001KTKN6G")
 
         // Configure the builder object
         builder.setAdvancedConfiguration(config: configuration)
@@ -179,6 +183,8 @@ class ViewController: UIViewController {
 
         let configuration = PXAdvancedConfiguration()
 
+//        configuration.setProductId(id: "BJDCVRTMG2N001KTKN6G")
+
 //        configuration.expressEnabled = true
 
         builder.setAdvancedConfiguration(config: configuration)
@@ -199,6 +205,30 @@ class ViewController: UIViewController {
             checkout?.start(navigationController: myNavigationController, lifeCycleProtocol: self)
         }
     }
+
+    private func runPXPaymentMethodSelector() {
+        let builder = PXPaymentMethodSelector.Builder(publicKey: publicKey, preferenceId: preferenceId)
+
+        builder.setAccessToken(accessToken: privateKey)
+
+        var paymentMethodSelector: PXPaymentMethodSelector?
+
+        do {
+            try paymentMethodSelector = builder.build()
+        } catch {
+            print(error)
+        }
+
+        guard let paymentMethodSelector = paymentMethodSelector else {
+            return print("Error building paymentMethodSelector")
+        }
+
+        guard let navigationController = navigationController else {
+            return print("Error obtaining navigation controller")
+        }
+
+        paymentMethodSelector.start(navigationController: navigationController, delegate: self)
+    }
 }
 
 // MARK: Optional Lifecycle protocol implementation example.
@@ -212,8 +242,31 @@ extension ViewController: PXLifeCycleProtocol {
     }
 
     func changePaymentMethodTapped() -> (() -> Void)? {
+        return nil
+//        return { () in
+//            print("px - changePaymentMethodTapped")
+//        }
+    }
+}
+
+extension ViewController: PXPaymentMethodSelectorDelegate {
+    func didSelectPaymentMethod() -> ((PXCheckoutStore) -> Void)? {
+        return { (_ checkoutStore: PXCheckoutStore) in
+            print("PX - didSelectPaymentMethod")
+            print(checkoutStore)
+
+            if let navigationController = self.navigationController {
+                navigationController.popToRootViewController(animated: false)
+            }
+        }
+    }
+
+    func didCancelPaymentMethodSelection() -> (() -> Void)? {
         return { () in
-            print("px - changePaymentMethodTapped")
+            print("PX - didCancelPaymentMethodSelection")
+            if let navigationController = self.navigationController {
+                navigationController.popToRootViewController(animated: false)
+            }
         }
     }
 }

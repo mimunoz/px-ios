@@ -15,7 +15,6 @@ class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDelegate
 
     var loadingView: UIView?
 
-    // TODO: Deprecate after PaymentVault & AditionalStep redesign/refactor.
     var hideNavBarCallback: (() -> Void)?
 
     var screenPath: String?
@@ -107,7 +106,6 @@ class MercadoPagoUIViewController: UIViewController, UIGestureRecognizerDelegate
 
     @objc func executeBack() {
         if let targetNavigationController = navigationController {
-            // TODO: Tener en cuenta las pantallas que no son de PX.
             let vcs = targetNavigationController.viewControllers.filter { $0.isKind(of: MercadoPagoUIViewController.self) }
             if vcs.count == 1 {
                 if let callbackBackAction = callbackBack {

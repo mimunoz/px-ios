@@ -20,7 +20,6 @@ open class PXTrackingConfiguration: NSObject {
     }
 
     func updateTracker() {
-        // TODO: replace PXTracker internally with a better solution based on this class
         if let trackListener = trackListener {
             MPXTracker.sharedInstance.setTrack(listener: trackListener)
         }
