@@ -15,6 +15,8 @@ extension InitFlow {
 
         let charges = self.initFlowModel.amountHelper.chargeRules ?? []
 
+        let paymentMethodRuleSet = initFlowModel.properties.advancedConfig.paymentMethodRuleSet ?? []
+
         // Add headers
         var headers: [String: String] = [:]
         if let prodId = initFlowModel.properties.productId {
@@ -23,10 +25,10 @@ extension InitFlow {
 
         if let prefId = pref.id, prefId.isNotEmpty {
             // CLOSED PREFERENCE
-            serviceAdapter.getClosedPrefInitSearch(preferenceId: prefId, cardsWithEsc: cardIdsWithEsc, oneTapEnabled: true, splitEnabled: splitEnabled, discountParamsConfiguration: discountParamsConfiguration, flow: flowName, charges: charges, headers: headers, newCardId: newCardId, callback: callback(_:), failure: failure(_:))
+            serviceAdapter.getClosedPrefInitSearch(preferenceId: prefId, cardsWithEsc: cardIdsWithEsc, oneTapEnabled: true, splitEnabled: splitEnabled, discountParamsConfiguration: discountParamsConfiguration, flow: flowName, charges: charges, paymentMethodRuleSet: paymentMethodRuleSet, headers: headers, newCardId: newCardId, callback: callback(_:), failure: failure(_:))
         } else {
             // OPEN PREFERENCE
-            serviceAdapter.getOpenPrefInitSearch(pref: pref, cardsWithEsc: cardIdsWithEsc, oneTapEnabled: true, splitEnabled: splitEnabled, discountParamsConfiguration: discountParamsConfiguration, flow: flowName, charges: charges, headers: headers, newCardId: newCardId, callback: callback(_:), failure: failure(_:))
+            serviceAdapter.getOpenPrefInitSearch(pref: pref, cardsWithEsc: cardIdsWithEsc, oneTapEnabled: true, splitEnabled: splitEnabled, discountParamsConfiguration: discountParamsConfiguration, flow: flowName, charges: charges, paymentMethodRuleSet: paymentMethodRuleSet, headers: headers, newCardId: newCardId, callback: callback(_:), failure: failure(_:))
         }
     }
 

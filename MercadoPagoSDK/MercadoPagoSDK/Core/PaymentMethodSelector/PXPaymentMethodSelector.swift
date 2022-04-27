@@ -33,6 +33,7 @@ public class PXPaymentMethodSelector: NSObject {
         var chargeRules: [PXPaymentTypeChargeRule]?
         var trackingConfiguration: PXTrackingConfiguration?
         var paymentMethodBehaviours: [PXPaymentMethodBehaviour]? = []
+        var paymentMethodRuleSet: [String]? = []
 
         public init(publicKey: String, preferenceId: String) {
             self.publicKey = publicKey
@@ -53,6 +54,10 @@ public class PXPaymentMethodSelector: NSObject {
 
         public func setPaymentMethodBehaviours(paymentMethodBehaviours: [PXPaymentMethodBehaviour]) {
             self.paymentMethodBehaviours = paymentMethodBehaviours
+        }
+
+        public func setPaymentMethodRuleSet(paymentMethodRuleSet: [String]) {
+            self.paymentMethodRuleSet = paymentMethodRuleSet
         }
 
         public func build() throws -> PXPaymentMethodSelector? {
@@ -84,6 +89,10 @@ public class PXPaymentMethodSelector: NSObject {
 
             if let dynamicDialogConfiguration = self.dynamicDialogConfiguration {
                 advancedConfiguration.dynamicViewControllersConfiguration = dynamicDialogConfiguration
+            }
+
+            if let paymentMethodRuleSet = self.paymentMethodRuleSet {
+                advancedConfiguration.paymentMethodRuleSet = paymentMethodRuleSet
             }
 
             let viewModel = PXPaymentMethodSelectorViewModel(checkoutPreference: preference, publicKey: publicKey, accessToken: self.accessToken, advancedConfiguration: advancedConfiguration, trackingConfiguration: self.trackingConfiguration)

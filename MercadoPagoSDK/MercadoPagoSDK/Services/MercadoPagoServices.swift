@@ -63,9 +63,9 @@ class MercadoPagoServices: NSObject {
         }
     }
 
-    func getOpenPrefInitSearch(pref: PXCheckoutPreference, cardsWithEsc: [String], oneTapEnabled: Bool, splitEnabled: Bool, discountParamsConfiguration: PXDiscountParamsConfiguration?, flow: String?, charges: [PXPaymentTypeChargeRule], headers: [String: String]?, newCardId: String?, callback : @escaping (PXInitDTO) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
+    func getOpenPrefInitSearch(pref: PXCheckoutPreference, cardsWithEsc: [String], oneTapEnabled: Bool, splitEnabled: Bool, discountParamsConfiguration: PXDiscountParamsConfiguration?, flow: String?, charges: [PXPaymentTypeChargeRule], paymentMethodRuleSet: [String]?, headers: [String: String]?, newCardId: String?, callback : @escaping (PXInitDTO) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
         let bodyFeatures = PXInitFeatures(oneTap: oneTapEnabled, split: splitEnabled)
-        let body = PXInitBody(preference: pref, publicKey: publicKey, flow: flow, cardsWithESC: cardsWithEsc, charges: charges, discountConfiguration: discountParamsConfiguration, features: bodyFeatures, newCardId: newCardId, checkoutType: checkoutType)
+        let body = PXInitBody(preference: pref, publicKey: publicKey, flow: flow, cardsWithESC: cardsWithEsc, charges: charges, paymentMethodRuleSet: paymentMethodRuleSet, discountConfiguration: discountParamsConfiguration, features: bodyFeatures, newCardId: newCardId, checkoutType: checkoutType)
 
         let bodyJSON = try? body.toJSON()
 
@@ -77,9 +77,9 @@ class MercadoPagoServices: NSObject {
         }
     }
 
-    func getClosedPrefInitSearch(preferenceId: String, cardsWithEsc: [String], oneTapEnabled: Bool, splitEnabled: Bool, discountParamsConfiguration: PXDiscountParamsConfiguration?, flow: String?, charges: [PXPaymentTypeChargeRule], headers: [String: String]?, newCardId: String?, callback : @escaping (PXInitDTO) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
+    func getClosedPrefInitSearch(preferenceId: String, cardsWithEsc: [String], oneTapEnabled: Bool, splitEnabled: Bool, discountParamsConfiguration: PXDiscountParamsConfiguration?, flow: String?, charges: [PXPaymentTypeChargeRule], paymentMethodRuleSet: [String]?, headers: [String: String]?, newCardId: String?, callback : @escaping (PXInitDTO) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
         let bodyFeatures = PXInitFeatures(oneTap: oneTapEnabled, split: splitEnabled)
-        let body = PXInitBody(preference: nil, publicKey: publicKey, flow: flow, cardsWithESC: cardsWithEsc, charges: charges, discountConfiguration: discountParamsConfiguration, features: bodyFeatures, newCardId: newCardId, checkoutType: checkoutType)
+        let body = PXInitBody(preference: nil, publicKey: publicKey, flow: flow, cardsWithESC: cardsWithEsc, charges: charges, paymentMethodRuleSet: paymentMethodRuleSet, discountConfiguration: discountParamsConfiguration, features: bodyFeatures, newCardId: newCardId, checkoutType: checkoutType)
 
         let bodyJSON = try? body.toJSON()
 

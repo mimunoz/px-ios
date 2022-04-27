@@ -11,13 +11,15 @@ struct PXInitBody: Codable {
     let discountConfiguration: PXDiscountParamsConfiguration?
     let features: PXInitFeatures
     let checkoutType: String?
+    let paymentMethodRuleSet: [String]?
 
-    init(preference: PXCheckoutPreference?, publicKey: String, flow: String?, cardsWithESC: [String], charges: [PXPaymentTypeChargeRule], discountConfiguration: PXDiscountParamsConfiguration?, features: PXInitFeatures, newCardId: String?, checkoutType: String?) {
+    init(preference: PXCheckoutPreference?, publicKey: String, flow: String?, cardsWithESC: [String], charges: [PXPaymentTypeChargeRule], paymentMethodRuleSet: [String]?, discountConfiguration: PXDiscountParamsConfiguration?, features: PXInitFeatures, newCardId: String?, checkoutType: String?) {
         self.preference = preference
         self.publicKey = publicKey
         self.flow = flow
         self.cardsWithESC = cardsWithESC
         self.charges = charges
+        self.paymentMethodRuleSet = paymentMethodRuleSet
         self.discountConfiguration = discountConfiguration
         self.features = features
         self.newCardId = newCardId
@@ -30,6 +32,7 @@ struct PXInitBody: Codable {
         case flow = "flow"
         case cardsWithESC = "cards_with_esc"
         case charges
+        case paymentMethodRuleSet = "payment_method_rule_set"
         case discountConfiguration = "discount_configuration"
         case features
         case newCardId = "new_card_id"

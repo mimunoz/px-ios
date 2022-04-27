@@ -83,6 +83,8 @@ open class PXAdvancedConfiguration: NSObject {
         }
     }
 
+    open var paymentMethodRuleSet: [String]? = []
+
     /**
      Set product id
      */

@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+- Added paymentMethodRuleSet
+
 ### Fixed
 - Fixed displayInfo to switch correctly between DEBIN and other PMs.
 - Removed paymentMethod disabled check on init
