@@ -23,21 +23,22 @@ class PXPaymentCongratsViewModel {
         var bottomText: NSAttributedString?
         var iconURL: String?
 
-        if let displayInfo = paymentInfo.displayInfo {
-            subtitles = getSubtitles(from: displayInfo.result?.paymentMethod?.detail)
+        if let displayInfoPaymentMethod = paymentInfo.displayInfo?.result?.paymentMethod,
+           let detail = displayInfoPaymentMethod.detail {
+            subtitles = getSubtitles(from: detail)
 
-            iconURL = displayInfo.result?.paymentMethod?.iconUrl
-        }
-
-        if let extraInfo = paymentInfo.displayInfo?.result?.extraInfo,
-           let detail = extraInfo.detail {
-            bottomText = getBottomText(detail)
+            iconURL = displayInfoPaymentMethod.iconUrl
         } else {
             subtitles.secondString = PXNewResultUtil.formatPaymentMethodSecondString(paymentMethodName: paymentInfo.paymentMethodName,
                                                                            paymentMethodLastFourDigits: paymentInfo.paymentMethodLastFourDigits,
                                                                            paymentType: paymentInfo.paymentMethodType)
             subtitles.thirdString = PXNewResultUtil.formatBankTransferSecondaryString(paymentInfo.paymentMethodDescription)
             iconURL = paymentInfo.paymentMethodIconURL
+        }
+
+        if let extraInfo = paymentInfo.displayInfo?.result?.extraInfo,
+           let detail = extraInfo.detail {
+            bottomText = getBottomText(detail)
         }
 
         let defaultIcon = ResourceManager.shared.getImage("PaymentGeneric")
