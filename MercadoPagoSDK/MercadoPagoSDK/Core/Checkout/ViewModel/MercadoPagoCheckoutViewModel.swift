@@ -492,10 +492,7 @@ class MercadoPagoCheckoutViewModel: NSObject, NSCopying {
 
         let totalPaymentMethodSearchCount = (search.oneTap?.filter { $0.status.enabled })?.count
 
-        if totalPaymentMethodSearchCount == 0 {
-            self.errorInputs(error: MPSDKError(message: "Hubo un error".localized, errorDetail: "No se ha podido obtener los métodos de pago con esta preferencia".localized, retry: false), errorCallback: { () in
-            })
-        } else if totalPaymentMethodSearchCount == 1 {
+        if totalPaymentMethodSearchCount == 1 {
             autoselectOnlyPaymentMethod()
         }
 
