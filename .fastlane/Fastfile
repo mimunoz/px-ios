@@ -14,6 +14,17 @@ before_all do
     require_relative 'helper/ci_helper.rb'
 end
 
+desc 'Start here, create a version from develop or release branch'
+lane :create_version do
+    current_branch = git_branch
+
+    if current_branch == "develop"
+        create_version_from_develop
+    else
+        create_version_from_release
+    end
+end
+
 desc 'Start here, this lane goes through the different ones'
 lane :start_deploy do
     
@@ -58,13 +69,15 @@ lane :deploy_public do
     end
 
     UI.message "Creating release #{pod_version} in GitHub"
+    release_notes = read_changelog(section_identifier: "[#{pod_version}]")
     set_github_release(
         repository_name: 'mercadopago/px-ios',
         api_token: CIHelper::GITHUB_TOKEN,
         name: "Release v#{pod_version}",
         tag_name: "#{pod_version}",
-        description: CIHelper::get_release_notes,
-        commitish: CIHelper::get_base_branch)
+        description: release_notes,
+        commitish: last_git_commit()[:commit_hash]
+    )
     UI.success 'Release created'
 
     UI.message 'Publishing public pod'
@@ -94,13 +107,15 @@ lane :deploy_private do
     end
 
     UI.message "Creating release #{pod_version} in GitHub"
+    release_notes = read_changelog(section_identifier: "[#{pod_version}]")
     set_github_release(
         repository_name: 'mercadopago/px-ios',
         api_token: CIHelper::GITHUB_TOKEN,
         name: "Release Private v#{pod_version}",
         tag_name: "#{pod_version}",
-        description: CIHelper::get_release_notes,
-        commitish: CIHelper::get_base_branch)
+        description: release_notes,
+        commitish: last_git_commit()[:commit_hash]
+    )
     UI.success 'Release created'
 
     UI.message 'Publishing private pod'
@@ -174,3 +189,92 @@ lane :communicate_build_to_slack do |options|
       }
     )
   end
+
+def create_version_from_release
+  ensure_git_branch(
+   branch: '^release\/[0-9]+\.[0-9]+\.[0-9]+$'
+  )
+  current_version = git_branch.delete_prefix("release/")
+  UI.message("current_version: #{current_version}")
+
+  create_version_from(current_version)
+end
+
+def create_version_from_develop
+    last_tag_version = get_last_tag_version
+    UI.message("last_tag_version: #{last_tag_version}")
+
+    new_version = bump(last_tag_version, "minor")
+    UI.message("new_version: #{new_version}")
+
+    create_version_from(new_version)
+end
+
+def create_version_from(new_version)
+    changelog = read_changelog(section_identifier: "[Unreleased]")
+    unless !changelog.empty?
+        UI.user_error!("Nothing to release, check changelog under [Unreleased]")
+    end
+
+    stamp_changelog(
+        section_identifier: new_version, 
+        should_stamp_date: true
+    )
+    version_bump_podspec(
+        path: "MercadoPagoSDKV4.podspec",
+        version_number: new_version
+    )
+    git_commit(
+        path: ["./CHANGELOG.md", "MercadoPagoSDKV4.podspec"],
+        message: "Release #{new_version}"
+    )
+    
+    # trigger release in CI
+    sh("git", "commit", "-m", "[ci deploy]", "--allow-empty")
+
+    push_to_git_remote(
+        remote_branch: "release/#{new_version}",
+        tags: true
+    )
+    create_pull_request(
+        repo: "mercadopago/px-ios",
+        title: "Release #{new_version}",
+        base: "develop",
+        body: changelog
+    )
+end
+
+def get_last_tag_version
+  sh("git", "fetch", "--tags")
+  last_version = git_tags
+    .select { |tag| /^[0-9]+\.[0-9]+\.[0-9]+$/.match?(tag) }
+    .sort_by { |v| Gem::Version.new(v) }
+    .last
+
+  return last_version
+end
+
+def bump(version, type)
+  separator = "."
+  splited_version = version.split(separator).map(&:to_i)
+
+  if splited_version.length < 3
+    return ""
+  end
+
+  case type
+  when "major"
+    splited_version[0] += 1
+    splited_version[1] = 0
+    splited_version[2] = 0
+  when "minor"
+    splited_version[1] += 1
+    splited_version[2] = 0
+  when "patch"
+    splited_version[2] += 1
+  else
+    return ""
+  end
+
+  return splited_version.join(separator)
+end

@@ -9,3 +9,5 @@ gem 'danger-swiftlint'
 gem 'git_diff_parser'
 gem 'cocoapods-clean_build_phases_scripts', '~> 0.0.1'
 gem 'danger-xcov'
+plugins_path = File.join(File.dirname(__FILE__), '.fastlane', 'Pluginfile')
+eval_gemfile(plugins_path) if File.exist?(plugins_path)
