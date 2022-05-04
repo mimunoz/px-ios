@@ -95,24 +95,26 @@ extension PXCardSliderPagerCell {
         accessibilityLabel = getAccessibilityMessage(accessibilityData)
 
         setupSwitchInfoView(model: model)
+        addShadow(to: cardHeader?.view)
     }
 
-    func renderEmptyCard(newCardData: PXAddNewMethodData?, newOfflineData: PXAddNewMethodData?, cardSize: CGSize, delegate: PXCardSliderPagerCellDelegate) {
+    func renderEmptyCard(newCardData: PXAddNewMethodData?, newOfflineData: PXAddNewMethodData?, cardSize: CGSize, delegate: PXCardSliderPagerCellDelegate, cardType: MLCardDrawerTypeV3 = .large) {
         self.cardSliderPagerCellDelegate = delegate
 
         setupContainerView(cardSize)
 
-        let bigSize = cardSize.height
-        let smallSize = (cardSize.height - PXLayout.XS_MARGIN) / 2
-
-        let shouldApplyCompactMode = newCardData != nil && newOfflineData != nil
-        let newMethodViewHeight = shouldApplyCompactMode ? smallSize : bigSize
-
         isAccessibilityElement = false
         if let newCardData = newCardData {
             let icon = ResourceManager.shared.getImage("add_new_card")
-            let newCardData = SplitableCardModel(title: newCardData.title, subtitle: newCardData.subtitle, icon: icon, compactMode: shouldApplyCompactMode, cardHeight: newMethodViewHeight)
-            let newCardView = SplitableCardView(data: newCardData)
+            let newCardModel = NewPaymentMethodCardModel(title: newCardData.title,
+                                                        subtitle: newCardData.subtitle,
+                                                        defaultIcon: icon,
+                                                        iconUrl: newCardData.iconUrl,
+                                                         border: newCardData.border,
+                                                         shadow: newCardData.shadow,
+                                                        backgroundColor: newCardData.backgroundColor)
+            let newCardView = getNewPaymentMethodCardView(data: newCardModel,
+                                                          cardType: cardType)
             newCardView.translatesAutoresizingMaskIntoConstraints = false
             newCardView.layer.cornerRadius = cornerRadius
             containerView.addSubview(newCardView)
@@ -124,14 +126,21 @@ extension PXCardSliderPagerCell {
                 newCardView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
                 newCardView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
                 newCardView.topAnchor.constraint(equalTo: containerView.topAnchor),
-                newCardView.heightAnchor.constraint(equalToConstant: newMethodViewHeight)
+                newCardView.heightAnchor.constraint(equalToConstant: cardSize.height)
             ])
         }
 
         if let newOfflineData = newOfflineData {
             let icon = ResourceManager.shared.getImage("add_new_offline")
-            let newOfflineData = SplitableCardModel(title: newOfflineData.title, subtitle: newOfflineData.subtitle, icon: icon, compactMode: shouldApplyCompactMode, cardHeight: newMethodViewHeight)
-            let newOfflineView = SplitableCardView(data: newOfflineData)
+            let newOfflineModel = NewPaymentMethodCardModel(title: newOfflineData.title,
+                                                           subtitle: newOfflineData.subtitle,
+                                                           defaultIcon: icon,
+                                                            iconUrl: newOfflineData.iconUrl,
+                                                            border: newCardData?.border,
+                                                            shadow: newOfflineData.shadow,
+                                                            backgroundColor: newOfflineData.backgroundColor)
+            let newOfflineView = getNewPaymentMethodCardView(data: newOfflineModel,
+                                                             cardType: cardType)
             newOfflineView.translatesAutoresizingMaskIntoConstraints = false
             newOfflineView.layer.cornerRadius = cornerRadius
 
@@ -144,7 +153,7 @@ extension PXCardSliderPagerCell {
                 newOfflineView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
                 newOfflineView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
                 newOfflineView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
-                newOfflineView.heightAnchor.constraint(equalToConstant: newMethodViewHeight)
+                newOfflineView.heightAnchor.constraint(equalToConstant: cardSize.height)
             ])
         }
     }
@@ -158,6 +167,19 @@ extension PXCardSliderPagerCell {
     func addNewOfflineMethodTapped() {
         PXFeedbackGenerator.selectionFeedback()
         cardSliderPagerCellDelegate?.addNewOfflineMethod()
+    }
+
+    private func getNewPaymentMethodCardView(data: NewPaymentMethodCardModel, cardType: MLCardDrawerTypeV3 = .large) -> UIView {
+        var view: UIView?
+
+        switch cardType {
+        case .mini, .xSmall, .small:
+            view = NewPaymentMethodSmallCardView(data: data)
+        case .medium, .large:
+            view = NewPaymentMethodLargeCardView(data: data)
+        }
+
+        return view ?? NewPaymentMethodLargeCardView(data: data)
     }
 
     func renderConsumerCreditsCard(model: PXCardSliderViewModel, cardSize: CGSize, accessibilityData: AccessibilityCardData, cardType: MLCardDrawerTypeV3?) {
@@ -185,6 +207,7 @@ extension PXCardSliderPagerCell {
             PXLayout.centerVertically(view: headerView).isActive = true
         }
         addBottomMessageView(message: bottomMessage)
+        addShadow(to: cardHeader?.view)
         accessibilityLabel = getAccessibilityMessage(accessibilityData)
     }
 
@@ -240,6 +263,13 @@ extension PXCardSliderPagerCell {
             self?.messageLabelCenterConstraint?.constant = shouldShow ? 0 : heightValue
             self?.layoutIfNeeded()
         })
+    }
+
+    func addShadow(to view: UIView?) {
+        view?.layer.shadowColor = UIColor.black.cgColor
+        view?.layer.shadowRadius = 3
+        view?.layer.shadowOpacity = 0.25
+        view?.layer.shadowOffset = CGSize(width: 0.3, height: 0.3)
     }
 }
 

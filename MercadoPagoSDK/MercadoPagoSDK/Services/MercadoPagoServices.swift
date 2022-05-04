@@ -63,13 +63,26 @@ class MercadoPagoServices: NSObject {
         }
     }
 
-    func getOpenPrefInitSearch(pref: PXCheckoutPreference, cardsWithEsc: [String], oneTapEnabled: Bool, splitEnabled: Bool, discountParamsConfiguration: PXDiscountParamsConfiguration?, flow: String?, charges: [PXPaymentTypeChargeRule], paymentMethodRuleSet: [String]?, headers: [String: String]?, newCardId: String?, callback : @escaping (PXInitDTO) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
+    func getOpenPrefInitSearch(pref: PXCheckoutPreference, cardsWithEsc: [String], oneTapEnabled: Bool, splitEnabled: Bool, discountParamsConfiguration: PXDiscountParamsConfiguration?, flow: String?, charges: [PXPaymentTypeChargeRule], paymentMethodRuleSet: [String]?, headers: [String: String]?, newCardId: String?, newAccountId: String?, callback : @escaping (PXInitDTO) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
         let bodyFeatures = PXInitFeatures(oneTap: oneTapEnabled, split: splitEnabled)
-        let body = PXInitBody(preference: pref, publicKey: publicKey, flow: flow, cardsWithESC: cardsWithEsc, charges: charges, paymentMethodRuleSet: paymentMethodRuleSet, discountConfiguration: discountParamsConfiguration, features: bodyFeatures, newCardId: newCardId, checkoutType: checkoutType)
+        let body = PXInitBody(preference: pref,
+                                publicKey: publicKey,
+                                flow: flow,
+                                cardsWithESC: cardsWithEsc,
+                                charges: charges,
+                                paymentMethodRuleSet: paymentMethodRuleSet,
+                                discountConfiguration: discountParamsConfiguration,
+                                features: bodyFeatures,
+                                newCardId: newCardId,
+                                newAccountId: newAccountId,
+                                checkoutType: checkoutType)
 
         let bodyJSON = try? body.toJSON()
 
-        checkoutService.getInit(preferenceId: nil, privateKey: privateKey, body: bodyJSON, headers: headers) { apiResponse in
+        checkoutService.getInit(preferenceId: nil,
+                                privateKey: privateKey,
+                                body: bodyJSON,
+                                headers: headers) { apiResponse in
             switch apiResponse {
             case .success(let dto): callback(dto)
             case .failure(let error): failure(error)
@@ -77,13 +90,38 @@ class MercadoPagoServices: NSObject {
         }
     }
 
-    func getClosedPrefInitSearch(preferenceId: String, cardsWithEsc: [String], oneTapEnabled: Bool, splitEnabled: Bool, discountParamsConfiguration: PXDiscountParamsConfiguration?, flow: String?, charges: [PXPaymentTypeChargeRule], paymentMethodRuleSet: [String]?, headers: [String: String]?, newCardId: String?, callback : @escaping (PXInitDTO) -> Void, failure: @escaping ((_ error: PXError) -> Void)) {
+    func getClosedPrefInitSearch(preferenceId: String,
+                                cardsWithEsc: [String],
+                                oneTapEnabled: Bool,
+                                splitEnabled: Bool,
+                                discountParamsConfiguration: PXDiscountParamsConfiguration?,
+                                flow: String?,
+                                charges: [PXPaymentTypeChargeRule],
+                                paymentMethodRuleSet: [String]?,
+                                headers: [String: String]?,
+                                newCardId: String?,
+                                newAccountId: String?,
+                                callback : @escaping (PXInitDTO) -> Void,
+                                failure: @escaping ((_ error: PXError) -> Void)) {
         let bodyFeatures = PXInitFeatures(oneTap: oneTapEnabled, split: splitEnabled)
-        let body = PXInitBody(preference: nil, publicKey: publicKey, flow: flow, cardsWithESC: cardsWithEsc, charges: charges, paymentMethodRuleSet: paymentMethodRuleSet, discountConfiguration: discountParamsConfiguration, features: bodyFeatures, newCardId: newCardId, checkoutType: checkoutType)
+        let body = PXInitBody(preference: nil,
+                                publicKey: publicKey,
+                                flow: flow,
+                                cardsWithESC: cardsWithEsc,
+                                charges: charges,
+                                paymentMethodRuleSet: paymentMethodRuleSet,
+                                discountConfiguration: discountParamsConfiguration,
+                                features: bodyFeatures,
+                                newCardId: newCardId,
+                                newAccountId: newAccountId,
+                                checkoutType: checkoutType)
 
         let bodyJSON = try? body.toJSON()
 
-        checkoutService.getInit(preferenceId: preferenceId, privateKey: privateKey, body: bodyJSON, headers: headers) { apiResponse in
+        checkoutService.getInit(preferenceId: preferenceId,
+                                privateKey: privateKey,
+                                body: bodyJSON,
+                                headers: headers) { apiResponse in
             switch apiResponse {
             case .success(let dto): callback(dto)
             case .failure(let error): failure(error)
@@ -100,7 +138,19 @@ class MercadoPagoServices: NSObject {
         }
     }
 
-    func getPointsAndDiscounts(url: String, uri: String, paymentIds: [String]? = nil, paymentMethodsIds: [String]? = nil, campaignId: String?, prefId: String?, platform: String, ifpe: Bool, merchantOrderId: Int?, headers: [String: String], paymentTypeId: String?, callback : @escaping (PXPointsAndDiscounts) -> Void, failure: @escaping (() -> Void)) {
+    func getPointsAndDiscounts(url: String,
+                               uri: String,
+                               paymentIds: [String]? = nil,
+                               paymentMethodsIds: [String]? = nil,
+                               campaignId: String?,
+                               prefId: String?,
+                               platform: String,
+                               ifpe: Bool,
+                               merchantOrderId: Int?,
+                               headers: [String: String],
+                               paymentTypeId: String?,
+                               callback : @escaping (PXPointsAndDiscounts) -> Void,
+                               failure: @escaping (() -> Void)) {
         let parameters = CustomParametersModel(privateKey: privateKey,
                                                publicKey: publicKey,
                                                paymentMethodIds: getPaymentMethodsIds(paymentMethodsIds),

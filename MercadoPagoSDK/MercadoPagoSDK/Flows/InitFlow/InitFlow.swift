@@ -2,7 +2,10 @@ import Foundation
 
 final class InitFlow {
     let initFlowModel: InitFlowModel
+    let maxRetry: Int = 3
     var newCardId: String?
+    var newAccountId: String?
+    var currentRetry: Int = 1
 
     private var status: PXFlowStatus = .ready
     private let finishInitCallback: ((PXCheckoutPreference, PXInitDTO) -> Void)

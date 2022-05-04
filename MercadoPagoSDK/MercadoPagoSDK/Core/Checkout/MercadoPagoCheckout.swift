@@ -20,10 +20,12 @@ open class MercadoPagoCheckout: NSObject {
     // until the init flow is refreshed with this new payment method
     struct InitFlowRefresh {
         static var cardId: String?
+        static var accountId: String?
         static let retryDelay: Double = 0.5
 
         static func resetValues() {
             cardId = nil
+            accountId = nil
         }
     }
 
@@ -137,7 +139,7 @@ extension MercadoPagoCheckout {
         DispatchQueue.main.async {
             let result = self.viewModel.nextStep()
             self.trackFlow(result.rawValue)
-            
+
             switch result {
             case .START :
                 self.startTracking { [weak self] in

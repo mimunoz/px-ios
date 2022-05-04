@@ -15,6 +15,7 @@ public class PXPaymentMethodSelector: NSObject {
     // until the init flow is refreshed with this new payment method
     struct InitFlowRefresh {
         static var cardId: String?
+        static var accountId: String?
         static let retryDelay: Double = 0.5
 
         static func resetValues() {

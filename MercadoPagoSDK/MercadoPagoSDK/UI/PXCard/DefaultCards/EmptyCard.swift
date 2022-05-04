@@ -4,6 +4,12 @@ import MLCardDrawer
 struct PXAddNewMethodData {
     let title: PXText?
     let subtitle: PXText?
+    let iconUrl: String?
+    let border: PXOneTapNewCardBorderDto?
+    let backgroundColor: String?
+    let shadow: Bool
+    let deeplink: String?
+    let bottomMessage: PXText?
 }
 
 class EmptyCard: NSObject, CardUI {

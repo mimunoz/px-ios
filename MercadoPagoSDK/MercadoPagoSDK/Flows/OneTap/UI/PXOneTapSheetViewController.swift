@@ -8,9 +8,9 @@ class PXOneTapSheetViewController: UIViewController {
     weak var delegate: PXOneTapSheetViewControllerProtocol?
     private let rowHeight: CGFloat = 80.0
     private let iconSize: CGFloat = 24.0
-    private let newCard: PXOneTapNewCardDto
+    private let newCard: PXOneTapNewPaymentMethodDto
 
-    init(newCard: PXOneTapNewCardDto) {
+    init(newCard: PXOneTapNewPaymentMethodDto) {
         self.newCard = newCard
         super.init(nibName: nil, bundle: nil)
     }

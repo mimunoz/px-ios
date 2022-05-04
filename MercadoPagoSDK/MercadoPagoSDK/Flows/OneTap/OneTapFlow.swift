@@ -90,6 +90,10 @@ final class OneTapFlow: NSObject, PXFlow {
     func refreshInitFlow(cardId: String) {
         resultHandler?.refreshInitFlow(cardId: cardId)
     }
+    
+    func refreshInitFlow(withNewAccountId accountId: String) {
+        resultHandler?.refreshAddAccountFlow(accountId: accountId)
+    }
 
     // Cancel one tap and go to checkout
     func cancelFlow() {

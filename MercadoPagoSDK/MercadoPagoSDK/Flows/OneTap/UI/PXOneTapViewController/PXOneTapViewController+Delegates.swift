@@ -229,7 +229,21 @@ extension PXOneTapViewController: PXCardSliderProtocol {
                     // Add new card using card form based on init type
                     // There might be cases when there's a different option besides standard type
                     // Eg: Money In for Chile should use only debit, therefor init type shuld be webpay_tbk
-                    addNewCard(initType: newCard.cardFormInitType)
+                    if let data = selectedCard?.cardUI as? EmptyCard,
+                        let deeplink = data.newCardData?.deeplink,
+                        let url = URL(string: deeplink) {
+                        showLoadingView()
+                        PXConfiguratorManager.mlCommonsProtocol.open(url: url, from: self) { [weak self] result in
+                            if let accountId = result?["external_account_id"] as? String,
+                                let hashedAccountId = accountId.data(using: .utf8)?.sha1 {
+                                self?.callbackNewBankAccount(hashedAccountId)
+                            } else {
+                                self?.hideLoadingViewIfNeeded()
+                            }
+                        }
+                    } else {
+                        addNewCard(initType: newCard.cardFormInitType)
+                    }
                 }
             } else {
                 // This is a fallback. There should be always a newCard in expressData
@@ -239,14 +253,14 @@ extension PXOneTapViewController: PXCardSliderProtocol {
         }
     }
 
-    private func buildBottomSheet(newCard: PXOneTapNewCardDto) -> AndesBottomSheetViewController {
+    private func buildBottomSheet(newCard: PXOneTapNewPaymentMethodDto) -> AndesBottomSheetViewController {
         if let andesBottomSheet = andesBottomSheet {
             return andesBottomSheet
         }
         let viewController = PXOneTapSheetViewController(newCard: newCard)
         viewController.delegate = self
         let sheet = AndesBottomSheetViewController(rootViewController: viewController)
-        sheet.titleBar.text = newCard.label.message
+        sheet.titleBar.text = newCard.label?.message
         sheet.titleBar.textAlignment = .center
         andesBottomSheet = sheet
         return sheet

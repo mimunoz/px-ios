@@ -5,6 +5,13 @@ func executeNextStep () {
 }
 
 extension PXPaymentMethodSelector: PXOneTapResultHandlerProtocol {
+    func refreshAddAccountFlow(accountId: String) {
+        InitFlowRefresh.accountId = accountId
+        viewModel?.checkoutPreference.setCardId(cardId: "accounts")
+        viewModel?.prepareForNewSelection()
+        viewModel?.refreshAddAccountFlow(accountId: accountId)
+    }
+
     func finishOneTap(paymentData: PXPaymentData, splitAccountMoney: PXPaymentData?, pointsAndDiscounts: PXPointsAndDiscounts?) {
         viewModel?.updateCheckoutModel(paymentData: paymentData)
 
@@ -13,8 +20,7 @@ extension PXPaymentMethodSelector: PXOneTapResultHandlerProtocol {
         if let callback = viewModel?.delegate?.didSelectPaymentMethod() {
             callback(PXCheckoutStore.sharedInstance)
         }
-//        viewModel.splitAccountMoney = splitAccountMoney
-//        executeNextStep()
+
         commonFinish()
         defaultExitAction()
     }

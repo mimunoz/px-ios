@@ -6,6 +6,7 @@ struct PXInitBody: Codable {
     let publicKey: String
     let flow: String?
     let newCardId: String?
+    let newAccountId: String?
     let cardsWithESC: [String]
     let charges: [PXPaymentTypeChargeRule]
     let discountConfiguration: PXDiscountParamsConfiguration?
@@ -13,7 +14,7 @@ struct PXInitBody: Codable {
     let checkoutType: String?
     let paymentMethodRuleSet: [String]?
 
-    init(preference: PXCheckoutPreference?, publicKey: String, flow: String?, cardsWithESC: [String], charges: [PXPaymentTypeChargeRule], paymentMethodRuleSet: [String]?, discountConfiguration: PXDiscountParamsConfiguration?, features: PXInitFeatures, newCardId: String?, checkoutType: String?) {
+    init(preference: PXCheckoutPreference?, publicKey: String, flow: String?, cardsWithESC: [String], charges: [PXPaymentTypeChargeRule], paymentMethodRuleSet: [String]?, discountConfiguration: PXDiscountParamsConfiguration?, features: PXInitFeatures, newCardId: String?, newAccountId: String?, checkoutType: String?) {
         self.preference = preference
         self.publicKey = publicKey
         self.flow = flow
@@ -23,6 +24,7 @@ struct PXInitBody: Codable {
         self.discountConfiguration = discountConfiguration
         self.features = features
         self.newCardId = newCardId
+        self.newAccountId = newAccountId
         self.checkoutType = checkoutType
     }
 
@@ -36,6 +38,7 @@ struct PXInitBody: Codable {
         case discountConfiguration = "discount_configuration"
         case features
         case newCardId = "new_card_id"
+        case newAccountId = "new_bank_account_id"
         case checkoutType = "checkout_type"
     }
 
@@ -58,6 +61,7 @@ struct PXInitFeatures: Codable {
     let taxableCharges: Bool
     let styleVersion: String
     let debin: String
+    let newPaymentMethodVersion: String
 
     init(
         oneTap: Bool = true,
@@ -71,7 +75,8 @@ struct PXInitFeatures: Codable {
         cardsCustomTaxesCharges: Bool = true,
         taxableCharges: Bool = true,
         styleVersion: String = "v1",
-        debin: String = "v1") {
+        debin: String = "v1",
+        newPaymentMethodVersion: String = "v1") {
         self.oneTap = oneTap
         self.split = split
         self.odr = odr
@@ -84,6 +89,7 @@ struct PXInitFeatures: Codable {
         self.taxableCharges = taxableCharges
         self.styleVersion = styleVersion
         self.debin = debin
+        self.newPaymentMethodVersion = newPaymentMethodVersion
     }
 
     enum CodingKeys: String, CodingKey {
@@ -99,5 +105,6 @@ struct PXInitFeatures: Codable {
         case taxableCharges = "taxable_charges"
         case styleVersion = "style_version"
         case debin
+        case newPaymentMethodVersion = "new_payment_method_version"
     }
 }

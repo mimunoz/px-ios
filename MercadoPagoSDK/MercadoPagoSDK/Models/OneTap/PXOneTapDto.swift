@@ -7,10 +7,10 @@ open class PXOneTapDto: NSObject, Codable {
     open var oneTapCard: PXOneTapCardDto?
     open var oneTapCreditsInfo: PXOneTapCreditsDto?
     open var accountMoney: PXAccountMoneyDto?
-    open var newCard: PXOneTapNewCardDto?
+    open var newCard: PXOneTapNewPaymentMethodDto?
     open var benefits: PXBenefits?
     open var status: PXStatus
-    open var offlineMethods: PXOfflineMethods?
+    open var offlineMethods: PXOneTapNewPaymentMethodDto?
     open var behaviours: [String: PXBehaviour]?
     open var displayInfo: PXOneTapDisplayInfo?
     open var applications: [PXOneTapApplication]?
@@ -22,10 +22,10 @@ open class PXOneTapDto: NSObject, Codable {
         oneTapCard: PXOneTapCardDto?,
         oneTapCreditsInfo: PXOneTapCreditsDto?,
         accountMoney: PXAccountMoneyDto?,
-        newCard: PXOneTapNewCardDto?,
+        newCard: PXOneTapNewPaymentMethodDto?,
         status: PXStatus,
         benefits: PXBenefits? = nil,
-        offlineMethods: PXOfflineMethods?,
+        offlineMethods: PXOneTapNewPaymentMethodDto?,
         behaviours: [String: PXBehaviour]?,
         displayInfo: PXOneTapDisplayInfo?,
         applications: [PXOneTapApplication]?,

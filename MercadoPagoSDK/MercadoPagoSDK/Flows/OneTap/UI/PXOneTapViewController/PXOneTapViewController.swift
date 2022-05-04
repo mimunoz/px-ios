@@ -20,6 +20,7 @@ final class PXOneTapViewController: MercadoPagoUIViewController {
     let slider = PXCardSlider()
 
     // MARK: Callbacks
+    var callbackNewBankAccount: ((String) -> Void)
     var callbackPaymentData: ((PXPaymentData) -> Void)
     var callbackConfirm: ((PXPaymentData, Bool) -> Void)
     var callbackUpdatePaymentOption: ((PaymentMethodOption) -> Void)
@@ -47,6 +48,7 @@ final class PXOneTapViewController: MercadoPagoUIViewController {
     private var navigationBarTapGesture: UITapGestureRecognizer?
     var installmentRow = PXOneTapInstallmentInfoView()
     var andesBottomSheet: AndesBottomSheetViewController?
+//    let loadingVC = PXLoadingViewController()
     var amountOfButtonPress: Int = 0
 
     var cardType: MLCardDrawerTypeV3
@@ -55,9 +57,19 @@ final class PXOneTapViewController: MercadoPagoUIViewController {
     var isPaymentToggle = IsPaymentToggle.noPaying
 
     // MARK: Lifecycle/Publics
-    init(viewModel: PXOneTapViewModel, pxOneTapContext: PXOneTapContext, timeOutPayButton: TimeInterval = 15, callbackPaymentData : @escaping ((PXPaymentData) -> Void), callbackConfirm: @escaping ((PXPaymentData, Bool) -> Void), callbackUpdatePaymentOption: @escaping ((PaymentMethodOption) -> Void), callbackRefreshInit: @escaping ((String) -> Void), callbackExit: @escaping (() -> Void), finishButtonAnimation: @escaping (() -> Void)) {
+    init(viewModel: PXOneTapViewModel,
+         pxOneTapContext: PXOneTapContext,
+         timeOutPayButton: TimeInterval = 15,
+         callbackNewBankAccount: @escaping ((String) -> Void),
+         callbackPaymentData : @escaping ((PXPaymentData) -> Void),
+         callbackConfirm: @escaping ((PXPaymentData, Bool) -> Void),
+         callbackUpdatePaymentOption: @escaping ((PaymentMethodOption) -> Void),
+         callbackRefreshInit: @escaping ((String) -> Void),
+         callbackExit: @escaping (() -> Void),
+         finishButtonAnimation: @escaping (() -> Void)) {
         self.viewModel = viewModel
         self.pxOneTapContext = pxOneTapContext
+        self.callbackNewBankAccount = callbackNewBankAccount
         self.callbackPaymentData = callbackPaymentData
         self.callbackConfirm = callbackConfirm
         self.callbackRefreshInit = callbackRefreshInit
@@ -160,6 +172,8 @@ final class PXOneTapViewController: MercadoPagoUIViewController {
                 ($0 as? MLCardFormViewController)?.dismissLoadingAndPop()
                 ($0 as? MLCardFormWebPayViewController)?.dismissLoadingAndPop()
             }
+
+            hideLoadingViewIfNeeded()
         }
     }
 
@@ -197,25 +211,25 @@ extension PXOneTapViewController {
 
     private func renderViews() {
         view.layer.masksToBounds = true
-        
+
         let contentView = getContentView()
-        
+
         setupHeaderView(to: contentView)
 
         setupBodyView(to: contentView)
-        
+
         setupInstallmentsContainer()
-        
+
         setupInstallmentRow()
-        
+
         setupSpacerView()
 
         setupCardSliderView()
 
         setupInstallmentInfoRow()
-        
+
         setupFooterView()
-        
+
         view.layoutIfNeeded()
 
         DispatchQueue.main.async {
@@ -224,22 +238,22 @@ extension PXOneTapViewController {
             }
         }
     }
-    
+
     private func getContentView() -> UIStackView {
         let contentView = UIStackView()
-        
+
         contentView.axis = .vertical
         contentView.alignment = .center
         contentView.distribution = .fill
         contentView.addBackground(color: UIColor.Andes.white)
         view.addSubview(contentView)
-        
+
         let contentViewHeight = PXLayout.getAvailabelScreenHeightWithStatusBarOnly(in: self)
 
         PXLayout.matchWidth(ofView: contentView)
         PXLayout.setHeight(owner: contentView, height: contentViewHeight)
         PXLayout.pinBottom(view: contentView)
-        
+
         return contentView
     }
 
@@ -279,7 +293,7 @@ extension PXOneTapViewController {
     }
 
     private func setupSpacerView() {
-        if let bodyView = bodyView, cardType == .small  {
+        if let bodyView = bodyView, cardType == .small {
             let spacerView = UIView()
             spacerView.translatesAutoresizingMaskIntoConstraints = false
             spacerView.backgroundColor = .white
@@ -291,36 +305,36 @@ extension PXOneTapViewController {
             ])
         }
     }
-    
+
     private func setupInstallmentInfoRow() {
         guard let cardSliderContentView = cardSliderContentView else { return }
         let installmentRowWidth: CGFloat = slider.getItemSize(cardSliderContentView).width
         installmentRow.render(installmentRowWidth)
     }
-    
+
     private func setupCardSliderView() {
         guard let bodyView = bodyView else { return }
         let cardSliderContentView = UIStackView()
-        
+
         cardSliderContentView.axis = .vertical
-        
+
         self.cardSliderContentView = cardSliderContentView
-        
+
         bodyView.addArrangedSubview(cardSliderContentView)
-        
+
         slider.cardType = cardType
-        
+
         cardSliderContentView.translatesAutoresizingMaskIntoConstraints = false
         PXLayout.matchWidth(ofView: cardSliderContentView)
-        
+
         view.layoutIfNeeded()
-        
+
         NSLayoutConstraint.activate([
             cardSliderContentView.heightAnchor.constraint(equalTo: cardSliderContentView.widthAnchor, multiplier: PXCardSliderSizeManager.aspectRatio(forType: cardType)),
             cardSliderContentView.leadingAnchor.constraint(equalTo: bodyView.leadingAnchor)
         ])
     }
-    
+
     private func setupFooterView() {
         guard let footerView = getFooterView() else { return }
         self.footerView = footerView
@@ -617,5 +631,27 @@ extension PXOneTapViewController {
 
     func removePulseViewNotifications() {
         NotificationCenter.default.removeObserver(self)
+    }
+}
+
+// MARK: Loading View
+extension PXOneTapViewController {
+    func showLoadingView() {
+        let loadingVC = PXLoadingViewController()
+        loadingVC.willMove(toParent: self)
+        self.addChild(loadingVC)
+        self.view.addSubview(loadingVC.view)
+        loadingVC.didMove(toParent: self)
+        loadingVC.view.bounds = self.view.bounds
+    }
+
+    func hideLoadingViewIfNeeded() {
+        let animationLoader = self.children.last
+        if let loaderViewController = animationLoader,
+           loaderViewController.isKind(of: PXLoadingViewController.self) {
+            animationLoader?.view.removeFromSuperview()
+            animationLoader?.removeFromParent()
+            animationLoader?.didMove(toParent: nil)
+        }
     }
 }

@@ -25,6 +25,9 @@ open class PXConfiguratorManager: NSObject {
     // ProfileID
     static var profileIDProtocol: PXProfileIDProtocol = PXProfileIDDefault()
 
+    // MLCommons (for deeplinks)
+    static var mlCommonsProtocol: PXMLCommonsProtocol = PXMLCommonsDefault()
+
     // MARK: Public
     // Set external implementation of PXBiometricProtocol
     public static func with(biometric biometricProtocol: PXBiometricProtocol) {
@@ -49,5 +52,10 @@ open class PXConfiguratorManager: NSObject {
     // Set external implementation of PXProfileIDProtocol
     public static func with(profileIDProtocol: PXProfileIDProtocol) {
         self.profileIDProtocol = profileIDProtocol
+    }
+
+    // Set external implementation of PXMLCommonsProtocol
+    public static func with(mlCommonsProtocol: PXMLCommonsProtocol) {
+        self.mlCommonsProtocol = mlCommonsProtocol
     }
 }

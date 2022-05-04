@@ -53,15 +53,32 @@ extension PXCardSlider: FSPagerViewDataSource {
                 if targetModel.creditsViewModel != nil,
                    targetModel.cardUI is ConsumerCreditsCard {
                     cell.delegate = self
-                    cell.renderConsumerCreditsCard(model: targetModel, cardSize: pagerView.itemSize, accessibilityData: accessibilityData, cardType: cardType)
+                    cell.renderConsumerCreditsCard(model: targetModel,
+                                                   cardSize: pagerView.itemSize,
+                                                   accessibilityData: accessibilityData,
+                                                   cardType: cardType)
                 } else {
                     // AccountMoney, Hybrid and Other cards.
                     if let _ = targetModel.cardUI as? AccountMoneyCard {
-                        cell.render(model: targetModel, cardSize: pagerView.itemSize, accessibilityData: accessibilityData, clearCardData: true, cardType: cardType, delegate: self)
+                        cell.render(model: targetModel,
+                                    cardSize: pagerView.itemSize,
+                                    accessibilityData: accessibilityData,
+                                    clearCardData: true,
+                                    cardType: cardType,
+                                    delegate: self)
                     } else if let _ = targetModel.cardUI as? HybridAMCard {
-                        cell.render(model: targetModel, cardSize: pagerView.itemSize, accessibilityData: accessibilityData, clearCardData: true, cardType: cardType, delegate: self)
+                        cell.render(model: targetModel,
+                                    cardSize: pagerView.itemSize,
+                                    accessibilityData: accessibilityData,
+                                    clearCardData: true,
+                                    cardType: cardType,
+                                    delegate: self)
                     } else {
-                        cell.render(model: targetModel, cardSize: pagerView.itemSize, accessibilityData: accessibilityData, cardType: cardType, delegate: self)
+                        cell.render(model: targetModel,
+                                    cardSize: pagerView.itemSize,
+                                    accessibilityData: accessibilityData,
+                                    cardType: cardType,
+                                    delegate: self)
                     }
                 }
                 return cell
@@ -74,7 +91,11 @@ extension PXCardSlider: FSPagerViewDataSource {
                         newCardData = emptyCard.newCardData
                         newOfflineData = emptyCard.newOfflineData
                     }
-                    cell.renderEmptyCard(newCardData: newCardData, newOfflineData: newOfflineData, cardSize: pagerView.itemSize, delegate: self)
+                    cell.renderEmptyCard(newCardData: newCardData,
+                                         newOfflineData: newOfflineData,
+                                         cardSize: pagerView.itemSize,
+                                         delegate: self,
+                                         cardType: cardType)
                     return cell
                 }
             }

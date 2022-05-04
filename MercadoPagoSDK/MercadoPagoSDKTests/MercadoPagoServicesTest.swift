@@ -75,7 +75,7 @@ final class CheckoutServicesMock: CheckoutService {
 
     func getInit(preferenceId: String?, privateKey: String?, body: Data?, headers: [String: String]?, completion: @escaping (Swift.Result<PXInitDTO, PXError>) -> Void) {
         calledGetInit = true
-        successResponse ? completion(.success(PXInitDTO(preference: nil, oneTap: nil, currency: PXCurrency(id: "", description: nil, symbol: nil, decimalPlaces: nil, decimalSeparator: nil, thousandSeparator: nil), site: PXSite(id: "", currencyId: nil, termsAndConditionsUrl: "", shouldWarnAboutBankInterests: nil), generalCoupon: "", coupons: [:], payerPaymentMethods: [], availablePaymentMethods: [], experiments: nil, payerCompliance: nil, configurations: nil, modals: [:], customCharges: nil))) : completion(.failure(PXError(domain: "", code: 0)))
+        successResponse ? completion(.success(PXInitDTO(preference: nil, oneTap: nil, currency: PXCurrency(id: "", description: nil, symbol: nil, decimalPlaces: nil, decimalSeparator: nil, thousandSeparator: nil), site: PXSite(id: "", currencyId: nil, termsAndConditionsUrl: "", shouldWarnAboutBankInterests: nil), generalCoupon: "", coupons: [:], payerPaymentMethods: [], availablePaymentMethods: [], experiments: nil, payerCompliance: nil, configurations: nil, modals: [:], customCharges: nil, retry: nil))) : completion(.failure(PXError(domain: "", code: 0)))
     }
 }
 
@@ -252,7 +252,7 @@ final class MercadoPagoServicesTest: XCTestCase {
     func testGetOpenPrefInitSearchSuccess() {
         var hasError = true
         XCTAssertTrue(checkoutService.calledGetInit == false)
-        sut.getOpenPrefInitSearch(pref: PXCheckoutPreference(preferenceId: ""), cardsWithEsc: [], oneTapEnabled: true, splitEnabled: true, discountParamsConfiguration: nil, flow: nil, charges: [], paymentMethodRuleSet: [], headers: nil, newCardId: nil) { _ in
+        sut.getOpenPrefInitSearch(pref: PXCheckoutPreference(preferenceId: ""), cardsWithEsc: [], oneTapEnabled: true, splitEnabled: true, discountParamsConfiguration: nil, flow: nil, charges: [], paymentMethodRuleSet: [], headers: nil, newCardId: nil, newAccountId: nil) { _ in
             hasError = false
         } failure: { _ in
             hasError = true
@@ -265,7 +265,7 @@ final class MercadoPagoServicesTest: XCTestCase {
     func testGetOpenPrefInitSearchFailure() {checkoutService.successResponse = false
         var hasError = true
         XCTAssertTrue(checkoutService.calledGetInit == false)
-        sut.getOpenPrefInitSearch(pref: PXCheckoutPreference(preferenceId: ""), cardsWithEsc: [], oneTapEnabled: true, splitEnabled: true, discountParamsConfiguration: nil, flow: nil, charges: [], paymentMethodRuleSet: [], headers: nil, newCardId: nil) { _ in
+        sut.getOpenPrefInitSearch(pref: PXCheckoutPreference(preferenceId: ""), cardsWithEsc: [], oneTapEnabled: true, splitEnabled: true, discountParamsConfiguration: nil, flow: nil, charges: [], paymentMethodRuleSet: [], headers: nil, newCardId: nil, newAccountId: nil) { _ in
             hasError = false
         } failure: { _ in
             hasError = true
@@ -278,7 +278,7 @@ final class MercadoPagoServicesTest: XCTestCase {
     func testGetClosedPrefInitSearchSuccess() {
         var hasError = true
         XCTAssertTrue(checkoutService.calledGetInit == false)
-        sut.getClosedPrefInitSearch(preferenceId: "", cardsWithEsc: [], oneTapEnabled: true, splitEnabled: true, discountParamsConfiguration: nil, flow: nil, charges: [], paymentMethodRuleSet: [], headers: nil, newCardId: nil) { _ in
+        sut.getClosedPrefInitSearch(preferenceId: "", cardsWithEsc: [], oneTapEnabled: true, splitEnabled: true, discountParamsConfiguration: nil, flow: nil, charges: [], paymentMethodRuleSet: [], headers: nil, newCardId: nil, newAccountId: nil) { _ in
             hasError = false
         } failure: { _ in
             hasError = true
@@ -292,7 +292,7 @@ final class MercadoPagoServicesTest: XCTestCase {
         checkoutService.successResponse = false
         var hasError = true
         XCTAssertTrue(checkoutService.calledGetInit == false)
-        sut.getClosedPrefInitSearch(preferenceId: "", cardsWithEsc: [], oneTapEnabled: true, splitEnabled: true, discountParamsConfiguration: nil, flow: nil, charges: [], paymentMethodRuleSet: [], headers: nil, newCardId: nil) { _ in
+        sut.getClosedPrefInitSearch(preferenceId: "", cardsWithEsc: [], oneTapEnabled: true, splitEnabled: true, discountParamsConfiguration: nil, flow: nil, charges: [], paymentMethodRuleSet: [], headers: nil, newCardId: nil, newAccountId: nil) { _ in
             hasError = false
         } failure: { _ in
             hasError = true

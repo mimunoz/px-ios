@@ -25,10 +25,34 @@ extension InitFlow {
 
         if let prefId = pref.id, prefId.isNotEmpty {
             // CLOSED PREFERENCE
-            serviceAdapter.getClosedPrefInitSearch(preferenceId: prefId, cardsWithEsc: cardIdsWithEsc, oneTapEnabled: true, splitEnabled: splitEnabled, discountParamsConfiguration: discountParamsConfiguration, flow: flowName, charges: charges, paymentMethodRuleSet: paymentMethodRuleSet, headers: headers, newCardId: newCardId, callback: callback(_:), failure: failure(_:))
+            serviceAdapter.getClosedPrefInitSearch(preferenceId: prefId,
+                                                    cardsWithEsc: cardIdsWithEsc,
+                                                    oneTapEnabled: true,
+                                                    splitEnabled: splitEnabled,
+                                                    discountParamsConfiguration: discountParamsConfiguration,
+                                                    flow: flowName,
+                                                    charges: charges,
+                                                    paymentMethodRuleSet: paymentMethodRuleSet,
+                                                    headers: headers,
+                                                    newCardId: newCardId,
+                                                    newAccountId: newAccountId,
+                                                    callback: callback(_:),
+                                                    failure: failure(_:))
         } else {
             // OPEN PREFERENCE
-            serviceAdapter.getOpenPrefInitSearch(pref: pref, cardsWithEsc: cardIdsWithEsc, oneTapEnabled: true, splitEnabled: splitEnabled, discountParamsConfiguration: discountParamsConfiguration, flow: flowName, charges: charges, paymentMethodRuleSet: paymentMethodRuleSet, headers: headers, newCardId: newCardId, callback: callback(_:), failure: failure(_:))
+            serviceAdapter.getOpenPrefInitSearch(pref: pref,
+                                                cardsWithEsc: cardIdsWithEsc,
+                                                oneTapEnabled: true,
+                                                splitEnabled: splitEnabled,
+                                                discountParamsConfiguration: discountParamsConfiguration,
+                                                flow: flowName,
+                                                charges: charges,
+                                                paymentMethodRuleSet: paymentMethodRuleSet,
+                                                headers: headers,
+                                                newCardId: newCardId,
+                                                newAccountId: newAccountId,
+                                                callback: callback(_:),
+                                                failure: failure(_:))
         }
     }
 
@@ -46,7 +70,7 @@ extension InitFlow {
             search.selectedDiscountConfiguration = selectedDiscountConfiguration
         }
         /// Fin del hack
-
+        
         initFlowModel.updateInitModel(paymentMethodsResponse: search)
 
         // Tracking Experiments

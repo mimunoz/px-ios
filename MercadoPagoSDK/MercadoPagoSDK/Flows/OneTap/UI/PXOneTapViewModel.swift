@@ -64,15 +64,43 @@ extension PXOneTapViewModel {
             if targetNode.newCard != nil || targetNode.offlineMethods != nil {
                 var newCardData: PXAddNewMethodData?
                 if let newCard = targetNode.newCard {
-                    newCardData = PXAddNewMethodData(title: newCard.label, subtitle: newCard.descriptionText)
+                    newCardData = PXAddNewMethodData(title: newCard.label,
+                                                     subtitle: newCard.descriptionText,
+                                                     iconUrl: newCard.genericCardDisplayInfo?.iconUrl,
+                                                     border: newCard.genericCardDisplayInfo?.border,
+                                                     backgroundColor: newCard.genericCardDisplayInfo?.backgroundColor,
+                                                     shadow: newCard.genericCardDisplayInfo?.shadow ?? false,
+                                                     deeplink: newCard.deeplink,
+                                                     bottomMessage: newCard.displayInfo?.bottomDescription)
                 }
                 var newOfflineData: PXAddNewMethodData?
                 if let offlineMethods = targetNode.offlineMethods {
-                    newOfflineData = PXAddNewMethodData(title: offlineMethods.label, subtitle: offlineMethods.descriptionText)
+                    newOfflineData = PXAddNewMethodData(title: offlineMethods.label,
+                                                        subtitle: offlineMethods.descriptionText,
+                                                        iconUrl: offlineMethods.genericCardDisplayInfo?.iconUrl,
+                                                        border: offlineMethods.genericCardDisplayInfo?.border,
+                                                        backgroundColor: offlineMethods.genericCardDisplayInfo?.backgroundColor,
+                                                        shadow: offlineMethods.genericCardDisplayInfo?.shadow ?? false,
+                                                        deeplink: offlineMethods.deeplink,
+                                                        bottomMessage: offlineMethods.displayInfo?.bottomDescription)
                 }
                 let emptyCard = EmptyCard(newCardData: newCardData, newOfflineData: newOfflineData)
 
-                let cardSliderApplication = PXCardSliderApplicationData(paymentMethodId: "", paymentTypeId: "", cardData: nil, cardUI: emptyCard, payerCost: [PXPayerCost](), selectedPayerCost: nil, shouldShowArrow: false, amountConfiguration: nil, status: statusConfig, bottomMessage: chargeRuleMessage, benefits: benefits, payerPaymentMethod: nil, behaviours: targetNode.behaviours, displayInfo: targetNode.displayInfo, displayMessage: nil)
+                let cardSliderApplication = PXCardSliderApplicationData(paymentMethodId: "",
+                                                                        paymentTypeId: "",
+                                                                        cardData: nil,
+                                                                        cardUI: emptyCard,
+                                                                        payerCost: [PXPayerCost](),
+                                                                        selectedPayerCost: nil,
+                                                                        shouldShowArrow: false,
+                                                                        amountConfiguration: nil,
+                                                                        status: statusConfig,
+                                                                        bottomMessage: chargeRuleMessage,
+                                                                        benefits: benefits,
+                                                                        payerPaymentMethod: nil,
+                                                                        behaviours: targetNode.behaviours,
+                                                                        displayInfo: targetNode.displayInfo,
+                                                                        displayMessage: nil)
 
                 var cardSliderApplications: [PXApplicationId: PXCardSliderApplicationData] = [:]
 
@@ -629,7 +657,7 @@ extension PXOneTapViewModel {
         }).first?.viewController(store: PXCheckoutStore.sharedInstance)
     }
 
-    func getOfflineMethods() -> PXOfflineMethods? {
+    func getOfflineMethods() -> PXOneTapNewPaymentMethodDto? {
         return expressData?
             .compactMap { $0.offlineMethods }
             .first

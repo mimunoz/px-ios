@@ -1,6 +1,13 @@
 import Foundation
 
 extension MercadoPagoCheckout: PXOneTapResultHandlerProtocol {
+    func refreshAddAccountFlow(accountId: String) {
+        InitFlowRefresh.accountId = accountId
+        viewModel.checkoutPreference.setCardId(cardId: "accounts")
+        viewModel.prepareForNewSelection()
+        viewModel.refreshAddAccountFlow(accountId: accountId)
+    }
+    
     func finishOneTap(paymentData: PXPaymentData, splitAccountMoney: PXPaymentData?, pointsAndDiscounts: PXPointsAndDiscounts?) {
         viewModel.updateCheckoutModel(paymentData: paymentData)
         viewModel.splitAccountMoney = splitAccountMoney

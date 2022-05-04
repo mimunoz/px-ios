@@ -8,7 +8,15 @@ final class PXOfflineMethodsViewModel: PXReviewViewModel {
 
     var selectedIndexPath: IndexPath?
 
-    public init(offlinePaymentTypes: [PXOfflinePaymentType], paymentMethods: [PXPaymentMethod], amountHelper: PXAmountHelper, paymentOptionSelected: PaymentMethodOption?, advancedConfig: PXAdvancedConfiguration, userLogged: Bool, disabledOption: PXDisabledOption? = nil, payerCompliance: PXPayerCompliance?, displayInfo: PXOneTapDisplayInfo?) {
+    public init(offlinePaymentTypes: [PXOfflinePaymentType]?,
+                paymentMethods: [PXPaymentMethod],
+                amountHelper: PXAmountHelper,
+                paymentOptionSelected: PaymentMethodOption?,
+                advancedConfig: PXAdvancedConfiguration,
+                userLogged: Bool,
+                disabledOption: PXDisabledOption? = nil,
+                payerCompliance: PXPayerCompliance?,
+                displayInfo: PXOneTapDisplayInfo?) {
         self.paymentTypes = PXOfflineMethodsViewModel.filterPaymentTypes(offlinePaymentTypes: offlinePaymentTypes)
         self.paymentMethods = paymentMethods
         self.payerCompliance = payerCompliance
@@ -89,9 +97,13 @@ final class PXOfflineMethodsViewModel: PXReviewViewModel {
 
 // MARK: Privates
 private extension PXOfflineMethodsViewModel {
-    class func filterPaymentTypes(offlinePaymentTypes: [PXOfflinePaymentType]) -> [PXOfflinePaymentType] {
+    class func filterPaymentTypes(offlinePaymentTypes: [PXOfflinePaymentType]?) -> [PXOfflinePaymentType] {
         var filteredOfflinePaymentTypes: [PXOfflinePaymentType] = [PXOfflinePaymentType]()
         var filteredPaymentMethods: [PXOfflinePaymentMethod] = [PXOfflinePaymentMethod]()
+
+        guard let offlinePaymentTypes = offlinePaymentTypes else {
+            return filteredOfflinePaymentTypes
+        }
 
         for paymentType in offlinePaymentTypes {
             for paymentMethod in paymentType.paymentMethods where paymentMethod.status.enabled {

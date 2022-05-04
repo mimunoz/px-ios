@@ -187,12 +187,28 @@ extension MercadoPagoCheckout {
     }
 
     private func shouldUpdateOnetapFlow() -> Bool {
-        if viewModel.onetapFlow != nil,
-            let cardId = InitFlowRefresh.cardId,
-            cardId.isNotEmpty {
+        if viewModel.onetapFlow != nil, cardIdExists() {
+            return true
+        }
+        
+        if viewModel.onetapFlow != nil, accountIdExists() {
             return true
         }
         // Card should not be updated or number of retries has reached max number
+        return false
+    }
+    
+    private func cardIdExists() -> Bool {
+        if let cardId = InitFlowRefresh.cardId {
+            return cardId.isNotEmpty
+        }
+        return false
+    }
+    
+    private func accountIdExists() -> Bool {
+        if let accountId = InitFlowRefresh.accountId {
+            return accountId.isNotEmpty
+        }
         return false
     }
 }
