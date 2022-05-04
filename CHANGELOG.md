@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Added DEBIN account creation
+- Added PXPaymentMethodBehaviour
+
 ## [4.59.0]
 
 ### Added
