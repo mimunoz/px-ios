@@ -15,7 +15,9 @@ extension InitFlow {
 
         let charges = self.initFlowModel.amountHelper.chargeRules ?? []
 
-        let paymentMethodRuleSet = initFlowModel.properties.advancedConfig.paymentMethodRuleSet ?? []
+        let paymentMethodRules = initFlowModel.properties.advancedConfig.paymentMethodRules ?? []
+
+        let paymentMethodBehaviours = self.initFlowModel.properties.advancedConfig.paymentMethodBehaviours
 
         // Add headers
         var headers: [String: String] = [:]
@@ -32,7 +34,8 @@ extension InitFlow {
                                                     discountParamsConfiguration: discountParamsConfiguration,
                                                     flow: flowName,
                                                     charges: charges,
-                                                    paymentMethodRuleSet: paymentMethodRuleSet,
+                                                    paymentMethodRules: paymentMethodRules,
+                                                    paymentMethodBehaviours: paymentMethodBehaviours,
                                                     headers: headers,
                                                     newCardId: newCardId,
                                                     newAccountId: newAccountId,
@@ -47,7 +50,7 @@ extension InitFlow {
                                                 discountParamsConfiguration: discountParamsConfiguration,
                                                 flow: flowName,
                                                 charges: charges,
-                                                paymentMethodRuleSet: paymentMethodRuleSet,
+                                                paymentMethodRules: paymentMethodRules,
                                                 headers: headers,
                                                 newCardId: newCardId,
                                                 newAccountId: newAccountId,

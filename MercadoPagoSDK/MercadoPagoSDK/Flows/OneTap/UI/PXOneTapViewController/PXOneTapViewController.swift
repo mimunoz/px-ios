@@ -289,6 +289,7 @@ extension PXOneTapViewController {
     private func setupInstallmentRow() {
         installmentRow = getInstallmentInfoView()
         installmentRow.isHidden = true
+        PXLayout.matchWidth(ofView: installmentRow)
         bodyView?.addArrangedSubview(installmentRow)
     }
 

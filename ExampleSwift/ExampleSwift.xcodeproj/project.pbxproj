@@ -485,7 +485,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mercadolibre.-";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match Development com.mercadolibre.*";
-				PX_ENVIRONMENT = prod;
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -505,7 +504,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.mercadolibre.-";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "match Development com.mercadolibre.*";
-				PX_ENVIRONMENT = prod;
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

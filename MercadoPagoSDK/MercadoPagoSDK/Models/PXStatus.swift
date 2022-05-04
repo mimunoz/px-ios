@@ -5,12 +5,14 @@ public struct PXStatus: Codable {
     let secondaryMessage: PXText?
     let enabled: Bool
     let detail: String?
+    let label: PXText?
 
     enum CodingKeys: String, CodingKey {
         case mainMessage = "main_message"
         case secondaryMessage = "secondary_message"
         case enabled
         case detail
+        case label
     }
 
     func isUsable() -> Bool {

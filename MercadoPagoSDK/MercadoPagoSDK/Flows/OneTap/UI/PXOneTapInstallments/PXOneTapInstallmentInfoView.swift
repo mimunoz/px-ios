@@ -1,6 +1,6 @@
 import UIKit
 
-final class PXOneTapInstallmentInfoView: PXComponentView {
+final class PXOneTapInstallmentInfoView: UIView {
     static let DEFAULT_ROW_HEIGHT: CGFloat = 50
     static let HIGH_ROW_HEIGHT: CGFloat = 78
     private let titleLabel = UILabel()
@@ -14,6 +14,16 @@ final class PXOneTapInstallmentInfoView: PXComponentView {
 
     weak var delegate: PXOneTapInstallmentInfoViewProtocol?
     private var model: [PXOneTapInstallmentInfoViewModel]?
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+
+        self.render(frame.width)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 }
 
 // MARK: Privates
@@ -34,7 +44,9 @@ extension PXOneTapInstallmentInfoView {
 
     private func setupSlider(width: CGFloat) {
         addSubview(pagerView)
-        pagerView.isUserInteractionEnabled = false
+        pagerView.translatesAutoresizingMaskIntoConstraints = false
+        pagerView.isUserInteractionEnabled = true
+        pagerView.isScrollEnabled = false
         PXLayout.pinTop(view: pagerView).isActive = true
         PXLayout.pinBottom(view: pagerView).isActive = true
         PXLayout.pinLeft(view: pagerView).isActive = true
@@ -152,6 +164,14 @@ extension PXOneTapInstallmentInfoView: FSPagerViewDelegate {
             }
         }
     }
+
+    func pagerView(_ pagerView: FSPagerView, didSelectItemAt index: Int) {
+        guard let model = model else { return }
+
+        let itemModel = model[index]
+
+        delegate?.cardTapped(status: itemModel.status)
+    }
 }
 
 // MARK: Accessibility
@@ -199,9 +219,9 @@ extension PXOneTapInstallmentInfoView {
 
     func render(_ width: CGFloat) {
         removeAllSubviews()
+        setupTitleLabel()
         setupSlider(width: width)
         setupFadeImages()
-        setupTitleLabel()
         PXLayout.setHeight(owner: self, height: PXOneTapInstallmentInfoView.DEFAULT_ROW_HEIGHT).isActive = true
     }
 

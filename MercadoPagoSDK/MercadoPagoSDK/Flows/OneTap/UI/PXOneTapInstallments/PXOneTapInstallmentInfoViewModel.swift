@@ -8,8 +8,9 @@ final class PXOneTapInstallmentInfoViewModel {
     var status: PXStatus
     let benefits: PXBenefits?
     let shouldShowInstallmentsHeader: Bool
+    let behaviours: [String: PXBehaviour]?
 
-    init(text: NSAttributedString, installmentData: PXInstallment?, selectedPayerCost: PXPayerCost?, shouldShowArrow: Bool, status: PXStatus, benefits: PXBenefits?, shouldShowInstallmentsHeader: Bool) {
+    init(text: NSAttributedString, installmentData: PXInstallment?, selectedPayerCost: PXPayerCost?, shouldShowArrow: Bool, status: PXStatus, benefits: PXBenefits?, shouldShowInstallmentsHeader: Bool, behaviours: [String: PXBehaviour]?) {
         self.text = text
         self.installmentData = installmentData
         self.selectedPayerCost = selectedPayerCost
@@ -17,5 +18,6 @@ final class PXOneTapInstallmentInfoViewModel {
         self.status = status
         self.benefits = benefits
         self.shouldShowInstallmentsHeader = shouldShowInstallmentsHeader
+        self.behaviours = behaviours
     }
 }

@@ -21,12 +21,12 @@ class ViewController: UIViewController {
     private var privateKey: String = ""
 
     // Preference ID
-    private var preferenceId: String = "656525290-45bf0d17-c93c-4bee-828e-6bb71e796e35"
+    private var preferenceId: String = "656525290-89085586-1877-419a-b70f-9153de487900"
 
     @IBAction func initDefault(_ sender: Any) {
 //         runMercadoPagoCheckout()
-         runMercadoPagoCheckoutWithLifecycle()
-//        runMercadoPagoCheckoutWithLifecycleAndCustomProcessor()
+//         runMercadoPagoCheckoutWithLifecycle()
+        runMercadoPagoCheckoutWithLifecycleAndCustomProcessor()
     }
 
     @IBAction func initPaymentMethodSelector(_ sender: Any) {
@@ -133,17 +133,17 @@ class ViewController: UIViewController {
 
         // CHARGE RULES SECTION
 
-//        // Add charge rules
-//        paymentConfiguration.addChargeRules(charges: pxPaymentTypeChargeRules)
+        // Add charge rules
+        paymentConfiguration.addChargeRules(charges: pxPaymentTypeChargeRules)
 
         // PREFERENCE/BUILDER SECTION
 
 //        // Create a Builder with your publicKey, preferenceId and paymentConfiguration
 //        let builder = MercadoPagoCheckoutBuilder(publicKey: publicKey, preferenceId: preferenceId, paymentConfiguration: paymentConfiguration).setLanguage("es")
 
-        let checkoutPreference = PXCheckoutPreference.init(preferenceId: preferenceId)
+//        let checkoutPreference = PXCheckoutPreference.init(preferenceId: preferenceId)
 
-//        let checkoutPreference = PXCheckoutPreference(siteId: "MLA", payerEmail: "1234@gmail.com", items: [PXItem(title: "Taza de té", quantity: 1, unitPrice: 15.0)])
+        let checkoutPreference = PXCheckoutPreference(siteId: "MLB", payerEmail: "1234@gmail.com", items: [PXItem(title: "Taza de te", quantity: 1, unitPrice: 15.0)])
 
         // Add excluded methods
 //        checkoutPreference.addExcludedPaymentType(PXPaymentTypes.TICKET.rawValue)
@@ -168,6 +168,8 @@ class ViewController: UIViewController {
         // Set the payer private key
         builder.setPrivateKey(key: privateKey)
 
+        builder.setLanguage("pt-BR")
+
         // Create Checkout reference
         checkout = MercadoPagoCheckout(builder: builder)
 
@@ -183,7 +185,7 @@ class ViewController: UIViewController {
 
         let configuration = PXAdvancedConfiguration()
 
-//        configuration.setProductId(id: "BJDCVRTMG2N001KTKN6G")
+        configuration.setProductId(id: "BJDCVRTMG2N001KTKN6G")
 
 //        configuration.expressEnabled = true
 
@@ -206,10 +208,34 @@ class ViewController: UIViewController {
         }
     }
 
+    func createPaymentMethodBehaviours() -> [PXPaymentMethodBehaviour] {
+        let title = PXText(message: "Algun title", backgroundColor: "#FFFFFF", textColor: "#000000", weight: nil, alignment: nil)
+
+        let description = PXText(message: "Alguna description", backgroundColor: "#FFFFFF", textColor: "#000000", weight: nil, alignment: nil)
+
+        let pmBehaviour = PXPaymentMethodBehaviour(paymentTypeRules: ["account_money"], paymentMethodRules: ["account_money"], sliderTitle: "Custom slider title!", behaviours: [Behaviour(type: "tap_card", modalContent: ModalContent(title: title, description: description, button: Button(label: "Touch me", target: "#target"), imageURL: "https://assets.nintendo.com/image/upload/f_auto,q_auto/ncom/en_US/merchandising/curated%20list/Jump%20for%20joy%20with%20Super%20Mario/515x325_gameStore_mario?v=2022042221"))])
+
+        return [pmBehaviour]
+    }
+
     private func runPXPaymentMethodSelector() {
         let builder = PXPaymentMethodSelector.Builder(publicKey: publicKey, preferenceId: preferenceId)
 
         builder.setAccessToken(accessToken: privateKey)
+
+        builder.setPaymentMethodBehaviours(paymentMethodBehaviours: createPaymentMethodBehaviours())
+
+        var chargeRules: [PXPaymentTypeChargeRule] = []
+
+        chargeRules.append(PXPaymentTypeChargeRule(paymentTypeId: "credit_card", amountCharge: 20.0))
+
+        chargeRules.append(PXPaymentTypeChargeRule(paymentTypeId: "account_money", message: "Dinero en cuenta, sin cargo"))
+
+        builder.setChargeRules(chargeRules: chargeRules)
+
+        builder.setLanguage(PXLanguages.PORTUGUESE_BRAZIL.rawValue)
+
+        builder.setPaymentMethodRules(paymentMethodRules: [PXPaymentMethodRules.ignoreInsufficientAMBalance.rawValue])
 
         var paymentMethodSelector: PXPaymentMethodSelector?
 

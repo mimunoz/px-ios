@@ -34,7 +34,7 @@ public class PXPaymentMethodSelector: NSObject {
         var chargeRules: [PXPaymentTypeChargeRule]?
         var trackingConfiguration: PXTrackingConfiguration?
         var paymentMethodBehaviours: [PXPaymentMethodBehaviour]? = []
-        var paymentMethodRuleSet: [String]? = []
+        var paymentMethodRules: [String]? = []
 
         public init(publicKey: String, preferenceId: String) {
             self.publicKey = publicKey
@@ -57,8 +57,12 @@ public class PXPaymentMethodSelector: NSObject {
             self.paymentMethodBehaviours = paymentMethodBehaviours
         }
 
-        public func setPaymentMethodRuleSet(paymentMethodRuleSet: [String]) {
-            self.paymentMethodRuleSet = paymentMethodRuleSet
+        public func setPaymentMethodRules(paymentMethodRules: [String]) {
+            self.paymentMethodRules = paymentMethodRules
+        }
+
+        public func setLanguage(_ string: String) {
+            Localizator.sharedInstance.setLanguage(string: string)
         }
 
         public func build() throws -> PXPaymentMethodSelector? {
@@ -92,13 +96,19 @@ public class PXPaymentMethodSelector: NSObject {
                 advancedConfiguration.dynamicViewControllersConfiguration = dynamicDialogConfiguration
             }
 
-            if let paymentMethodRuleSet = self.paymentMethodRuleSet {
-                advancedConfiguration.paymentMethodRuleSet = paymentMethodRuleSet
+            if let paymentMethodRules = self.paymentMethodRules {
+                advancedConfiguration.paymentMethodRules = paymentMethodRules
+            }
+
+            if let paymentMethodBehaviours = paymentMethodBehaviours {
+                advancedConfiguration.paymentMethodBehaviours = paymentMethodBehaviours
             }
 
             let viewModel = PXPaymentMethodSelectorViewModel(checkoutPreference: preference, publicKey: publicKey, accessToken: self.accessToken, advancedConfiguration: advancedConfiguration, trackingConfiguration: self.trackingConfiguration)
 
             viewModel.chargeRules = chargeRules
+
+            viewModel.updateInitFlow()
 
             return PXPaymentMethodSelector(viewModel: viewModel)
         }

@@ -12,20 +12,22 @@ struct PXInitBody: Codable {
     let discountConfiguration: PXDiscountParamsConfiguration?
     let features: PXInitFeatures
     let checkoutType: String?
-    let paymentMethodRuleSet: [String]?
+    let paymentMethodRules: [String]?
+    let paymentMethodBehaviours: [PXPaymentMethodBehaviour]?
 
-    init(preference: PXCheckoutPreference?, publicKey: String, flow: String?, cardsWithESC: [String], charges: [PXPaymentTypeChargeRule], paymentMethodRuleSet: [String]?, discountConfiguration: PXDiscountParamsConfiguration?, features: PXInitFeatures, newCardId: String?, newAccountId: String?, checkoutType: String?) {
+    init(preference: PXCheckoutPreference?, publicKey: String, flow: String?, cardsWithESC: [String], charges: [PXPaymentTypeChargeRule], paymentMethodRules: [String]?, paymentMethodBehaviours: [PXPaymentMethodBehaviour]?, discountConfiguration: PXDiscountParamsConfiguration?, features: PXInitFeatures, newCardId: String?, newAccountId: String?, checkoutType: String?) {
         self.preference = preference
         self.publicKey = publicKey
         self.flow = flow
         self.cardsWithESC = cardsWithESC
         self.charges = charges
-        self.paymentMethodRuleSet = paymentMethodRuleSet
+        self.paymentMethodRules = paymentMethodRules
         self.discountConfiguration = discountConfiguration
         self.features = features
         self.newCardId = newCardId
         self.newAccountId = newAccountId
         self.checkoutType = checkoutType
+        self.paymentMethodBehaviours = paymentMethodBehaviours
     }
 
     enum CodingKeys: String, CodingKey {
@@ -34,12 +36,13 @@ struct PXInitBody: Codable {
         case flow = "flow"
         case cardsWithESC = "cards_with_esc"
         case charges
-        case paymentMethodRuleSet = "payment_method_rule_set"
+        case paymentMethodRules = "payment_methods_rulesets"
         case discountConfiguration = "discount_configuration"
         case features
         case newCardId = "new_card_id"
         case newAccountId = "new_bank_account_id"
         case checkoutType = "checkout_type"
+        case paymentMethodBehaviours = "payment_method_behaviours"
     }
 
     public func toJSON() throws -> Data {

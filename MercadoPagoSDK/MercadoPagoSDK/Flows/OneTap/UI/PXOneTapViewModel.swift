@@ -239,10 +239,29 @@ extension PXOneTapViewModel {
             let shouldShowInstallmentsHeader = sliderNode.shouldShowInstallmentsHeader()
 
             if selectedApplication.status.isDisabled() {
-                let disabledInfoModel = PXOneTapInstallmentInfoViewModel(text: disabledMessage, installmentData: nil, selectedPayerCost: nil, shouldShowArrow: false, status: selectedApplication.status, benefits: selectedApplication.benefits, shouldShowInstallmentsHeader: shouldShowInstallmentsHeader)
+                let disabledInfoModel = PXOneTapInstallmentInfoViewModel(
+                    text: disabledMessage,
+                    installmentData: nil,
+                    selectedPayerCost: nil,
+                    shouldShowArrow: false,
+                    status: selectedApplication.status,
+                    benefits: selectedApplication.benefits,
+                    shouldShowInstallmentsHeader: shouldShowInstallmentsHeader,
+                    behaviours: selectedApplication.behaviours
+                )
+
                 model.append(disabledInfoModel)
             } else if !selectedApplication.status.isUsable() {
-                let disabledInfoModel = PXOneTapInstallmentInfoViewModel(text: emptyMessage, installmentData: nil, selectedPayerCost: nil, shouldShowArrow: false, status: selectedApplication.status, benefits: selectedApplication.benefits, shouldShowInstallmentsHeader: shouldShowInstallmentsHeader)
+                let disabledInfoModel = PXOneTapInstallmentInfoViewModel(
+                    text: emptyMessage,
+                    installmentData: nil,
+                    selectedPayerCost: nil,
+                    shouldShowArrow: false,
+                    status: selectedApplication.status,
+                    benefits: selectedApplication.benefits,
+                    shouldShowInstallmentsHeader: shouldShowInstallmentsHeader,
+                    behaviours: selectedApplication.behaviours)
+
                 model.append(disabledInfoModel)
             } else if selectedApplication.paymentTypeId == PXPaymentTypes.DEBIT_CARD.rawValue {
                 // If it's debit and has split, update split message
@@ -259,17 +278,35 @@ extension PXOneTapViewModel {
                         shouldShowArrow: selectedApplication.shouldShowArrow,
                         status: selectedApplication.status,
                         benefits: selectedApplication.benefits,
-                        shouldShowInstallmentsHeader: shouldShowInstallmentsHeader
-                    )
+                        shouldShowInstallmentsHeader: shouldShowInstallmentsHeader,
+                        behaviours: selectedApplication.behaviours)
+
                     model.append(installmentInfoModel)
                 }
             } else {
                 if let displayMessage = selectedApplication.displayMessage {
-                    let installmentInfoModel = PXOneTapInstallmentInfoViewModel(text: displayMessage, installmentData: installment, selectedPayerCost: selectedPayerCost, shouldShowArrow: selectedApplication.shouldShowArrow, status: selectedApplication.status, benefits: selectedApplication.benefits, shouldShowInstallmentsHeader: shouldShowInstallmentsHeader)
+                    let installmentInfoModel = PXOneTapInstallmentInfoViewModel(
+                        text: displayMessage,
+                        installmentData: installment,
+                        selectedPayerCost: selectedPayerCost,
+                        shouldShowArrow: selectedApplication.shouldShowArrow,
+                        status: selectedApplication.status,
+                        benefits: selectedApplication.benefits,
+                        shouldShowInstallmentsHeader: shouldShowInstallmentsHeader,
+                        behaviours: selectedApplication.behaviours)
+
                     model.append(installmentInfoModel)
                 } else {
                     let isDigitalCurrency: Bool = sliderNode.creditsViewModel != nil
-                    let installmentInfoModel = PXOneTapInstallmentInfoViewModel(text: getInstallmentInfoAttrText(selectedPayerCost, isDigitalCurrency, interestFreeConfig: selectedApplication.benefits?.interestFree), installmentData: installment, selectedPayerCost: selectedPayerCost, shouldShowArrow: selectedApplication.shouldShowArrow, status: selectedApplication.status, benefits: selectedApplication.benefits, shouldShowInstallmentsHeader: shouldShowInstallmentsHeader)
+                    let installmentInfoModel = PXOneTapInstallmentInfoViewModel(text: getInstallmentInfoAttrText(selectedPayerCost, isDigitalCurrency, interestFreeConfig: selectedApplication.benefits?.interestFree),
+                        installmentData: installment,
+                        selectedPayerCost: selectedPayerCost,
+                        shouldShowArrow: selectedApplication.shouldShowArrow,
+                        status: selectedApplication.status,
+                        benefits: selectedApplication.benefits,
+                        shouldShowInstallmentsHeader: shouldShowInstallmentsHeader,
+                        behaviours: selectedApplication.behaviours)
+
                     model.append(installmentInfoModel)
                 }
             }

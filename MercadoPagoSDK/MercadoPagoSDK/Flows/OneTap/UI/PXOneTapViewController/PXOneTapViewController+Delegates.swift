@@ -207,7 +207,8 @@ extension PXOneTapViewController: PXCardSliderProtocol {
     func showDisabledCardModal(status: PXStatus) {
         guard let message = status.secondaryMessage else { return }
 
-        let primaryAction = getActionForModal()
+        let primaryAction = getActionForModal(PXRemoteAction(label: status.label?.message ?? "Pagar con otro medio".localized, target: ""))
+
         let vc = PXOneTapDisabledViewController(title: nil, description: message, primaryButton: primaryAction, secondaryButton: nil, iconUrl: nil)
 
         self.currentModal = PXComponentFactory.Modal.show(viewController: vc, title: nil)

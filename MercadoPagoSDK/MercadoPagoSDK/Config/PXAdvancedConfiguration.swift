@@ -83,7 +83,7 @@ open class PXAdvancedConfiguration: NSObject {
         }
     }
 
-    open var paymentMethodRuleSet: [String]? = []
+    open var paymentMethodRules: [String]? = []
 
     /**
      Set product id
@@ -95,4 +95,6 @@ open class PXAdvancedConfiguration: NSObject {
     func isESCEnabled() -> Bool {
         return true
     }
+
+    open var paymentMethodBehaviours: [PXPaymentMethodBehaviour]? = []
 }

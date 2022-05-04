@@ -22,7 +22,7 @@ extension PXPaymentMethodSelectorViewModel {
             guard let self = self else { return }
 
             self.checkoutPreference = checkoutPreference
-//            self.updateCustomTexts()
+            self.updateCustomTexts()
             self.updateCheckoutModel(paymentMethodSearch: initSearch)
             self.paymentData.updatePaymentDataWith(payer: checkoutPreference.getPayer())
             PXTrackingStore.sharedInstance.addData(forKey: PXTrackingStore.cardIdsESC, value: self.getCardsIdsWithESC())
