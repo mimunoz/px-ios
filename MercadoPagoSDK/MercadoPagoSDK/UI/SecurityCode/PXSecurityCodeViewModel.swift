@@ -112,12 +112,9 @@ extension PXSecurityCodeViewModel {
         var properties: [String: Any] = [:]
         properties["payment_method_id"] = paymentMethod.getPaymentIdForTracking()
         properties["payment_method_type"] = paymentMethod.getPaymentTypeForTracking()
-        if let cardInfo = cardInfo as? PXCardInformation {
-            properties["card_id"] = cardInfo.getCardId()
-            properties["issuer_id"] = cardInfo.getIssuer()?.id
+        if let choType = PXTrackingStore.sharedInstance.getChoType() {
+            properties["review_type"] = choType
         }
-        properties["bin"] = cardInfo.getCardBin()
-        properties["reason"] = reason.rawValue
         return properties
     }
 

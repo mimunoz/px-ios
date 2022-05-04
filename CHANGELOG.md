@@ -10,6 +10,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added DEBIN account creation
 - Added PXPaymentMethodBehaviour
 
+### Removed
+- Remove unnecessary tracks parameters for path: /px_checkout/review/confirm
+
 ## [4.59.0]
 
 ### Added
