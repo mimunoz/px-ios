@@ -60,8 +60,7 @@ class PXOneTapDisabledViewController: UIViewController {
 
     @discardableResult
     func addNewButton(containerView: PXComponentView, action: PXAction, isSecondary: Bool, margin: CGFloat) -> UIView {
-        let button = isSecondary ? AndesButton(text: action.label, hierarchy: .quiet, size: .large) : AndesButton(text: action.label, hierarchy: .loud, size: .large)
-
+        let button = isSecondary ? AndesButton(text: action.label, hierarchy: .transparent, size: .large) : AndesButton(text: action.label, hierarchy: .loud, size: .large)
         containerView.addSubviewToBottom(button, withMargin: margin)
         NSLayoutConstraint.activate([
             button.heightAnchor.constraint(equalToConstant: 50),
