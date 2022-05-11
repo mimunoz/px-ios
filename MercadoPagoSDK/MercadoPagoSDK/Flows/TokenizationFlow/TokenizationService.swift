@@ -105,6 +105,11 @@ class TokenizationService {
             if token.lastFourDigits.isEmpty {
                 token.lastFourDigits = cardInformation.getCardLastForDigits()
             }
+
+            if token.firstSixDigits.isEmpty {
+                token.firstSixDigits = cardInformation.getFirstSixDigits()
+            }
+
             self.resultHandler?.finishFlow(token: token, shouldResetESC: true)
         }, failure: { error in
             self.trackTokenApiError()
@@ -122,6 +127,11 @@ class TokenizationService {
             if token.lastFourDigits.isEmpty {
                 let cardInformation = self.paymentOptionSelected as? PXCardInformation
                 token.lastFourDigits = cardInformation?.getCardLastForDigits() ?? ""
+            }
+            
+            if token.firstSixDigits.isEmpty {
+                let cardInformation = self.paymentOptionSelected as? PXCardInformation
+                token.firstSixDigits = cardInformation?.getFirstSixDigits() ?? ""
             }
 
             var shouldResetESC = false
