@@ -8,6 +8,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added BIN setter in Tokenization services
 - Changed hierarchy of Secondary Button of the IFPE Modal
 
+### Added
+- Added PXPaymentMethodSelector trackingConfig
+- Added sonic branding for congrats screen
+
 ## [4.60.0] - 2022-05-05Z
 
 ### Added

@@ -3,6 +3,7 @@ import Foundation
 final class PXTrackingStore {
     enum TrackingChoType: String {
         case one_tap
+        case one_tap_selector
         case traditional
     }
 

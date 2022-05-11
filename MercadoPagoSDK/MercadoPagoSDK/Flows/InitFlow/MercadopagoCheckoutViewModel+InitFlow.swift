@@ -15,6 +15,7 @@ extension MercadoPagoCheckoutViewModel {
         initFlowProperties.paymentConfigurationService = paymentConfigurationService
         initFlowProperties.privateKey = privateKey
         initFlowProperties.productId = getAdvancedConfiguration().productId
+        initFlowProperties.checkoutType = PXTrackingStore.TrackingChoType.one_tap
 
         configureBiometricModule()
 
@@ -49,7 +50,7 @@ extension MercadoPagoCheckoutViewModel {
         initFlow?.newCardId = cardId
         initFlow?.start()
     }
-    
+
     func refreshAddAccountFlow(accountId: String) {
         initFlow?.initFlowModel.updateInitModel(paymentMethodsResponse: nil)
         initFlow?.newAccountId = accountId

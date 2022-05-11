@@ -237,6 +237,8 @@ class ViewController: UIViewController {
 
         builder.setPaymentMethodRules(paymentMethodRules: [PXPaymentMethodRules.ignoreInsufficientAMBalance.rawValue])
 
+        builder.setTrackingConfiguration(trackingConfiguration: PXTrackingConfiguration(trackListener: self, flowName: "some-flow-id", flowDetails: nil, sessionId: "1234"))
+
         var paymentMethodSelector: PXPaymentMethodSelector?
 
         do {
@@ -294,5 +296,15 @@ extension ViewController: PXPaymentMethodSelectorDelegate {
                 navigationController.popToRootViewController(animated: false)
             }
         }
+    }
+}
+
+extension ViewController: PXTrackerListener {
+    func trackEvent(screenName: String?, action: String!, result: String?, extraParams: [String: Any]?) {
+        print("Track event")
+    }
+
+    func trackScreen(screenName: String, extraParams: [String: Any]?) {
+        print("Track screen")
     }
 }

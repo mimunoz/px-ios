@@ -16,6 +16,7 @@ extension PXPaymentMethodSelectorViewModel {
         initFlowProperties.paymentConfigurationService = PXPaymentConfigurationServices()
         initFlowProperties.privateKey = accessToken
         initFlowProperties.productId = getAdvancedConfiguration().productId
+        initFlowProperties.checkoutType = PXTrackingStore.TrackingChoType.one_tap_selector
 
         // Create init flow.
         initFlow = InitFlow(flowProperties: initFlowProperties, finishInitCallback: { [weak self] checkoutPreference, initSearch  in
@@ -49,7 +50,7 @@ extension PXPaymentMethodSelectorViewModel {
         initFlow?.newCardId = cardId
         initFlow?.start()
     }
-    
+
     func refreshAddAccountFlow(accountId: String) {
         initFlow?.initFlowModel.updateInitModel(paymentMethodsResponse: nil)
         initFlow?.newAccountId = accountId

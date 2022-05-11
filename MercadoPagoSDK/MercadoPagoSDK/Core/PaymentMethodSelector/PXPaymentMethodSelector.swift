@@ -65,6 +65,10 @@ public class PXPaymentMethodSelector: NSObject {
             Localizator.sharedInstance.setLanguage(string: string)
         }
 
+        public func setTrackingConfiguration(trackingConfiguration: PXTrackingConfiguration) {
+            self.trackingConfiguration = trackingConfiguration
+        }
+
         public func build() throws -> PXPaymentMethodSelector? {
             guard let publicKey = publicKey else {
                 throw PXPaymentMethodSelectorError.missingPublicKey
@@ -145,7 +149,10 @@ extension PXPaymentMethodSelector {
 
         viewModel?.pxNavigationHandler.presentInitLoading()
 
-        self.initialize()
+        self.startTracking { [weak self] in
+            guard let self = self else { return }
+            self.initialize()
+        }
     }
 
     func finish() {

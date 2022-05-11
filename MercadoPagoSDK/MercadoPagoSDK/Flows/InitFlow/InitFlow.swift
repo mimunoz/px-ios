@@ -98,8 +98,6 @@ extension InitFlow {
 // MARK: - Privates
 extension InitFlow {
     private func setCheckoutTypeForTracking() {
-        if let paymentMethodsSearch = initFlowModel.getPaymentMethodSearch() {
-            PXTrackingStore.sharedInstance.setChoType(paymentMethodsSearch.oneTap != nil ? .one_tap : .traditional)
-        }
+        PXTrackingStore.sharedInstance.setChoType(initFlowModel.properties.checkoutType)
     }
 }

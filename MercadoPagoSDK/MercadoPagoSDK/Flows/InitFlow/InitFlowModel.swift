@@ -1,6 +1,7 @@
 import Foundation
 
-typealias InitFlowProperties = (paymentData: PXPaymentData, checkoutPreference: PXCheckoutPreference, paymentPlugin: PXSplitPaymentProcessor?, paymentMethodSearchResult: PXInitDTO?, chargeRules: [PXPaymentTypeChargeRule]?, serviceAdapter: MercadoPagoServices, advancedConfig: PXAdvancedConfiguration, paymentConfigurationService: PXPaymentConfigurationServices, privateKey: String?, productId: String?)
+typealias InitFlowProperties = (paymentData: PXPaymentData, checkoutPreference: PXCheckoutPreference, paymentPlugin: PXSplitPaymentProcessor?, paymentMethodSearchResult: PXInitDTO?, chargeRules: [PXPaymentTypeChargeRule]?, serviceAdapter: MercadoPagoServices, advancedConfig: PXAdvancedConfiguration, paymentConfigurationService: PXPaymentConfigurationServices, privateKey: String?, productId: String?, checkoutType: PXTrackingStore.TrackingChoType)
+
 typealias InitFlowError = (errorStep: InitFlowModel.Steps, shouldRetry: Bool, requestOrigin: ApiUtil.RequestOrigin?, apiException: ApiException?)
 
 protocol InitFlowProtocol: NSObjectProtocol {
