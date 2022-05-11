@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 - Added BIN setter in Tokenization services
 - Changed hierarchy of Secondary Button of the IFPE Modal
+### Changed
+- When select an Installment with interest update total amount in oneTap
 
 ### Added
 - Added PXPaymentMethodSelector trackingConfig
@@ -58,6 +60,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Add bank_name and external_account_id for DEBIN tracks
 - New payment method model support
+
 - Added Congrats Extra Info (IFPE regulations)
 
 ### Fixed
@@ -72,7 +75,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 - Remove unnecessary tracks for path: /px_checkout/dialog/dismiss
 - Remove unnecessary parameters for path: /px_checkout/result/error/primary_action
-
 ## v4.55.1
 
 ### Fixed

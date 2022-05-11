@@ -355,6 +355,13 @@ extension PXOneTapViewController: PXOneTapInstallmentInfoViewProtocol, PXOneTapI
             let viewModel = PXOneTapInstallmentsSelectorViewModel(installmentData: installmentData, selectedPayerCost: selectedModel.selectedPayerCost, interest: selectedModel.benefits?.interestFree, reimbursement: selectedModel.benefits?.reimbursement)
             installmentsSelectorView.update(viewModel: viewModel)
         }
+
+        headerView?.updateModel(
+            viewModel.getHeaderViewModel(
+            selectedCard: selectedCard,
+            pxOneTapContext: pxOneTapContext
+            )
+        )
     }
 
     func hideInstallments() {
