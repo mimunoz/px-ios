@@ -1,9 +1,10 @@
 import Foundation
 import MLUI
+import AVFoundation
 
 class PXAnimatedButton: UIButton {
     private enum Constants {
-        static let defaultAnimationDuration = 0.5
+        static let defaultAnimationDuration = 0.7
         static let defaultTimeOut = 15.0
         static let explosionAnimationDuration = 0.3
         static let showIconAnimationDuration = 0.6
@@ -11,8 +12,12 @@ class PXAnimatedButton: UIButton {
         static let scaleFactorForIconAnimation = CGFloat(0.40)
         static let xScaleForIconAnimation = CGFloat(1.0)
         static let xScaleForExpandAnimation = CGFloat(50)
+        static let congratsSuccessSound = "210226_MEPA_POSITIVO"
+        static let congratsErrorSound = "210126_MEPA_NEGATIVO"
+        static let congratsSoundExtension = "mp3"
     }
 
+    private var audioPlayer: AVAudioPlayer?
     weak var animationDelegate: PXAnimatedButtonDelegate?
     var progressView: ProgressView?
     var status: Status = .normal
@@ -61,7 +66,7 @@ extension PXAnimatedButton: ProgressViewDelegate, CAAnimationDelegate {
         status = .loading
     }
 
-    func finishAnimatingButton(color: UIColor, image: UIImage?, postPaymentStatus: PostPaymentStatus?) {
+    func finishAnimatingButton(color: UIColor, image: UIImage?, postPaymentStatus: PostPaymentStatus?, paymentStatus: PXPaymentStatus?) {
         status = .expanding
         progressView?.doComplete(completion: { [weak self] _ in
             guard let self = self,
@@ -101,14 +106,14 @@ extension PXAnimatedButton: ProgressViewDelegate, CAAnimationDelegate {
             }
 
             transitionAnimator.addCompletion { [weak self] _ in
-                self?.explosion(color: color, newFrame: toCircleFrame, image: image)
+                self?.explosion(color: color, newFrame: toCircleFrame, image: image, paymentStatus: paymentStatus)
             }
 
             transitionAnimator.startAnimation()
         })
     }
 
-    private func explosion(color: UIColor, newFrame: CGRect, image: UIImage?) {
+    private func explosion(color: UIColor, newFrame: CGRect, image: UIImage?, paymentStatus: PXPaymentStatus?) {
         guard let animatedView = self.animatedView else { return }
 
         UIView.animate(
@@ -120,6 +125,7 @@ extension PXAnimatedButton: ProgressViewDelegate, CAAnimationDelegate {
                 PXFeedbackGenerator.successNotificationFeedback()
                 self.iconAnimation(newFrame: newFrame, image: image) {
                     self.animationDelegate?.expandAnimationInProgress()
+                    self.playCongratsSound(status: paymentStatus)
                     self.expandAnimation {
                         self.animationDelegate?.didFinishAnimation()
                     }
@@ -164,21 +170,31 @@ extension PXAnimatedButton: ProgressViewDelegate, CAAnimationDelegate {
         )
     }
 
-        private func expandAnimation(completion: @escaping () -> Void) {
-            guard let animatedView = self.animatedView else { return }
+    private func expandAnimation(completion: @escaping () -> Void) {
+        guard let animatedView = self.animatedView else { return }
 
-            self.superview?.layer.masksToBounds = false
-            UIView.animate(
-                withDuration: Constants.defaultAnimationDuration,
-                animations: {
-                    animatedView.transform = CGAffineTransform(
-                        scaleX: Constants.xScaleForExpandAnimation,
-                        y: Constants.xScaleForExpandAnimation
-                    )
-                },
-                completion: { _ in completion() }
-            )
+        self.superview?.layer.masksToBounds = false
+        UIView.animate(
+            withDuration: Constants.defaultAnimationDuration,
+            animations: {
+                animatedView.transform = CGAffineTransform(
+                    scaleX: Constants.xScaleForExpandAnimation,
+                    y: Constants.xScaleForExpandAnimation
+                )
+            },
+            completion: { _ in completion() }
+        )
+    }
+
+    private func playCongratsSound(status: PXPaymentStatus?) {
+        let soundName = status == .APPROVED ? Constants.congratsSuccessSound : Constants.congratsErrorSound
+        if let audioURL = MercadoPagoBundle.bundle().url(forResource: soundName, withExtension: Constants.congratsSoundExtension) {
+            try? audioPlayer = AVAudioPlayer(contentsOf: audioURL)
+            audioPlayer?.numberOfLoops = 0
+            audioPlayer?.prepareToPlay()
+            audioPlayer?.play()
         }
+    }
 
     func didFinishProgress() {
         progressView?.doReset()
@@ -267,11 +283,13 @@ extension PXAnimatedButton: ProgressViewDelegate, CAAnimationDelegate {
 
 // MARK: Business Logic
 extension PXAnimatedButton {
-    @objc func animateFinish(_ sender: NSNotification) {
+    @objc
+    func animateFinish(_ sender: NSNotification) {
         if let notificationObject = sender.object as? PXAnimatedButtonNotificationObject {
             let image = ResourceManager.shared.getBadgeImageWith(status: notificationObject.status, statusDetail: notificationObject.statusDetail, clearBackground: true)
             let color = ResourceManager.shared.getResultColorWith(status: notificationObject.status, statusDetail: notificationObject.statusDetail)
-            finishAnimatingButton(color: color, image: image, postPaymentStatus: notificationObject.postPaymentStatus)
+            let paymentStatus = PXPaymentStatus.init(rawValue: notificationObject.status)
+            finishAnimatingButton(color: color, image: image, postPaymentStatus: notificationObject.postPaymentStatus, paymentStatus: paymentStatus)
         }
     }
 }
