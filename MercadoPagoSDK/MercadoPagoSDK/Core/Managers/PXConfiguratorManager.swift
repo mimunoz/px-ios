@@ -11,6 +11,11 @@ open class PXConfiguratorManager: NSObject {
         return biometricProtocol.isValidationRequired(config: biometricConfig)
     }
 
+    // PX NativeReauth
+
+    static var nativeReauthProtocol: PXNativeReauthProtocol = PXNativeReauthDefault()
+    static var nativeReauthConfig: PXNativeReauthConfig = PXNativeReauthConfig.createConfig()
+
     // PX Flow Behaviour
     static var flowBehaviourProtocol: PXFlowBehaviourProtocol = PXFlowBehaviourDefault()
 
@@ -57,5 +62,11 @@ open class PXConfiguratorManager: NSObject {
     // Set external implementation of PXMLCommonsProtocol
     public static func with(mlCommonsProtocol: PXMLCommonsProtocol) {
         self.mlCommonsProtocol = mlCommonsProtocol
+    }
+
+    // Set external implementation of PXNativeReauthProtocol
+
+    public static func with(nativeReauthProtocol: PXNativeReauthProtocol) {
+        self.nativeReauthProtocol = nativeReauthProtocol
     }
 }

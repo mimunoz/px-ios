@@ -17,8 +17,8 @@ extension MercadoPagoCheckoutViewModel {
         initFlowProperties.productId = getAdvancedConfiguration().productId
         initFlowProperties.checkoutType = PXTrackingStore.TrackingChoType.one_tap
 
-        configureBiometricModule()
-
+        configureReauthModule()
+        
         // Create init flow.
         initFlow = InitFlow(flowProperties: initFlowProperties, finishInitCallback: { [weak self] checkoutPreference, initSearch  in
             guard let self = self else { return }
@@ -61,8 +61,7 @@ extension MercadoPagoCheckoutViewModel {
         initFlow?.updateModel(paymentPlugin: self.paymentPlugin, chargeRules: self.chargeRules)
     }
 
-    func configureBiometricModule() {
-        // We use productId as unique identifier
-        PXConfiguratorManager.biometricConfig = PXBiometricConfig.createConfig(withFlowIdentifier: getAdvancedConfiguration().productId, andAmount: paymentData.getRawAmount())
+    func configureReauthModule() {
+        PXConfiguratorManager.nativeReauthConfig = PXNativeReauthConfig.createConfig()
     }
 }

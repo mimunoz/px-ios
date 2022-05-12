@@ -558,15 +558,14 @@ extension PXOneTapViewController {
     private func confirmPayment() {
         isUIEnabled(false)
         if viewModel.shouldValidateWithBiometric() {
-            viewModel.validateWithBiometric(onSuccess: { [weak self] in
+            viewModel.validateWithReauth { [weak self] in
                 DispatchQueue.main.async {
                     self?.doPayment()
                 }
-            }, onError: { [weak self] _ in
-                // User abort validation or validation fail.
+            } onError: { [weak self] _ in
                 self?.isUIEnabled(true)
                 self?.trackEvent(event: GeneralErrorTrackingEvents.error([:]))
-            })
+            }
         } else {
             doPayment()
         }

@@ -35,12 +35,19 @@ class PXReviewViewModel: NSObject {
         // We should´t validate with Biometric.
         return false
     }
-
-    func validateWithBiometric(onSuccess: @escaping () -> Void, onError: @escaping (Error) -> Void) {
-        let config = PXConfiguratorManager.biometricConfig
-        config.setAmount(NSDecimalNumber(string: String(amountHelper.amountToPay)))
-        PXConfiguratorManager.biometricProtocol.validate(config: PXConfiguratorManager.biometricConfig, onSuccess: onSuccess, onError: onError)
-    }
+    
+    func validateWithReauth(onSuccess: @escaping () -> Void, onError: @escaping (Error) -> Void) {
+            let config = PXConfiguratorManager.nativeReauthConfig
+            let paymentMethod = ReauthPaymentMethod(id: amountHelper.getPaymentData().paymentMethod?.id,
+                                                    type: amountHelper.getPaymentData().paymentMethod?.paymentTypeId,
+                                                    amount: NSNumber(value: amountHelper.amountToPay).decimalValue)
+            let paymentExperience = ReauthPaymentExperience(totalAmount: NSNumber(value: amountHelper.amountToPay).decimalValue,
+                                                            sessionId: MPXTracker.sharedInstance.getSessionID(),
+                                                            productId: nil)
+            config.setPaymentExperience(paymentExperience: paymentExperience)
+            config.setPaymentMethod(paymentMethod: paymentMethod)
+            PXConfiguratorManager.nativeReauthProtocol.validate(withConfig: config, onSuccess: onSuccess, onError: onError)
+        }
 }
 
 // MARK: - Logic.
