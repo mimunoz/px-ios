@@ -19,7 +19,8 @@ Pod::Spec.new do |s|
       'MercadoPagoSDKResources' => [
         'MercadoPagoSDK/Resources/**/*.xcassets',
         'MercadoPagoSDK/Resources/**/*.{lproj,strings,stringsdict}',
-        'MercadoPagoSDK/Resources/**/*.plist'
+        'MercadoPagoSDK/Resources/**/*.plist',
+        'MercadoPagoSDK/Resources/**/*.mp3'
       ]
     }
     s.dependency 'MLUI', '~> 5.0'
