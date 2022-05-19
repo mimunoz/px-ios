@@ -408,15 +408,16 @@ extension PXPaymentCongratsViewModel: PXNewResultViewModelInterface {
 extension PXPaymentCongratsViewModel {
     func getTrackingRemediesProperties(isFromModal: Bool) -> [String: Any] {
             let from = isFromModal == true ? "modal" : "view"
-            guard let extConf = paymentCongrats.externalTrackingValues else { return ["from": from] }
             var properties: [String: Any] = [:]
             properties["index"] = 0
             properties["type"] = paymentCongrats.type.getRawValue()
             properties["payment_status"] = paymentCongrats.type.getRawValue()
-            properties["payment_status_detail"] = extConf.paymentStatusDetail
+            properties["payment_status_detail"] = paymentCongrats.externalTrackingValues ?? "unknown"
+
             if let trackingData = paymentCongrats.remedyViewData?.remedy.trackingData {
                 properties["extra_info"] = trackingData
             }
+
             properties["from"] = from
             return properties
         }
