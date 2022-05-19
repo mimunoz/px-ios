@@ -239,7 +239,7 @@ def create_version_from(new_version)
     create_pull_request(
         repo: "mercadopago/px-ios",
         title: "Release #{new_version}",
-        base: "develop",
+        base: "release/#{new_version}",
         body: changelog
     )
 end
