@@ -20,11 +20,13 @@ public class PXPaymentProcessorAdapter: NSObject, PXSplitPaymentProcessor {
     }
 
     public func startPayment(checkoutStore: PXCheckoutStore, errorHandler: PXPaymentProcessorErrorHandler, successWithBasePayment: @escaping ((PXBasePayment) -> Void)) {
-        paymentProcessor.startPayment?(checkoutStore: checkoutStore, errorHandler: errorHandler, successWithBusinessResult: { businessResult in
-            successWithBasePayment(businessResult)
-        }, successWithPaymentResult: { genericPayment in
-            successWithBasePayment(genericPayment)
-        })
+        ConcurrencyPayments.shared.executeByCriteria(data: checkoutStore) {
+            self.paymentProcessor.startPayment?(checkoutStore: checkoutStore, errorHandler: errorHandler, successWithBusinessResult: { businessResult in
+                successWithBasePayment(businessResult)
+            }, successWithPaymentResult: { genericPayment in
+                successWithBasePayment(genericPayment)
+            })
+        }
     }
 
     public func didReceive(checkoutStore: PXCheckoutStore) {

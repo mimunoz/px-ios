@@ -23,6 +23,9 @@ open class PXConfiguratorManager: NSObject {
     static var escProtocol: PXESCProtocol = PXESCDefault()
     static var escConfig: PXESCConfig = PXESCConfig.createConfig()
 
+    // PX MLRemoteConfigurations
+    static var remoteConfigurationsProtocol: PXMLRemoteConfigurationsProtocol = PXMLRemoteConfigurationsDefault()
+
     // 3DS
     static var threeDSProtocol: PXThreeDSProtocol = PXThreeDSDefault()
     static var threeDSConfig: PXThreeDSConfig = PXThreeDSConfig.createConfig()
@@ -47,6 +50,11 @@ open class PXConfiguratorManager: NSObject {
     // Set external implementation of PXESCProtocol
     public static func with(escProtocol: PXESCProtocol) {
         self.escProtocol = escProtocol
+    }
+
+    // Set external implementation of PXMLRemoteConfigurationsProtocol
+    public static func with(remoteConfigurationsProtocol: PXMLRemoteConfigurationsProtocol) {
+        self.remoteConfigurationsProtocol = remoteConfigurationsProtocol
     }
 
     // Set external implementation of PXThreeDSProtocol

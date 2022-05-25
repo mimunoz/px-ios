@@ -64,12 +64,13 @@ extension OneTapFlow: PXPaymentResultHandlerProtocol {
         securityCodeVC.resetButton()
     }
 
-    func finishPaymentFlow(paymentResult: PaymentResult, instructionsInfo: PXInstruction?, pointsAndDiscounts: PXPointsAndDiscounts?) {
+    func finishPaymentFlow(paymentResult: PaymentResult, instructionsInfo: PXInstruction?, pointsAndDiscounts: PXPointsAndDiscounts?, checkoutPreference: PXCheckoutPreference?) {
         if paymentResult.isApproved() {
             isPaymentToggle.toggle()
             strategyTrackings.getPropertieFlowSuccess(flow: "Pagamento aprovado payment: \(isPaymentToggle)")
         }
         if paymentResult.isRejected() {
+            ConcurrencyPayments.shared.revert(data: checkoutPreference)
             MPXTracker.sharedInstance.trackScreen(event: PXPaymentsInfoGeneralEvents.infoGeneral_Follow_Reject)
         }
         if paymentResult.isPending() {

@@ -155,7 +155,7 @@ final class PXPaymentFlow: NSObject, PXFlow {
         strategyTracking.getPropertieFlow(flow: "finishFlow")
 
         if let paymentResult = model.paymentResult {
-            self.resultHandler?.finishPaymentFlow(paymentResult: paymentResult, instructionsInfo: model.instructionsInfo, pointsAndDiscounts: model.pointsAndDiscounts)
+            self.resultHandler?.finishPaymentFlow(paymentResult: paymentResult, instructionsInfo: model.instructionsInfo, pointsAndDiscounts: model.pointsAndDiscounts, checkoutPreference: model.checkoutPreference)
         } else if let businessResult = model.businessResult {
             self.resultHandler?.finishPaymentFlow(businessResult: businessResult, pointsAndDiscounts: model.pointsAndDiscounts)
         }

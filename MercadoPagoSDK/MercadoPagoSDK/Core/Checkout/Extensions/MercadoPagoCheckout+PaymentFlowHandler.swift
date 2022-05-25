@@ -14,7 +14,7 @@ extension MercadoPagoCheckout: PXPaymentResultHandlerProtocol {
         }
     }
 
-    func finishPaymentFlow(paymentResult: PaymentResult, instructionsInfo: PXInstruction?, pointsAndDiscounts: PXPointsAndDiscounts?) {
+    func finishPaymentFlow(paymentResult: PaymentResult, instructionsInfo: PXInstruction?, pointsAndDiscounts: PXPointsAndDiscounts?, checkoutPreference: PXCheckoutPreference?) {
         viewModel.remedy = nil
         viewModel.paymentResult = paymentResult
         viewModel.instructionsInfo = instructionsInfo
